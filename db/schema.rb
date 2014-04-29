@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429131440) do
+ActiveRecord::Schema.define(version: 20140429133839) do
 
   create_table "heros", force: true do |t|
     t.string   "name"
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 20140429131440) do
     t.datetime "updated_at"
     t.string   "one_time_authentication_token"
     t.string   "username"
+    t.string   "sign_up_ip"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

@@ -14,17 +14,23 @@ describe 'Authentication' do
     let(:token ) { user.regenerate_one_time_authentication_token! }
 
     it 'logs in' do
-      get '/', u: user.id, t: token
+      get '/', u: user.username, t: token
       expect(response.code).to eq('200')
     end
 
+    it 'cannot log in with a empty token' do
+      user.update_attributes(one_time_authentication_token: nil)
+      get '/', u: user.username, t: ''
+      expect(response).to redirect_to('/users/sign_in')
+    end
+
     it 'cannot log in with the same token a second time' do
-      get '/', u: user.id, t: token
+      get '/', u: user.username, t: token
       expect(response.code).to eq('200')
 
       delete '/users/sign_out'
 
-      get '/', u: user.id, t: token
+      get '/', u: user.username, t: token
       expect(response).to redirect_to('/users/sign_in')
     end
 

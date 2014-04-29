@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_via_one_time_token
     token = params[:t]
-    user = User.find_by_id(params[:u])
+    user = User.find_by_username(params[:u])
     if user && user.check_and_redeem_one_time_authentication_token(token)
       sign_in(user)
     end
