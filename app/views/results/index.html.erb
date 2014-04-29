@@ -1,0 +1,27 @@
+<h1>Results</h1>
+
+Total: <%= @results.wins.count %>/<%= @results.losses.count %> <%= ratio(@results.wins.count, @results.count) %>
+
+<h2>As Class</h2>
+
+<% Hero.all.each do |hero| %>
+<%
+  res = @results.where(hero_id: hero.id)
+%>
+<%= hero.name %>: <%= res.wins.count %>/<%= res.losses.count %> <%= ratio(res.wins.count, res.count) %><br/>
+<% end %>
+
+<h2>Vs Class</h2>
+
+<% Hero.all.each do |hero| %>
+<%
+  res = @results.where(opponent_id: hero.id)
+%>
+<%= hero.name %>: <%= res.wins.count %>/<%= res.losses.count %> <%= ratio(res.wins.count, res.count) %><br/>
+<% end %>
+
+<h2>Order</h2>
+<% res = @results.where(coin: false) %>
+Going first: <%= res.wins.count %>/<%= res.losses.count %> <%= ratio(res.wins.count, res.count) %><br/>
+<% res = @results.where(coin: true) %>
+Going second: <%= res.wins.count %>/<%= res.losses.count %> <%= ratio(res.wins.count, res.count) %><br/>
