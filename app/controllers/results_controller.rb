@@ -2,12 +2,12 @@ class ResultsController < ApplicationController
   respond_to :json, :html
 
   def index
-    @results = Result.all
+    @results = current_user.results
     respond_with(@results)
   end
 
   def create
-    @result = Result.create(safe_params)
+    @result = current_user.results.create(safe_params)
     respond_with(@result)
   end
 

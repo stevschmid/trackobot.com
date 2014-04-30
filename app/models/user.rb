@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :trackable
 
+  has_many :results
+
   def regenerate_one_time_authentication_token
     self.one_time_authentication_token = loop do
       token = Devise.friendly_token

@@ -4,6 +4,8 @@ class Result < ActiveRecord::Base
   belongs_to :hero
   belongs_to :opponent, class_name: 'Hero'
 
+  belongs_to :user
+
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
 
