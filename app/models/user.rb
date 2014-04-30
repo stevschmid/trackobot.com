@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :trackable
 
   has_many :results
+  has_many :arenas
 
   def regenerate_one_time_authentication_token
     self.one_time_authentication_token = loop do

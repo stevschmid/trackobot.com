@@ -6,8 +6,12 @@ class Result < ActiveRecord::Base
 
   belongs_to :user
 
+  belongs_to :arena
+
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
+
+  before_create :connect_to_arena, if: :arena?
 
   def hero=(hero)
     if hero.kind_of?(String)
@@ -21,5 +25,18 @@ class Result < ActiveRecord::Base
       opponent = Hero.where('lower(name) = ?', opponent.downcase).first
     end
     super(opponent)
+  end
+
+  def connect_to_arena
+    current_arena = user.arenas.order('created_at').last
+    if current_arena &&
+      current_arena.hero == hero &&
+      current_arena.wins.count < 12 &&
+      current_arena.losses.count < 3
+    then
+      self.arena = current_arena
+    end
+
+    self.arena ||= user.arenas.create(hero: hero)
   end
 end
