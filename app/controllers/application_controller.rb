@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
     user = User.find_by_username(params[:u])
     if user && user.check_and_redeem_one_time_authentication_token(token)
       sign_in(user)
+      redirect_to url_for(params.except(:u, :t))
     end
   end
 end
