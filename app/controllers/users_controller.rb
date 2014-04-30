@@ -4,14 +4,14 @@ class UsersController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:create]
 
-  before_action :check_ip_spam, only: [:create]
+  before_action :check_ip_spam, only: [:create], unless: -> { Rails.env.development? }
 
   def create
     username = generate_unique_username
     @generated_password = generate_password
     @user = User.create(username: username,
-                        password: @generate_password,
-                        password_confirmation: @generate_password,
+                        password: @generated_password,
+                        password_confirmation: @generated_password,
                         sign_up_ip: ip_address)
     respond_with(@user)
   end

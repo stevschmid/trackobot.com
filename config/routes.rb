@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :results
 
   resources :users, only: [:create, :show]
+  resources :one_time_auth, only: [:create, :show]
 end
