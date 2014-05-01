@@ -7,7 +7,7 @@
       <tbody>
       <% @arenas.each do |arena| %>
         <tr>
-          <td><%= arena.hero.name %></td>
+          <td><%= hero_name(arena.hero.name) %></td>
           <td><%= arena.wins.count %>-<%= arena.losses.count %></td>
           <td><%= time_ago_in_words(arena.results.order('created_at DESC').first.created_at) %> ago</td>
         </tr>

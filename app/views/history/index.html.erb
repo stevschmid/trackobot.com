@@ -7,9 +7,9 @@
       <tbody>
       <% @results.each do |result| %>
         <tr>
-          <td><%= result.hero.name %></td>
-          <td>vs <%= result.opponent.name %></td>
-          <td><%= result.win ? 'Win' : 'Loss' %></td>
+          <td><%= hero_name(result.hero.name) %></td>
+          <td>vs <%= hero_name(result.opponent.name) %></td>
+          <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= time_ago_in_words(result.created_at) %> ago</td>
           <td width="50"><span class="badge"><%= result.mode %></span></td>
         </tr>
