@@ -1,5 +1,5 @@
 class Result < ActiveRecord::Base
-  paginates_per 20
+  paginates_per 15
 
   default_scope { order('results.created_at DESC') }
 

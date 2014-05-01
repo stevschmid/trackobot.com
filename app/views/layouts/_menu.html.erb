@@ -1,6 +1,9 @@
-<ul class="nav nav-pills">
-  <%= nav_link 'History', history_index_path %>
-  <%= nav_link 'Arena', arena_index_path %>
-  <%= nav_link 'Stats', stats_path %>
-</ul>
+<div class="header">
+  <ul class="nav nav-pills pull-right">
+    <%= nav_link 'History', history_index_path %>
+    <%= nav_link 'Arena', arena_index_path %>
+    <%= nav_link 'Stats', stats_path %>
+  </ul>
 
+  <h3 class="text-muted">Profile of <%= current_user.username %></h3>
+</div>

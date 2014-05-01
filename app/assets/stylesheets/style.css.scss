@@ -1,0 +1,18 @@
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+
+.table {
+  border: 1px solid #dddddd;
+
+  th {
+    background: #f0f0f0;
+  }
+}
