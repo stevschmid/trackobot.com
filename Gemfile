@@ -33,6 +33,12 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
 end
 
+gem 'therubyracer'
+gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'twitter-bootstrap-rails'
+
+gem 'kaminari'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

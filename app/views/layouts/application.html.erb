@@ -8,10 +8,13 @@
 </head>
 <body>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<div class="container">
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg %>
+  <% end %>
 
-<%= yield %>
+  <%= yield %>
+</div>
 
 </body>
 </html>

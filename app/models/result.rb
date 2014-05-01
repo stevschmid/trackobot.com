@@ -1,4 +1,8 @@
 class Result < ActiveRecord::Base
+  paginates_per 20
+
+  default_scope { order('results.created_at DESC') }
+
   enum mode: [:ranked, :casual, :practice, :arena]
 
   belongs_to :hero

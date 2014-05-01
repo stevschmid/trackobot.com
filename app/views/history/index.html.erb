@@ -1,0 +1,26 @@
+<div class="container">
+  <%= render '/layouts/menu' %>
+
+  <div>
+    <h2>History</h2>
+    <table class="table table-hover">
+      <tbody>
+      <% @results.each do |result| %>
+        <tr>
+          <td><%= result.hero.name %></td>
+          <td>vs <%= result.opponent.name %></td>
+          <td><%= result.win ? 'Win' : 'Loss' %></td>
+          <td><%= time_ago_in_words(result.created_at) %> ago</td>
+          <td width="50"><span class="badge"><%= result.mode %></span></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <ul class="pager">
+      <li><%= link_to_previous_page @results, 'Previous' %></li>
+      <li><%= link_to_next_page @results, 'Next' %></li>
+    </ul>
+  </div>
+</div>
+

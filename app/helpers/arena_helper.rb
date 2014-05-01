@@ -1,0 +1,2 @@
+module ArenaHelper
+end

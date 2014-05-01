@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20140430091804) do
   add_index "results", ["arena_id"], name: "index_results_on_arena_id"
   add_index "results", ["hero_id"], name: "index_results_on_hero_id"
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id"
+  add_index "results", ["user_id"], name: "index_results_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                         default: "", null: false

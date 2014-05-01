@@ -1,0 +1,47 @@
+<div class="container">
+  <%= render '/layouts/menu' %>
+
+  <div>
+    <h2>Arena Statistics</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Win - Loss</th>
+          <th># achieved</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      <% @stats[:arena][:runs].each do |num_wins, count| %>
+      <tr>
+        <td><%= num_wins %>-x</td>
+        <td><%= count %></td>
+      </tr>
+      <% end %>
+    </table>
+
+    <h2> Class Statistics</h2>
+    <% [:as, :vs].each do |type| %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Win/Loss</th>
+            <th>Winrate</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        <% @stats[:classes][type].each do |hero, stats| %>
+        <tr>
+          <td><%= type %> <%= hero %></td>
+          <td><%= stats[:wins] %>/<%= stats[:losses] %></td>
+          <td><%= win_rate(stats[:wins], stats[:losses]) %></td>
+        </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+
+</div>
+
