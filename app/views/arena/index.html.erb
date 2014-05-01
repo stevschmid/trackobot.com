@@ -15,10 +15,13 @@
       </tbody>
     </table>
 
-    <ul class="pager">
-      <li><%= link_to_previous_page @arenas, 'Previous' %></li>
-      <li><%= link_to_next_page @arenas, 'Next' %></li>
-    </ul>
+    <div class="text-right">
+      <%= page_entries_info @arenas %>
+    </div>
+
+    <div class="text-center">
+      <%= paginate @arenas, window: 1 %>
+    </div>
   </div>
 </div>
 

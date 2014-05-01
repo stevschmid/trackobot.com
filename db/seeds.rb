@@ -21,7 +21,7 @@ if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
 
   100.times do |x|
-    Result.create(mode: [:arena, :casual, :practice].sample,
+    Result.create(mode: [:arena, :casual, :practice, :ranked].sample,
                   hero: Hero.all.sample,
                   opponent: Hero.all.sample,
                   win: [true, false].sample,

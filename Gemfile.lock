@@ -75,6 +75,9 @@ GEM
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kaminari-bootstrap (3.0.1)
+      kaminari (>= 0.13.0)
+      rails
     less (2.5.0)
       commonjs (~> 0.2.7)
     less-rails (2.5.0)
@@ -172,6 +175,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
+  kaminari-bootstrap (~> 3.0.1)
   less-rails
   rails (= 4.1.0)
   rspec-rails

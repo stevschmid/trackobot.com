@@ -11,16 +11,19 @@
           <td>vs <%= hero_name(result.opponent.name) %></td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= time_ago_in_words(result.created_at) %> ago</td>
-          <td width="50"><span class="badge"><%= result.mode %></span></td>
+          <td><%= result.mode.capitalize %></td>
         </tr>
       <% end %>
       </tbody>
     </table>
 
-    <ul class="pager">
-      <li><%= link_to_previous_page @results, 'Previous' %></li>
-      <li><%= link_to_next_page @results, 'Next' %></li>
-    </ul>
+    <div class="text-right">
+      <%= page_entries_info @results %>
+    </div>
+
+    <div class="text-center">
+      <%= paginate @results, window: 1 %>
+    </div>
   </div>
 </div>
 
