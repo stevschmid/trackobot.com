@@ -41,4 +41,34 @@ class Result < ActiveRecord::Base
 
     self.arena ||= user.arenas.create(hero: hero)
   end
+
+  def result
+    case win
+    when true
+      'win'
+    when false
+      'loss'
+    else
+      nil
+    end
+  end
+
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << [:id, :mode, :hero, :opponent, :result, :coin, :arena_id, :added]
+
+      all.each do |result|
+        csv << [
+          result.id,
+          result.mode,
+          result.hero.name,
+          result.opponent.name,
+          result.result,
+          result.coin,
+          result.arena && result.arena.id,
+          result.created_at
+        ]
+      end
+    end
+  end
 end

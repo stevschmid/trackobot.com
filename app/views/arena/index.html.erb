@@ -22,6 +22,10 @@
     <div class="text-center">
       <%= paginate @arenas, window: 1 %>
     </div>
+    
+    <div class="pull-right btn-group">
+      <%= link_to 'JSON', arena_index_path(format: :json), class: 'btn btn-default btn-xs' %>
+    </div>
   </div>
 </div>
 

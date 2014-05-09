@@ -10,7 +10,7 @@ class ArenaController < ApplicationController
           next_page: @arenas.next_page,
           prev_page: @arenas.prev_page,
           total_pages: @arenas.total_pages,
-          total_count: @arenas.total_count
+          total_items: @arenas.total_count
         }
       end
     end

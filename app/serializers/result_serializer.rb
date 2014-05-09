@@ -1,5 +1,5 @@
 class ResultSerializer < ActiveModel::Serializer
-  attributes :id, :mode, :hero, :opponent, :coin, :win, :arena_id
+  attributes :id, :mode, :hero, :opponent, :coin, :result, :arena_id
   attribute :created_at, key: :added
 
   def hero

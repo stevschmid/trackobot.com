@@ -23,7 +23,7 @@ describe ArenaController do
     end
 
     it 'has meta pagination information' do
-      expect(json[:meta].keys).to include(:current_page, :next_page, :prev_page, :total_pages, :total_count)
+      expect(json[:meta].keys).to include(:current_page, :next_page, :prev_page, :total_pages, :total_items)
     end
 
     describe 'arena structure' do

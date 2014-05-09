@@ -1,8 +1,9 @@
 class HistoryController < ApplicationController
 
   def index
-    @results = current_user.results.page(params[:page]).order('results.created_at DESC')
-    # respond_with(@results)
+    @unpaged_results = current_user.results.order('results.created_at DESC')
+    @results = @unpaged_results.page(params[:page])
+
     respond_to do |format|
       format.html
       format.json do
@@ -11,8 +12,11 @@ class HistoryController < ApplicationController
           next_page: @results.next_page,
           prev_page: @results.prev_page,
           total_pages: @results.total_pages,
-          total_count: @results.total_count
+          total_items: @results.total_count
         }
+      end
+      format.csv do
+        render text: @unpaged_results.to_csv
       end
     end
   end

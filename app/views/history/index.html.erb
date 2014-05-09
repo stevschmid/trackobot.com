@@ -24,6 +24,11 @@
     <div class="text-center">
       <%= paginate @results, window: 1 %>
     </div>
+
+    <div class="pull-right btn-group">
+      <%= link_to 'JSON', history_index_path(format: :json), class: 'btn btn-default btn-xs' %>
+      <%= link_to 'CSV', history_index_path(format: :csv), class: 'btn btn-default btn-xs' %>
+    </div>
   </div>
 </div>
 
