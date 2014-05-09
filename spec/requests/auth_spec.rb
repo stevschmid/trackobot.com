@@ -15,7 +15,7 @@ describe 'Authentication' do
 
     it 'logs in' do
       get '/', u: user.username, t: token
-      expect(response.code).to eq('200')
+      expect(response.code).to redirect_to('/')
     end
 
     it 'cannot log in with a empty token' do
@@ -26,7 +26,7 @@ describe 'Authentication' do
 
     it 'cannot log in with the same token a second time' do
       get '/', u: user.username, t: token
-      expect(response.code).to eq('200')
+      expect(response.code).to redirect_to('/')
 
       delete '/users/sign_out'
 

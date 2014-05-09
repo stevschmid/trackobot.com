@@ -1,6 +1,9 @@
 module ApplicationHelper
-  def nav_link(link_text, link_path)
-    class_name = current_page?(link_path) ? 'active' : ''
+  def nav_link(link_text, link_path, root = false)
+    current = current_page?(link_path)
+    current ||= root && current_page?(root_path)
+
+    class_name = current ? 'active' : ''
 
     content_tag(:li, :class => class_name) do
       link_to link_text, link_path

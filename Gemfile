@@ -40,6 +40,7 @@ gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branc
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 
+gem 'active_model_serializers'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
