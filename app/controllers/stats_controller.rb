@@ -30,6 +30,11 @@ class StatsController < ApplicationController
       @stats[:arena][:runs][num_wins] += 1
     end
 
-    respond_with(@stats)
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: {stats: @stats}
+      end
+    end
   end
 end
