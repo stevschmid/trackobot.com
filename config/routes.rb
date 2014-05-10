@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root 'history#index'
+  root 'static#index'
 
   resources :history, only: [:index]
   resources :arena, only: [:index]
