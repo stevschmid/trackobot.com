@@ -5,7 +5,7 @@ describe 'Authentication' do
 
   context 'without auth' do
     it 'redirects to login' do
-      get '/'
+      get '/profile'
       expect(response).to redirect_to('/users/sign_in')
     end
   end
@@ -14,23 +14,23 @@ describe 'Authentication' do
     let(:token ) { user.regenerate_one_time_authentication_token! }
 
     it 'logs in' do
-      get '/', u: user.username, t: token
-      expect(response.code).to redirect_to('/')
+      get '/profile', u: user.username, t: token
+      expect(response).to redirect_to('/profile')
     end
 
     it 'cannot log in with a empty token' do
       user.update_attributes(one_time_authentication_token: nil)
-      get '/', u: user.username, t: ''
+      get '/profile', u: user.username, t: ''
       expect(response).to redirect_to('/users/sign_in')
     end
 
     it 'cannot log in with the same token a second time' do
-      get '/', u: user.username, t: token
-      expect(response.code).to redirect_to('/')
+      get '/profile', u: user.username, t: token
+      expect(response).to redirect_to('/profile')
 
       delete '/users/sign_out'
 
-      get '/', u: user.username, t: token
+      get '/profile', u: user.username, t: token
       expect(response).to redirect_to('/users/sign_in')
     end
 

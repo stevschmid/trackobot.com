@@ -1,7 +1,7 @@
 module ApplicationHelper
   def nav_link(link_text, link_path, root = false)
     current = current_page?(link_path)
-    current ||= root && current_page?(root_path)
+    current ||= root && current_page?(profile_path)
 
     class_name = current ? 'active' : ''
 
