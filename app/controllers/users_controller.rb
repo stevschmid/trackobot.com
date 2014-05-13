@@ -24,7 +24,7 @@ class UsersController < ApplicationController
 
   def check_ip_spam
     if User.where(sign_up_ip: ip_address)
-           .where('created_at > ?', 1.hour.ago).count >= 3
+           .where('created_at > ?', 10.minutes.ago).count >= 3
     then
       render nothing: true, status: 429
     end
