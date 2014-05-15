@@ -1,7 +1,7 @@
 class Result < ActiveRecord::Base
   paginates_per 15
 
-  enum mode: [:ranked, :casual, :practice, :arena]
+  enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   belongs_to :hero
   belongs_to :opponent, class_name: 'Hero'
