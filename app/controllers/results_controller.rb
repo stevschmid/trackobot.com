@@ -3,7 +3,7 @@ class ResultsController < ApplicationController
 
   def create
     @result = current_user.results.create(safe_params)
-    respond_with(@result)
+    respond_with(:profile, @result)
   end
 
   private
