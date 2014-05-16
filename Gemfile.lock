@@ -95,6 +95,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.3.3)
     multi_json (1.9.2)
+    newrelic_rpm (3.8.0.218)
     orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.4)
@@ -195,6 +196,7 @@ DEPENDENCIES
   kaminari
   kaminari-bootstrap (~> 3.0.1)
   less-rails
+  newrelic_rpm
   pg
   rails (= 4.1.0)
   rails_12factor
