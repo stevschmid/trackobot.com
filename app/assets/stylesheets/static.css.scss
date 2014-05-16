@@ -4,7 +4,7 @@
 
 .start {
   .slogan {
-    font-size: 16px;
+    font-size: 1.2em;
     font-style: italic;
     margin-bottom: 1em;
   }
@@ -13,4 +13,20 @@
     margin-top: 2em;
     border-bottom: 1px solid #CECECE;
   }  
+
+  .step {
+    width: 100%;
+    border-radius: 4px;
+    padding: 4px;
+    border: 1px solid #ddd;
+  }
+
+  .caption {
+    font-size: 0.8em;
+    padding: 4px;
+  }
+
+  .steps {
+    margin-top: 2em;
+  }
 }
