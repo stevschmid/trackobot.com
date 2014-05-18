@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :results
   has_many :arenas
 
+  validates_presence_of :username
+
   def regenerate_one_time_authentication_token
     self.one_time_authentication_token = loop do
       token = Devise.friendly_token
