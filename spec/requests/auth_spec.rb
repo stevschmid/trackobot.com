@@ -24,6 +24,11 @@ describe 'Authentication' do
       expect(response).to redirect_to('/users/sign_in')
     end
 
+    it 'cannot log in with a invalid token' do
+      get '/profile', u: user.username, t: 'pasterino'
+      expect(response).to redirect_to('/users/sign_in')
+    end
+
     it 'cannot log in with the same token a second time' do
       get '/profile', u: user.username, t: token
       expect(response).to redirect_to('/profile')
