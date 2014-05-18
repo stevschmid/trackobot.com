@@ -1,7 +1,8 @@
 class Result < ActiveRecord::Base
   paginates_per 15
 
-  validates_presence_of :mode, :win, :hero_id, :opponent_id, :user_id
+  validates_presence_of :mode, :hero_id, :opponent_id, :user_id
+  validates_inclusion_of :win, in: [true, false]
 
   enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
