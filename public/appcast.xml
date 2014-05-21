@@ -12,5 +12,12 @@
       <pubDate>Thu, 15 May 2014 15:42:03 +0200</pubDate>
       <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.0.1/Track-o-Bot_0.0.1.dmg" sparkle:version="0.0.1" length="7293577" type="application/octet-stream"/>
     </item>
+    <item>
+      <title>Version 0.0.2</title>
+      <description><![CDATA[
+        ]]></description>
+      <pubDate>Wed, 21 May 2014 20:57:01 +0200</pubDate>
+      <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.0.2/Track-o-Bot_0.0.2.dmg" sparkle:version="0.0.2" length="7157176" type="application/octet-stream"/>
+    </item>
   </channel>
 </rss>
