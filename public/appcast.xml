@@ -15,6 +15,11 @@
     <item>
       <title>Version 0.0.2</title>
       <description><![CDATA[
+        <ul>
+          <li>Distinguish between friendly and practice matches</li>
+          <li>Improve logging</li>
+          <li>Replace icon</li>
+        </ul>
         ]]></description>
       <pubDate>Wed, 21 May 2014 20:57:01 +0200</pubDate>
       <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.0.2/Track-o-Bot_0.0.2.dmg" sparkle:version="0.0.2" length="7157176" type="application/octet-stream"/>
