@@ -16,7 +16,7 @@
       <title>Version 0.0.2</title>
       <description><![CDATA[
         <ul>
-          <li>Distinguish between friendly and practice matches</li>
+          <li>Record friendly matches</li>
           <li>Improve logging</li>
           <li>Replace icon</li>
         </ul>
