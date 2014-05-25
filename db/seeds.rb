@@ -17,6 +17,23 @@ if Hero.count == 0
   Hero.create(name: 'Druid')
 end
 
+if Card.count == 0
+  cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
+  cards.each do |card|
+    Card.create(ref: card[:id],
+                name: card[:name],
+                description: card[:description],
+                mana: card[:mana],
+                type: card[:type],
+                hero: card[:class],
+                set: card[:set],
+                quality: card[:legendary],
+                race: card[:race],
+                attack: card[:attack],
+                health: card[:health])
+  end
+end
+
 if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
 

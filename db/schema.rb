@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140430091804) do
+ActiveRecord::Schema.define(version: 20140525125301) do
 
   create_table "arenas", force: true do |t|
     t.integer  "hero_id"
@@ -22,6 +22,33 @@ ActiveRecord::Schema.define(version: 20140430091804) do
 
   add_index "arenas", ["hero_id"], name: "index_arenas_on_hero_id"
   add_index "arenas", ["user_id"], name: "index_arenas_on_user_id"
+
+  create_table "card_histories", force: true do |t|
+    t.integer  "card_id"
+    t.integer  "result_id"
+    t.string   "player"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "card_histories", ["card_id"], name: "index_card_histories_on_card_id"
+  add_index "card_histories", ["result_id"], name: "index_card_histories_on_result_id"
+
+  create_table "cards", force: true do |t|
+    t.string   "ref"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "mana"
+    t.string   "type"
+    t.string   "hero"
+    t.string   "set"
+    t.string   "quality"
+    t.string   "race"
+    t.integer  "attack"
+    t.integer  "health"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "heros", force: true do |t|
     t.string   "name"

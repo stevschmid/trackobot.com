@@ -10,8 +10,9 @@ class Result < ActiveRecord::Base
   belongs_to :opponent, class_name: 'Hero'
 
   belongs_to :user
-
   belongs_to :arena
+
+  has_many :card_histories
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
