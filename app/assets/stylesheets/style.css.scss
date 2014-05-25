@@ -38,3 +38,12 @@ body {
   cursor: pointer;
   border-bottom: 1px dotted;
 }
+
+.mana {
+  background: asset_url('mana.png');
+  width: 16px;
+  height: 14px;
+  text-align: center;
+  color: white;
+  float: left;
+}

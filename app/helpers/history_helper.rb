@@ -6,7 +6,7 @@ module HistoryHelper
     table = "<table class='card_history'>" + card_history.group(:card).count.sort_by do |card, count|
       card.mana || -1
     end.collect do |card, count|
-      "<tr><td>#{card.name} #{"(#{count})" if count > 1}</td></tr>"
+      "<tr><td><div class='mana'>#{card.mana || 0}</div>&nbsp;#{card.name} #{"(#{count})" if count > 1}</td></tr>"
     end.join + "</table>"
 
     table.html_safe
