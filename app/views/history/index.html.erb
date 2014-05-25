@@ -6,9 +6,30 @@
     <table class="table table-hover table-condensed">
       <tbody>
       <% @results.each do |result| %>
+        <%
+          additions_for_cards_played = {
+                                        class: 'has-popover',
+                                        data: {
+                                          container: 'body',
+                                          title: 'Cards played',
+                                          trigger: 'hover',
+                                          placement: 'bottom',
+                                          html: true
+                                        }
+                                      }
+
+          if my_cards_played = table_of_cards_played(result.card_histories.me)
+            my_additions = additions_for_cards_played.deep_merge(data: {content: my_cards_played})
+          end
+
+          if opponent_cards_played = table_of_cards_played(result.card_histories.opponent)
+            opponent_additions = additions_for_cards_played.deep_merge(data: {content: opponent_cards_played})
+          end
+        %>
         <tr>
-          <td><%= hero_name(result.hero.name) %></td>
-          <td>vs <%= hero_name(result.opponent.name) %></td>
+          <td><%= hero_name(result.hero.name, my_additions) %></td>
+          <td> vs <%= hero_name(result.opponent.name, opponent_additions) %>
+          </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= time_ago_in_words(result.created_at) %> ago</td>
           <td><%= result.mode.capitalize %></td>
