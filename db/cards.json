@@ -642,7 +642,7 @@
   {
     "id": "CS2_017",
     "name": "Shapeshift",
-    "description": "<b>Hero Power</b>\\n +1 Attack this turn.  +1 Armor.",
+    "description": "<b>Hero Power</b>\\n+1 Attack this turn.\\n+1 Armor.",
     "mana": 2,
     "type": "hero",
     "class": "druid",
@@ -1490,7 +1490,7 @@
   {
     "id": "CS2_083b",
     "name": "Dagger Mastery",
-    "description": "<b>Hero Power</b> \\n Equip a 1/2 Dagger.",
+    "description": "<b>Hero Power</b>\\nEquip a 1/2 Dagger.",
     "mana": 2,
     "type": "hero",
     "class": "rogue",
@@ -4122,15 +4122,15 @@
   {
     "id": "EX1_083",
     "name": "Tinkmaster Overspark",
-    "description": "<b>Battlecry:</b> Transform a minion into a 5/5 Devilsaur or a 1/1 Squirrel at random.",
+    "description": "<b>Battlecry:</b> Transform another random minion into a 5/5 Devilsaur or a 1/1 Squirrel.",
     "mana": 3,
     "type": "minion",
     "class": "neutral",
     "set": "expert",
     "quality": "legendary",
     "race": null,
-    "attack": 2,
-    "health": 2,
+    "attack": 3,
+    "health": 3,
     "flags": [
       "battlecry",
       "elite"
@@ -4463,6 +4463,22 @@
     ]
   },
   {
+    "id": "EX1_116t",
+    "name": "Whelp",
+    "description": null,
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": "expert",
+    "quality": null,
+    "race": "dragon",
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
     "id": "EX1_124",
     "name": "Eviscerate",
     "description": "Deal $2 damage. <b>Combo:</b> Deal $4 damage instead.",
@@ -4481,7 +4497,7 @@
   {
     "id": "EX1_126",
     "name": "Betrayal",
-    "description": "An enemy minion deals its damage to the minions next to it.",
+    "description": "Force an enemy minion to deal its damage to the minions next to it.",
     "mana": 2,
     "type": "ability",
     "class": "rogue",
@@ -4946,7 +4962,7 @@
   {
     "id": "EX1_160b",
     "name": "Leader of the Pack",
-    "description": "Give all of your minions +1/+1.",
+    "description": "Give your minions +1/+1.",
     "mana": null,
     "type": "ability",
     "class": "druid",
@@ -4962,7 +4978,7 @@
   {
     "id": "EX1_160be",
     "name": "Leader of the Pack",
-    "description": "This minion has +1/+1.",
+    "description": "+1/+1",
     "mana": null,
     "type": "ability",
     "class": "druid",
@@ -5283,7 +5299,7 @@
   {
     "id": "EX1_178",
     "name": "Ancient of War",
-    "description": "<b>Choose One</b> - <b>Taunt</b> and +5 Health; or +5 Attack.",
+    "description": "<b>Choose One</b> -\\n+5 Attack; or +5 Health and <b>Taunt</b>.",
     "mana": 7,
     "type": "minion",
     "class": "druid",
@@ -6876,7 +6892,7 @@
   {
     "id": "EX1_408",
     "name": "Mortal Strike",
-    "description": "Deal $4 damage.  If your hero has 12 or less Health, deal $6 damage instead.",
+    "description": "Deal $4 damage.  If you have 12 or less Health, deal $6 instead.",
     "mana": 4,
     "type": "ability",
     "class": "warrior",
@@ -7312,7 +7328,7 @@
     "id": "EX1_538",
     "name": "Unleash the Hounds",
     "description": "For each enemy minion, summon a 1/1 Hound with <b>Charge</b>.",
-    "mana": 2,
+    "mana": 3,
     "type": "ability",
     "class": "hunter",
     "set": "expert",
@@ -7472,7 +7488,7 @@
   {
     "id": "EX1_557",
     "name": "Nat Pagle",
-    "description": "At the end of your turn, you have a 50% chance to draw a card.",
+    "description": "At the start of your turn, you have a 50% chance to draw an extra card.",
     "mana": 2,
     "type": "minion",
     "class": "neutral",
@@ -8487,7 +8503,7 @@
   {
     "id": "EX1_619e",
     "name": "Equality",
-    "description": "This minion's Health has been changed to 1.",
+    "description": "Health changed to 1.",
     "mana": null,
     "type": "ability",
     "class": "paladin",
@@ -9127,7 +9143,7 @@
   {
     "id": "Mekka3e",
     "name": "Emboldened!",
-    "description": "+1/+1.",
+    "description": "Increased Stats.",
     "mana": null,
     "type": "ability",
     "class": "neutral",
@@ -10990,8 +11006,8 @@
   },
   {
     "id": "XXX_011",
-    "name": "Exhaust",
-    "description": "Exhaust a character.",
+    "name": "Summon a random Secret",
+    "description": "Summon a secret from your deck.",
     "mana": 0,
     "type": "ability",
     "class": "neutral",
