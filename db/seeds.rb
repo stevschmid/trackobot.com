@@ -17,22 +17,40 @@ if Hero.count == 0
   Hero.create(name: 'Druid')
 end
 
-if Card.count == 0
-  cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
-  cards.each do |card|
-    Card.create(ref: card[:id],
-                name: card[:name],
-                description: card[:description],
-                mana: card[:mana],
-                type: card[:type],
-                hero: card[:class],
-                set: card[:set],
-                quality: card[:legendary],
-                race: card[:race],
-                attack: card[:attack],
-                health: card[:health])
-  end
+def attributes_by_json_card(card)
+  {
+    ref: card[:id],
+    name: card[:name],
+    description: card[:description],
+    mana: card[:mana],
+    type: card[:type],
+    hero: card[:class],
+    set: card[:set],
+    quality: card[:legendary],
+    race: card[:race],
+    attack: card[:attack],
+    health: card[:health]
+  }
 end
+
+cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
+p "Updating cards"
+p Card.count
+cards.each do |card|
+  db_card = Card.where(ref: card[:id]).first_or_initialize
+  db_card.update_attributes(ref: card[:id],
+                            name: card[:name],
+                            description: card[:description],
+                            mana: card[:mana],
+                            type: card[:type],
+                            hero: card[:class],
+                            set: card[:set],
+                            quality: card[:legendary],
+                            race: card[:race],
+                            attack: card[:attack],
+                            health: card[:health])
+end
+p Card.count
 
 if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
