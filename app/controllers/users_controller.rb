@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:create]
 
-#  before_action :check_ip_spam, only: [:create], unless: -> { Rails.env.development? }
+  before_action :check_ip_spam, only: [:create], unless: -> { Rails.env.development? }
 
   def create
     username = generate_unique_username
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   private
 
   def ip_address
-    request.env['REMOTE_ADDR']
+    request.remote_ip
   end
 
   def check_ip_spam
