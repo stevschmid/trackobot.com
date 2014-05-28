@@ -46,5 +46,15 @@
       <pubDate>Wed, 28 May 2014 20:05:48 +0200</pubDate>
       <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.1.1/Track-o-Bot_0.1.1.dmg" sparkle:version="0.1.1" length="7175733" type="application/octet-stream"/>
     </item>
+    <item>
+      <title>Version 0.1.2</title>
+      <description><![CDATA[
+        <ul>
+          <li>Make credentials read-only in the settings tab</li>
+        </ul>
+        ]]></description>
+      <pubDate>Wed, 28 May 2014 21:21:19 +0200</pubDate>
+      <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.1.2/Track-o-Bot_0.1.2.dmg" sparkle:version="0.1.2" length="7175747" type="application/octet-stream"/>
+    </item>
   </channel>
 </rss>
