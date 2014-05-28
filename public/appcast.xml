@@ -24,5 +24,17 @@
       <pubDate>Thu, 22 May 2014 21:47:30 +0200</pubDate>
       <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.0.2/Track-o-Bot_0.0.2.dmg" sparkle:version="0.0.2" length="7157077" type="application/octet-stream"/>
     </item>
+    <item>
+      <title>Version 0.1.0</title>
+      <description><![CDATA[
+        <ul>
+          <li>Add ability to track the card history by enabling and parsing the ingame logs</li>
+          <li>Improve reliability of detection</li>
+          <li>Fix various small bugs</li>
+        </ul>
+        ]]></description>
+      <pubDate>Wed, 28 May 2014 14:08:00 +0200</pubDate>
+      <enclosure url="https://github.com/stevschmid/track-o-bot/releases/download/0.1.0/Track-o-Bot_0.1.0.dmg" sparkle:version="0.1.0" length="7175727" type="application/octet-stream"/>
+    </item>
   </channel>
 </rss>
