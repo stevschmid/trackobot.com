@@ -44,6 +44,8 @@ gem 'active_model_serializers'
 
 gem 'font-awesome-less'
 
+gem 'airbrake'
+
 group :staging, :production do
   gem 'rails_12factor'
   gem 'pg' # postgres ftw
