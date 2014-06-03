@@ -1,17 +1,11 @@
-require 'rexml/document'
-require 'time'
+require 'open-uri'
 
-def version_as_int(version)
-  version.to_s.gsub(/\D/, '').to_i
+releases = JSON.load(open('https://api.github.com/repos/stevschmid/track-o-bot/releases'))
+latest_release = releases.max_by do |rel|
+  Time.parse(rel['published_at'])
 end
 
-doc = REXML::Document.new(File.open('public/appcast.xml'))
-items = doc.elements.collect('*/channel/item') do |item|
-  item
-end
-latest_item = items.max do |a, b|
-  version_as_int(a.elements['enclosure'].attributes['sparkle:version']) <=> version_as_int(b.elements['enclosure'].attributes['sparkle:version'])
-end
+asset = latest_release['assets'].find { |asset| asset['name'].index('.dmg') }
 
-DOWNLOAD_URL = latest_item.elements['enclosure'].attributes['url']
+DOWNLOAD_URL_MAC = latest_release['html_url'].gsub('/tag/', '/download/') + '/' + asset['name']
 
