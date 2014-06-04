@@ -42,7 +42,7 @@ gem 'kaminari-bootstrap', '~> 3.0.1'
 
 gem 'active_model_serializers'
 
-gem 'font-awesome-less'
+gem 'font-awesome-sass'
 
 gem 'airbrake'
 
