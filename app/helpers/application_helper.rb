@@ -16,5 +16,9 @@ module ApplicationHelper
       content_tag(:span, span_additions) { hero_name }
     ].join(' ').html_safe
   end
+
+  def show_feedback_button?
+    current_user.feedbacks.where('created_at > ?', 1.hour.ago).none?
+  end
 end
 

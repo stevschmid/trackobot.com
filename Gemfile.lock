@@ -45,6 +45,7 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    bootstrap_form (2.1.1)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -192,6 +193,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   airbrake
+  bootstrap_form
   coffee-rails (~> 4.0.0)
   devise
   factory_girl_rails

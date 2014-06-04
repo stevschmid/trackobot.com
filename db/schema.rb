@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140525125301) do
+ActiveRecord::Schema.define(version: 20140604154253) do
 
   create_table "arenas", force: true do |t|
     t.integer  "hero_id"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20140525125301) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "feedbacks", force: true do |t|
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id"
 
   create_table "heros", force: true do |t|
     t.string   "name"

@@ -1,0 +1,15 @@
+<div class="container">
+  <%= render '/layouts/header' %>
+
+  <div>
+    <h2>Feedback</h2>
+
+    <div class="alert alert-info">Use this form to let off steam or leave some nice words about Track-o-Bot! Go ahead and post annoying bugs, cool ideas or your favorite children's story!</div>
+
+    <%= bootstrap_form_for(@feedback) do |f| %>
+      <%= f.text_area :message, autofocus: true, class: 'form-control', rows: 5, placeholder: 'I think Track-o-Bot is...' %>
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    <% end %>
+
+  </div>
+</div>
