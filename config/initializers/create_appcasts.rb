@@ -1,6 +1,8 @@
 require 'open-uri'
 
 releases = JSON.load(open('https://api.github.com/repos/stevschmid/track-o-bot/releases'))
+# sort version ascending
+releases.sort_by! { |rel| Gem::Version.new(rel['tag_name']) }
 
 mac_releases = releases.select do |rel|
   rel['assets'].any? { |a| a['name'].index('.dmg') }
