@@ -52,7 +52,7 @@ end
 
           asset = rel['assets'].find { |a| a['name'].index(asset_extension) }
           dl_url = rel['html_url'].gsub('/tag/', '/download/') + '/' + asset['name']
-          item.enclosure url: dl_url, 'sparkle-version' => rel['tag_name'], length: asset['size'], type: asset['content_type']
+          item.enclosure url: dl_url, 'sparkle:version' => rel['tag_name'], length: asset['size'], type: asset['content_type']
         end
       end
     end
