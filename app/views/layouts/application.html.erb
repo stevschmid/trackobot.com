@@ -23,8 +23,14 @@
 <body>
 
 <div class="container">
+  <%
+      alert_mapping = {error: 'danger', notice: 'info', alert: 'warning', success: 'success'}
+  %>
   <% flash.each do |name, msg| %>
-    <%= content_tag :div, msg, class: 'alert alert-warning' %>
+    <%= content_tag :div, class: "alert alert-dismissable alert-#{ alert_mapping[name.to_sym] || 'warning' }" do |div| %>
+      <%= button_tag "&times;".html_safe, class: 'close', data: {dismiss: 'alert'}, 'aria-hidden' => 'true' %>
+      <%= msg %>
+    <% end %>
   <% end %>
 
   <%= yield %>

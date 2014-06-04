@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :results
   has_many :arenas
 
+  has_many :feedbacks
+
   validates_presence_of :username
 
   def regenerate_one_time_authentication_token

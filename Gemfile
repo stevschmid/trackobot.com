@@ -37,12 +37,14 @@ gem 'therubyracer'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 
+gem 'bootstrap_form'
+
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 
 gem 'active_model_serializers'
 
-gem 'font-awesome-less'
+gem 'font-awesome-sass'
 
 gem 'airbrake'
 

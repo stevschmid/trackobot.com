@@ -1,0 +1,6 @@
+<div class="pull-right btn-group">
+  <%= link_to icon('bullhorn', 'Feedback'), new_feedback_path, class: 'btn btn-default btn-xs btn-primary' if show_feedback_button? %>
+  <%= link_to 'JSON', {format: :json}, class: 'btn btn-default btn-xs' if json %>
+  <%= link_to 'CSV', {format: :csv}, class: 'btn btn-default btn-xs' if csv %>
+</div>
+

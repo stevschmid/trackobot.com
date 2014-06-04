@@ -46,10 +46,7 @@
       <%= paginate @results, window: 1 %>
     </div>
 
-    <div class="pull-right btn-group">
-      <%= link_to 'JSON', profile_history_index_path(format: :json), class: 'btn btn-default btn-xs' %>
-      <%= link_to 'CSV', profile_history_index_path(format: :csv), class: 'btn btn-default btn-xs' %>
-    </div>
+    <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: true} %>
   </div>
 </div>
 

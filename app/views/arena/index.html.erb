@@ -23,9 +23,7 @@
       <%= paginate @arenas, window: 1 %>
     </div>
     
-    <div class="pull-right btn-group">
-      <%= link_to 'JSON', profile_arena_index_path(format: :json), class: 'btn btn-default btn-xs' %>
-    </div>
+    <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: false} %>
   </div>
 </div>
 

@@ -45,6 +45,7 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    bootstrap_form (2.1.1)
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -68,8 +69,8 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    font-awesome-less (4.0.2)
-      less-rails (>= 2.4.2)
+    font-awesome-sass (4.1.0)
+      sass (~> 3.2)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (2.0.6)
@@ -86,11 +87,11 @@ GEM
       kaminari (>= 0.13.0)
       rails
     kgio (2.9.2)
-    less (2.5.0)
+    less (2.4.0)
       commonjs (~> 0.2.7)
-    less-rails (2.5.0)
+    less-rails (2.4.2)
       actionpack (>= 3.1)
-      less (~> 2.5.0)
+      less (~> 2.4.0)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -167,14 +168,14 @@ GEM
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     turbolinks (2.2.2)
       coffee-rails
-    tzinfo (1.1.0)
+    tzinfo (1.2.1)
       thread_safe (~> 0.1)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
@@ -192,10 +193,11 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   airbrake
+  bootstrap_form
   coffee-rails (~> 4.0.0)
   devise
   factory_girl_rails
-  font-awesome-less
+  font-awesome-sass
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
