@@ -18,7 +18,7 @@ class ResultsController < ApplicationController
       if card
         result.card_histories.new(player: card_history_item[:player], card: card)
       else
-        Rails.log.info "Card #{card_history_item[:card_id]} not found in Card Database"
+        logger.info "Card #{card_history_item[:card_id]} not found in Card Database"
       end
     end
   end
