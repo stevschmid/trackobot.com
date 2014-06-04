@@ -46,6 +46,8 @@ gem 'font-awesome-less'
 
 gem 'airbrake'
 
+gem 'redcarpet'
+
 group :staging, :production do
   gem 'rails_12factor'
   gem 'pg' # postgres ftw
