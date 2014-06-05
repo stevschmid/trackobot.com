@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604154253) do
+ActiveRecord::Schema.define(version: 20140605111232) do
 
   create_table "arenas", force: true do |t|
     t.integer  "hero_id"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20140604154253) do
     t.datetime "updated_at"
   end
 
+  add_index "cards", ["ref"], name: "index_cards_on_ref"
+
   create_table "feedbacks", force: true do |t|
     t.integer  "user_id"
     t.text     "message"
@@ -81,6 +83,7 @@ ActiveRecord::Schema.define(version: 20140604154253) do
   add_index "results", ["hero_id"], name: "index_results_on_hero_id"
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id"
   add_index "results", ["user_id"], name: "index_results_on_user_id"
+  add_index "results", ["win"], name: "index_results_on_win"
 
   create_table "users", force: true do |t|
     t.string   "email",                         default: "", null: false
