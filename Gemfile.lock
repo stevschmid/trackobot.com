@@ -153,6 +153,8 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    skylight (0.3.14)
+      activesupport (>= 3.0.0)
     spring (1.1.2)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -211,6 +213,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
+  skylight
   spring
   sqlite3
   therubyracer

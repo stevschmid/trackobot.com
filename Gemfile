@@ -58,6 +58,8 @@ group :staging, :production do
   gem 'unicorn'
 
   gem 'newrelic_rpm'
+
+  gem 'skylight'
 end
 
 # Use ActiveModel has_secure_password
