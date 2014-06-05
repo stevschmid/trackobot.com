@@ -50,6 +50,8 @@ gem 'airbrake'
 
 gem 'redcarpet'
 
+gem 'local_time'
+
 group :staging, :production do
   gem 'rails_12factor'
   gem 'pg' # postgres ftw

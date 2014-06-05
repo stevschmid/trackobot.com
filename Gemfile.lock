@@ -93,6 +93,8 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.4.0)
     libv8 (3.16.14.3)
+    local_time (1.0.0)
+      coffee-rails
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -205,6 +207,7 @@ DEPENDENCIES
   kaminari
   kaminari-bootstrap (~> 3.0.1)
   less-rails
+  local_time
   newrelic_rpm
   pg
   rails (= 4.1.1)
