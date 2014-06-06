@@ -10,6 +10,13 @@ class User < ActiveRecord::Base
 
   validates_presence_of :username
 
+  has_many :notification_reads
+  has_many :read_notifications, class_name: 'Notification', through: :notification_reads, source: :notification
+
+  def unread_notifications
+    Notification.where.not(id: read_notifications)
+  end
+
   def regenerate_one_time_authentication_token
     self.one_time_authentication_token = loop do
       token = Devise.friendly_token

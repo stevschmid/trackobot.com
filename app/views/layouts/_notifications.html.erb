@@ -1,0 +1,17 @@
+<% current_user.unread_notifications.each do |notification| %>
+
+    <%= content_tag :div, class: "alert alert-dismissable alert-#{ notification.kind || 'info' }" do |div| %>
+      <%= link_to "&times;".html_safe, mark_as_read_notification_path(notification), remote: true, method: :put, class: 'close mark-as-read' %>
+      <%= button_tag "&times;".html_safe, class: 'close hidden', data: {dismiss: 'alert'}, 'aria-hidden' => 'true' %>
+      <%= notification.message.html_safe %>
+    <% end %>
+
+<% end %>
+
+<script type="text/javascript">
+$(document).on('click', '.mark-as-read', function() {
+    var a = $(this).siblings('button.close');
+    console.log(a);
+    $(a).click();
+});
+</script>

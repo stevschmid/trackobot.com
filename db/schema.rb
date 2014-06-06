@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605111232) do
+ActiveRecord::Schema.define(version: 20140606105205) do
 
   create_table "arenas", force: true do |t|
     t.integer  "hero_id"
@@ -63,6 +63,23 @@ ActiveRecord::Schema.define(version: 20140605111232) do
 
   create_table "heros", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_reads", force: true do |t|
+    t.integer  "notification_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notification_reads", ["notification_id"], name: "index_notification_reads_on_notification_id"
+  add_index "notification_reads", ["user_id"], name: "index_notification_reads_on_user_id"
+
+  create_table "notifications", force: true do |t|
+    t.string   "kind"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
