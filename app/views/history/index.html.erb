@@ -12,6 +12,12 @@
     </p>
     <% end %>
 
+    <% if @arena %>
+    <p>
+      <strong>Arena Run:</strong> <%= hero_name(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
+    </p>
+    <% end %>
+
     <table class="table table-hover table-condensed">
       <tbody>
       <% @results.each do |result| %>
