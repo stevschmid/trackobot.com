@@ -56,13 +56,17 @@ if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
 
   100.times do |x|
-    Result.create(mode: [:arena, :casual, :practice, :ranked].sample,
+    result = Result.create(mode: [:arena, :casual, :practice, :ranked].sample,
                   hero: Hero.all.sample,
                   opponent: Hero.all.sample,
                   win: [true, false].sample,
                   coin: [true, false].sample,
                   user: user,
                  )
+    result.card_histories.new(player: 'me', card: Card.find_by_ref('EX1_538'))
+    result.card_histories.new(player: 'opponent', card: Card.find_by_ref('CS2_032'))
+    result.card_histories.new(player: 'me', card: Card.find_by_ref('CS2_033'))
+    result.save
   end
 end
 

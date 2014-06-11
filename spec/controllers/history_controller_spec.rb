@@ -26,7 +26,8 @@ describe HistoryController do
     end
 
     describe 'result structure' do
-      subject { json[:history].first }
+      let(:json_result) { json[:history].first }
+      subject { json_result }
 
       its([:id]) { should eq(result.id) }
       its([:mode]) { should eq(result.mode) }
@@ -45,6 +46,39 @@ describe HistoryController do
         let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user) }
         it { should_not include(:arena_id) }
       end
+
+      describe 'card history' do
+        before do
+          # unleash
+          result.card_histories.new(player: 'me', card: Card.find_by_ref('EX1_538'))
+          # flamestrike
+          result.card_histories.new(player: 'opponent', card: Card.find_by_ref('CS2_032'))
+          # water elemental
+          result.card_histories.new(player: 'me', card: Card.find_by_ref('CS2_033'))
+          result.save
+
+          get :index, format: :json
+        end
+
+        its([:card_history]) { should have(3).items }
+
+        describe 'card_history structure' do
+          let(:json_card_history) { json_result[:card_history] }
+          subject { json_card_history.first }
+
+          its([:player]) { should eq 'me' }
+
+          describe 'card structure' do
+            subject { json_card_history.first[:card] }
+
+            its([:name]) { should eq 'Unleash the Hounds' }
+            its([:id]) { should eq 'EX1_538' }
+            its([:mana]) { should eq 3 }
+          end
+
+        end
+      end
+
     end
   end
 
