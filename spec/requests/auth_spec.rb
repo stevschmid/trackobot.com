@@ -38,6 +38,32 @@ describe 'Authentication' do
       get '/profile', u: user.username, t: token
       expect(response).to redirect_to('/users/sign_in')
     end
+  end
+
+  context 'with an API token' do
+    let(:token) { user.api_authentication_token }
+
+    it 'logs in' do
+      get '/profile/history.json', username: user.username, token: token
+      expect(response.code).to eq '200'
+    end
+
+    it 'cannot log in with a empty token' do
+      User.skip_callback(:save, :before, :ensure_api_authentication_token)
+      user.update_attributes(api_authentication_token: nil)
+      get '/profile/history.json', username: user.username, token: ''
+      expect(response.code).to eq '401'
+    end
+
+    it 'cannot log in with a invalid token' do
+      get '/profile/history.json', username: user.username, token: 'swaggerino123'
+      expect(response.code).to eq '401'
+    end
+
+    it 'cannot log in with a invalid username' do
+      get '/profile/history.json', username: user.username + 'yo', token: token
+      expect(response.code).to eq '401'
+    end
 
   end
 end
