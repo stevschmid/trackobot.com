@@ -65,12 +65,12 @@
     <h2> Class Statistics</h2>
     <% if @as_hero %>
     <p>
-      <strong>As Hero:</strong> <%= hero_name(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
+      <strong>As:</strong> <%= hero_name(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
     </p>
     <% end %>
     <% if @vs_hero %>
     <p>
-      <strong>Versus Hero:</strong> <%= hero_name(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
+      <strong>Versus:</strong> <%= hero_name(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
     </p>
     <% end %>
 
