@@ -1,4 +1,7 @@
 <%
+  csv = local_assigns.fetch :csv, false
+  json = local_assigns.fetch :json, false
+
   links = []
 
   links << link_to('API Info', profile_settings_path)
