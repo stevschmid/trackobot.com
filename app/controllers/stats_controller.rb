@@ -4,6 +4,8 @@ class StatsController < ApplicationController
   def index
 
     @stats = {
+      overall: {
+      },
       classes: {
         vs: {},
         as: {}
@@ -29,6 +31,9 @@ class StatsController < ApplicationController
       @stats[:arena][:runs][num_wins] ||= 0
       @stats[:arena][:runs][num_wins] += 1
     end
+
+    @stats[:overall][:wins] = current_user.results.wins.count
+    @stats[:overall][:losses] = current_user.results.losses.count
 
     respond_to do |format|
       format.html
