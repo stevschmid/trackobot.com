@@ -18,7 +18,7 @@ win_releases = releases.select do |rel|
 end
 latest_win_release = win_releases.max_by { |rel| Gem::Version.new(rel['tag_name']) }
 if latest_win_release
-  win_asset = latest_win_release['assets'].find { |asset| asset['name'].index('.dmg') }
+  win_asset = latest_win_release['assets'].find { |asset| asset['name'].index('.exe') }
   WIN_DOWNLOAD_URL = latest_win_release['html_url'].gsub('/tag/', '/download/') + '/' + win_asset['name']
 end
 
