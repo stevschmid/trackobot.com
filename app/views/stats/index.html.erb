@@ -40,7 +40,23 @@
     </table>
 
     <h2> Class Statistics</h2>
-    <% [:as, :vs].each do |type| %>
+    <%
+      class_tables = [:as, :vs]
+    %>
+    <% if @as_hero
+        class_tables.delete(:as) %>
+    <p>
+      <strong>As Hero:</strong> <%= hero_name(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
+    </p>
+    <% end %>
+    <% if @vs_hero
+        class_tables.delete(:vs) %>
+    <p>
+      <strong>Versus Hero:</strong> <%= hero_name(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
+    </p>
+    <% end %>
+
+    <% class_tables.each do |type| %>
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
@@ -53,7 +69,7 @@
 
         <% @stats[:classes][type].each do |hero, stats| %>
         <tr>
-          <td><%= type %> <%= hero_name(hero) %></td>
+          <td><%= type %> <%= link_to hero_name(hero), params.merge("#{type}_hero" => hero.downcase) %></td>
           <td><%= stats[:wins] %>/<%= stats[:losses] %></td>
           <td><%= win_rate(stats[:wins], stats[:losses]) %></td>
         </tr>

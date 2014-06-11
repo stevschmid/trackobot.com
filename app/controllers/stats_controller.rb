@@ -15,10 +15,22 @@ class StatsController < ApplicationController
       }
     }
 
-    Hero.all.each do |hero|
+    if params[:as_hero].present?
+      @as_hero = Hero.where('LOWER(name) = ?', params[:as_hero]).first
+    end
+    if params[:vs_hero].present?
+      @vs_hero = Hero.where('LOWER(name) = ?', params[:vs_hero]).first
+    end
+
+    [@as_hero || Hero.all].flatten.each do |hero|
       as_results = current_user.results.where(hero_id: hero.id)
-      vs_results = current_user.results.where(opponent_id: hero.id)
+      as_results = as_results.where(opponent_id: @vs_hero.id) if @vs_hero
       @stats[:classes][:as][hero.name] = { wins: as_results.wins.count, losses: as_results.losses.count }
+    end
+
+    [@vs_hero || Hero.all].flatten.each do |hero|
+      vs_results = current_user.results.where(opponent_id: hero.id)
+      vs_results = vs_results.where(hero_id: @as_hero.id) if @as_hero
       @stats[:classes][:vs][hero.name] = { wins: vs_results.wins.count, losses: vs_results.losses.count }
     end
 
