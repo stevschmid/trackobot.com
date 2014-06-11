@@ -1,6 +1,15 @@
-<div class="pull-right btn-group">
-  <%= link_to icon('bullhorn', 'Feedback'), new_feedback_path, class: 'btn btn-default btn-xs btn-primary' if show_feedback_button? %>
-  <%= link_to 'JSON', {format: :json}, class: 'btn btn-default btn-xs' if json %>
-  <%= link_to 'CSV', {format: :csv}, class: 'btn btn-default btn-xs' if csv %>
+<%
+  links = []
+
+  links << link_to('API Info', profile_settings_path)
+  links << link_to('Feedback', new_feedback_path) 
+  links << link_to('Github', 'https://github.com/stevschmid/track-o-bot')
+  links << link_to('This page in JSON', format: :json) if json
+  links << link_to('This page in CSV', format: :csv) if csv
+%>
+
+<div class="text-center row">
+  [ <%= links.join(' | ').html_safe %> ]
 </div>
+
 

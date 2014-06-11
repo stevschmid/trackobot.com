@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     resources :arena, only: [:index]
     resources :stats, only: [:index]
     resources :results, only: [:create, :show]
+
+    resource :settings, only: [:show, :update]
   end
 
   resources :users, only: [:create, :show]
