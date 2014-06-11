@@ -4,6 +4,10 @@ class ResultSerializer < ActiveModel::Serializer
 
   has_many :card_histories, key: :card_history
 
+  def card_histories
+    object.card_histories.order(:created_at)
+  end
+
   def hero
     object.hero.name
   end
