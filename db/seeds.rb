@@ -62,6 +62,7 @@ if Rails.env.development? && User.count == 0
                   win: [true, false].sample,
                   coin: [true, false].sample,
                   user: user,
+                  created_at: Date.today - rand(0..40).days
                  )
     rand(2..10).times do
       result.card_histories.new(player: rand(0..1) == 0 ? 'me' : 'opponent', card: Card.order('RANDOM()').first)

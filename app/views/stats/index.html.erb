@@ -2,7 +2,22 @@
   <%= render '/layouts/header' %>
 
   <div>
-    <h2>Overall</h2>
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>Overall</h2>
+      </div>
+      <div class="col-sm-6">
+        <h2 class="text-right">
+          <div class="btn-group btn-group-sm">
+            <%= link_to 'All-time', params.except(:time_range), class: %w[btn btn-default] + (@time_range ? [] : ['active'])  %>
+            <%= link_to 'Today', params.merge(time_range: :today), class: %w[btn btn-default] + (@time_range == :today ? ['active'] : [])  %>
+            <%= link_to 'Last 3 days', params.merge(time_range: :last_3_days), class: %w[btn btn-default] + (@time_range == :last_3_days ? ['active'] : [])  %>
+            <%= link_to 'Last 30 days', params.merge(time_range: :last_30_days), class: %w[btn btn-default] + (@time_range == :last_30_days ? ['active'] : []) %>
+          </div>
+        </h2>
+      </div>
+    </div>
+
 
     <table class="table table-hover table-condensed">
       <thead>
@@ -40,23 +55,18 @@
     </table>
 
     <h2> Class Statistics</h2>
-    <%
-      class_tables = [:as, :vs]
-    %>
-    <% if @as_hero
-        class_tables.delete(:as) %>
+    <% if @as_hero %>
     <p>
       <strong>As Hero:</strong> <%= hero_name(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
     </p>
     <% end %>
-    <% if @vs_hero
-        class_tables.delete(:vs) %>
+    <% if @vs_hero %>
     <p>
       <strong>Versus Hero:</strong> <%= hero_name(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
     </p>
     <% end %>
 
-    <% class_tables.each do |type| %>
+    <% %i[as vs].each do |type| %>
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
