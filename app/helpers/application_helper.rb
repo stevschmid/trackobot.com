@@ -12,9 +12,13 @@ module ApplicationHelper
 
   def hero_name(hero_name, span_additions = nil)
     [
-      image_tag("classes/#{hero_name.downcase}.png", width: '20px'),
+      hero_icon(hero_name),
       content_tag(:span, span_additions) { hero_name }
     ].join(' ').html_safe
+  end
+
+  def hero_icon(hero_name, additions = {})
+    image_tag("classes/#{hero_name.downcase}.png", {width: '20px'}.merge(additions))
   end
 
   def show_feedback_button?
