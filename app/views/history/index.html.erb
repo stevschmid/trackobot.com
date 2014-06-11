@@ -6,6 +6,12 @@
 
     <%= render partial: '/layouts/notifications' %>
 
+    <% if Result.modes.has_key?(params[:mode]) %>
+    <p>
+      <strong>Mode:</strong> <%= params[:mode].capitalize %> <%= link_to icon('times'), params.except(:mode) %>
+    </p>
+    <% end %>
+
     <table class="table table-hover table-condensed">
       <tbody>
       <% @results.each do |result| %>
@@ -35,7 +41,7 @@
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= local_time_ago(result.created_at) %></td>
-          <td><%= result.mode.capitalize %></td>
+          <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode) %></td>
         </tr>
       <% end %>
       </tbody>
