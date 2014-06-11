@@ -9,6 +9,7 @@
   links << link_to('Github', 'https://github.com/stevschmid/track-o-bot')
   links << link_to('This page in JSON', params.merge(format: :json)) if json
   links << link_to('This page in CSV', params.merge(format: :csv)) if csv
+  links << link_to('Logout', destroy_user_session_path, method: :delete)
 %>
 
 <div class="text-center row">
