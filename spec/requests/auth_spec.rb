@@ -51,6 +51,7 @@ describe 'Authentication' do
     it 'cannot log in with a empty token' do
       User.skip_callback(:save, :before, :ensure_api_authentication_token)
       user.update_attributes(api_authentication_token: nil)
+      User.set_callback(:save, :before, :ensure_api_authentication_token)
       get '/profile/history.json', username: user.username, token: ''
       expect(response.code).to eq '401'
     end
