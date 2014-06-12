@@ -47,10 +47,22 @@
       </thead>
       <tbody>
 
+      <% 
+        total_arenas = @stats[:arena].inject(0) do |sum, (_, count_per_hero)|
+          sum + count_per_hero.values.inject(&:+) 
+        end
+      %>
       <% @stats[:arena].each do |num_wins, count_per_hero| %>
+      <% run_count = count_per_hero.values.inject(&:+) %> 
       <tr>
         <td><%= num_wins %>-x</td>
-        <td><%= count_per_hero.values.inject(&:+) %></td>
+        <td>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<%= run_count %>" aria-valuemin="0" aria-valuemax="<%= total_arenas %>" style="width: <%= (run_count.to_f/total_arenas*100).to_i %>%;">
+              <%= run_count %>x
+            </div>
+          </div>
+        </td>
         <td>
           <%=
             count_per_hero.collect do |hero_name, count|
