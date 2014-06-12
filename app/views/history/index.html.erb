@@ -47,7 +47,7 @@
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= local_time_ago(result.created_at) %></td>
-          <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode) %></td>
+          <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %></td>
         </tr>
       <% end %>
       </tbody>
