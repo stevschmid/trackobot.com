@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611180154) do
+ActiveRecord::Schema.define(version: 20140612115318) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "arenas", force: true do |t|
     t.integer  "hero_id"
@@ -20,8 +23,8 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.integer  "user_id"
   end
 
-  add_index "arenas", ["hero_id"], name: "index_arenas_on_hero_id"
-  add_index "arenas", ["user_id"], name: "index_arenas_on_user_id"
+  add_index "arenas", ["hero_id"], name: "index_arenas_on_hero_id", using: :btree
+  add_index "arenas", ["user_id"], name: "index_arenas_on_user_id", using: :btree
 
   create_table "card_histories", force: true do |t|
     t.integer  "card_id"
@@ -31,8 +34,8 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.datetime "updated_at"
   end
 
-  add_index "card_histories", ["card_id"], name: "index_card_histories_on_card_id"
-  add_index "card_histories", ["result_id"], name: "index_card_histories_on_result_id"
+  add_index "card_histories", ["card_id"], name: "index_card_histories_on_card_id", using: :btree
+  add_index "card_histories", ["result_id"], name: "index_card_histories_on_result_id", using: :btree
 
   create_table "cards", force: true do |t|
     t.string   "ref"
@@ -50,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.datetime "updated_at"
   end
 
-  add_index "cards", ["ref"], name: "index_cards_on_ref"
+  add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
 
   create_table "feedbacks", force: true do |t|
     t.integer  "user_id"
@@ -59,7 +62,7 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.datetime "updated_at"
   end
 
-  add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id"
+  add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
 
   create_table "heros", force: true do |t|
     t.string   "name"
@@ -74,14 +77,15 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.datetime "updated_at"
   end
 
-  add_index "notification_reads", ["notification_id"], name: "index_notification_reads_on_notification_id"
-  add_index "notification_reads", ["user_id"], name: "index_notification_reads_on_user_id"
+  add_index "notification_reads", ["notification_id"], name: "index_notification_reads_on_notification_id", using: :btree
+  add_index "notification_reads", ["user_id"], name: "index_notification_reads_on_user_id", using: :btree
 
   create_table "notifications", force: true do |t|
     t.string   "kind"
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "hidden",     default: false
   end
 
   create_table "results", force: true do |t|
@@ -96,11 +100,11 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.integer  "arena_id"
   end
 
-  add_index "results", ["arena_id"], name: "index_results_on_arena_id"
-  add_index "results", ["hero_id"], name: "index_results_on_hero_id"
-  add_index "results", ["opponent_id"], name: "index_results_on_opponent_id"
-  add_index "results", ["user_id"], name: "index_results_on_user_id"
-  add_index "results", ["win"], name: "index_results_on_win"
+  add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
+  add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
+  add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
+  add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
+  add_index "results", ["win"], name: "index_results_on_win", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                         default: "", null: false
@@ -121,6 +125,6 @@ ActiveRecord::Schema.define(version: 20140611180154) do
     t.string   "api_authentication_token"
   end
 
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

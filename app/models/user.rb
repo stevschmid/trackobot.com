@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   def unread_notifications
     Notification.where.not(id: read_notifications)
+                .where.not(hidden: true)
   end
 
   # One Time Auth
