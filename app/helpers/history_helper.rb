@@ -15,14 +15,14 @@ module HistoryHelper
   def timeline(result)
     chronological_card_history = result.card_histories.order(:created_at)
 
-    history_by_player = {'me' => [], 'opponent' => []}
+    history = []
 
     current_plays = []
     current_player = nil
 
     chronological_card_history.each do |card_history|
       if current_player && current_player != card_history.player
-        history_by_player[current_player] << current_plays
+        history << current_plays
         current_plays = []
       end
       current_player = card_history.player
@@ -30,20 +30,16 @@ module HistoryHelper
     end
 
     if current_plays.any?
-      history_by_player[current_player] << current_plays
+      history << current_plays
     end
 
     li = []
-    history_by_player.each do |player, grouped_card_histories|
-      grouped_card_histories.each do |card_histories|
-        history = []
-
-        card_histories.each do |card_history|
-          history << content_tag(:div, "<div class='mana'>#{card_history.card.mana || 0}</div>&nbsp;".html_safe + card_history.card.name, class: 'card')
-        end
-
-        li << content_tag(:li, history.join.html_safe, class: player)
+    history.each do |grouped_card_histories|
+      cards = []
+      grouped_card_histories.each do |card_history|
+        cards << content_tag(:div, "<div class='mana'>#{card_history.card.mana || 0}</div>&nbsp;".html_safe + card_history.card.name, class: 'card')
       end
+      li << content_tag(:li, cards.join.html_safe, class: grouped_card_histories.first.player)
     end
 
     content_tag(:ol, li.join.html_safe, class: 'timeline')
