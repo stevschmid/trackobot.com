@@ -18,12 +18,12 @@
     </p>
     <% end %>
 
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-condensed history">
       <tbody>
       <% @results.each do |result| %>
         <%
           additions_for_cards_played = {
-                                        class: 'has-popover',
+                                        class: 'has-popover dotted-baseline',
                                         data: {
                                           container: 'body',
                                           title: 'Cards played',
@@ -33,19 +33,37 @@
                                         }
                                       }
 
-          if my_cards_played = table_of_cards_played(result.card_histories.me)
-            my_additions = additions_for_cards_played.deep_merge(data: {content: my_cards_played})
+          my_additions = {}
+          opponent_additions = {}
+
+          if cards_played = table_of_cards_played(result.card_histories)
+            my_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:me]}) if cards_played[:me]
+            opponent_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:opponent]}) if cards_played[:opponent]
           end
 
-          if opponent_cards_played = table_of_cards_played(result.card_histories.opponent)
-            opponent_additions = additions_for_cards_played.deep_merge(data: {content: opponent_cards_played})
-          end
         %>
         <tr>
           <td><%= hero_name(result.hero.name, my_additions) %></td>
           <td> vs <%= hero_name(result.opponent.name, opponent_additions) %>
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
+          <td>
+            <%
+              if result.card_histories.any?
+                header = timeline_header_of_result(result)
+                additions_for_timeline = {
+                  class: 'btn btn-default btn-xs timeline-button',
+                  data: {
+                    container: 'body',
+                    title: header.gsub('"', "'"),
+                    html: true
+                  }
+                }
+                timeline = timeline_of_result(result).gsub("'", "'")
+              end
+            %>
+            <%= button_tag image_tag('crossed_swords_14.png'), additions_for_timeline.deep_merge(data: {content: timeline}) if timeline %>
+          </td>
           <td><%= local_time_ago(result.created_at) %></td>
           <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %></td>
         </tr>

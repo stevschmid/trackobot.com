@@ -7,4 +7,12 @@ class CardHistory < ActiveRecord::Base
 
   scope :me, ->{ where(player: 'me') }
   scope :opponent, ->{ where(player: 'opponent') }
+
+  def me?
+    player == 'me'
+  end
+
+  def opponent?
+    player == 'opponent'
+  end
 end

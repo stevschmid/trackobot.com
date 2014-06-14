@@ -36,6 +36,9 @@ body {
 
 .has-popover {
   cursor: pointer;
+}
+
+.dotted-baseline {
   border-bottom: 1px dotted;
 }
 
@@ -50,4 +53,10 @@ body {
 
 time {
   color: #aaa;
+}
+
+.popover-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 500px;
 }
