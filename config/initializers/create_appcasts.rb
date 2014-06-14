@@ -1,8 +1,9 @@
 require 'open-uri'
 
 releases = JSON.load(open('https://api.github.com/repos/stevschmid/track-o-bot/releases'))
-# sort version ascending
-releases.sort_by! { |rel| Gem::Version.new(rel['tag_name']) }
+# sort version DESCENDING cuz WinSparkle cannot handle the truth and takes the top item as the newest one...
+# once in my lifetime I'd like to work with experts, ONCE
+releases.sort_by! { |rel| Gem::Version.new(rel['tag_name']) }.reverse!
 
 mac_releases = releases.select do |rel|
   rel['assets'].any? { |a| a['name'].index('.dmg') }
