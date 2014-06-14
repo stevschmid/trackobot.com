@@ -69,15 +69,13 @@ $border-color: #dddddd;
   left:100%;
   top:50%;
 }
-.timeline li:nth-of-type(odd),
-.timeline li:nth-of-type(even){
+.timeline li {
   margin:-6px 0 0 0;
 }
-.timeline li:nth-of-type(even){
+.timeline li.opponent {
   float:right;
-  text-align:left;
 }
-.timeline li:nth-of-type(even):after{
+.timeline li.opponent:after{
   left:auto;
   right:100%;
 }
