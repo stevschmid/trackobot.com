@@ -45,7 +45,7 @@ end
         rss.item do |item|
           item.title rel['name']
           item.description do |description|
-            html = markdown.render(rel['body'])
+            html = '<style type="text/css">* { font-family: Arial, Helvetica, sans-serif; }</style>' + markdown.render(rel['body'])
             description.cdata!(html)
           end
           item.pubDate Time.parse(rel['published_at']).strftime('%a, %d %b %Y %H:%M:%S %z')
