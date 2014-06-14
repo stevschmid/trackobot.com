@@ -8,6 +8,9 @@ class HistoryController < ApplicationController
       @unpaged_results = @unpaged_results.where(arena_id: @arena.id)
     end
     @results = @unpaged_results.page(params[:page])
+    @results.includes!(:card_histories => :card)
+            .includes!(:hero)
+            .includes!(:opponent)
 
     respond_to do |format|
       format.html

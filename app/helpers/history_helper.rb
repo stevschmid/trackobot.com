@@ -1,15 +1,30 @@
 module HistoryHelper
 
-  def table_of_cards_played(card_history)
-    return nil if card_history.empty?
+  def table_of_cards_played(card_histories)
+    return nil if card_histories.empty?
 
-    table = "<table class='card_history'>" + card_history.group(:card).count.sort_by do |card, count|
-      card.mana || -1
-    end.collect do |card, count|
-      "<tr><td><div class='mana'>#{card.mana || 0}</div>&nbsp;#{card.name} #{"(#{count})" if count > 1}</td></tr>"
-    end.join + "</table>"
+    cards = {me: [], opponent: []}
 
-    table.html_safe
+    # use ruby approach because we use eager loaded objects
+    card_histories.each do |card_history|
+      if card_history.me?
+        cards[:me] << card_history.card
+      else
+        cards[:opponent] << card_history.card
+      end
+    end
+
+    result = {}
+
+    %i[me opponent].each do |x|
+      cards_by_mana = cards[x].group_by { |card| card }.sort_by { |card, _| card.mana || -1 }
+      next if cards_by_mana.empty?
+      result[x] = "<table class='card_history'>" + cards_by_mana.collect do |card, array|
+        "<tr><td><div class='mana'>#{card.mana || 0}</div>&nbsp;#{card.name} #{"(#{array.length})" if array.length > 1}</td></tr>"
+      end.join + "</table>"
+    end
+
+    result
   end
 
   def timeline_header_of_result(result)
@@ -26,7 +41,7 @@ module HistoryHelper
   end
 
   def timeline_of_result(result)
-    chronological_card_history = result.card_histories.order(:created_at)
+    chronological_card_history = result.card_histories
 
     card_groups = []
 

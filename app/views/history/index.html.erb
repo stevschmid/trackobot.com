@@ -33,13 +33,14 @@
                                         }
                                       }
 
-          if my_cards_played = table_of_cards_played(result.card_histories.me)
-            my_additions = additions_for_cards_played.deep_merge(data: {content: my_cards_played})
+          my_additions = {}
+          opponent_additions = {}
+
+          if cards_played = table_of_cards_played(result.card_histories)
+            my_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:me]}) if cards_played[:me]
+            opponent_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:opponent]}) if cards_played[:opponent]
           end
 
-          if opponent_cards_played = table_of_cards_played(result.card_histories.opponent)
-            opponent_additions = additions_for_cards_played.deep_merge(data: {content: opponent_cards_played})
-          end
         %>
         <tr>
           <td><%= hero_name(result.hero.name, my_additions) %></td>

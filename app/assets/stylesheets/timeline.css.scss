@@ -13,7 +13,7 @@ $border-color: #dddddd;
 .timeline{
   background: asset-url('dot.gif') top center repeat-y;
   width: 450px;
-  padding: 25px 0;
+  padding: 25px 10px;
   list-style: none;
   position: relative;
   overflow: hidden;
@@ -66,10 +66,10 @@ $border-color: #dddddd;
     box-shadow:0 1px #fff inset;
   }
 
-  li.me:before, 
+  li.me:before,
   li.opponent:before {
     content: " ";
-    width: 46px;
+    width: 36px;
     height: 1px;
     background: $border-color;
     position: absolute;
@@ -77,7 +77,7 @@ $border-color: #dddddd;
     top: 50%;
   }
 
-  li.me:after, 
+  li.me:after,
   li.opponent:after {
     content: " ";
     position: absolute;
@@ -91,30 +91,24 @@ $border-color: #dddddd;
     border-radius: 3px;
   }
 
+  li.opponent:before {
+    left: auto;
+    right: 100%;
+  }
+
   li.me:after {
     left: 100%;
-    margin-left: 44px;
+    margin-left: 34px;
   }
 
   li.opponent:after {
     right: 100%;
-    margin-right: 43px;
+    margin-right: 33px;
   }
 
   li.opponent {
     float: right;
   }
-
-  li.opponent:before {
-    content:" ";
-    width: 46px;
-    height: 1px;
-    background: $border-color;
-    position: absolute;
-    left: auto;
-    right: 100%;
-  }
-
   li:hover {
     border-color: #428bca;
     cursor: pointer;
@@ -126,3 +120,4 @@ $border-color: #dddddd;
     background-color: #428bca;
   }
 }
+
