@@ -12,7 +12,7 @@ module HistoryHelper
     table.html_safe
   end
 
-  def timeline_header(result)
+  def timeline_header_of_result(result)
     content_tag(:div, class: 'timeline-header') do
       if result.coin
         hero_appendix = ' <small>2nd</small>'.html_safe
@@ -25,36 +25,36 @@ module HistoryHelper
     end
   end
 
-  def timeline(result)
+  def timeline_of_result(result)
     chronological_card_history = result.card_histories.order(:created_at)
 
-    history = []
+    card_groups = []
 
-    current_plays = []
+    current_card_group = []
     current_player = nil
 
     chronological_card_history.each do |card_history|
       if current_player && current_player != card_history.player
-        history << current_plays
-        current_plays = []
+        card_groups << current_card_group
+        current_card_group = []
       end
       current_player = card_history.player
-      current_plays << card_history
+      current_card_group << card_history
     end
 
-    if current_plays.any?
-      history << current_plays
+    if current_card_group.any?
+      card_groups << current_card_group
     end
 
-    li = []
-    history.each do |grouped_card_histories|
+    list = []
+    card_groups.each do |card_group|
       cards = []
-      grouped_card_histories.each do |card_history|
+      card_group.each do |card_history|
         cards << content_tag(:div, "<div class='mana'>#{card_history.card.mana || 0}</div>&nbsp;".html_safe + card_history.card.name, class: 'card')
       end
-      li << content_tag(:li, cards.join.html_safe, class: grouped_card_histories.first.player)
+      list << content_tag(:li, cards.join.html_safe, class: card_group.first.player)
     end
 
-    content_tag(:ol, li.join.html_safe, class: 'timeline')
+    content_tag(:ol, list.join.html_safe, class: 'timeline')
   end
 end
