@@ -6,7 +6,7 @@ $border-color: #dddddd;
 .timeline{
   background: asset-url('dot.gif') top center repeat-y;
   width:450px;
-  padding:50px 0;
+  padding:25px 0;
   /* margin:0 auto 50px auto; */
   overflow:hidden;
   list-style:none;
@@ -50,7 +50,6 @@ $border-color: #dddddd;
   padding:2px;
   font-size: 8pt;
   border:1px solid $border-color;
-  margin:0 0 10px 0;
   
   -moz-border-radius:2px;
   -webkit-border-radius:2px;
@@ -59,8 +58,7 @@ $border-color: #dddddd;
   -webkit-box-shadow:0 1px #fff inset;
   box-shadow:0 1px #fff inset;
 }
-.timeline li:before,
-.timeline li:after{
+.timeline li.me:before, .timeline li.opponent:before {
   content:" ";
   width:46px;
   height:1px;
@@ -69,13 +67,42 @@ $border-color: #dddddd;
   left:100%;
   top:50%;
 }
-.timeline li {
-  margin:-6px 0 0 0;
+.timeline li.me:after, li.opponent:after {
+  content: " ";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: $border-color;
+  top: 50%;
+  margin-top: -2px;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
 }
+
+.timeline li.me:after {
+  left: 100%;
+  margin-left: 44px;
+}
+.timeline li.opponent:after {
+  right: 100%;
+  margin-right: 43px;
+}
+
+.timeline li.opponent:before {
+  content:" ";
+  width:46px;
+  height:1px;
+  background: $border-color;
+  position:absolute;
+  left:100%;
+  top:50%;
+}
+
 .timeline li.opponent {
   float:right;
 }
-.timeline li.opponent:after{
+.timeline li.opponent:before{
   left:auto;
   right:100%;
 }
@@ -86,4 +113,14 @@ $border-color: #dddddd;
 }
 .timeline li:hover:before, .timeline li:hover:after {
   background-color: #428bca;
+}
+
+.timeline-header {
+  height: 20px;
+  div {
+    text-align: center;
+    width: 50%;
+    float: left;
+    font-weight: bold;
+  }  
 }

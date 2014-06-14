@@ -12,6 +12,19 @@ module HistoryHelper
     table.html_safe
   end
 
+  def timeline_header(result)
+    content_tag(:div, class: 'timeline-header') do
+      if result.coin
+        hero_appendix = ' <small>2nd</small>'.html_safe
+        opponent_appendix = ' <small>1st</small>'.html_safe
+      else
+        hero_appendix = ' <small>1st</small>'.html_safe
+        opponent_appendix = ' <small>2nd</small>'.html_safe
+      end
+      [content_tag(:div, hero_name(result.hero.name) + hero_appendix), content_tag(:div, hero_name(result.opponent.name) + opponent_appendix)].join.html_safe
+    end
+  end
+
   def timeline(result)
     chronological_card_history = result.card_histories.order(:created_at)
 

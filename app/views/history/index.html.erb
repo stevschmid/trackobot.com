@@ -47,15 +47,17 @@
           </td>
           <td>
             <%
+                header = timeline_header(result)
                 additions_for_timeline = {
                                             class: 'has-popover btn btn-default btn-xs timeline-button',
                                             data: {
                                               container: 'body',
-                                              title: 'Timeline',
+                                              title: header.gsub('"', "'"),
                                               placement: 'bottom',
                                               html: true
                                             }
                                           }
+
             %>
             <%= button_tag icon('history'), additions_for_timeline.deep_merge(data: {content: timeline(result).gsub('"', "'")}) %>
           </td>
