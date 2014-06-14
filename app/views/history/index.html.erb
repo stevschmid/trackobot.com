@@ -18,12 +18,12 @@
     </p>
     <% end %>
 
-    <table class="table table-hover table-condensed">
+    <table class="table table-hover table-condensed history">
       <tbody>
       <% @results.each do |result| %>
         <%
           additions_for_cards_played = {
-                                        class: 'has-popover',
+                                        class: 'has-popover dotted-baseline',
                                         data: {
                                           container: 'body',
                                           title: 'Cards played',
@@ -44,6 +44,20 @@
         <tr>
           <td><%= hero_name(result.hero.name, my_additions) %></td>
           <td> vs <%= hero_name(result.opponent.name, opponent_additions) %>
+          </td>
+          <td>
+            <%
+                additions_for_timeline = {
+                                            class: 'has-popover btn btn-default btn-xs timeline-button',
+                                            data: {
+                                              container: 'body',
+                                              title: 'Timeline',
+                                              placement: 'bottom',
+                                              html: true
+                                            }
+                                          }
+            %>
+            <%= button_tag icon('history'), additions_for_timeline.deep_merge(data: {content: timeline(result).gsub('"', "'")}) %>
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td><%= local_time_ago(result.created_at) %></td>

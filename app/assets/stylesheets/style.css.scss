@@ -36,6 +36,9 @@ body {
 
 .has-popover {
   cursor: pointer;
+}
+
+.dotted-baseline {
   border-bottom: 1px dotted;
 }
 
@@ -50,4 +53,16 @@ body {
 
 time {
   color: #aaa;
+}
+
+.history {
+  .timeline-button {
+    visibility: hidden;
+  }
+
+  tr:hover {
+    .timeline-button {
+      visibility: visible;
+    }
+  }
 }
