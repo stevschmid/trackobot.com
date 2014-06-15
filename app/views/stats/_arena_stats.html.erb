@@ -1,0 +1,27 @@
+<h2>Arena Statistics</h2>
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Win - Loss</th>
+      <th># achieved</th>
+      <th>Class</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <% @stats[:arena].each do |num_wins, count_per_hero| %>
+  <tr>
+    <td><%= num_wins %>-x</td>
+    <td><%= count_per_hero.values.inject(&:+) %></td>
+    <td>
+      <%=
+        count_per_hero.collect do |hero_name, count|
+          hero_icon(hero_name, {data: {toggle: 'tooltip', placement: 'bottom'}, title: "#{count}x with #{hero_name}", class: 'has-tooltip'})
+        end.join.html_safe
+      %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+

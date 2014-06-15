@@ -15,6 +15,10 @@ class StatsController < ApplicationController
       }
     }
 
+    if params[:mode].present? && Result.modes.has_key?(params[:mode].to_sym)
+      @mode = params[:mode].to_sym
+    end
+
     if params[:time_range].present? && TIME_RANGE_FILTERS.include?(params[:time_range])
       @time_range = params[:time_range].to_sym
     end
@@ -28,6 +32,7 @@ class StatsController < ApplicationController
 
     user_results = current_user.results
     user_results = user_results.where('created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
+    user_results = user_results.where(mode: Result.modes[@mode]) if @mode
 
     user_arenas = current_user.arenas
     user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
