@@ -42,7 +42,7 @@ class StatsController < ApplicationController
         as_results = user_results.where(hero_id: hero.id)
         as_results = as_results.where(opponent_id: @vs_hero.id) if @vs_hero
         [hero.name, {wins: as_results.wins.count, losses: as_results.losses.count}]
-      end.sort_by { |_, hero_stats| win_rate(hero_stats[:wins], hero_stats[:losses]) }
+      end.sort_by { |_, hero_stats| win_rate(hero_stats[:wins], hero_stats[:losses]) }.reverse
     ]
 
     @stats[:classes][:vs] = Hash[
@@ -50,7 +50,7 @@ class StatsController < ApplicationController
         vs_results = user_results.where(opponent_id: hero.id)
         vs_results = vs_results.where(hero_id: @as_hero.id) if @as_hero
         [hero.name, {wins: vs_results.wins.count, losses: vs_results.losses.count}]
-      end.sort_by { |_, hero_stats| win_rate(hero_stats[:wins], hero_stats[:losses]) }
+      end.sort_by { |_, hero_stats| win_rate(hero_stats[:wins], hero_stats[:losses]) }.reverse
     ]
 
     num_wins_per_arena = user_arenas
@@ -69,7 +69,7 @@ class StatsController < ApplicationController
       # map hero_id to name
       [
         wins,
-        Hash[count_per_hero.collect { |(hero_id, count)| [Hero.find(hero_id).name, count] }.sort_by { |_, count| count } ]
+        Hash[count_per_hero.collect { |(hero_id, count)| [Hero.find(hero_id).name, count] }.sort_by { |_, count| count }.reverse ]
       ]
     end.sort]
 
