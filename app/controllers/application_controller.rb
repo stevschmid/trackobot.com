@@ -27,4 +27,8 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def after_sign_in_path_for(resource)
+    profile_history_index_path
+  end
 end
