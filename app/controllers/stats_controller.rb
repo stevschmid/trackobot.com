@@ -1,7 +1,7 @@
 class StatsController < ApplicationController
   respond_to :json, :html
 
-  TIME_RANGE_FILTERS = %w[today last_3_days last_30_days]
+  TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month]
 
   def index
     @stats = {
@@ -88,12 +88,12 @@ class StatsController < ApplicationController
 
   def min_date_for_time_range(time_range)
     case time_range
-    when :today
-      Date.today
+    when :last_24_hours
+      24.hours.ago
     when :last_3_days
       3.days.ago
-    when :last_30_days
-      30.days.ago
+    when :current_month
+      Date.today.beginning_of_month
     end
   end
 
