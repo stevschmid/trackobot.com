@@ -3,7 +3,7 @@
 <table class="table table-hover table-condensed">
   <thead>
     <tr>
-      <th>Win - Loss</th>
+      <th>Wins</th>
       <th># achieved</th>
       <th>Class</th>
     </tr>
@@ -12,7 +12,7 @@
 
   <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
-    <td><%= num_wins %>-x</td>
+    <td><%= num_wins %></td>
     <td><%= count_per_hero.values.inject(&:+) %></td>
     <td>
       <%=
