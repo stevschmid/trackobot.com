@@ -15,8 +15,8 @@
     <thead>
       <tr>
         <th>Class</th>
-        <th>Win/Loss</th>
-        <th>Winrate</th>
+        <th class="text-center">Win/Loss</th>
+        <th class="text-center">Winrate</th>
       </tr>
     </thead>
     <tbody>
@@ -24,8 +24,8 @@
     <% @stats[:classes][type].each do |hero, stats| %>
     <tr>
       <td><%= type %> <%= link_to hero_name(hero), params.merge("#{type}_hero" => hero.downcase) %></td>
-      <td><%= stats[:wins] %>/<%= stats[:losses] %></td>
-      <td><%= win_rate(stats[:wins], stats[:losses]) %></td>
+      <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
+      <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>
     </tr>
     <% end %>
   </table>

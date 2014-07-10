@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th>Wins</th>
-      <th># achieved</th>
-      <th>Class</th>
+      <th class="text-center"># achieved</th>
+      <th class="text-center">Class</th>
     </tr>
   </thead>
   <tbody>
@@ -13,8 +13,11 @@
   <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
     <td><%= num_wins %></td>
-    <td><%= count_per_hero.values.inject(&:+) %></td>
-    <td>
+    <td class="text-center"><%= 
+      times_achieved = count_per_hero.values.inject(&:+) 
+      "#{times_achieved}x"
+    %></td>
+    <td class="text-center">
       <%=
         count_per_hero.collect do |hero_name, count|
           hero_icon(hero_name, {data: {toggle: 'tooltip', placement: 'bottom'}, title: "#{count}x with #{hero_name}", class: 'has-tooltip'})

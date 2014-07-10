@@ -19,13 +19,13 @@
       <thead>
         <tr>
           <th>Win - Loss</th>
-          <th>Winrate</th>
+          <th class="text-center">Winrate</th>
         </tr>
       </thead>
       <tbody>
       <tr>
         <td><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
-        <td><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+        <td class="text-center"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
       </tr>
     </table>
 
