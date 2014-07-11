@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Devise::Controllers::Rememberable
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
@@ -14,7 +16,7 @@ class ApplicationController < ActionController::Base
     user = User.find_by_username(params[:u])
     if user && user.check_and_redeem_one_time_authentication_token(token)
       sign_in(user)
-      current_user.remember_me!
+      remember_me(current_user)
       redirect_to url_for(params.except(:u, :t))
     end
   end
