@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     resources :stats, only: [:index]
     resources :results, only: [:create, :show]
 
-    resource :settings, only: [:show, :update]
+    namespace :settings do
+      resource :api, only: [:show, :update]
+    end
   end
 
   resources :users, only: [:create, :show]

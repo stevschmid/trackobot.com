@@ -1,4 +1,4 @@
-class SettingsController < ApplicationController
+class Settings::ApisController < ApplicationController
   def show
   end
 
@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
     if params[:regenerate_api_token].present?
       current_user.regenerate_api_authentication_token
       current_user.save!
-      redirect_to profile_settings_path, flash: {success: 'Your API token was regenerated successfully.'}
+      redirect_to profile_settings_api_path, flash: {success: 'Your API token was regenerated successfully.'}
     end
   end
 end

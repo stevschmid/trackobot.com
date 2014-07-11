@@ -4,32 +4,6 @@
 
   <div>
     <h2>Settings</h2>
-
-    <h3>Decks</h3>
-
-    <%= form_tag profile_settings_path, role: 'form' do %>
-    <table class="table table-hover table-condensed">
-      <tr>
-        <th>Class</th>
-        <th>Name</th>
-        <th>Key Cards</th>
-      </tr>
-      <tr>
-        <td>
-          <%= select_tag :hero_id, options_from_collection_for_select(Hero.all, :id, :name), class: 'form-control chosen-select' %>
-        </td>
-        <td>
-          <%= text_field_tag :name, '', class: 'form-control' %>
-        </td>
-        <td>
-          <%= select_tag(:deck_cards, options_from_collection_for_select(Card.playable.order(:name), :id, :name),
-                         class: 'chosen-select', multiple: 'multiple',
-                         data: {placeholder: 'Enter a card name'}) %>
-        </td>
-      </tr>
-    </table>
-    <% end %>
-
     <h3>API</h3>
 
     <div class="alert alert-info">
@@ -43,7 +17,7 @@
       </p>
     </div>
 
-    <%= form_tag profile_settings_path, method: :put, class: 'form-horizontal', role: 'form' do %>
+    <%= form_tag profile_settings_api_path, method: :put, class: 'form-horizontal', role: 'form' do %>
       <div class="form-group">
         <label class="col-sm-4 control-label"><code>username</code></label>
         <div class="col-sm-8">
