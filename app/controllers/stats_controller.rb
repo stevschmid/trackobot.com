@@ -35,10 +35,10 @@ class StatsController < ApplicationController
     end
 
     if params[:as_deck].present?
-      @as_deck = current_user.decks.where('LOWER(name) = ?', params[:as_deck]).first
+      @as_deck = current_user.decks.find_by_id(params[:as_deck])
     end
     if params[:vs_deck].present?
-      @vs_deck = current_user.decks.where('LOWER(name) = ?', params[:vs_deck]).first
+      @vs_deck = current_user.decks.find_by_id(params[:vs_deck])
     end
 
     user_results = current_user.results

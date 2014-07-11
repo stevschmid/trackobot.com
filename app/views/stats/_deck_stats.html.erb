@@ -35,7 +35,7 @@
 
       <% @stats[:decks][type].each do |deck, stats| %>
       <tr>
-        <td><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.name.downcase) %></td>
+        <td><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
         <td class="text-center"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
         <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
         <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>
