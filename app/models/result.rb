@@ -51,7 +51,7 @@ class Result < ActiveRecord::Base
   end
 
   def connect_to_decks
-    user.decks.each do |deck|
+    user.decks.where(hero_id: [hero.id, opponent.id]).each do |deck|
       deck_card_ids = deck.cards.pluck(:id)
 
       if deck.hero == hero
