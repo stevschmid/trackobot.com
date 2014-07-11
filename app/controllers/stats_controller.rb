@@ -48,11 +48,11 @@ class StatsController < ApplicationController
     user_arenas = current_user.arenas
     user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
 
-    @stats[:classes][:as] = group_results_by(user_results, Hero, @as_hero, :hero_id, :opponent_id, @vs_hero.try(:id))
-    @stats[:classes][:vs] = group_results_by(user_results, Hero, @vs_hero, :opponent_id, :hero_id, @as_hero.try(:id))
+    @stats[:classes][:as] = group_results_by(user_results, Hero.all, @as_hero, :hero_id, :opponent_id, @vs_hero.try(:id))
+    @stats[:classes][:vs] = group_results_by(user_results, Hero.all, @vs_hero, :opponent_id, :hero_id, @as_hero.try(:id))
 
-    @stats[:decks][:as] = group_results_by(user_results, Deck, @as_deck, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
-    @stats[:decks][:vs] = group_results_by(user_results, Deck, @vs_deck, :opponent_deck_id, :deck_id, @as_deck.try(:id))
+    @stats[:decks][:as] = group_results_by(user_results, current_user.decks, @as_deck, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
+    @stats[:decks][:vs] = group_results_by(user_results, current_user.decks, @vs_deck, :opponent_deck_id, :deck_id, @as_deck.try(:id))
 
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
@@ -104,9 +104,9 @@ class StatsController < ApplicationController
     return wins.to_f / total
   end
 
-  def group_results_by(results, group_class, group_element, group_id_key, filter_key, filter_value = nil)
+  def group_results_by(results, all_group_elements, group_element, group_id_key, filter_key, filter_value = nil)
     Hash[
-      [ group_element || group_class.all ].flatten.collect do |group|
+      [ group_element || all_group_elements ].flatten.collect do |group|
         group_results = results.where(group_id_key => group.id)
         if filter_value
           group_results = group_results.where(filter_key => filter_value)

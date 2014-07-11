@@ -10,31 +10,37 @@
 </p>
 <% end %>
 
-<% %i[as vs].each do |type| %>
-  <table class="table table-hover table-condensed">
-    <thead>
+<% if current_user.decks.empty? %>
+<p class="alert alert-info">
+  No decks defined. Define decks in the <%= link_to 'settings', profile_settings_decks_path %>.
+</p>
+<% else %>
+  <% %i[as vs].each do |type| %>
+    <table class="table table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Deck</th>
+          <th class="text-center">Share</th>
+          <th class="text-center">Win/Loss</th>
+          <th class="text-center">Winrate</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      <%
+        total = @stats[:decks][type].inject(0) do |sum, (deck, stats)|
+          sum + stats[:wins] + stats[:losses]
+        end
+      %>
+
+      <% @stats[:decks][type].each do |deck, stats| %>
       <tr>
-        <th>Deck</th>
-        <th class="text-center">Share</th>
-        <th class="text-center">Win/Loss</th>
-        <th class="text-center">Winrate</th>
+        <td><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.name.downcase) %></td>
+        <td class="text-center"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
+        <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
+        <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>
       </tr>
-    </thead>
-    <tbody>
-
-    <%
-      total = @stats[:decks][type].inject(0) do |sum, (deck, stats)|
-        sum + stats[:wins] + stats[:losses]
-      end
-    %>
-
-    <% @stats[:decks][type].each do |deck, stats| %>
-    <tr>
-      <td><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.name.downcase) %></td>
-      <td class="text-center"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
-      <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-      <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>
-    </tr>
-    <% end %>
-  </table>
+      <% end %>
+    </table>
+  <% end %>
 <% end %>
