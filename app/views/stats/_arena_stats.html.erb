@@ -4,12 +4,18 @@
   <thead>
     <tr>
       <th>Wins</th>
-      <th class="text-center"># achieved</th>
+      <th class="text-center">Achieved</th>
+      <th class="text-center">Share</th>
       <th class="text-center">Class</th>
     </tr>
   </thead>
   <tbody>
 
+  <%
+    total_arena_runs = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
+      sum + count_per_hero.values.inject(&:+)
+    end
+  %>
   <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
     <td><%= num_wins %></td>
@@ -17,6 +23,9 @@
       times_achieved = count_per_hero.values.inject(&:+) 
       "#{times_achieved}x"
     %></td>
+    <td class="text-center">
+      <%= percentage( times_achieved, total_arena_runs ) %>
+    </td>
     <td class="text-center">
       <%=
         count_per_hero.collect do |hero_name, count|
