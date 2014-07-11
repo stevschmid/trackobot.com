@@ -21,6 +21,7 @@ class Result < ActiveRecord::Base
   scope :losses, ->{ where(win: false) }
 
   before_create :connect_to_arena, if: :arena?
+  before_create :connect_to_decks, unless: :arena?
 
   def hero=(hero)
     if hero.kind_of?(String)
@@ -47,6 +48,22 @@ class Result < ActiveRecord::Base
     end
 
     self.arena ||= user.arenas.create(hero: hero)
+  end
+
+  def connect_to_decks
+    user.decks.each do |deck|
+      deck_card_ids = deck.cards.pluck(:id)
+
+      if deck.hero == hero
+        hero_card_ids = card_histories.select(&:me?).collect(&:card_id)
+        self.deck ||= deck if (hero_card_ids & deck_card_ids).any?
+      end
+
+      if deck.hero == opponent
+        opponent_card_ids = card_histories.select(&:opponent?).collect(&:card_id)
+        self.opponent_deck ||= deck if (opponent_card_ids & deck_card_ids).any?
+      end
+    end
   end
 
   def result

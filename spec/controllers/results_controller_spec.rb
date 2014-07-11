@@ -82,4 +82,34 @@ describe ResultsController do
     end
   end
 
+  describe 'deck support' do
+    let!(:miracle) { user.decks.create!(name: 'Miracle', hero: Hero.find_by_name('Rogue'), card_ids: Card.where(name: 'Gadgetzan Auctioneer').pluck(:id)) }
+    let!(:handlock) { user.decks.create!(name: 'Handlock', hero: Hero.find_by_name('Warlock'), card_ids: Card.where(name: 'Mountain Giant').pluck(:id)) }
+
+    let(:result_params) do
+      {
+        hero: 'Rogue',
+        opponent: 'Warlock',
+        mode: 'ranked',
+        coin: true,
+        win: true
+      }
+    end
+
+    let(:card_history) do
+      [
+        {card_id: 'EX1_105', player: 'opponent'}, # opponent played handlock
+        {card_id: 'EX1_095', player: 'me'} # I played miracle
+      ]
+    end
+
+    it 'assigns decks on upload' do
+      post :create, result: result_params.merge(card_history: card_history), format: :json
+      result = user.results.last
+
+      expect(result.deck).to eq miracle
+      expect(result.opponent_deck).to eq handlock
+    end
+  end
+
 end
