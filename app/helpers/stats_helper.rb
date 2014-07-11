@@ -14,4 +14,16 @@ module StatsHelper
       ].join(' ').html_safe
     end
   end
+
+  def percentage(x, total)
+    return '-' if total == 0
+    ratio = x.to_f / total
+
+    content_tag :div do
+      [
+        (ratio * 100.0).round(1).to_s + '%',
+        content_tag(:span, "#{x}/#{total}", class: 'pie')
+      ].join(' ').html_safe
+    end
+  end
 end
