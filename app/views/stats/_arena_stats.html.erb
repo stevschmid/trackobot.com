@@ -1,5 +1,14 @@
 <h2>Arena Statistics</h2>
 
+<%
+  total_arena_runs = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
+    sum + count_per_hero.values.inject(&:+)
+  end
+  total_wins = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
+    sum + num_wins * count_per_hero.values.inject(&:+)
+  end
+%>
+
 <table class="table table-hover table-condensed">
   <thead>
     <tr>
@@ -11,11 +20,6 @@
   </thead>
   <tbody>
 
-  <%
-    total_arena_runs = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
-      sum + count_per_hero.values.inject(&:+)
-    end
-  %>
   <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
     <td><%= num_wins %></td>
@@ -36,4 +40,22 @@
   </tr>
   <% end %>
 </table>
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Total wins</th>
+      <th class="text-center">Total arenas</th>
+      <th class="text-center">Wins on average</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= total_wins %></td>
+      <td class="text-center"><%= total_arena_runs %></td>
+      <td class="text-center"><%= total_arena_runs == 0 ? '-' : "%.1f" % (total_wins.to_f / total_arena_runs) %></td>
+    </tr>
+  </tbody>
+</table>
+
 
