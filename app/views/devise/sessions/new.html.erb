@@ -4,7 +4,7 @@
   <%= f.text_field :username, autofocus: true, class: 'form-control' %>
   <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
   <% if devise_mapping.rememberable? -%>
-    <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+    <%= f.check_box :remember_me %> 
   <% end -%>
   <%= f.submit "Sign in", class: 'btn btn-primary' %>
 <% end %>
