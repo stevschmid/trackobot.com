@@ -1,6 +1,6 @@
 class Settings::DecksController < ApplicationController
   def index
-    @decks = current_user.decks.order(:id)
+    @decks = current_user.decks.order(:hero_id)
   end
 
   def new

@@ -4,7 +4,7 @@
 
   <div>
     <h2>Settings</h2>
-    <h3>MetaTracker</h3>
+    <h3>Decks</h3>
 
     <table class="table table-hover table-condensed">
       <thead>
@@ -17,7 +17,7 @@
       <tbody>
       <% @decks.each do |deck| %>
         <tr>
-          <td><%= hero_name(deck.hero.name, deck: deck) %></td>
+          <td><%= hero_label(deck.hero.name, deck.name) %></td>
           <td>
             <%= deck.cards.order(:name).map(&:name).join(', ') %> 
           </td>

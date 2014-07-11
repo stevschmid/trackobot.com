@@ -3,6 +3,7 @@ class Deck < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :name
+  validates_uniqueness_of :name, scope: :user_id, case_sensitive: false
 
   has_and_belongs_to_many :cards
 
@@ -24,5 +25,9 @@ class Deck < ActiveRecord::Base
 
     opponent_decks = deck_results.where('card_histories.player' => 'opponent', opponent: hero)
     opponent_decks.update_all(opponent_deck_id: id)
+  end
+
+  def to_s
+    name
   end
 end

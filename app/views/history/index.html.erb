@@ -15,7 +15,7 @@
 
     <% if @arena %>
     <p>
-      <strong>Arena Run:</strong> <%= hero_name(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
+      <strong>Arena Run:</strong> <%= hero_label(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
     </p>
     <% end %>
 
@@ -34,18 +34,18 @@
                                         }
                                       }
 
-          my_additions = {}
+          player_additions = {}
           opponent_additions = {}
 
           if cards_played = table_of_cards_played(result.card_histories)
-            my_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:me]}) if cards_played[:me]
+            player_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:me]}) if cards_played[:me]
             opponent_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:opponent]}) if cards_played[:opponent]
           end
 
         %>
         <tr>
-          <td><%= hero_name(result.hero.name, additions: my_additions, deck: result.deck) %></td>
-          <td> vs <%= hero_name(result.opponent.name, additions: opponent_additions, deck: result.opponent_deck) %>
+          <td><%= player_label_for_result(result, player_additions) %></td>
+          <td> vs <%= opponent_label_for_result(result, opponent_additions) %>
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td>

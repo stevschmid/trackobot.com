@@ -11,6 +11,10 @@ class StatsController < ApplicationController
         vs: {},
         as: {}
       },
+      decks: {
+        vs: {},
+        as: {}
+      },
       arena: {
       }
     }
@@ -30,6 +34,13 @@ class StatsController < ApplicationController
       @vs_hero = Hero.where('LOWER(name) = ?', params[:vs_hero]).first
     end
 
+    if params[:as_deck].present?
+      @as_deck = current_user.decks.where('LOWER(name) = ?', params[:as_deck]).first
+    end
+    if params[:vs_deck].present?
+      @vs_deck = current_user.decks.where('LOWER(name) = ?', params[:vs_deck]).first
+    end
+
     user_results = current_user.results
     user_results = user_results.where('created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
     user_results = user_results.where(mode: Result.modes[@mode]) if @mode
@@ -37,21 +48,11 @@ class StatsController < ApplicationController
     user_arenas = current_user.arenas
     user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
 
-    @stats[:classes][:as] = Hash[
-      [@as_hero || Hero.all].flatten.collect do |hero|
-        as_results = user_results.where(hero_id: hero.id)
-        as_results = as_results.where(opponent_id: @vs_hero.id) if @vs_hero
-        [hero.name, {wins: as_results.wins.count, losses: as_results.losses.count}]
-      end.sort_by { |_, hero_stats| [win_rate(hero_stats[:wins], hero_stats[:losses]), hero_stats[:wins] + hero_stats[:losses]] }.reverse
-    ]
+    @stats[:classes][:as] = group_results_by(user_results, Hero, @as_hero, :hero_id, :opponent_id, @vs_hero.try(:id))
+    @stats[:classes][:vs] = group_results_by(user_results, Hero, @vs_hero, :opponent_id, :hero_id, @as_hero.try(:id))
 
-    @stats[:classes][:vs] = Hash[
-      [@vs_hero || Hero.all].flatten.collect do |hero|
-        vs_results = user_results.where(opponent_id: hero.id)
-        vs_results = vs_results.where(hero_id: @as_hero.id) if @as_hero
-        [hero.name, {wins: vs_results.wins.count, losses: vs_results.losses.count}]
-      end.sort_by { |_, hero_stats| [win_rate(hero_stats[:wins], hero_stats[:losses]), hero_stats[:wins] + hero_stats[:losses]] }.reverse
-    ]
+    @stats[:decks][:as] = group_results_by(user_results, Deck, @as_deck, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
+    @stats[:decks][:vs] = group_results_by(user_results, Deck, @vs_deck, :opponent_deck_id, :deck_id, @as_deck.try(:id))
 
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
@@ -101,5 +102,17 @@ class StatsController < ApplicationController
     total = wins + losses
     return 0 if total == 0
     return wins.to_f / total
+  end
+
+  def group_results_by(results, group_class, group_element, group_id_key, filter_key, filter_value = nil)
+    Hash[
+      [ group_element || group_class.all ].flatten.collect do |group|
+        group_results = results.where(group_id_key => group.id)
+        if filter_value
+          group_results = group_results.where(filter_key => filter_value)
+        end
+        [ group, { total: group_results.count, wins: group_results.wins.count, losses: group_results.losses.count } ]
+      end.sort_by { |_, stats| [ win_rate(stats[:wins], stats[:losses]), stats[:total] ] }.reverse # sort desc
+    ]
   end
 end

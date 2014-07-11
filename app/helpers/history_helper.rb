@@ -36,7 +36,7 @@ module HistoryHelper
         hero_appendix = ' <small>1st</small>'.html_safe
         opponent_appendix = ' <small>2nd</small>'.html_safe
       end
-      [content_tag(:div, hero_name(result.hero.name, deck: result.deck) + hero_appendix), content_tag(:div, hero_name(result.opponent.name) + opponent_appendix)].join.html_safe
+      [content_tag(:div, player_label_for_result(result) + hero_appendix), content_tag(:div, opponent_label_for_result(result) + opponent_appendix)].join.html_safe
     end
   end
 

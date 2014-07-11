@@ -1,12 +1,12 @@
-<h2> Class Statistics</h2>
-<% if @as_hero %>
+<h2>Deck Statistics</h2>
+<% if @as_deck %>
 <p>
-  <strong>As:</strong> <%= hero_name(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
+  <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>
 </p>
 <% end %>
-<% if @vs_hero %>
+<% if @vs_deck %>
 <p>
-  <strong>Versus:</strong> <%= hero_name(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
+  <strong>Versus:</strong> <%= label_for_deck(@vs_deck) %> <%= link_to icon('times'), params.except(:vs_deck) %>
 </p>
 <% end %>
 
@@ -23,14 +23,14 @@
     <tbody>
 
     <%
-      total = @stats[:classes][type].inject(0) do |sum, (hero, stats)|
+      total = @stats[:decks][type].inject(0) do |sum, (deck, stats)|
         sum + stats[:wins] + stats[:losses]
       end
     %>
 
-    <% @stats[:classes][type].each do |hero, stats| %>
+    <% @stats[:decks][type].each do |deck, stats| %>
     <tr>
-      <td><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
+      <td><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.name.downcase) %></td>
       <td class="text-center"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
       <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
       <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>

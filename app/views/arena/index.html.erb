@@ -10,7 +10,7 @@
       <tbody>
       <% @arenas.each do |arena| %>
         <tr>
-          <td><%= hero_name(arena.hero.name) %></td>
+          <td><%= hero_label(arena.hero.name) %></td>
           <td><%= link_to arena_result(arena), profile_history_index_path(arena_id: arena.id) %></td>
           <td><%= local_time_ago(arena.results.order('created_at DESC').first.created_at) %></td>
         </tr>

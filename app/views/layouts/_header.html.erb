@@ -7,7 +7,7 @@
     <li class="dropdown <%= params[:controller].include?('settings') ? 'active' : '' %>">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= icon('gear') %> <span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
-        <%= nav_link 'MetaTracker', profile_settings_decks_path %>
+        <%= nav_link 'Decks', profile_settings_decks_path %>
         <%= nav_link 'API', profile_settings_api_path %>
       </ul>
     </li>
