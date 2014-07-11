@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require chosen-jquery
 //= require turbolinks
 //= require local_time
 //= require jquery.peity.min
