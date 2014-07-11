@@ -10,10 +10,10 @@ module ApplicationHelper
     end
   end
 
-  def hero_name(hero_name, span_additions = nil)
+  def hero_name(hero_name, opts = {})
     [
       hero_icon(hero_name),
-      content_tag(:span, span_additions) { hero_name }
+      content_tag(:span, opts[:additions]) { opts[:deck] ? opts[:deck].name : hero_name }
     ].join(' ').html_safe
   end
 

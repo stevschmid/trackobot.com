@@ -44,8 +44,8 @@
 
         %>
         <tr>
-          <td><%= hero_name(result.hero.name, my_additions) %></td>
-          <td> vs <%= hero_name(result.opponent.name, opponent_additions) %>
+          <td><%= hero_name(result.hero.name, additions: my_additions, deck: result.deck) %></td>
+          <td> vs <%= hero_name(result.opponent.name, additions: opponent_additions, deck: result.opponent_deck) %>
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td>

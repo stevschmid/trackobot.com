@@ -65,3 +65,17 @@ time {
   vertical-align: middle;
 }
 
+.table {
+  tr:hover {
+    .show-on-hover {
+      visibility: visible;
+    }
+  }
+
+  tr {
+    .show-on-hover {
+      visibility: hidden;
+    }
+  }
+}
+

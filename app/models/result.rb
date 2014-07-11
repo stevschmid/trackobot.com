@@ -9,6 +9,9 @@ class Result < ActiveRecord::Base
   belongs_to :hero
   belongs_to :opponent, class_name: 'Hero'
 
+  belongs_to :deck
+  belongs_to :opponent_deck, class_name: 'Deck'
+
   belongs_to :user
   belongs_to :arena
 

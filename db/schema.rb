@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710195956) do
+ActiveRecord::Schema.define(version: 20140711121711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,10 +114,14 @@ ActiveRecord::Schema.define(version: 20140710195956) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "arena_id"
+    t.integer  "deck_id"
+    t.integer  "opponent_deck_id"
   end
 
   add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
+  add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
   add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
+  add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
   add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
   add_index "results", ["win"], name: "index_results_on_win", using: :btree

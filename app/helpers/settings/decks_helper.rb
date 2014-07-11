@@ -1,0 +1,2 @@
+module Settings::DecksHelper
+end

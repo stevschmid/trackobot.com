@@ -3,6 +3,14 @@
     <%= nav_link 'History', profile_history_index_path, true %>
     <%= nav_link 'Arena', profile_arena_index_path %>
     <%= nav_link 'Stats', profile_stats_path %>
+
+    <li class="dropdown <%= params[:controller].include?('settings') ? 'active' : '' %>">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= icon('gear') %> <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <%= nav_link 'MetaTracker', profile_settings_decks_path %>
+        <%= nav_link 'API', profile_settings_api_path %>
+      </ul>
+    </li>
   </ul>
 
   <h3 class="text-muted">Your Profile</h3>

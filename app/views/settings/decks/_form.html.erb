@@ -1,0 +1,7 @@
+<%= bootstrap_form_for(@deck, url: @deck.persisted? ? profile_settings_deck_path(@deck) : profile_settings_decks_path) do |f| %>
+  <%= f.collection_select :hero_id, Hero.all, :id, :name, {}, class: 'chosen-select' %> 
+  <%= f.text_field :name %> 
+  <%= f.collection_select :card_ids, Card.playable.order(:name), :id, :name, { label: 'Key cards' }, { class: 'chosen-select', multiple: true } %>
+  <%= f.submit nil, class: 'btn btn-primary' %>
+<% end %>
+
