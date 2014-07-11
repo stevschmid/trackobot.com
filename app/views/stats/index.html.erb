@@ -30,8 +30,8 @@
       </tr>
     </table>
 
-    <%= render partial: 'arena_stats' unless @mode and @mode != :arena %>
     <%= render partial: 'class_stats' %>
+    <%= render partial: 'arena_stats' unless @mode and @mode != :arena %>
 
     <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: false} %>
   </div>
