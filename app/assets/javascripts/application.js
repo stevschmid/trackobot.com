@@ -15,4 +15,5 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require local_time
+//= require jquery.peity.min
 //= require_tree .

@@ -6,6 +6,12 @@ module StatsHelper
             else
               0
             end
-    (ratio * 100.0).round(1).to_s + '%'
+
+    content_tag :div do
+      [
+        (ratio * 100.0).round(1).to_s + '%',
+        content_tag(:span, "#{num_wins}/#{num_wins + num_losses}", class: 'pie')
+      ].join(' ').html_safe
+    end
   end
 end
