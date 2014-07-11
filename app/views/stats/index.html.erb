@@ -32,7 +32,7 @@
     </table>
 
     <%= render partial: 'class_stats' %>
-    <%= render partial: 'deck_stats' %>
+    <%= render partial: 'deck_stats' unless @mode and @mode == :arena %>
     <%= render partial: 'arena_stats' unless @mode and @mode != :arena %>
 
     <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: false} %>
