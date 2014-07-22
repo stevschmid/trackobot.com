@@ -402,7 +402,7 @@
   {
     "id": "CS1h_001",
     "name": "Lesser Heal",
-    "description": "<b>Hero Power</b> \\n Restore 2 Health.",
+    "description": "<b>Hero Power</b>\\nRestore 2 Health.",
     "mana": 2,
     "type": "hero",
     "class": "priest",
@@ -434,7 +434,7 @@
   {
     "id": "CS2_004",
     "name": "Power Word: Shield",
-    "description": "Give a minion +2 Health.\nDraw a card.",
+    "description": "Give a minion +2 Health.\\nDraw a card.",
     "mana": 1,
     "type": "ability",
     "class": "priest",
@@ -866,7 +866,7 @@
   {
     "id": "CS2_034",
     "name": "Fireblast",
-    "description": "<b>Hero Power</b> \\n Deal 1 damage.",
+    "description": "<b>Hero Power</b>\\nDeal 1 damage.",
     "mana": 2,
     "type": "hero",
     "class": "mage",
@@ -898,7 +898,7 @@
   {
     "id": "CS2_038",
     "name": "Ancestral Spirit",
-    "description": "Choose a minion. When that minion is destroyed, return it to the battlefield.",
+    "description": "Give a minion \"<b>Deathrattle:</b> Resummon this minion.\"",
     "mana": 2,
     "type": "ability",
     "class": "shaman",
@@ -914,7 +914,7 @@
   {
     "id": "CS2_038e",
     "name": "Ancestral Spirit",
-    "description": "Deathrattle: Return this minion to the battlefield.",
+    "description": "<b>Deathrattle:</b> Resummon this minion.",
     "mana": null,
     "type": "ability",
     "class": "shaman",
@@ -1058,7 +1058,7 @@
   {
     "id": "CS2_049",
     "name": "Totemic Call",
-    "description": "<b>Hero Power</b> \\n Summon a random Totem.",
+    "description": "<b>Hero Power</b>\\nSummon a random Totem.",
     "mana": 2,
     "type": "hero",
     "class": "shaman",
@@ -1154,7 +1154,7 @@
   {
     "id": "CS2_056",
     "name": "Life Tap",
-    "description": "<b>Hero Power</b> \\n Draw a card and take 2 damage.",
+    "description": "<b>Hero Power</b>\\nDraw a card and take 2 damage.",
     "mana": 2,
     "type": "hero",
     "class": "warlock",
@@ -1714,7 +1714,7 @@
   {
     "id": "CS2_101",
     "name": "Reinforce",
-    "description": "<b>Hero Power</b> \\n Summon a 1/1 Silver Hand Recruit.",
+    "description": "<b>Hero Power</b>\\nSummon a 1/1 Silver Hand Recruit.",
     "mana": 2,
     "type": "hero",
     "class": "paladin",
@@ -1746,7 +1746,7 @@
   {
     "id": "CS2_102",
     "name": "Armor Up!",
-    "description": "<b>Hero Power</b> \\n Gain 2 Armor.",
+    "description": "<b>Hero Power</b>\\nGain 2 Armor.",
     "mana": 2,
     "type": "hero",
     "class": "warrior",
@@ -2914,7 +2914,7 @@
   {
     "id": "DREAM_01",
     "name": "Laughing Sister",
-    "description": "Can't be targeted by Spells or Hero Powers.",
+    "description": "Can't be targeted by spells or Hero Powers.",
     "mana": 3,
     "type": "minion",
     "class": "warlock",
@@ -3218,7 +3218,7 @@
   {
     "id": "DS1h_292",
     "name": "Steady Shot",
-    "description": "<b>Hero Power</b> \\n Deal 2 damage to the enemy hero.",
+    "description": "<b>Hero Power</b>\\nDeal 2 damage to the enemy hero.",
     "mana": 2,
     "type": "hero",
     "class": "hunter",
@@ -5781,7 +5781,7 @@
   {
     "id": "EX1_289",
     "name": "Ice Barrier",
-    "description": "<b>Secret:</b> As soon as your hero is attacked, gain 8 Armor.",
+    "description": "<b>Secret:</b> When your hero is attacked, gain 8 Armor.",
     "mana": 3,
     "type": "ability",
     "class": "mage",
@@ -6151,7 +6151,7 @@
   {
     "id": "EX1_323",
     "name": "Lord Jaraxxus",
-    "description": "<b>Battlecry:</b> Destroy your hero and replace him with Lord Jaraxxus.",
+    "description": "<b>Battlecry:</b> Destroy your hero and replace it with Lord Jaraxxus.",
     "mana": 9,
     "type": "minion",
     "class": "warlock",
@@ -7279,7 +7279,7 @@
   {
     "id": "EX1_536",
     "name": "Eaglehorn Bow",
-    "description": "Whenever a <b>Secret</b> is revealed, gain +1 Durability.",
+    "description": "Whenever a friendly <b>Secret</b> is revealed, gain +1 Durability.",
     "mana": 3,
     "type": "weapon",
     "class": "hunter",
@@ -7521,7 +7521,7 @@
   {
     "id": "EX1_559",
     "name": "Archmage Antonidas",
-    "description": "Whenever you cast a spell, put a 'Fireball' spell into your hand.",
+    "description": "Whenever you cast a spell, add a 'Fireball' spell to your hand.",
     "mana": 7,
     "type": "minion",
     "class": "mage",
@@ -8631,7 +8631,7 @@
   {
     "id": "EX1_625t",
     "name": "Mind Spike",
-    "description": "<b>Hero Power</b> \\n Deal 2 damage.",
+    "description": "<b>Hero Power</b>\\nDeal 2 damage.",
     "mana": 2,
     "type": "hero",
     "class": "priest",
@@ -8647,7 +8647,7 @@
   {
     "id": "EX1_625t2",
     "name": "Mind Shatter",
-    "description": "<b>Hero Power</b> \\n Deal 3 damage.",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage.",
     "mana": 2,
     "type": "hero",
     "class": "priest",
@@ -8759,7 +8759,7 @@
   {
     "id": "EX1_tk33",
     "name": "INFERNO!",
-    "description": "<b>Hero Power</b> \\n Summon a 6/6 Infernal.",
+    "description": "<b>Hero Power</b>\\nSummon a 6/6 Infernal.",
     "mana": 2,
     "type": "hero",
     "class": "warlock",
@@ -8802,6 +8802,671 @@
     "health": 2,
     "flags": [
       "charge"
+    ]
+  },
+  {
+    "id": "FP1_001",
+    "name": "Zombie Chow",
+    "description": "<b>Deathrattle:</b> Restore 5 Health to the enemy hero.",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 2,
+    "health": 3,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_002",
+    "name": "Haunted Creeper",
+    "description": "<b>Deathrattle:</b> Summon two 1/1 Spectral Spiders.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": "beast",
+    "attack": 1,
+    "health": 2,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_002t",
+    "name": "Spectral Spider",
+    "description": null,
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_003",
+    "name": "Echoing Ooze",
+    "description": "<b>Battlecry:</b> Summon an exact copy of this minion at the end of the turn.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "epic",
+    "race": null,
+    "attack": 1,
+    "health": 2,
+    "flags": [
+      "battlecry"
+    ]
+  },
+  {
+    "id": "FP1_004",
+    "name": "Mad Scientist",
+    "description": "<b>Deathrattle:</b> Put a <b>Secret</b> from your deck into the battlefield.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 2,
+    "health": 2,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_005",
+    "name": "Shade of Naxxramas",
+    "description": "<b>Stealth.</b> At the start of your turn, gain +1/+1.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "epic",
+    "race": null,
+    "attack": 2,
+    "health": 2,
+    "flags": [
+      "stealth"
+    ]
+  },
+  {
+    "id": "FP1_005e",
+    "name": "Consume",
+    "description": "Increased stats.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_006",
+    "name": "Deathcharger",
+    "description": "<b>Charge. Deathrattle:</b> Deal 3 damage to your hero.",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 3,
+    "flags": [
+      "charge",
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_007",
+    "name": "Nerubian Egg",
+    "description": "<b>Deathrattle:</b> Summon a 4/4 Nerubian.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "rare",
+    "race": null,
+    "attack": 0,
+    "health": 2,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_007t",
+    "name": "Nerubian",
+    "description": null,
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "rare",
+    "race": null,
+    "attack": 4,
+    "health": 4,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_008",
+    "name": "Spectral Knight",
+    "description": "Can't be targeted by spells or Hero Powers.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 4,
+    "health": 6,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_009",
+    "name": "Deathlord",
+    "description": "<b>Taunt. Deathrattle:</b> Your opponent puts a minion from their deck into the battlefield.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "rare",
+    "race": null,
+    "attack": 2,
+    "health": 8,
+    "flags": [
+      "deathrattle",
+      "taunt"
+    ]
+  },
+  {
+    "id": "FP1_010",
+    "name": "Maexxna",
+    "description": "Destroy any minion damaged by this minion.",
+    "mana": 6,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": "beast",
+    "attack": 2,
+    "health": 8,
+    "flags": [
+      "elite",
+      "poison"
+    ]
+  },
+  {
+    "id": "FP1_011",
+    "name": "Webspinner",
+    "description": "<b>Deathrattle:</b> Add a random Beast card to your hand.",
+    "mana": 1,
+    "type": "minion",
+    "class": "hunter",
+    "set": null,
+    "quality": "common",
+    "race": "beast",
+    "attack": 1,
+    "health": 1,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_012",
+    "name": "Sludge Belcher",
+    "description": "<b>Taunt.\\nDeathrattle:</b> Summon a 1/2 Slime with <b>Taunt</b>.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "rare",
+    "race": null,
+    "attack": 3,
+    "health": 5,
+    "flags": [
+      "deathrattle",
+      "taunt"
+    ]
+  },
+  {
+    "id": "FP1_012t",
+    "name": "Slime",
+    "description": "<b>Taunt</b>",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 2,
+    "flags": [
+      "taunt"
+    ]
+  },
+  {
+    "id": "FP1_013",
+    "name": "Kel'Thuzad",
+    "description": "At the end of each turn, summon all friendly minions that died this turn.",
+    "mana": 8,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 6,
+    "health": 8,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "FP1_014",
+    "name": "Stalagg",
+    "description": "<b>Deathrattle:</b> If Feugen also died this game, summon Thaddius.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 7,
+    "health": 4,
+    "flags": [
+      "deathrattle",
+      "elite"
+    ]
+  },
+  {
+    "id": "FP1_014t",
+    "name": "Thaddius",
+    "description": null,
+    "mana": 10,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 11,
+    "health": 11,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "FP1_015",
+    "name": "Feugen",
+    "description": "<b>Deathrattle:</b> If Stalagg also died this game, summon Thaddius.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 4,
+    "health": 7,
+    "flags": [
+      "deathrattle",
+      "elite"
+    ]
+  },
+  {
+    "id": "FP1_016",
+    "name": "Wailing Soul",
+    "description": "<b>Battlecry: Silence</b> your other minions.",
+    "mana": 4,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "rare",
+    "race": null,
+    "attack": 3,
+    "health": 5,
+    "flags": [
+      "battlecry"
+    ]
+  },
+  {
+    "id": "FP1_017",
+    "name": "Nerub'ar Weblord",
+    "description": "Minions with <b>Battlecry</b> cost (2) more.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 1,
+    "health": 4,
+    "flags": [
+      "aura"
+    ]
+  },
+  {
+    "id": "FP1_018",
+    "name": "Duplicate",
+    "description": "<b>Secret:</b> When a friendly minion dies, put 2 copies of it into your hand.",
+    "mana": 3,
+    "type": "ability",
+    "class": "mage",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+      "secret"
+    ]
+  },
+  {
+    "id": "FP1_019",
+    "name": "Poison Seeds",
+    "description": "Destroy all minions and summon 2/2 Treants to replace them.",
+    "mana": 4,
+    "type": "ability",
+    "class": "druid",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_019t",
+    "name": "Treant",
+    "description": null,
+    "mana": 1,
+    "type": "minion",
+    "class": "druid",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_020",
+    "name": "Avenge",
+    "description": "<b>Secret:</b> When one of your minions dies, give a random friendly minion +3/+2.",
+    "mana": 1,
+    "type": "ability",
+    "class": "paladin",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+      "secret"
+    ]
+  },
+  {
+    "id": "FP1_020e",
+    "name": "Vengeance",
+    "description": "+3/+2.",
+    "mana": null,
+    "type": "ability",
+    "class": "paladin",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_021",
+    "name": "Death's Bite",
+    "description": "<b>Deathrattle:</b> Deal 1 damage to all minions.",
+    "mana": 4,
+    "type": "weapon",
+    "class": "warrior",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 4,
+    "health": 2,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_022",
+    "name": "Voidcaller",
+    "description": "<b>Deathrattle:</b> Put a random Demon from your hand into the battlefield.",
+    "mana": 4,
+    "type": "minion",
+    "class": "warlock",
+    "set": null,
+    "quality": "common",
+    "race": "demon",
+    "attack": 3,
+    "health": 4,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_023",
+    "name": "Dark Cultist",
+    "description": "<b>Deathrattle:</b> Give a random friendly minion +3 Health.",
+    "mana": 3,
+    "type": "minion",
+    "class": "priest",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 3,
+    "health": 4,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_023e",
+    "name": "Power of the Ziggurat",
+    "description": "+3 Health.",
+    "mana": null,
+    "type": "ability",
+    "class": "priest",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_024",
+    "name": "Unstable Ghoul",
+    "description": "<b>Taunt</b>. <b>Deathrattle:</b> Deal 1 damage to all minions.",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 1,
+    "health": 3,
+    "flags": [
+      "deathrattle",
+      "taunt"
+    ]
+  },
+  {
+    "id": "FP1_025",
+    "name": "Reincarnate",
+    "description": "Destroy a minion, then return it to life with full Health.",
+    "mana": 2,
+    "type": "ability",
+    "class": "shaman",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_026",
+    "name": "Anub'ar Ambusher",
+    "description": "<b>Deathrattle:</b> Return a random friendly minion to your hand.",
+    "mana": 4,
+    "type": "minion",
+    "class": "rogue",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 5,
+    "health": 5,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_027",
+    "name": "Stoneskin Gargoyle",
+    "description": "At the start of your turn, restore this minion to full Health.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 1,
+    "health": 4,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_028",
+    "name": "Undertaker",
+    "description": "Whenever you summon a minion with <b>Deathrattle</b>, gain +1/+1.",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 1,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_028e",
+    "name": "Darkness Calls",
+    "description": "Increased stats.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_029",
+    "name": "Dancing Swords",
+    "description": "<b>Deathrattle:</b> Your opponent draws a card.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": 4,
+    "health": 4,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "FP1_030",
+    "name": "Loatheb",
+    "description": "<b>Battlecry:</b> Enemy spells cost (5) more next turn.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 5,
+    "health": 5,
+    "flags": [
+      "battlecry",
+      "elite"
+    ]
+  },
+  {
+    "id": "FP1_030e",
+    "name": "Necrotic Aura",
+    "description": "Your spells cost (5) more this turn.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "FP1_031",
+    "name": "Baron Rivendare",
+    "description": "Your minions trigger their <b>Deathrattles</b> twice.",
+    "mana": 4,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 1,
+    "health": 7,
+    "flags": [
+      "aura",
+      "elite"
     ]
   },
   {
@@ -9202,6 +9867,1927 @@
     "health": 1,
     "flags": [
 
+    ]
+  },
+  {
+    "id": "NAX10_01",
+    "name": "Patchwerk",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX10_01H",
+    "name": "Patchwerk",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX10_02",
+    "name": "Hook",
+    "description": "<b>Deathrattle:</b> Put this weapon into your hand.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 8,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAX10_02H",
+    "name": "Hook",
+    "description": "<b>Windfury</b>\\n<b>Deathrattle:</b> Put this weapon into your hand.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 4,
+    "health": 8,
+    "flags": [
+      "deathrattle",
+      "windury"
+    ]
+  },
+  {
+    "id": "NAX10_03",
+    "name": "Hateful Strike",
+    "description": "<b>Hero Power</b>\\nDestroy a minion.",
+    "mana": 4,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX10_03H",
+    "name": "Hateful Strike",
+    "description": "<b>Hero Power</b>\\nDestroy a minion.",
+    "mana": 4,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_01",
+    "name": "Grobbulus",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_01H",
+    "name": "Grobbulus",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_02",
+    "name": "Poison Cloud",
+    "description": "<b>Hero Power</b>\\nDeal 1 damage to all minions. If any die, summon a slime.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_02H",
+    "name": "Poison Cloud",
+    "description": "<b>Hero Power</b>\\nDeal 2 damage to all enemies. If any die, summon a slime.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_03",
+    "name": "Fallout Slime",
+    "description": null,
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_04",
+    "name": "Mutating Injection",
+    "description": "Give a minion +4/+4 and <b>Taunt</b>.",
+    "mana": 3,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX11_04e",
+    "name": "Mutating Injection",
+    "description": "+4/+4 and <b>Taunt</b>.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_01",
+    "name": "Gluth",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_01H",
+    "name": "Gluth",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_02",
+    "name": "Decimate",
+    "description": "<b>Hero Power</b>\\nChange the Health of all minions to 1.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_02e",
+    "name": "Decimate",
+    "description": "Health changed to 1.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_02H",
+    "name": "Decimate",
+    "description": "<b>Hero Power</b>\\nChange the Health of enemy minions to 1.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_03",
+    "name": "Jaws",
+    "description": "Whenever a minion with <b>Deathrattle</b> dies, gain +2 Attack.",
+    "mana": 1,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 5,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_03e",
+    "name": "Extra Teeth",
+    "description": "Increased Attack.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_03H",
+    "name": "Jaws",
+    "description": "Whenever a minion with <b>Deathrattle</b> dies, gain +2 Attack.",
+    "mana": 1,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 3,
+    "health": 5,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_04",
+    "name": "Enrage",
+    "description": "Give your hero +6 Attack this turn.",
+    "mana": 3,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX12_04e",
+    "name": "Enrage",
+    "description": "+6 Attack this turn.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_01",
+    "name": "Thaddius",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_01H",
+    "name": "Thaddius",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_02",
+    "name": "Polarity Shift",
+    "description": "<b>Hero Power</b>\\nSwap the Attack and Health of all minions.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_02e",
+    "name": "Polarity",
+    "description": "Attack and Health swapped.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_03",
+    "name": "Supercharge",
+    "description": "Give your minions +2 Health.",
+    "mana": 2,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_03e",
+    "name": "Supercharged",
+    "description": "+2 Health.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX13_04H",
+    "name": "Feugen",
+    "description": null,
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 4,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX13_05H",
+    "name": "Stalagg",
+    "description": null,
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": null,
+    "attack": 7,
+    "health": 4,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX14_01",
+    "name": "Sapphiron",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX14_01H",
+    "name": "Sapphiron",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX14_02",
+    "name": "Frost Breath",
+    "description": "<b>Hero Power</b>\\nDestroy all enemy minions that aren't <b>Frozen</b>.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX14_03",
+    "name": "Frozen Champion",
+    "description": "Permanently Frozen.  Adjacent minions are Immune to Frost Breath.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 10,
+    "flags": [
+      "aura"
+    ]
+  },
+  {
+    "id": "NAX14_04",
+    "name": "Pure Cold",
+    "description": "Deal $8 damage to the enemy hero, and <b>Freeze</b> it.",
+    "mana": 5,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+      "freeze"
+    ]
+  },
+  {
+    "id": "NAX15_01",
+    "name": "Kel'Thuzad",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_01e",
+    "name": "Interloper!",
+    "description": null,
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_01H",
+    "name": "Kel'Thuzad",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_01He",
+    "name": "Interloper!",
+    "description": null,
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_02",
+    "name": "Frost Blast",
+    "description": "<b>Hero Power</b>\\nDeal 2 damage to the enemy hero and <b>Freeze</b> it.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+      "freeze"
+    ]
+  },
+  {
+    "id": "NAX15_02H",
+    "name": "Frost Blast",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage to the enemy hero and <b>Freeze</b> it.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+      "freeze"
+    ]
+  },
+  {
+    "id": "NAX15_03n",
+    "name": "Guardian of Icecrown",
+    "description": "<b>Taunt</b>",
+    "mana": 4,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 3,
+    "health": 3,
+    "flags": [
+      "taunt"
+    ]
+  },
+  {
+    "id": "NAX15_03t",
+    "name": "Guardian of Icecrown",
+    "description": "<b>Taunt</b>",
+    "mana": 4,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 5,
+    "flags": [
+      "taunt"
+    ]
+  },
+  {
+    "id": "NAX15_04",
+    "name": "Chains",
+    "description": "<b>Hero Power</b>\\nTake control of a random enemy minion until end of turn.",
+    "mana": 8,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_04a",
+    "name": "Slave of Kel'Thuzad",
+    "description": "MINE!",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_04H",
+    "name": "Chains",
+    "description": "<b>Hero Power</b>\\nTake control of a random enemy minion.",
+    "mana": 8,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX15_05",
+    "name": "Mr. Bigglesworth",
+    "description": "<i>This is Kel'Thuzad's kitty.</i>",
+    "mana": 0,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": "legendary",
+    "race": "beast",
+    "attack": 1,
+    "health": 1,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX1_01",
+    "name": "Anub'Rekhan",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1_03",
+    "name": "Nerubian",
+    "description": null,
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 3,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1_04",
+    "name": "Skitter",
+    "description": "<b>Hero Power</b>\\nSummon a 3/1 Nerubian.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1_05",
+    "name": "Locust Swarm",
+    "description": "Deal 3 damage to all enemy minions. Restore 3 Health to your hero.",
+    "mana": 7,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1h_01",
+    "name": "Anub'Rekhan",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1h_03",
+    "name": "Nerubian",
+    "description": null,
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 4,
+    "health": 4,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX1h_04",
+    "name": "Skitter",
+    "description": "<b>Hero Power</b>\\nSummon a 4/4 Nerubian.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX2_01",
+    "name": "Grand Widow Faerlina",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX2_01H",
+    "name": "Grand Widow Faerlina",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX2_03",
+    "name": "Rain of Fire",
+    "description": "<b>Hero Power</b>\\nFire a missile for each card in your opponent's hand.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX2_03H",
+    "name": "Rain of Fire",
+    "description": "<b>Hero Power</b>\\nFire a missile for each card in your opponent's hand.",
+    "mana": 1,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX2_05",
+    "name": "Worshipper",
+    "description": "Your hero has +1 Attack on your turn.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 4,
+    "flags": [
+      "aura"
+    ]
+  },
+  {
+    "id": "NAX2_05H",
+    "name": "Worshipper",
+    "description": "Your hero has +3 Attack on your turn.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 4,
+    "flags": [
+      "aura"
+    ]
+  },
+  {
+    "id": "NAX3_01",
+    "name": "Maexxna",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX3_01H",
+    "name": "Maexxna",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX3_02",
+    "name": "Web Wrap",
+    "description": "<b>Hero Power</b>\\nReturn a random enemy minion to your opponent's hand.",
+    "mana": 3,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX3_02H",
+    "name": "Web Wrap",
+    "description": "<b>Hero Power</b>\\nReturn 2 random enemy minions to your opponent's hand.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX3_03",
+    "name": "Necrotic Poison",
+    "description": "Destroy a minion.",
+    "mana": 2,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_01",
+    "name": "Noth the Plaguebringer",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "mage",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_01H",
+    "name": "Noth the Plaguebringer",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "mage",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_03",
+    "name": "Skeleton",
+    "description": null,
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_03H",
+    "name": "Skeleton",
+    "description": null,
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 5,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_04",
+    "name": "Raise Dead",
+    "description": "<b>Passive Hero Power</b>\\nWhenever an enemy dies, raise a 1/1 Skeleton.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_04H",
+    "name": "Raise Dead",
+    "description": "<b>Passive Hero Power</b>\\nWhenever an enemy dies, raise a 5/5 Skeleton.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX4_05",
+    "name": "Plague",
+    "description": "Destroy all non-Skeleton minions.",
+    "mana": 6,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX5_01",
+    "name": "Heigan the Unclean",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "warlock",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX5_01H",
+    "name": "Heigan the Unclean",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "warlock",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX5_02",
+    "name": "Eruption",
+    "description": "<b>Hero Power</b>\\nDeal 2 damage to the left-most enemy minion.",
+    "mana": 1,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX5_02H",
+    "name": "Eruption",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage to the left-most enemy minion.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX5_03",
+    "name": "Mindpocalypse",
+    "description": "Both players draw 2 cards and gain a Mana Crystal.",
+    "mana": 2,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_01",
+    "name": "Loatheb",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 75,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_01H",
+    "name": "Loatheb",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 99,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_02",
+    "name": "Necrotic Aura",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage to the enemy hero.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_02e",
+    "name": "Necrotic Aura",
+    "description": "Decreased Health.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_02H",
+    "name": "Necrotic Aura",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage to the enemy hero.",
+    "mana": 0,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_03",
+    "name": "Deathbloom",
+    "description": "Deal $5 damage to a minion. Summon a Spore.",
+    "mana": 4,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_03t",
+    "name": "Spore",
+    "description": "<b>Deathrattle:</b> Give all enemy minions +8 Attack.",
+    "mana": 0,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 0,
+    "health": 1,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAX6_03te",
+    "name": "Fungal Growth",
+    "description": "Increased Attack.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX6_04",
+    "name": "Sporeburst",
+    "description": "Deal $1 damage to all enemy minions. Summon a Spore.",
+    "mana": 1,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_01",
+    "name": "Instructor Razuvious",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 40,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_01H",
+    "name": "Instructor Razuvious",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 55,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_02",
+    "name": "Understudy",
+    "description": "<b>Taunt</b>",
+    "mana": 2,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 0,
+    "health": 7,
+    "flags": [
+      "taunt"
+    ]
+  },
+  {
+    "id": "NAX7_03",
+    "name": "Unbalancing Strike",
+    "description": "<b>Hero Power</b>\\nDeal 3 damage.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_03H",
+    "name": "Unbalancing Strike",
+    "description": "<b>Hero Power</b>\\nDeal 4 damage.",
+    "mana": 1,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_04",
+    "name": "Massive Runeblade",
+    "description": "Deals double damage to heroes.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_04H",
+    "name": "Massive Runeblade",
+    "description": "Deals double damage to heroes.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 10,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX7_05",
+    "name": "Mind Control Crystal",
+    "description": "Activate the Crystal to control the Understudies!",
+    "mana": 1,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_01",
+    "name": "Gothik the Harvester",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 30,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_01H",
+    "name": "Gothik the Harvester",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 45,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_02",
+    "name": "Harvest",
+    "description": "<b>Hero Power</b>\\nDraw a card.",
+    "mana": 2,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_02H",
+    "name": "Harvest",
+    "description": "<b>Hero Power</b>\\nDraw a card. Gain a Mana Crystal.",
+    "mana": 1,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_03",
+    "name": "Unrelenting Trainee",
+    "description": "<b>Deathrattle:</b> Summon a Spectral Trainee for your opponent.",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 2,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAX8_03t",
+    "name": "Spectral Trainee",
+    "description": "At the start of your turn, deal 1 damage to your hero.",
+    "mana": 1,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 0,
+    "health": 2,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_04",
+    "name": "Unrelenting Warrior",
+    "description": "<b>Deathrattle:</b> Summon a Spectral Warrior for your opponent.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 3,
+    "health": 4,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAX8_04t",
+    "name": "Spectral Warrior",
+    "description": "At the start of your turn, deal 1 damage to your hero.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 0,
+    "health": 4,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX8_05",
+    "name": "Unrelenting Rider",
+    "description": "<b>Deathrattle:</b> Summon a Spectral Rider for your opponent.",
+    "mana": 6,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 6,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAX8_05t",
+    "name": "Spectral Rider",
+    "description": "At the start of your turn, deal 1 damage to your hero.",
+    "mana": 5,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 0,
+    "health": 6,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_01",
+    "name": "Baron Rivendare",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 7,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_01H",
+    "name": "Baron Rivendare",
+    "description": null,
+    "mana": null,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": 14,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_02",
+    "name": "Lady Blaumeux",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_02H",
+    "name": "Lady Blaumeux",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_03",
+    "name": "Thane Korth'azz",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_03H",
+    "name": "Thane Korth'azz",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_04",
+    "name": "Sir Zeliek",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_04H",
+    "name": "Sir Zeliek",
+    "description": "Your hero is <b>Immune</b>.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 7,
+    "flags": [
+      "elite"
+    ]
+  },
+  {
+    "id": "NAX9_05",
+    "name": "Runeblade",
+    "description": "Has +3 Attack if the other Horsemen are dead.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 3,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_05H",
+    "name": "Runeblade",
+    "description": "Has +6 Attack if the other Horsemen are dead.",
+    "mana": 3,
+    "type": "weapon",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 2,
+    "health": 3,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_06",
+    "name": "Unholy Shadow",
+    "description": "<b>Hero Power</b>\\nDraw 2 cards.",
+    "mana": 5,
+    "type": "hero",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_07",
+    "name": "Mark of the Horsemen",
+    "description": "Give your minions and your weapon +1/+1.",
+    "mana": 5,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAX9_07e",
+    "name": "Mark of the Horsemen",
+    "description": "+1/+1.",
+    "mana": null,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "NAXM_001",
+    "name": "Necroknight",
+    "description": "<b>Deathrattle:</b> Destroy the minions next to this one as well.",
+    "mana": 4,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 5,
+    "health": 6,
+    "flags": [
+      "deathrattle"
+    ]
+  },
+  {
+    "id": "NAXM_002",
+    "name": "Skeletal Smith",
+    "description": "<b>Deathrattle:</b> Destroy your opponent's weapon.",
+    "mana": 3,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 4,
+    "health": 3,
+    "flags": [
+      "deathrattle"
     ]
   },
   {
@@ -9611,7 +12197,7 @@
   {
     "id": "NEW1_023",
     "name": "Faerie Dragon",
-    "description": "Can't be targeted by Spells or Hero Powers.",
+    "description": "Can't be targeted by spells or Hero Powers.",
     "mana": 2,
     "type": "minion",
     "class": "neutral",
@@ -10223,7 +12809,7 @@
   {
     "id": "tt_010a",
     "name": "Spellbender",
-    "description": "<b></b>",
+    "description": null,
     "mana": null,
     "type": "minion",
     "class": "mage",
@@ -10543,7 +13129,7 @@
   {
     "id": "TU4d_003",
     "name": "Shotgun Blast",
-    "description": "<b>Hero Power</b> \\n Deal 1 damage.",
+    "description": "<b>Hero Power</b>\\nDeal 1 damage.",
     "mana": 2,
     "type": "hero",
     "class": "hunter",
@@ -10575,7 +13161,7 @@
   {
     "id": "TU4e_002",
     "name": "Flames of Azzinoth",
-    "description": "<b>Hero Power</b> \\n Summon two 2/1 minions.",
+    "description": "<b>Hero Power</b>\\nSummon two 2/1 minions.",
     "mana": 2,
     "type": "hero",
     "class": "neutral",
@@ -10641,22 +13227,6 @@
     "name": "Flame Burst",
     "description": "Shoot 5 missiles at random enemies for $1 damage each.",
     "mana": 3,
-    "type": "ability",
-    "class": "neutral",
-    "set": "missions",
-    "quality": "common",
-    "race": null,
-    "attack": null,
-    "health": null,
-    "flags": [
-
-    ]
-  },
-  {
-    "id": "TU4e_006",
-    "name": "Metamorphosis",
-    "description": "Do something crazy.",
-    "mana": 6,
     "type": "ability",
     "class": "neutral",
     "set": "missions",
@@ -11374,7 +13944,7 @@
   },
   {
     "id": "XXX_041",
-    "name": "Destory Hero Power",
+    "name": "Destroy Hero Power",
     "description": "Destroy a player's Hero Power.",
     "mana": 0,
     "type": "ability",
@@ -11450,6 +14020,150 @@
     "health": null,
     "flags": [
 
+    ]
+  },
+  {
+    "id": "XXX_046",
+    "name": "Force AI to Use Hero Power",
+    "description": "Force the AI to use their Hero Power every turn from now on.",
+    "mana": 0,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_047",
+    "name": "Destroy Deck",
+    "description": "Delete an opponent's deck",
+    "mana": 0,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_048",
+    "name": "-1 Durability",
+    "description": "Give a player's weapon -1 Durability.",
+    "mana": 0,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_049",
+    "name": "Destroy all Mana",
+    "description": "Destroy all of a player's Mana Crystals.",
+    "mana": 0,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_050",
+    "name": "Destroy a Mana Crystal",
+    "description": "Pick a player and destroy one of his Mana Crystals.",
+    "mana": 0,
+    "type": "ability",
+    "class": "neutral",
+    "set": null,
+    "quality": "common",
+    "race": null,
+    "attack": null,
+    "health": null,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_096",
+    "name": "AI Buddy - Damage Own Hero 5",
+    "description": "Spawn into play to smack your own hero for 5.",
+    "mana": 0,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_097",
+    "name": "AI Buddy - Destroy Minions",
+    "description": "Spawn into play to destroy all minions.",
+    "mana": 0,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_098",
+    "name": "AI Buddy - No Deck/Hand",
+    "description": "Spawn into play to destroy the AI's Hand and Deck.",
+    "mana": 0,
+    "type": "minion",
+    "class": "neutral",
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+
+    ]
+  },
+  {
+    "id": "XXX_099",
+    "name": "AI Helper Buddy",
+    "description": "Get the AI ready for testing.",
+    "mana": 0,
+    "type": "minion",
+    "class": null,
+    "set": null,
+    "quality": null,
+    "race": null,
+    "attack": 1,
+    "health": 1,
+    "flags": [
+      "elite"
     ]
   }
 ]

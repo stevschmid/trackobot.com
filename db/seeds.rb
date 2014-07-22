@@ -36,6 +36,7 @@ end
 cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
 p "Updating cards"
 p Card.count
+id_before = Card.find_by_name('Holy Fire').id
 cards.each do |card|
   db_card = Card.where(ref: card[:id]).first_or_initialize
   db_card.update_attributes(ref: card[:id],
@@ -50,7 +51,9 @@ cards.each do |card|
                             attack: card[:attack],
                             health: card[:health])
 end
+id_after = Card.find_by_name('Holy Fire').id
 p Card.count
+p "Test #{id_before} #{id_after}"
 
 if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
