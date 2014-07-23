@@ -3,6 +3,7 @@ class Card < ActiveRecord::Base
 
   has_and_belongs_to_many :decks
 
+  # Card.playable.group_by { |x| x['name'] }.select { |n,c| c.length > 1 }.values.flatten.map(&:ref)
   scope :playable, -> do
     # select cards which were recorded as played
     where('EXISTS(SELECT card_histories.id FROM card_histories WHERE card_histories.card_id = cards.id LIMIT 1)')
@@ -20,6 +21,10 @@ class Card < ActiveRecord::Base
       'NEW1_040t', # gnoll
       'TU4a_003', # gnoll
       'tt_010a', # spellbender minion
+      'FP1_007t', # nerubian
+      'NAX1_03', # nerubian
+      'NAX2_05', # worshipper
+      'NAX2_05H' # worshipper
     ])
   end
 end
