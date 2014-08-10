@@ -15,3 +15,5 @@
 /log/*.log
 /tmp
 /public/appcast*.xml
+
+/config/database.yml
