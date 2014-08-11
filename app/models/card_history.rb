@@ -2,17 +2,7 @@ class CardHistory < ActiveRecord::Base
   belongs_to :card
   belongs_to :result
 
+  enum player: [:me, :opponent]
+
   validates_presence_of :card, :player
-  validates_inclusion_of :player, in: %w[me opponent]
-
-  scope :me, ->{ where(player: 'me') }
-  scope :opponent, ->{ where(player: 'opponent') }
-
-  def me?
-    player == 'me'
-  end
-
-  def opponent?
-    player == 'opponent'
-  end
 end
