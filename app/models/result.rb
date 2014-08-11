@@ -15,7 +15,7 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :arena
 
-  has_many :card_histories, -> { order 'created_at' }
+  has_many :card_histories, -> { order 'id' }
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
