@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811105322) do
+ActiveRecord::Schema.define(version: 20140811110600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140811105322) do
     t.integer "card_id"
     t.integer "result_id"
     t.string  "player"
+    t.integer "player_enum"
   end
 
   add_index "card_histories", ["card_id"], name: "index_card_histories_on_card_id", using: :btree
