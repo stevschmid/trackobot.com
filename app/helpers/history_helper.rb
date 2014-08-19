@@ -2,7 +2,7 @@ module HistoryHelper
 
   def card_history_additions(card_histories)
     return {} if card_histories.empty?
-    content = escape_once(render(partial: 'card_history', locals: { card_histories: card_histories }))
+    content = escape_once(render(partial: 'card_history', locals: { grouped_card_histories: group_card_histories_by_card_and_sort_by_mana(card_histories) }))
     {
       class: 'has-popover dotted-baseline',
       data: {
@@ -19,7 +19,7 @@ module HistoryHelper
   def timeline_additions(result)
     return {} if result.card_histories.empty?
     header = escape_once(render(partial: 'timeline_header', locals: { result: result }))
-    content = escape_once(render(partial: 'timeline', locals: { grouped_card_histories: group_card_histories_chronologically(result) }))
+    content = escape_once(render(partial: 'timeline', locals: { grouped_card_histories: group_card_histories_chronologically(result.card_histories) }))
     {
       class: 'btn btn-default btn-xs timeline-button',
       data: {
@@ -33,15 +33,17 @@ module HistoryHelper
 
   private
 
-  def group_card_histories_chronologically(result)
-    chronological_card_history = result.card_histories
+  def group_card_histories_by_card_and_sort_by_mana(card_histories)
+    card_histories.group_by(&:card).sort_by { |card, _| card.mana || -1 }
+  end
 
+  def group_card_histories_chronologically(card_histories)
     groups = []
 
     current_card_group = []
     current_player = nil
 
-    chronological_card_history.each do |card_history|
+    card_histories.each do |card_history|
       if current_player && current_player != card_history.player
         groups << current_card_group
         current_card_group = []
