@@ -1,6 +1,6 @@
 $border-color: #dddddd;
 
-.timeline-header {
+div.timeline-header {
   height: 20px;
   div {
     text-align: center;
@@ -10,7 +10,7 @@ $border-color: #dddddd;
   }
 }
 
-.timeline{
+ol.timeline {
   background: asset-url('dot.gif') top center repeat-y;
   width: 450px;
   padding: 25px 10px;

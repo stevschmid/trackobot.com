@@ -11,13 +11,13 @@
 <% end %>
 
 <% %i[as vs].each do |type| %>
-  <table class="table table-hover table-condensed">
+  <table class="table table-hover table-condensed class-stats">
     <thead>
       <tr>
-        <th>Class</th>
-        <th class="text-center">Share</th>
-        <th class="text-center">Win/Loss</th>
-        <th class="text-center">Winrate</th>
+        <th class="hero">Class</th>
+        <th class="share">Share</th>
+        <th class="win-loss">Win/Loss</th>
+        <th class="winrate">Winrate</th>
       </tr>
     </thead>
     <tbody>
@@ -30,10 +30,10 @@
 
     <% @stats[:classes][type].each do |hero, stats| %>
     <tr>
-      <td><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
-      <td class="text-center"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
-      <td class="text-center"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-      <td class="text-center"><%= win_rate(stats[:wins], stats[:losses]) %></td>
+      <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
+      <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
+      <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
+      <td class="winrate"><%= win_rate(stats[:wins], stats[:losses]) %></td>
     </tr>
     <% end %>
   </table>

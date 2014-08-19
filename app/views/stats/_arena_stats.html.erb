@@ -9,28 +9,28 @@
   end
 %>
 
-<table class="table table-hover table-condensed">
+<table class="table table-hover table-condensed arena-stats">
   <thead>
     <tr>
-      <th>Wins</th>
-      <th class="text-center">Achieved</th>
-      <th class="text-center">Share</th>
-      <th class="text-center">Class</th>
+      <th class="wins">Wins</th>
+      <th class="achieved">Achieved</th>
+      <th class="share">Share</th>
+      <th class="hero">Class</th>
     </tr>
   </thead>
   <tbody>
 
   <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
-    <td><%= num_wins %></td>
-    <td class="text-center"><%= 
+    <td class="wins"><%= num_wins %></td>
+    <td class="achieved"><%= 
       times_achieved = count_per_hero.values.inject(&:+) 
       "#{times_achieved}x"
     %></td>
-    <td class="text-center">
+    <td class="share">
       <%= percentage( times_achieved, total_arena_runs ) %>
     </td>
-    <td class="text-center">
+    <td class="hero">
       <%=
         count_per_hero.collect do |hero_name, count|
           hero_icon(hero_name, {data: {toggle: 'tooltip', placement: 'bottom'}, title: "#{count}x with #{hero_name}", class: 'has-tooltip'})
@@ -41,19 +41,19 @@
   <% end %>
 </table>
 
-<table class="table table-hover table-condensed">
+<table class="table table-hover table-condensed arena-stats">
   <thead>
     <tr>
-      <th>Total wins</th>
-      <th class="text-center">Total arenas</th>
-      <th class="text-center">Wins on average</th>
+      <th class="total-wins">Total wins</th>
+      <th class="total-arenas">Total arenas</th>
+      <th class="wins-average">Wins on average</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><%= total_wins %></td>
-      <td class="text-center"><%= total_arena_runs %></td>
-      <td class="text-center"><%= total_arena_runs == 0 ? '-' : "%.1f" % (total_wins.to_f / total_arena_runs) %></td>
+      <td class="total-wins"><%= total_wins %></td>
+      <td class="total-arenas"><%= total_arena_runs %></td>
+      <td class="wins-average"><%= total_arena_runs == 0 ? '-' : "%.1f" % (total_wins.to_f / total_arena_runs) %></td>
     </tr>
   </tbody>
 </table>

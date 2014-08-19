@@ -1,3 +1,49 @@
 // Place all the styles related to the Stats controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.overall-stats {
+  table-layout: fixed;
+  
+  th, td {
+    &.winrate { 
+      text-align: center;
+    } 
+  }
+}
+
+table.class-stats, table.deck-stats {
+  table-layout: fixed;
+
+  th, td {
+    &.winrate, &.share, &.win-loss {
+      text-align: center;
+    }
+
+    &.hero, &.deck {
+      width: 35%;
+    }
+  }
+}
+
+table.arena-stats {
+  table-layout: fixed;
+
+  th, td {
+    &.achieved, &.share, &.hero {
+      text-align: center;
+    }
+
+    &.total-arenas, &.wins-average {
+      text-align: center;
+    }
+
+    &.wins {
+      width: 15%;
+    }
+
+    &.achieved {
+      width: 15%;
+    }
+  }
+}
