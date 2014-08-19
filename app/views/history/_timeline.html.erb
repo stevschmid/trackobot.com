@@ -1,0 +1,11 @@
+<ol class="timeline">
+  <% grouped_card_histories.each do |card_histories| %>
+    <li class="<%= card_histories.first.player %>">
+    <% card_histories.each do |card_history| %>
+      <div class="card">
+        <div class="mana"><%= card_history.card.mana || 0 %></div>&nbsp;<%= card_history.card.name %>
+      </div>
+    <% end %>
+  </li>
+  <% end %>
+</ol>

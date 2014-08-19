@@ -23,27 +23,10 @@
       <tbody>
       <% @results.each do |result| %>
         <tr>
-          <td><%= player_label_for_result result, card_history_label_additions(result.player_card_histories) %></td>
-          <td> vs <%= opponent_label_for_result result, card_history_label_additions(result.opponent_card_histories) %>
-          </td>
+          <td><%= player_label_for_result result, card_history_additions(result.player_card_histories) %></td>
+          <td>vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
-          <td>
-            <%
-              if result.card_histories.any?
-                header = timeline_header_of_result(result)
-                additions_for_timeline = {
-                  class: 'btn btn-default btn-xs timeline-button',
-                  data: {
-                    container: 'body',
-                    title: header.gsub('"', "'"),
-                    html: true
-                  }
-                }
-                timeline = timeline_of_result(result).gsub("'", "'")
-              end
-            %>
-            <%= button_tag image_tag('crossed_swords_14.png'), additions_for_timeline.deep_merge(data: {content: timeline}) if timeline %>
-          </td>
+          <td><%= button_tag image_tag('crossed_swords_14.png'), timeline_additions(result) if result.card_histories.any? %></td>
           <td><%= local_time_ago(result.created_at) %></td>
           <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %></td>
         </tr>
