@@ -18,6 +18,10 @@ module Stats
                    results = current_user.results
                    results = results.where('created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
                    results = results.where(mode: Result.modes[@mode]) if @mode
+                   results = results.where(hero_id: @as_hero.id) if @as_hero
+                   results = results.where(deck_id: @as_deck.id) if @as_deck
+                   results = results.where(opponent_id: @vs_hero.id) if @vs_hero
+                   results = results.where(opponent_deck_id: @vs_deck.id) if @vs_deck
                    results
                  end
   end
@@ -26,6 +30,8 @@ module Stats
     @user_arenas ||= begin
                        user_arenas = current_user.arenas
                        user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
+                       user_arenas = user_arenas.where('arenas.hero_id = ?', @as_hero.id) if @as_hero
+                       user_arenas = user_arenas.where('arenas.opponent_id = ?', @vs_hero.id) if @vs_hero
                        user_arenas
                      end
   end
@@ -48,6 +54,22 @@ module Stats
     if params[:order].present? && ORDER_FIELDS.include?(params[:order])
       @order = params[:order].to_sym
     end
+
+    if params[:as_deck].present?
+      @as_deck = current_user.decks.find_by_id(params[:as_deck])
+    end
+
+    if params[:vs_deck].present?
+      @vs_deck = current_user.decks.find_by_id(params[:vs_deck])
+    end
+
+    if params[:as_hero].present?
+      @as_hero = Hero.where('LOWER(name) = ?', params[:as_hero]).first
+    end
+
+    if params[:vs_hero].present?
+      @vs_hero = Hero.where('LOWER(name) = ?', params[:vs_hero]).first
+    end
   end
 
   def min_date_for_time_range(time_range)
@@ -67,11 +89,10 @@ module Stats
     return wins.to_f / total
   end
 
-  def group_results_by(results, group_item_or_items, id_key, filter_by_key, filter_by_value = nil)
+  def group_results_by(results, group_items, id_key)
     Hash[
-      sort_grouped_results([group_item_or_items].flatten.collect do |group_item|
+      sort_grouped_results(group_items.collect do |group_item|
         group_results = results.where(id_key => group_item.id)
-        group_results = group_results.where(filter_by_key => filter_by_value) if filter_by_value
         [ group_item, { total: group_results.count, wins: group_results.wins.count, losses: group_results.losses.count } ]
       end)
     ]

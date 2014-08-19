@@ -12,6 +12,17 @@
 
   <%= render partial: '/layouts/notifications' %>
 
+  <% if @as_hero %>
+  <p>
+    <strong>As:</strong> <%= hero_label(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
+  </p>
+  <% end %>
+  <% if @vs_hero %>
+  <p>
+    <strong>Versus:</strong> <%= hero_label(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
+  </p>
+  <% end %>
+
   <table class="table table-hover table-condensed overall-stats">
     <thead>
       <tr>
@@ -28,19 +39,9 @@
     </tbody>
   </table>
 
-  <% if @as_hero %>
-  <p>
-    <strong>As:</strong> <%= hero_label(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
-  </p>
-  <% end %>
-  <% if @vs_hero %>
-  <p>
-    <strong>Versus:</strong> <%= hero_label(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
-  </p>
-  <% end %>
-
   <%
     %i[as vs].each do |type| 
+      next if instance_variable_get("@#{type}_hero")
       key = "#{type}_class".to_sym
   %>
     <table class="table table-hover table-condensed class-stats">
