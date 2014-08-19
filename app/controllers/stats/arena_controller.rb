@@ -8,7 +8,12 @@ class Stats::ArenaController < ApplicationController
       @hero = Hero.where('LOWER(name) = ?', params[:hero]).first
     end
 
-    num_wins_per_arena = user_arenas
+    arenas = user_arenas
+    arenas = arenas.where('arenas.hero_id = ?', @hero.id) if @hero
+
+    results = Result.where(arena: arenas)
+
+    num_wins_per_arena = arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
       .group('arenas.id', 'arenas.hero_id')
       .count('results.id')
@@ -17,16 +22,15 @@ class Stats::ArenaController < ApplicationController
 
     # count it up!
     num_wins_per_arena.each do |(_, hero_id), num_wins|
-      next if @hero and hero_id != @hero.id
       count_by_wins[num_wins] += 1
     end
 
     @stats = {
       overall: {
-        wins: user_results.arena.wins.count,
-        losses: user_results.arena.losses.count,
-        total: user_results.count,
-        runs: user_arenas.count
+        wins: results.arena.wins.count,
+        losses: results.arena.losses.count,
+        total: results.count,
+        runs: arenas.count
       },
       count_by_wins: count_by_wins
     }
