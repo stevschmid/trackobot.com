@@ -52,9 +52,9 @@
         <thead>
           <tr>
             <th class="deck">Deck</th>
-            <th class="share">Share</th>
+            <th class="share"><%= sortable_header_link('Share', :share) %></th>
             <th class="win-loss">Win/Loss</th>
-            <th class="winrate">Winrate</th>
+            <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
           </tr>
         </thead>
         <tbody>
