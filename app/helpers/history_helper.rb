@@ -1,30 +1,19 @@
 module HistoryHelper
 
-  def table_of_cards_played(card_histories)
-    return nil if card_histories.empty?
-
-    cards = {me: [], opponent: []}
-
-    # use ruby approach because we use eager loaded objects
-    card_histories.each do |card_history|
-      if card_history.me?
-        cards[:me] << card_history.card
-      else
-        cards[:opponent] << card_history.card
-      end
-    end
-
-    result = {}
-
-    %i[me opponent].each do |x|
-      cards_by_mana = cards[x].group_by { |card| card }.sort_by { |card, _| card.mana || -1 }
-      next if cards_by_mana.empty?
-      result[x] = "<table class='card_history'>" + cards_by_mana.collect do |card, array|
-        "<tr><td><div class='mana'>#{card.mana || 0}</div>&nbsp;#{card.name} #{"(#{array.length})" if array.length > 1}</td></tr>"
-      end.join + "</table>"
-    end
-
-    result
+  def card_history_label_additions(card_histories)
+    return {} if card_histories.empty?
+    content = escape_once(render(partial: 'card_history', locals: {card_histories: card_histories}))
+    {
+      class: 'has-popover dotted-baseline',
+      data: {
+        container: 'body',
+        title: "Cards played (#{card_histories.length})",
+        trigger: 'hover',
+        placement: 'bottom',
+        content: content,
+        html: true
+      }
+    }
   end
 
   def timeline_header_of_result(result)

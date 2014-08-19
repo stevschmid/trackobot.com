@@ -9,6 +9,8 @@ class HistoryController < ApplicationController
     end
     @results = @unpaged_results.page(params[:page])
     @results.includes!(:card_histories => :card)
+            .includes!(:player_card_histories => :card)
+            .includes!(:opponent_card_histories => :card)
             .includes!(:hero)
             .includes!(:opponent)
 

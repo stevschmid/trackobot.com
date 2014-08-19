@@ -22,30 +22,9 @@
     <table class="table table-hover table-condensed history">
       <tbody>
       <% @results.each do |result| %>
-        <%
-          additions_for_cards_played = {
-                                        class: 'has-popover dotted-baseline',
-                                        data: {
-                                          container: 'body',
-                                          title: 'Cards played',
-                                          trigger: 'hover',
-                                          placement: 'bottom',
-                                          html: true
-                                        }
-                                      }
-
-          player_additions = {}
-          opponent_additions = {}
-
-          if cards_played = table_of_cards_played(result.card_histories)
-            player_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:me]}) if cards_played[:me]
-            opponent_additions = additions_for_cards_played.deep_merge(data: {content: cards_played[:opponent]}) if cards_played[:opponent]
-          end
-
-        %>
         <tr>
-          <td><%= player_label_for_result(result, player_additions) %></td>
-          <td> vs <%= opponent_label_for_result(result, opponent_additions) %>
+          <td><%= player_label_for_result result, card_history_label_additions(result.player_card_histories) %></td>
+          <td> vs <%= opponent_label_for_result result, card_history_label_additions(result.opponent_card_histories) %>
           </td>
           <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
           <td>
