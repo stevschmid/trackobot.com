@@ -2,7 +2,14 @@
   <ul class="nav nav-tabs pull-right">
     <%= nav_link 'History', profile_history_index_path, true %>
     <%= nav_link 'Arena', profile_arena_index_path %>
-    <%= nav_link 'Stats', profile_stats_path %>
+
+    <li class="dropdown <%= params[:controller].include?('stats') ? 'active' : '' %>">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stats <span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <%= nav_link 'Detailed', profile_stats_detailed_index_path %>
+        <%= nav_link 'Arena', profile_stats_arena_index_path %>
+      </ul>
+    </li>
 
     <li class="dropdown <%= params[:controller].include?('settings') ? 'active' : '' %>">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= icon('gear') %> <span class="caret"></span></a>

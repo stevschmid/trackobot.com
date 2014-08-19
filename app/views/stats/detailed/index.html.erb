@@ -1,4 +1,4 @@
-<%= profile_page 'Stats', json: true, csv: false do %>
+<%= profile_page 'Detailed Stats', json: true, csv: false do %>
   <%= render partial: '/layouts/notifications' %>
 
   <div class="row">
@@ -7,7 +7,7 @@
     </div>
     <div class="col-sm-8">
       <h2>
-        <%= render partial: '../toolbar' %>
+        <%= render partial: '/stats/toolbar' %>
       </h2>
     </div>
   </div>

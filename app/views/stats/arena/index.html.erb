@@ -1,10 +1,12 @@
+<%= profile_page 'Arena Stats', json: true do %>
+
 <h2>Arena Statistics</h2>
 
 <%
-  total_arena_runs = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
+  total_arena_runs = @stats.inject(0) do |sum, (num_wins, count_per_hero)|
     sum + count_per_hero.values.inject(&:+)
   end
-  total_wins = @stats[:arena].inject(0) do |sum, (num_wins, count_per_hero)|
+  total_wins = @stats.inject(0) do |sum, (num_wins, count_per_hero)|
     sum + num_wins * count_per_hero.values.inject(&:+)
   end
 %>
@@ -20,7 +22,7 @@
   </thead>
   <tbody>
 
-  <% @stats[:arena].each do |num_wins, count_per_hero| %>
+  <% @stats.each do |num_wins, count_per_hero| %>
   <tr>
     <td class="wins"><%= num_wins %></td>
     <td class="achieved"><%= 
@@ -58,4 +60,4 @@
   </tbody>
 </table>
 
-
+<% end %>

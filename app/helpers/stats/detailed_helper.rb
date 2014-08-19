@@ -1,0 +1,2 @@
+module Stats::DetailedHelper
+end

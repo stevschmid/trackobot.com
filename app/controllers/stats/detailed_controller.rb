@@ -1,4 +1,4 @@
-class StatsController < ApplicationController
+class Stats::DetailedController < ApplicationController
   respond_to :json, :html
 
   TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month]
@@ -14,8 +14,6 @@ class StatsController < ApplicationController
       decks: {
         vs: {},
         as: {}
-      },
-      arena: {
       }
     }
 
@@ -45,34 +43,11 @@ class StatsController < ApplicationController
     user_results = user_results.where('created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
     user_results = user_results.where(mode: Result.modes[@mode]) if @mode
 
-    user_arenas = current_user.arenas
-    user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
-
     @stats[:classes][:as] = group_results_by(user_results, Hero.all, @as_hero, :hero_id, :opponent_id, @vs_hero.try(:id))
     @stats[:classes][:vs] = group_results_by(user_results, Hero.all, @vs_hero, :opponent_id, :hero_id, @as_hero.try(:id))
 
     @stats[:decks][:as] = group_results_by(user_results, current_user.decks, @as_deck, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
     @stats[:decks][:vs] = group_results_by(user_results, current_user.decks, @vs_deck, :opponent_deck_id, :deck_id, @as_deck.try(:id))
-
-    num_wins_per_arena = user_arenas
-      .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
-      .group('arenas.id', 'arenas.hero_id')
-      .count('results.id')
-
-    wins_per_run_and_hero  = {}
-    num_wins_per_arena.each do |(_, hero_id), num_wins|
-      run = (wins_per_run_and_hero[num_wins] ||= {})
-      run[hero_id] ||= 0
-      run[hero_id] += 1
-    end
-
-    @stats[:arena] = Hash[wins_per_run_and_hero.collect do |(wins, count_per_hero)|
-      # map hero_id to name
-      [
-        wins,
-        Hash[count_per_hero.collect { |(hero_id, count)| [Hero.find(hero_id).name, count] }.sort_by { |_, count| count }.reverse ]
-      ]
-    end.sort]
 
     @stats[:overall][:wins] = user_results.wins.count
     @stats[:overall][:losses] = user_results.losses.count

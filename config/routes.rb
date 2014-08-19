@@ -7,8 +7,12 @@ Rails.application.routes.draw do
     get '/' => 'history#index'
     resources :history, only: [:index]
     resources :arena, only: [:index]
-    resources :stats, only: [:index]
     resources :results, only: [:create, :show]
+
+    namespace :stats do
+      resources :detailed, only: :index
+      resources :arena, only: :index
+    end
 
     namespace :settings do
       resource :api, only: [:show, :update]
