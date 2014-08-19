@@ -1,5 +1,5 @@
 module StatsHelper
-  def win_rate(num_wins, num_losses)
+  def winrate(num_wins, num_losses)
     return '-' if num_wins + num_losses == 0
     ratio = if num_wins + num_losses > 0
               num_wins.to_f / (num_wins + num_losses)
@@ -25,5 +25,16 @@ module StatsHelper
         content_tag(:span, "#{x}/#{total}", class: 'pie')
       ].join(' ').html_safe
     end
+  end
+
+  def sortable_header_link(label, sort_by)
+    if @sort_by == sort_by
+      order = @order == :asc ? :desc : :asc
+      label = [label, icon("sort-#{@order}")].join(' ').html_safe
+    else
+      order = Stats::DEFAULT_ORDER
+    end
+
+    link_to label, params.merge(sort_by: sort_by, order: order)
   end
 end

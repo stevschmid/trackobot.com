@@ -22,7 +22,7 @@
     <tbody>
       <tr>
         <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
-        <td class="winrate"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
+        <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
         </td>
       </tr>
     </tbody>
@@ -44,9 +44,9 @@
       <thead>
         <tr>
           <th class="hero">Class</th>
-          <th class="share">Share</th>
+          <th class="share"><%= sortable_header_link('Share', :share) %></th>
           <th class="win-loss">Win/Loss</th>
-          <th class="winrate">Winrate</th>
+          <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
         </tr>
       </thead>
       <tbody>
@@ -62,7 +62,7 @@
         <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
         <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
         <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-        <td class="winrate"><%= win_rate(stats[:wins], stats[:losses]) %></td>
+        <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
       </tr>
       <% end %>
     </table>

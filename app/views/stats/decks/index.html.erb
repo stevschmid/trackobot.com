@@ -20,7 +20,7 @@
     <tbody>
       <tr>
         <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
-        <td class="winrate"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
+        <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
         </td>
       </tr>
     </tbody>
@@ -67,7 +67,7 @@
           <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
           <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
           <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-          <td class="winrate"><%= win_rate(stats[:wins], stats[:losses]) %></td>
+          <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
         </tr>
         <% end %>
       </table>

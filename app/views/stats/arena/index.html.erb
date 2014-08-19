@@ -25,7 +25,7 @@
       <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
       <td class="runs"><%= @stats[:overall][:runs] %></td>
       <td class="wins-average"><%= @stats[:overall][:runs] == 0 ? '-' : "%.1f" % (@stats[:overall][:wins].to_f / @stats[:overall][:runs]) %></td>
-      <td class="winrate"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+      <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
     </tr>
   </tbody>
 </table>
