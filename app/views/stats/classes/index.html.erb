@@ -52,12 +52,12 @@
       <tbody>
 
       <%
-        total = @stats[:classes][type].inject(0) do |sum, (hero, stats)|
+        total = @stats[:by_class][type].inject(0) do |sum, (hero, stats)|
           sum + stats[:wins] + stats[:losses]
         end
       %>
 
-      <% @stats[:classes][type].each do |hero, stats| %>
+      <% @stats[:by_class][type].each do |hero, stats| %>
       <tr>
         <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
         <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>

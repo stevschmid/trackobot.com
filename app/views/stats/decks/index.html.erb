@@ -57,12 +57,12 @@
         <tbody>
 
         <%
-          total = @stats[:decks][type].inject(0) do |sum, (deck, stats)|
+          total = @stats[:by_deck][type].inject(0) do |sum, (deck, stats)|
             sum + stats[:wins] + stats[:losses]
           end
         %>
 
-        <% @stats[:decks][type].each do |deck, stats| %>
+        <% @stats[:by_deck][type].each do |deck, stats| %>
         <tr>
           <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
           <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
