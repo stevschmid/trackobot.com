@@ -20,11 +20,15 @@ class Stats::DecksController < ApplicationController
       @vs_deck = current_user.decks.find_by_id(params[:vs_deck])
     end
 
-    @stats[:by_deck][:as] = group_results_by(user_results, @as_deck || current_user.decks, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
-    @stats[:by_deck][:vs] = group_results_by(user_results, @vs_deck || current_user.decks, :opponent_deck_id, :deck_id, @as_deck.try(:id))
-
-    @stats[:overall][:wins] = user_results.wins.count
-    @stats[:overall][:losses] = user_results.losses.count
+    @stats = {
+      overall: {
+        wins: user_results.wins.count,
+        losses: user_results.losses.count,
+        total: user_results.count
+      },
+      as_deck: group_results_by(user_results, @as_deck || current_user.decks, :deck_id, :opponent_deck_id, @vs_deck.try(:id)),
+      vs_deck: group_results_by(user_results, @vs_deck || current_user.decks, :opponent_deck_id, :deck_id, @as_deck.try(:id))
+    }
 
     respond_to do |format|
       format.html

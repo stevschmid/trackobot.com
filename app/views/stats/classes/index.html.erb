@@ -39,7 +39,10 @@
   </p>
   <% end %>
 
-  <% %i[as vs].each do |type| %>
+  <%
+    %i[as vs].each do |type| 
+      key = "#{type}_class".to_sym
+  %>
     <table class="table table-hover table-condensed class-stats">
       <thead>
         <tr>
@@ -51,16 +54,10 @@
       </thead>
       <tbody>
 
-      <%
-        total = @stats[:by_class][type].inject(0) do |sum, (hero, stats)|
-          sum + stats[:wins] + stats[:losses]
-        end
-      %>
-
-      <% @stats[:by_class][type].each do |hero, stats| %>
+      <% @stats[key].each do |hero, stats| %>
       <tr>
         <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
-        <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
+        <td class="share"><%= percentage(stats[:total], @stats[:overall][:total]) %></td>
         <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
         <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
       </tr>
