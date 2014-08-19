@@ -51,14 +51,12 @@ module Stats
     return wins.to_f / total
   end
 
-  def group_results_by(results, all_group_elements, group_element, group_id_key, filter_key, filter_value = nil)
+  def group_results_by(results, group_item_or_items, id_key, filter_by_key, filter_by_value = nil)
     Hash[
-      [ group_element || all_group_elements ].flatten.collect do |group|
-        group_results = results.where(group_id_key => group.id)
-        if filter_value
-          group_results = group_results.where(filter_key => filter_value)
-        end
-        [ group, { total: group_results.count, wins: group_results.wins.count, losses: group_results.losses.count } ]
+      [ group_item_or_items ].flatten.collect do |group_item|
+        group_results = results.where(id_key => group_item.id)
+        group_results = group_results.where(filter_by_key => filter_by_value) if filter_by_value
+        [ group_item, { total: group_results.count, wins: group_results.wins.count, losses: group_results.losses.count } ]
       end.sort_by { |_, stats| [ win_rate(stats[:wins], stats[:losses]), stats[:total] ] }.reverse # sort desc
     ]
   end

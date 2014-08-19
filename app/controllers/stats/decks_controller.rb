@@ -20,8 +20,8 @@ class Stats::DecksController < ApplicationController
       @vs_deck = current_user.decks.find_by_id(params[:vs_deck])
     end
 
-    @stats[:decks][:as] = group_results_by(user_results, current_user.decks, @as_deck, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
-    @stats[:decks][:vs] = group_results_by(user_results, current_user.decks, @vs_deck, :opponent_deck_id, :deck_id, @as_deck.try(:id))
+    @stats[:decks][:as] = group_results_by(user_results, @as_deck || current_user.decks, :deck_id, :opponent_deck_id, @vs_deck.try(:id))
+    @stats[:decks][:vs] = group_results_by(user_results, @vs_deck || current_user.decks, :opponent_deck_id, :deck_id, @as_deck.try(:id))
 
     @stats[:overall][:wins] = user_results.wins.count
     @stats[:overall][:losses] = user_results.losses.count

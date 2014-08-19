@@ -20,8 +20,8 @@ class Stats::ClassesController < ApplicationController
       @vs_hero = Hero.where('LOWER(name) = ?', params[:vs_hero]).first
     end
 
-    @stats[:classes][:as] = group_results_by(user_results, Hero.all, @as_hero, :hero_id, :opponent_id, @vs_hero.try(:id))
-    @stats[:classes][:vs] = group_results_by(user_results, Hero.all, @vs_hero, :opponent_id, :hero_id, @as_hero.try(:id))
+    @stats[:classes][:as] = group_results_by(user_results, @as_hero || Hero.all, :hero_id, :opponent_id, @vs_hero.try(:id))
+    @stats[:classes][:vs] = group_results_by(user_results, @vs_hero || Hero.all, :opponent_id, :hero_id, @as_hero.try(:id))
 
     @stats[:overall][:wins] = user_results.wins.count
     @stats[:overall][:losses] = user_results.losses.count
