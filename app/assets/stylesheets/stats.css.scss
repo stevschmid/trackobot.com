@@ -30,7 +30,7 @@ table.arena-stats {
   table-layout: fixed;
 
   th, td {
-    &.achieved, &.share, &.hero {
+    &.achieved, &.share {
       text-align: center;
     }
 
@@ -39,11 +39,7 @@ table.arena-stats {
     }
 
     &.wins {
-      width: 15%;
-    }
-
-    &.achieved {
-      width: 15%;
+      width: 20%;
     }
   }
 }

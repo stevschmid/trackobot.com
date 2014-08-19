@@ -1,0 +1,11 @@
+<div class="btn-group btn-group-sm">
+  <button type="button" class="btn <%= @hero ? 'btn-primary' : 'btn-default' %> dropdown-toggle" data-toggle="dropdown">
+    <%= (@hero && @hero.name.capitalize) || 'Class' %> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <%= content_tag(:li, class: (@hero.nil? ? 'active' : '')) { link_to 'All classes', params.except(:hero) } %>
+    <% Hero.all.each do |hero| %>
+      <%= content_tag(:li, class: (@hero == hero ? 'active' : '')) { link_to hero.name, params.merge(hero: hero.name.downcase) } %>
+    <% end %>
+  </ul>
+</div>

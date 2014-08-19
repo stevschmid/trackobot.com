@@ -1,0 +1,9 @@
+<%
+  selectors = local_assigns.fetch(:selectors, %i[mode timerange])
+%>
+
+<div class="btn-toolbar pull-right">
+  <% selectors.each do |selector| %>
+    <%= render partial: "/stats/shared/#{selector}_selector", locals: local_assigns %>
+  <% end %>
+</div>

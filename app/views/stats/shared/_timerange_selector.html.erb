@@ -1,0 +1,7 @@
+<div class="btn-group btn-group-sm">
+  <%= link_to 'All-time', params.except(:time_range), class: %w[btn btn-default] + (@time_range ? [] : ['active'])  %>
+  <%= link_to 'Last 24 hours', params.merge(time_range: :last_24_hours), class: %w[btn btn-default] + (@time_range == :last_24_hours ? ['active'] : [])  %>
+  <%= link_to 'Last 3 days', params.merge(time_range: :last_3_days), class: %w[btn btn-default] + (@time_range == :last_3_days ? ['active'] : [])  %>
+  <%= link_to 'Current month', params.merge(time_range: :current_month), class: %w[btn btn-default] + (@time_range == :current_month ? ['active'] : []) %>
+</div>
+

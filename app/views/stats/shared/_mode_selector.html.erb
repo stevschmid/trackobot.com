@@ -1,0 +1,14 @@
+<%
+  modes = local_assigns.fetch(:modes, %i[ranked casual arena friendly])
+%>
+<div class="btn-group btn-group-sm">
+  <button type="button" class="btn <%= @mode ? 'btn-primary' : 'btn-default' %> dropdown-toggle" data-toggle="dropdown">
+    <%= (@mode && @mode.capitalize) || 'Mode' %> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <%= content_tag(:li, class: (@mode.nil? ? 'active' : '')) { link_to 'All modes', params.except(:mode) } %>
+    <% modes.each do |mode| %>
+      <%= content_tag(:li, class: (@mode == mode ? 'active' : '')) { link_to mode.capitalize, params.merge(mode: mode) } %>
+    <% end %>
+  </ul>
+</div>

@@ -4,38 +4,32 @@ class Stats::ArenaController < ApplicationController
   include Stats
 
   def index
-    @stats = {
-      overall: {
-      },
-      arena: {
-        vs: {},
-        as: {}
-      }
-    }
+    if params[:hero].present?
+      @hero = Hero.where('LOWER(name) = ?', params[:hero]).first
+    end
 
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
       .group('arenas.id', 'arenas.hero_id')
       .count('results.id')
 
-    wins_per_run_and_hero  = {}
+    count_by_wins = Array.new(13, 0)
+
+    # count it up!
     num_wins_per_arena.each do |(_, hero_id), num_wins|
-      run = (wins_per_run_and_hero[num_wins] ||= {})
-      run[hero_id] ||= 0
-      run[hero_id] += 1
+      next if @hero and hero_id != @hero.id
+      count_by_wins[num_wins] += 1
     end
 
-    @stats[:overall][:wins] = user_results.arena.wins.count
-    @stats[:overall][:losses] = user_results.arena.losses.count
-    @stats[:overall][:runs] = user_arenas.count
-
-    @stats[:arena] = Hash[wins_per_run_and_hero.collect do |(wins, count_per_hero)|
-      # map hero_id to name
-      [
-        wins,
-        Hash[count_per_hero.collect { |(hero_id, count)| [Hero.find(hero_id).name, count] }.sort_by { |_, count| count }.reverse ]
-      ]
-    end.sort]
+    @stats = {
+      overall: {
+        wins: user_results.arena.wins.count,
+        losses: user_results.arena.losses.count,
+        total: user_results.count,
+        runs: user_arenas.count
+      },
+      count_by_wins: count_by_wins
+    }
 
     respond_to do |format|
       format.html
