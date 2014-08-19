@@ -1,11 +1,11 @@
 <%= profile_page 'Deck Statistics', json: true do %>
   <div class="row">
     <div class="col-sm-4">
-      <h2>Overall</h2>
+      <h3>Deck Statistics</h3>
     </div>
     <div class="col-sm-8">
       <h2>
-        <%= render partial: '/stats/toolbar' %>
+        <%= render partial: '/stats/toolbar', locals: { disable_arena_mode_selection: true } %>
       </h2>
     </div>
   </div>
@@ -26,8 +26,8 @@
     </tbody>
   </table>
 
-  <h2>Deck Statistics</h2>
   <%= render partial: '/layouts/notifications' %>
+
   <% if @as_deck %>
   <p>
     <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>

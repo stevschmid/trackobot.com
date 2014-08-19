@@ -1,15 +1,34 @@
 <%= profile_page 'Arena Stats', json: true do %>
 
-<h2>Arena Statistics</h2>
+<div class="row">
+  <div class="col-sm-4">
+    <h3>Arena Statistics</h3>
+  </div>
+  <div class="col-sm-8">
+    <h2>
+      <%= render partial: '/stats/toolbar', locals: { show_mode: false } %>
+    </h2>
+  </div>
+</div>
 
-<%
-  total_arena_runs = @stats.inject(0) do |sum, (num_wins, count_per_hero)|
-    sum + count_per_hero.values.inject(&:+)
-  end
-  total_wins = @stats.inject(0) do |sum, (num_wins, count_per_hero)|
-    sum + num_wins * count_per_hero.values.inject(&:+)
-  end
-%>
+<table class="table table-hover table-condensed arena-stats">
+  <thead>
+    <tr>
+      <th class="win-loss">Win - Loss</th>
+      <th class="runs">Runs</th>
+      <th class="wins-average">Wins on average</th>
+      <th class="winrate">Winrate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
+      <td class="runs"><%= @stats[:overall][:runs] %></td>
+      <td class="wins-average"><%= @stats[:overall][:runs] == 0 ? '-' : "%.1f" % (@stats[:overall][:wins].to_f / @stats[:overall][:runs]) %></td>
+      <td class="winrate"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+    </tr>
+  </tbody>
+</table>
 
 <table class="table table-hover table-condensed arena-stats">
   <thead>
@@ -22,7 +41,7 @@
   </thead>
   <tbody>
 
-  <% @stats.each do |num_wins, count_per_hero| %>
+  <% @stats[:arena].each do |num_wins, count_per_hero| %>
   <tr>
     <td class="wins"><%= num_wins %></td>
     <td class="achieved"><%= 
@@ -30,7 +49,7 @@
       "#{times_achieved}x"
     %></td>
     <td class="share">
-      <%= percentage( times_achieved, total_arena_runs ) %>
+      <%= percentage( times_achieved, @stats[:overall][:runs] ) %>
     </td>
     <td class="hero">
       <%=
@@ -41,23 +60,6 @@
     </td>
   </tr>
   <% end %>
-</table>
-
-<table class="table table-hover table-condensed arena-stats">
-  <thead>
-    <tr>
-      <th class="total-wins">Total wins</th>
-      <th class="total-arenas">Total arenas</th>
-      <th class="wins-average">Wins on average</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="total-wins"><%= total_wins %></td>
-      <td class="total-arenas"><%= total_arena_runs %></td>
-      <td class="wins-average"><%= total_arena_runs == 0 ? '-' : "%.1f" % (total_wins.to_f / total_arena_runs) %></td>
-    </tr>
-  </tbody>
 </table>
 
 <% end %>

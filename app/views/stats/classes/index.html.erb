@@ -1,7 +1,7 @@
 <%= profile_page 'Class Statistics', json: true do %>
   <div class="row">
     <div class="col-sm-4">
-      <h2>Overall</h2>
+      <h3>Class Statistics</h3>
     </div>
     <div class="col-sm-8">
       <h2>
@@ -9,6 +9,8 @@
       </h2>
     </div>
   </div>
+
+  <%= render partial: '/layouts/notifications' %>
 
   <table class="table table-hover table-condensed overall-stats">
     <thead>
@@ -26,8 +28,6 @@
     </tbody>
   </table>
 
-  <h2>Class Statistics</h2>
-  <%= render partial: '/layouts/notifications' %>
   <% if @as_hero %>
   <p>
     <strong>As:</strong> <%= hero_label(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>

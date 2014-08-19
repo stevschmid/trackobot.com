@@ -4,6 +4,15 @@ class Stats::ArenaController < ApplicationController
   include Stats
 
   def index
+    @stats = {
+      overall: {
+      },
+      arena: {
+        vs: {},
+        as: {}
+      }
+    }
+
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
       .group('arenas.id', 'arenas.hero_id')
@@ -16,7 +25,11 @@ class Stats::ArenaController < ApplicationController
       run[hero_id] += 1
     end
 
-    @stats = Hash[wins_per_run_and_hero.collect do |(wins, count_per_hero)|
+    @stats[:overall][:wins] = user_results.arena.wins.count
+    @stats[:overall][:losses] = user_results.arena.losses.count
+    @stats[:overall][:runs] = user_arenas.count
+
+    @stats[:arena] = Hash[wins_per_run_and_hero.collect do |(wins, count_per_hero)|
       # map hero_id to name
       [
         wins,
