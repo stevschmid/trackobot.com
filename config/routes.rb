@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     resources :results, only: [:create, :show]
 
     namespace :stats do
-      resources :detailed, only: :index
+      resources :classes, only: :index
+      resources :decks, only: :index
       resources :arena, only: :index
     end
 

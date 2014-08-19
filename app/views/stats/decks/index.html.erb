@@ -1,0 +1,76 @@
+<%= profile_page 'Deck Statistics', json: true do %>
+  <div class="row">
+    <div class="col-sm-4">
+      <h2>Overall</h2>
+    </div>
+    <div class="col-sm-8">
+      <h2>
+        <%= render partial: '/stats/toolbar' %>
+      </h2>
+    </div>
+  </div>
+
+  <table class="table table-hover table-condensed overall-stats">
+    <thead>
+      <tr>
+        <th class="win-loss">Win - Loss</th>
+        <th class="winrate">Winrate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
+        <td class="winrate"><%= win_rate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Deck Statistics</h2>
+  <%= render partial: '/layouts/notifications' %>
+  <% if @as_deck %>
+  <p>
+    <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>
+  </p>
+  <% end %>
+  <% if @vs_deck %>
+  <p>
+    <strong>Versus:</strong> <%= label_for_deck(@vs_deck) %> <%= link_to icon('times'), params.except(:vs_deck) %>
+  </p>
+  <% end %>
+
+  <% if current_user.decks.empty? %>
+  <p class="alert alert-info">
+    No decks defined. Define decks in the <%= link_to 'settings', profile_settings_decks_path %>.
+  </p>
+  <% else %>
+    <% %i[as vs].each do |type| %>
+      <table class="table table-hover table-condensed deck-stats">
+        <thead>
+          <tr>
+            <th class="deck">Deck</th>
+            <th class="share">Share</th>
+            <th class="win-loss">Win/Loss</th>
+            <th class="winrate">Winrate</th>
+          </tr>
+        </thead>
+        <tbody>
+
+        <%
+          total = @stats[:decks][type].inject(0) do |sum, (deck, stats)|
+            sum + stats[:wins] + stats[:losses]
+          end
+        %>
+
+        <% @stats[:decks][type].each do |deck, stats| %>
+        <tr>
+          <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
+          <td class="share"><%= percentage(stats[:wins] + stats[:losses], total) %></td>
+          <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
+          <td class="winrate"><%= win_rate(stats[:wins], stats[:losses]) %></td>
+        </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% end %>
+<% end %>

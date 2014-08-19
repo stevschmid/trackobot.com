@@ -1,0 +1,2 @@
+module Stats::ClassesHelper
+end
