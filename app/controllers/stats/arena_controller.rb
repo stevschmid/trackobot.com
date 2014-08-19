@@ -1,10 +1,9 @@
 class Stats::ArenaController < ApplicationController
   respond_to :json, :html
 
-  def index
-    user_arenas = current_user.arenas
-    user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
+  include Stats
 
+  def index
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
       .group('arenas.id', 'arenas.hero_id')
