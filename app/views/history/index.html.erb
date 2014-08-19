@@ -1,48 +1,39 @@
-<div class="container">
-  <%= render '/layouts/header' %>
-  <% title 'History' %>
+<%= profile_page 'History', json: true, csv: true do %>
+  <h2>History</h2>
+  <%= render partial: '/layouts/notifications' %>
 
-  <div>
-    <h2>History</h2>
+  <% if Result.modes.has_key?(params[:mode]) %>
+  <p>
+    <strong>Mode:</strong> <%= params[:mode].capitalize %> <%= link_to icon('times'), params.except(:mode) %>
+  </p>
+  <% end %>
 
-    <%= render partial: '/layouts/notifications' %>
+  <% if @arena %>
+  <p>
+    <strong>Arena Run:</strong> <%= hero_label(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
+  </p>
+  <% end %>
 
-    <% if Result.modes.has_key?(params[:mode]) %>
-    <p>
-      <strong>Mode:</strong> <%= params[:mode].capitalize %> <%= link_to icon('times'), params.except(:mode) %>
-    </p>
+  <table class="table table-hover table-condensed history">
+    <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= player_label_for_result result, card_history_additions(result.player_card_histories) %></td>
+        <td>vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
+        <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
+        <td><%= button_tag image_tag('crossed_swords_14.png'), timeline_additions(result) if result.card_histories.any? %></td>
+        <td><%= local_time_ago(result.created_at) %></td>
+        <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %></td>
+      </tr>
     <% end %>
+    </tbody>
+  </table>
 
-    <% if @arena %>
-    <p>
-      <strong>Arena Run:</strong> <%= hero_label(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
-    </p>
-    <% end %>
-
-    <table class="table table-hover table-condensed history">
-      <tbody>
-      <% @results.each do |result| %>
-        <tr>
-          <td><%= player_label_for_result result, card_history_additions(result.player_card_histories) %></td>
-          <td>vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
-          <td><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
-          <td><%= button_tag image_tag('crossed_swords_14.png'), timeline_additions(result) if result.card_histories.any? %></td>
-          <td><%= local_time_ago(result.created_at) %></td>
-          <td><%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-    <div class="text-right">
-      <%= page_entries_info @results %>
-    </div>
-
-    <div class="text-center">
-      <%= paginate @results, window: 1 %>
-    </div>
-
-    <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: true} %>
+  <div class="text-right">
+    <%= page_entries_info @results %>
   </div>
-</div>
 
+  <div class="text-center">
+    <%= paginate @results, window: 1 %>
+  </div>
+<% end %>

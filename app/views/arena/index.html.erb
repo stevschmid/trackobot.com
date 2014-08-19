@@ -1,32 +1,24 @@
-<div class="container">
-  <%= render '/layouts/header' %>
-  <% title 'Arena' %>
+<%= profile_page 'Arena', json: true, csv: false do %>
+  <h2>Arena</h2>
+  <%= render partial: '/layouts/notifications' %>
 
-  <div>
-    <h2>Arena</h2>
-    <%= render partial: '/layouts/notifications' %>
+  <table class="table table-hover table-condensed">
+    <tbody>
+    <% @arenas.each do |arena| %>
+      <tr>
+        <td><%= hero_label(arena.hero.name) %></td>
+        <td><%= link_to arena_result(arena), profile_history_index_path(arena_id: arena.id) %></td>
+        <td><%= local_time_ago(arena.results.order('created_at DESC').first.created_at) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-    <table class="table table-hover table-condensed">
-      <tbody>
-      <% @arenas.each do |arena| %>
-        <tr>
-          <td><%= hero_label(arena.hero.name) %></td>
-          <td><%= link_to arena_result(arena), profile_history_index_path(arena_id: arena.id) %></td>
-          <td><%= local_time_ago(arena.results.order('created_at DESC').first.created_at) %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-    <div class="text-right">
-      <%= page_entries_info @arenas %>
-    </div>
-
-    <div class="text-center">
-      <%= paginate @arenas, window: 1 %>
-    </div>
-    
-    <%= render partial: 'layouts/profile_footer', locals: {json: true, csv: false} %>
+  <div class="text-right">
+    <%= page_entries_info @arenas %>
   </div>
-</div>
 
+  <div class="text-center">
+    <%= paginate @arenas, window: 1 %>
+  </div>
+<% end %>

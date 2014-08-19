@@ -1,12 +1,5 @@
-<div class="container">
-  <%= render '/layouts/header' %>
-  <% title 'New Deck' %>
-
-  <div>
-    <h2>Settings</h2>
-    <h3>New Deck</h3>
-    <%= render partial: 'form' %>
-    <%= render partial: 'layouts/profile_footer' %>
-  </div>
-</div>
-
+<%= profile_page 'New Deck' do %>
+  <h2>Settings</h2>
+  <h3>New Deck</h3>
+  <%= render partial: 'form' %>
+<% end %>

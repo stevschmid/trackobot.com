@@ -1,4 +1,16 @@
 module ApplicationHelper
+
+  def profile_page(title, footer_info = {}, &block)
+    title(title)
+    content_tag(:div, class: 'container') do
+      [
+        render(partial: '/layouts/header'),
+        capture(&block),
+        render(partial: '/layouts/footer', locals: footer_info)
+      ].join.html_safe
+    end
+  end
+
   def nav_link(link_text, link_path, root = false)
     current = current_page?(link_path)
     current ||= root && current_page?(profile_path)

@@ -1,50 +1,43 @@
-<div class="container">
-  <%= render '/layouts/header' %>
-  <% title 'Decks' %>
+<%= profile_page 'Decks' do %>
+  <h2>Settings</h2>
+  <h3>Decks</h3>
 
-  <div>
-    <h2>Settings</h2>
-    <h3>Decks</h3>
-
-    <div class="alert alert-info"><p>
-      <p>
-        Add decks to refine your match-ups! Decks are composed of key cards which will <strong>uniquely</strong> identify a deck.
-      </p>
-      <p>
-        If <strong>any</strong> of the listed key card of a deck matches, the deck is assigned to the result. 
-      </p>
-      <p>
-        See <%= link_to 'a configuration example', image_path('decks_settings_example.png'), target: '_blank' %>
-        and the <%= link_to 'the resulting changes', image_path('decks_history_example.png'), target: '_blank' %>.
-      </p>
-    </div>
-
-    <table class="table table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Key cards</th>
-          <th>&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @decks.each do |deck| %>
-        <tr>
-          <td><%= hero_label(deck.hero.name, deck.name) %></td>
-          <td>
-            <%= deck.cards.order(:name).map(&:name).join(', ') %> 
-          </td>
-          <td class="text-right">
-            <%= link_to icon('edit'), edit_profile_settings_deck_path(deck), class: 'show-on-hover' %> 
-            <%= link_to icon('minus-circle'), profile_settings_deck_path(deck), method: :delete, class: 'show-on-hover', data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-    <%= link_to 'Add Deck', new_profile_settings_deck_path, class: 'btn btn-default' %>
-    <%= render partial: 'layouts/profile_footer' %>
+  <div class="alert alert-info"><p>
+    <p>
+      Add decks to refine your match-ups! Decks are composed of key cards which will <strong>uniquely</strong> identify a deck.
+    </p>
+    <p>
+      If <strong>any</strong> of the listed key card of a deck matches, the deck is assigned to the result. 
+    </p>
+    <p>
+      See <%= link_to 'a configuration example', image_path('decks_settings_example.png'), target: '_blank' %>
+      and the <%= link_to 'the resulting changes', image_path('decks_history_example.png'), target: '_blank' %>.
+    </p>
   </div>
-</div>
 
+  <table class="table table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Key cards</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @decks.each do |deck| %>
+      <tr>
+        <td><%= hero_label(deck.hero.name, deck.name) %></td>
+        <td>
+          <%= deck.cards.order(:name).map(&:name).join(', ') %> 
+        </td>
+        <td class="text-right">
+          <%= link_to icon('edit'), edit_profile_settings_deck_path(deck), class: 'show-on-hover' %> 
+          <%= link_to icon('minus-circle'), profile_settings_deck_path(deck), method: :delete, class: 'show-on-hover', data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Add Deck', new_profile_settings_deck_path, class: 'btn btn-default' %>
+<% end %>
