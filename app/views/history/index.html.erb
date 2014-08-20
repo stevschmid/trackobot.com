@@ -3,15 +3,11 @@
   <%= render partial: '/layouts/notifications' %>
 
   <% if Result.modes.has_key?(params[:mode]) %>
-  <p>
-    <strong>Mode:</strong> <%= params[:mode].capitalize %> <%= link_to icon('times'), params.except(:mode) %>
-  </p>
+    <%= render(partial: '/layouts/filter', locals: {name: 'Mode', label: params[:mode].capitalize, param: :mode}) %>
   <% end %>
 
   <% if @arena %>
-  <p>
-    <strong>Arena Run:</strong> <%= hero_label(@arena.hero.name) %> <%= arena_result(@arena) %> <%= link_to icon('times'), params.except(:arena_id) %>
-  </p>
+    <%= render(partial: '/layouts/filter', locals: {name: 'Arena Run', label: "#{hero_label(@arena.hero.name)} (#{arena_result(@arena)})", param: :arena_id}) %>
   <% end %>
 
   <table class="table table-hover table-condensed history">

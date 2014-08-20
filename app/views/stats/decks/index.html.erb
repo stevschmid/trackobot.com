@@ -12,16 +12,8 @@
 
   <%= render partial: '/layouts/notifications' %>
 
-  <% if @as_deck %>
-  <p>
-    <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>
-  </p>
-  <% end %>
-  <% if @vs_deck %>
-  <p>
-    <strong>Versus:</strong> <%= label_for_deck(@vs_deck) %> <%= link_to icon('times'), params.except(:vs_deck) %>
-  </p>
-  <% end %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'As', label: label_for_deck(@as_deck), param: :as_deck}) if @as_deck %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'Versus', label: label_for_deck(@vs_deck), param: :vs_deck}) if @vs_deck %>
 
   <table class="table table-hover table-condensed stats overall-stats">
     <thead>

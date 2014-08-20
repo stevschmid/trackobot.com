@@ -12,16 +12,8 @@
 
   <%= render partial: '/layouts/notifications' %>
 
-  <% if @as_hero %>
-  <p>
-    <strong>As:</strong> <%= hero_label(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
-  </p>
-  <% end %>
-  <% if @vs_hero %>
-  <p>
-    <strong>Versus:</strong> <%= hero_label(@vs_hero.name) %> <%= link_to icon('times'), params.except(:vs_hero) %>
-  </p>
-  <% end %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'As', label: hero_label(@as_hero.name), param: :as_hero}) if @as_hero %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'Versus', label: hero_label(@vs_hero.name), param: :vs_hero}) if @vs_hero %>
 
   <table class="table table-hover table-condensed stats overall-stats">
     <thead>
