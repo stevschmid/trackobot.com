@@ -10,6 +10,19 @@
     </div>
   </div>
 
+  <%= render partial: '/layouts/notifications' %>
+
+  <% if @as_deck %>
+  <p>
+    <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>
+  </p>
+  <% end %>
+  <% if @vs_deck %>
+  <p>
+    <strong>Versus:</strong> <%= label_for_deck(@vs_deck) %> <%= link_to icon('times'), params.except(:vs_deck) %>
+  </p>
+  <% end %>
+
   <table class="table table-hover table-condensed overall-stats">
     <thead>
       <tr>
@@ -26,19 +39,6 @@
     </tbody>
   </table>
 
-  <%= render partial: '/layouts/notifications' %>
-
-  <% if @as_deck %>
-  <p>
-    <strong>As:</strong> <%= label_for_deck(@as_deck) %> <%= link_to icon('times'), params.except(:as_deck) %>
-  </p>
-  <% end %>
-  <% if @vs_deck %>
-  <p>
-    <strong>Versus:</strong> <%= label_for_deck(@vs_deck) %> <%= link_to icon('times'), params.except(:vs_deck) %>
-  </p>
-  <% end %>
-
   <% if current_user.decks.empty? %>
   <p class="alert alert-info">
     No decks defined. Define decks in the <%= link_to 'settings', profile_settings_decks_path %>.
@@ -47,12 +47,13 @@
   <%
     %i[as vs].each do |type| 
       key = "#{type}_deck".to_sym
+      next if instance_variable_get("@#{type}_deck")
   %>
       <table class="table table-hover table-condensed deck-stats">
         <thead>
           <tr>
             <th class="deck">Deck</th>
-            <th class="share"><%= sortable_header_link('Share', :share) %></th>
+            <th class="share"><%= sortable_header_link('% Overall', :share) %></th>
             <th class="win-loss">Win/Loss</th>
             <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
           </tr>

@@ -14,18 +14,20 @@ class Stats::DecksController < ApplicationController
       vs_deck: {}
     }
 
-    user_results.group(:win, :deck_id).count.each do |(win, deck_id), count|
-      next unless deck_id and current_user.decks.find_by_id(deck_id)
-      stat = (@stats[:as_deck][current_user.decks.find(deck_id)] ||= {wins: 0, losses: 0, total: 0})
-      stat[(win ? :wins : :losses)] += count
-      stat[:total] += count
+    as = user_results.group(:win, :deck_id).count
+    current_user.decks.each do |deck|
+      stat = (@stats[:as_deck][deck] ||= {})
+      stat[:wins]   = as.select { |(win, deck_id), _| win && deck_id == deck.id }.values.sum
+      stat[:losses] = as.select { |(win, deck_id), _| !win && deck_id == deck.id }.values.sum
+      stat[:total]  = stat[:wins] + stat[:losses]
     end
 
-    user_results.group(:win, :opponent_deck_id).count.each do |(win, deck_id), count|
-      next unless deck_id and current_user.decks.find_by_id(deck_id)
-      stat = (@stats[:vs_deck][current_user.decks.find(deck_id)] ||= {wins: 0, losses: 0, total: 0})
-      stat[(win ? :wins : :losses)] += count
-      stat[:total] += count
+    vs = user_results.group(:win, :opponent_deck_id).count
+    current_user.decks.each do |deck|
+      stat = (@stats[:vs_deck][deck] ||= {})
+      stat[:wins]   = vs.select { |(win, opponent_deck_id), _| win && opponent_deck_id == deck.id }.values.sum
+      stat[:losses] = vs.select { |(win, opponent_deck_id), _| !win && opponent_deck_id == deck.id }.values.sum
+      stat[:total]  = stat[:wins] + stat[:losses]
     end
 
     respond_to do |format|

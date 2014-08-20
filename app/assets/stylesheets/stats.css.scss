@@ -34,12 +34,49 @@ table.arena-stats {
       text-align: center;
     }
 
-    &.runs, &.winrate, &.wins-average {
+    &.win-loss, &.winrate, &.wins-average {
       text-align: center;
     }
 
-    &.wins {
+    &.runs {
+      width: 15%;
+    }
+  }
+}
+
+table.arena-class-stats {
+  table-layout: fixed;
+
+  th, td {
+    &.share, &.win-loss, &.runs, &.wins-average, &.winrate {
+      text-align: center;
+    }
+
+    &.wins-average {
       width: 20%;
     }
+
+    &.runs {
+      width: 15%;
+    }
+  }
+}
+
+table.arena-win-distribution-stats {
+  table-layout: fixed;
+
+  td, th {
+    text-align: center;
+  }
+
+  tr th:first-child, td:first-child {
+    width: 15%;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  td.bar-graph {
+    padding-left: 13px;
+    padding-right: 13px;
   }
 }

@@ -7,6 +7,9 @@ $(document).on 'ready page:load', ->
   $("span.pie").peity "pie",
     fill: ["#3498db", "#eee"]
 
+  $("span.bar").peity "bar",
+    fill: ["#3498db"]
+
   # timeline
   options =
     placement: (context, source) ->

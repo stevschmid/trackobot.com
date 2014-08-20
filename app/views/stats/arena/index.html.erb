@@ -11,88 +11,88 @@
   </div>
 </div>
 
+<%= render partial: '/layouts/notifications' %>
+
+<% if @as_hero %>
+<p>
+  <strong>As:</strong> <%= hero_label(@as_hero.name) %> <%= link_to icon('times'), params.except(:as_hero) %>
+</p>
+<% end %>
+
 <table class="table table-hover table-condensed arena-stats">
   <thead>
     <tr>
-      <th class="win-loss">Win - Loss</th>
       <th class="runs">Runs</th>
       <th class="wins-average">Wins on average</th>
+      <th class="win-loss">Win - Loss</th>
       <th class="winrate">Winrate</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
       <td class="runs"><%= @stats[:overall][:runs] %></td>
-      <td class="wins-average"><%= @stats[:overall][:runs] == 0 ? '-' : "%.1f" % (@stats[:overall][:wins].to_f / @stats[:overall][:runs]) %></td>
+      <td class="wins-average"><%= ratio(@stats[:overall][:wins], @stats[:overall][:runs]) %></td>
+      <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
       <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
     </tr>
   </tbody>
 </table>
 
+<% unless @as_hero %>
 <table class="table table-hover table-condensed arena-class-stats">
   <thead>
     <tr>
       <th class="hero">Class</th>
-      <th class="share">Share</th>
-      <th class="win-loss">Win - Loss</th>
+      <th class="share">% Overall</th>
       <th class="runs">Runs</th>
       <th class="wins-average">Wins on average</th>
+      <th class="win-loss">Win - Loss</th>
       <th class="winrate">Winrate</th>
-      <th class="win-distribution">Win Distribution</th>
     </tr>
   </thead>
   <tbody>
-  <% Hero.all.each do |hero| %>
+  <% @stats[:as_hero].each do |hero, stats| %>
   <tr>
-    <td class="hero"><%= link_to hero_label(hero.name), params.merge(hero: hero.name.downcase) %></td>
-    <td class="share">0.0%</td>
-    <td class="win-loss"><%= percentage(0, 0) %></td>
-    <td class="runs"><%= percentage(0, 0) %></td>
-    <td class="wins-average"><%= 0 %>/<%= 0 %></td>
-    <td class="winrate"><%= winrate(0, 0) %></td>
-    <td class="win-distribution"><%= winrate(0, 0) %></td>
+    <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
+    <td class="share"><%= percentage(stats[:total], @stats[:overall][:total]) %></td>
+    <td class="runs"><%= stats[:runs] %></td>
+    <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
+    <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
+    <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
   </tr>
   <% end %>
 </table>
+<% end %>
 
-<div class="row">
-  <div class="col-sm-7">
-    <table class="table table-hover table-condensed arena-stats">
-      <thead>
-        <tr>
-          <th class="wins">Wins</th>
-          <th class="achieved">Times achieved</th>
-          <th class="share">Share</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      <% @stats[:count_by_wins].each_with_index do |count, num_wins| %>
-      <tr class="arena-stats-select-win-bar" data-bar-index="<%= num_wins %>">
-        <td class="wins"><%= num_wins %></td>
-        <td class="achieved"><%= "#{count}" %></td>
-        <td class="share"><%= percentage(count, @stats[:overall][:runs]) %></td>
-      </tr>
+<table class="table table-hover table-condensed arena-win-distribution-stats">
+  <thead>
+    <tr>
+      <th>Wins</th>
+      <% (0..12).each do |wins| %>
+        <th><%= wins %></th>
       <% end %>
-    </table>
-  </div>
-  <div class="col-sm-5">
-    <table class="table table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Distribution of wins</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <span class="arena-stats-win-distribution" data-width="100%" data-height="100px"><%= @stats[:count_by_wins].join(',') %></span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>&nbsp;</td>
+      <td colspan="13" class="bar-graph">
+        <span class="bar" data-gap="25" data-width="100%" data-height="100px"><%= @stats[:count_by_wins].join(',') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td>Count</td>
+      <% (0..12).each do |wins| %>
+        <td><%= @stats[:count_by_wins][wins] %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td>% Overall</td>
+      <% (0..12).each do |wins| %>
+        <td><%= percentage(@stats[:count_by_wins][wins], @stats[:overall][:runs], 0, false) %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 
 <% end %>
