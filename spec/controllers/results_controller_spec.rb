@@ -103,12 +103,24 @@ describe ResultsController do
       ]
     end
 
-    it 'assigns decks on upload' do
-      post :create, result: result_params.merge(card_history: card_history), format: :json
-      result = user.results.last
+    context 'for non-arenas' do
+      it 'assigns decks on upload' do
+        post :create, result: result_params.merge(card_history: card_history), format: :json
+        result = user.results.last
 
-      expect(result.deck).to eq miracle
-      expect(result.opponent_deck).to eq handlock
+        expect(result.deck).to eq miracle
+        expect(result.opponent_deck).to eq handlock
+      end
+    end
+
+    context 'for arenas' do
+      it 'does not assign decks on upload' do
+        post :create, result: result_params.merge(mode: 'arena', card_history: card_history), format: :json
+        result = user.results.last
+
+        expect(result.deck).to be_nil
+        expect(result.opponent_deck).to be_nil
+      end
     end
   end
 

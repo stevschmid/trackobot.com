@@ -24,8 +24,21 @@ class Result < ActiveRecord::Base
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
 
-  before_create :connect_to_arena, if: :arena?
-  before_create :connect_to_decks, unless: :arena?
+  before_create :create_or_update_associated_arena, if: :arena?
+  after_create :connect_to_decks, unless: :arena?
+
+  # scopes to use to mass update results after a deck gets updated
+  scope :match_with_deck, ->(deck) { joins('INNER JOIN match_best_decks_with_results rb ON rb.result_id = results.id AND rb.user_id = results.user_id').where('rb.deck_id = ?', deck.id) }
+  scope :match_with_player_deck, ->(deck) { match_with_deck(deck).where('rb.player = ?', CardHistory.players[:me]) }
+  scope :match_with_opponent_deck, ->(deck) { match_with_deck(deck).where('rb.player = ?', CardHistory.players[:opponent]) }
+
+  def determine_best_matching_player_deck
+    Deck.find_by_sql(["SELECT deck_id AS id FROM match_best_decks_with_results WHERE result_id = ? AND player = ?", id, CardHistory.players[:me]]).first
+  end
+
+  def determine_best_matching_opponent_deck
+    Deck.find_by_sql(["SELECT deck_id AS id FROM match_best_decks_with_results WHERE result_id = ? AND player = ?", id, CardHistory.players[:opponent]]).first
+  end
 
   def hero=(hero)
     if hero.kind_of?(String)
@@ -41,7 +54,7 @@ class Result < ActiveRecord::Base
     super(opponent)
   end
 
-  def connect_to_arena
+  def create_or_update_associated_arena
     current_arena = user.arenas.order('created_at').last
     if current_arena &&
       current_arena.hero == hero &&
@@ -55,19 +68,9 @@ class Result < ActiveRecord::Base
   end
 
   def connect_to_decks
-    user.decks.where(hero_id: [hero.id, opponent.id]).each do |deck|
-      deck_card_ids = deck.cards.pluck(:id)
-
-      if deck.hero == hero
-        hero_card_ids = card_histories.select(&:me?).collect(&:card_id)
-        self.deck ||= deck if (hero_card_ids & deck_card_ids).any?
-      end
-
-      if deck.hero == opponent
-        opponent_card_ids = card_histories.select(&:opponent?).collect(&:card_id)
-        self.opponent_deck ||= deck if (opponent_card_ids & deck_card_ids).any?
-      end
-    end
+    self.deck ||= determine_best_matching_player_deck
+    self.opponent_deck ||= determine_best_matching_opponent_deck
+    self.save
   end
 
   def result

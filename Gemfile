@@ -65,3 +65,5 @@ group :development do
   gem 'capistrano3-unicorn'
 end
 
+# view support
+gem 'schema_plus'

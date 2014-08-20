@@ -10,20 +10,16 @@ class Deck < ActiveRecord::Base
 
   def update_results
     eligible_results = user.results.where.not(mode: Result.modes[:arena])
-
     # reset old results which this associated deck
     eligible_results.where(deck_id: id).update_all(deck_id: nil)
     eligible_results.where(opponent_deck_id: id).update_all(opponent_deck_id: nil)
 
-    # find new results
-    deck_results = eligible_results.joins(:card_histories)
-      .where('card_histories.card_id' => cards.pluck(:id))
+    # find the (new) best matching deck for these results
+    player_results_to_update = eligible_results.where('results.deck_id IS NULL')
+    user.decks.all.each { |deck| player_results_to_update.match_with_player_deck(deck).update_all(deck_id: deck.id) }
 
-    user_decks = deck_results.where('card_histories.player' => 'me', hero: hero)
-    user_decks.update_all(deck_id: id)
-
-    opponent_decks = deck_results.where('card_histories.player' => 'opponent', opponent: hero)
-    opponent_decks.update_all(opponent_deck_id: id)
+    opponent_results_to_update = eligible_results.where('results.opponent_deck_id IS NULL')
+    user.decks.all.each { |deck| opponent_results_to_update.match_with_opponent_deck(deck).update_all(opponent_deck_id: deck.id) }
   end
 
   def to_s

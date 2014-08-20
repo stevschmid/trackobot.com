@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811112001) do
+ActiveRecord::Schema.define(version: 20140820150911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,19 +21,17 @@ ActiveRecord::Schema.define(version: 20140811112001) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.index ["hero_id"], :name => "index_arenas_on_hero_id"
+    t.index ["user_id"], :name => "index_arenas_on_user_id"
   end
-
-  add_index "arenas", ["hero_id"], name: "index_arenas_on_hero_id", using: :btree
-  add_index "arenas", ["user_id"], name: "index_arenas_on_user_id", using: :btree
 
   create_table "card_histories", force: true do |t|
     t.integer "card_id"
     t.integer "result_id"
     t.integer "player"
+    t.index ["card_id"], :name => "index_card_histories_on_card_id"
+    t.index ["result_id"], :name => "index_card_histories_on_result_id"
   end
-
-  add_index "card_histories", ["card_id"], name: "index_card_histories_on_card_id", using: :btree
-  add_index "card_histories", ["result_id"], name: "index_card_histories_on_result_id", using: :btree
 
   create_table "cards", force: true do |t|
     t.string   "ref"
@@ -49,9 +47,8 @@ ActiveRecord::Schema.define(version: 20140811112001) do
     t.integer  "health"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["ref"], :name => "index_cards_on_ref"
   end
-
-  add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
 
   create_table "cards_decks", id: false, force: true do |t|
     t.integer "card_id"
@@ -64,42 +61,22 @@ ActiveRecord::Schema.define(version: 20140811112001) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["hero_id"], :name => "index_decks_on_hero_id"
+    t.index ["user_id"], :name => "index_decks_on_user_id"
   end
-
-  add_index "decks", ["hero_id"], name: "index_decks_on_hero_id", using: :btree
-  add_index "decks", ["user_id"], name: "index_decks_on_user_id", using: :btree
 
   create_table "feedbacks", force: true do |t|
     t.integer  "user_id"
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["user_id"], :name => "index_feedbacks_on_user_id"
   end
-
-  add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
 
   create_table "heros", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "notification_reads", force: true do |t|
-    t.integer  "notification_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "notification_reads", ["notification_id"], name: "index_notification_reads_on_notification_id", using: :btree
-  add_index "notification_reads", ["user_id"], name: "index_notification_reads_on_user_id", using: :btree
-
-  create_table "notifications", force: true do |t|
-    t.string   "kind"
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "hidden",     default: false
   end
 
   create_table "results", force: true do |t|
@@ -114,16 +91,37 @@ ActiveRecord::Schema.define(version: 20140811112001) do
     t.integer  "arena_id"
     t.integer  "deck_id"
     t.integer  "opponent_deck_id"
+    t.index ["arena_id"], :name => "index_results_on_arena_id"
+    t.index ["deck_id"], :name => "index_results_on_deck_id"
+    t.index ["hero_id"], :name => "index_results_on_hero_id"
+    t.index ["opponent_deck_id"], :name => "index_results_on_opponent_deck_id"
+    t.index ["opponent_id"], :name => "index_results_on_opponent_id"
+    t.index ["user_id"], :name => "index_results_on_user_id"
+    t.index ["win"], :name => "index_results_on_win"
   end
 
-  add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
-  add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
-  add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
-  add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
-  add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
-  add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
-  add_index "results", ["win"], name: "index_results_on_win", using: :btree
+  create_view "match_decks_with_results", "SELECT results.id AS result_id, results.user_id, cards_decks.deck_id, card_histories.player, count(card_histories.id) AS cards_matched FROM (((results JOIN decks ON ((decks.user_id = results.user_id))) JOIN cards_decks ON ((cards_decks.deck_id = decks.id))) JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id)))))) GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player HAVING (count(card_histories.id) > 0)", :force => true
+  create_view "match_best_decks_with_results", "SELECT s.result_id, s.user_id, s.deck_id, s.player, s.cards_matched FROM (match_decks_with_results s JOIN (SELECT match_decks_with_results.result_id, match_decks_with_results.user_id, match_decks_with_results.player, max(match_decks_with_results.cards_matched) AS max_cards_matched FROM match_decks_with_results GROUP BY match_decks_with_results.result_id, match_decks_with_results.user_id, match_decks_with_results.player) m ON (((((s.result_id = m.result_id) AND (s.cards_matched = m.max_cards_matched)) AND (s.user_id = m.user_id)) AND (s.player = m.player))))", :force => true
+  create_view "match_deck_with_results", "SELECT results.id AS result_id, results.user_id, cards_decks.deck_id, card_histories.player, count(card_histories.id) AS cards_matched FROM (((results JOIN decks ON ((decks.user_id = results.user_id))) JOIN cards_decks ON ((cards_decks.deck_id = decks.id))) JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id)))))) GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player HAVING (count(card_histories.id) > 0)", :force => true
+  create_table "notification_reads", force: true do |t|
+    t.integer  "notification_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["notification_id"], :name => "index_notification_reads_on_notification_id"
+    t.index ["user_id"], :name => "index_notification_reads_on_user_id"
+  end
 
+  create_table "notifications", force: true do |t|
+    t.string   "kind"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "hidden",     default: false
+  end
+
+  create_view "result_deck_matches", "SELECT results.id, results.user_id, cards_decks.deck_id, card_histories.player, count(card_histories.id) AS cards_matched FROM (((results JOIN decks ON ((decks.user_id = results.user_id))) JOIN cards_decks ON ((cards_decks.deck_id = decks.id))) JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id)))))) GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player HAVING (count(card_histories.id) > 0) ORDER BY results.id, cards_decks.deck_id", :force => true
+  create_view "result_best_deck_match", "SELECT s.id, s.user_id, s.deck_id, s.player, s.cards_matched FROM (result_deck_matches s JOIN (SELECT k.id, max(k.cards_matched) AS max_cards_matched FROM result_deck_matches k GROUP BY k.id) ss ON (((s.id = ss.id) AND (s.cards_matched = ss.max_cards_matched))))", :force => true
   create_table "users", force: true do |t|
     t.string   "email",                         default: "", null: false
     t.string   "encrypted_password",            default: "", null: false
@@ -141,8 +139,7 @@ ActiveRecord::Schema.define(version: 20140811112001) do
     t.string   "username"
     t.string   "sign_up_ip"
     t.string   "api_authentication_token"
+    t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   end
-
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
