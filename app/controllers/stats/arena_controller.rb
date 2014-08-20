@@ -31,7 +31,7 @@ class Stats::ArenaController < ApplicationController
         total: user_results.arena.count,
         runs: user_arenas.count
       },
-      as_hero: as_hero,
+      as_hero: sort_grouped_stats(as_hero),
       count_by_wins: count_by_wins
     }
 

@@ -89,17 +89,8 @@ module Stats
     return wins.to_f / total
   end
 
-  def group_results_by(results, group_items, id_key)
-    Hash[
-      sort_grouped_results(group_items.collect do |group_item|
-        group_results = results.where(id_key => group_item.id)
-        [ group_item, { total: group_results.count, wins: group_results.wins.count, losses: group_results.losses.count } ]
-      end)
-    ]
-  end
-
-  def sort_grouped_results(grouped_results)
-    sorted = grouped_results.sort_by do |_, stats|
+  def sort_grouped_stats(grouped_stats)
+    sorted = grouped_stats.sort_by do |group, stats|
       case @sort_by
       when :share
         stats[:total]
@@ -108,6 +99,6 @@ module Stats
       end
     end
     sorted = sorted.reverse if @order == :desc
-    sorted
+    Hash[sorted]
   end
 end

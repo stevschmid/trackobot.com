@@ -43,11 +43,11 @@
   <thead>
     <tr>
       <th class="hero">Class</th>
-      <th class="share">% Overall</th>
+      <th class="share"><%= sortable_header_link('% Overall', :share) %></th>
       <th class="runs">Runs</th>
       <th class="wins-average">Wins on average</th>
       <th class="win-loss">Win - Loss</th>
-      <th class="winrate">Winrate</th>
+      <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
     </tr>
   </thead>
   <tbody>
