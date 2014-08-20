@@ -5,9 +5,9 @@
     <h3>Arena Statistics</h3>
   </div>
   <div class="col-sm-8">
-    <h2>
+    <h3>
       <%= render partial: '/stats/shared/toolbar', locals: { selectors: %i[timerange] } %>
-    </h2>
+    </h3>
   </div>
 </div>
 
@@ -19,7 +19,7 @@
 </p>
 <% end %>
 
-<table class="table table-hover table-condensed arena-stats">
+<table class="table table-hover table-condensed stats arena-stats">
   <thead>
     <tr>
       <th class="runs">Runs</th>
@@ -39,7 +39,7 @@
 </table>
 
 <% unless @as_hero %>
-<table class="table table-hover table-condensed arena-class-stats">
+<table class="table table-hover table-condensed stats arena-class-stats">
   <thead>
     <tr>
       <th class="hero">Class</th>
@@ -64,7 +64,7 @@
 </table>
 <% end %>
 
-<table class="table table-hover table-condensed arena-win-distribution-stats">
+<table class="table table-hover table-condensed stats arena-win-distribution-stats">
   <thead>
     <tr>
       <th>Wins</th>

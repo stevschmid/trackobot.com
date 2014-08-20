@@ -4,9 +4,9 @@
       <h3>Class Statistics</h3>
     </div>
     <div class="col-sm-8">
-      <h2>
+      <h3>
         <%= render partial: '/stats/shared/toolbar' %>
-      </h2>
+      </h3>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
   </p>
   <% end %>
 
-  <table class="table table-hover table-condensed overall-stats">
+  <table class="table table-hover table-condensed stats overall-stats">
     <thead>
       <tr>
         <th class="win-loss">Win - Loss</th>
@@ -44,7 +44,7 @@
       next if instance_variable_get("@#{type}_hero")
       key = "#{type}_class".to_sym
   %>
-    <table class="table table-hover table-condensed class-stats">
+    <table class="table table-hover table-condensed stats class-stats">
       <thead>
         <tr>
           <th class="hero">Class</th>

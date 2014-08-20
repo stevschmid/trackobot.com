@@ -4,9 +4,9 @@
       <h3>Deck Statistics</h3>
     </div>
     <div class="col-sm-8">
-      <h2>
+      <h3>
         <%= render partial: '/stats/shared/toolbar', locals: { modes: %i[ranked casual friendly] } %>
-      </h2>
+      </h3>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
   </p>
   <% end %>
 
-  <table class="table table-hover table-condensed overall-stats">
+  <table class="table table-hover table-condensed stats overall-stats">
     <thead>
       <tr>
         <th class="win-loss">Win - Loss</th>
@@ -49,7 +49,7 @@
       key = "#{type}_deck".to_sym
       next if instance_variable_get("@#{type}_deck")
   %>
-      <table class="table table-hover table-condensed deck-stats">
+      <table class="table table-hover table-condensed stats deck-stats">
         <thead>
           <tr>
             <th class="deck">Deck</th>

@@ -2,24 +2,24 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-table.overall-stats {
+table.stats {
   table-layout: fixed;
-  
+
   th, td {
-    &.winrate { 
-      text-align: center;
-    } 
+    text-align: center;
+  }
+
+  tr th:first-child, td:first-child {
+    text-align: left;
   }
 }
 
-table.class-stats, table.deck-stats {
+table.overall-stats {
   table-layout: fixed;
+}
 
+table.class-stats, table.deck-stats {
   th, td {
-    &.winrate, &.share, &.win-loss {
-      text-align: center;
-    }
-
     &.hero, &.deck {
       width: 35%;
     }
@@ -27,17 +27,7 @@ table.class-stats, table.deck-stats {
 }
 
 table.arena-stats {
-  table-layout: fixed;
-
   th, td {
-    &.achieved, &.share {
-      text-align: center;
-    }
-
-    &.win-loss, &.winrate, &.wins-average {
-      text-align: center;
-    }
-
     &.runs {
       width: 15%;
     }
@@ -45,13 +35,7 @@ table.arena-stats {
 }
 
 table.arena-class-stats {
-  table-layout: fixed;
-
   th, td {
-    &.share, &.win-loss, &.runs, &.wins-average, &.winrate {
-      text-align: center;
-    }
-
     &.wins-average {
       width: 20%;
     }
@@ -63,15 +47,8 @@ table.arena-class-stats {
 }
 
 table.arena-win-distribution-stats {
-  table-layout: fixed;
-
-  td, th {
-    text-align: center;
-  }
-
   tr th:first-child, td:first-child {
     width: 15%;
-    text-align: left;
     font-weight: bold;
   }
 
