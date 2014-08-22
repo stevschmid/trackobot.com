@@ -1,3 +1,4 @@
+$secondary-color: #999;
 $hero-colors:
   "warlock" #7624ad,
   "druid" #703606,
@@ -49,7 +50,7 @@ body {
 }
 
 .dotted-baseline {
-  border-bottom: 1px dotted;
+  border-bottom: 1px dotted $secondary-color;
 }
 
 .mana {
@@ -134,7 +135,7 @@ time {
 }
 
 .win-loss-unit {
-  color: #888;
+  color: $secondary-color;
   padding-left: 1px;
   font-size: 9px;
 }
