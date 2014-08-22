@@ -6,9 +6,16 @@ table.arena {
   table-layout: fixed;
 
   td.hero {
-    width: 25%;
   }
   td.timestamp {
-    width: 25%;
+  }
+  td.result {
+    .arena-wins.justified {
+      display: inline-block;
+      width: 3.5em;
+      text-align: right;
+    }
   }
 }
+
+

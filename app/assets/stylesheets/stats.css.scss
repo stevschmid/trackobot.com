@@ -21,7 +21,7 @@ table.overall-stats {
 table.class-stats, table.deck-stats {
   th, td {
     &.hero, &.deck {
-      width: 35%;
+      width: 45%;
     }
   }
 }
@@ -52,8 +52,19 @@ table.arena-win-distribution-stats {
     font-weight: bold;
   }
 
-  td.bar-graph {
-    padding-left: 13px;
-    padding-right: 13px;
+  td {
+    .bar {
+      position: relative;
+      height: 100px;
+      width: 16px;
+      display: inline-block;
+      
+      .value {
+        width: 100%;
+        position: absolute;
+        background: #428bca; 
+        bottom: 0;
+      }
+    }
   }
 }

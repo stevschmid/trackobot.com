@@ -58,8 +58,8 @@ module HistoryHelper
     hero_label(deck.hero.name, deck.name, additions)
   end
 
-  def hero_icon(hero_name, additions = {})
-    image_tag("classes/#{hero_name.downcase}.png", {width: 20}.merge(additions))
+  def hero_icon(name)
+    content_tag(:span, '', class: "#{name.downcase}-icon")
   end
 
   private

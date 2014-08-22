@@ -1,0 +1,18 @@
+<%
+  total = values.sum { |v| v[:value] }
+  if total > 0
+%>
+<tfoot>
+  <tr>
+    <td colspan="<%= colspan %>" style="padding: 0; margin: 0">
+      <div class="class-distribution-bar">
+        <%
+          values.each do |v| 
+            percent = (100.0 * v[:value].to_f / total).round(3)
+        %><span class="<%= v[:class] %> entry has-tooltip" style="width: <%= percent %>%;"
+            data-toggle="tooltip" data-placement="bottom" title="<%= v[:label] %> <%= percent.round(1) %>%">&nbsp;</span><% end %>
+      </div>
+    </td>
+  </tr>
+</tfoot>
+<% end %>

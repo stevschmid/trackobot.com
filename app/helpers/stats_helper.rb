@@ -1,5 +1,5 @@
 module StatsHelper
-  def winrate(num_wins, num_losses)
+  def winrate(num_wins, num_losses, classes = [])
     return '-' if num_wins + num_losses == 0
     ratio = if num_wins + num_losses > 0
               num_wins.to_f / (num_wins + num_losses)
@@ -9,22 +9,21 @@ module StatsHelper
 
     content_tag :div do
       [
-        (ratio * 100.0).round(1).to_s + '%',
+        content_tag(:span, (ratio * 100.0).round(1).to_s + '%', class: classes + ['winrate']),
         content_tag(:span, "#{num_wins}/#{num_wins + num_losses}", class: 'pie')
       ].join(' ').html_safe
     end
   end
 
-  def percentage(x, total, digits = 1, pie = true)
+  def win_loss(num_wins, num_losses)
+    return '-' if num_wins == 0 and num_losses == 0
+    "#{num_wins}<small class='win-loss-unit'>W</small> #{num_losses}<small class='win-loss-unit'>L</small>".html_safe
+  end
+
+  def percentage(x, total, digits = 1, classes = [])
     return '-' if total == 0
     ratio = x.to_f / total
-
-    content_tag :div do
-      [
-        (ratio * 100.0).round(digits).to_s + '%',
-        pie ? content_tag(:span, "#{x}/#{total}", class: 'pie') : nil
-      ].compact.join(' ').html_safe
-    end
+    content_tag(:span, (ratio * 100.0).round(digits).to_s + '%', class: classes + ['percentage'])
   end
 
   def ratio(x, y)

@@ -18,13 +18,13 @@
   <table class="table table-hover table-condensed stats overall-stats">
     <thead>
       <tr>
-        <th class="win-loss">Win - Loss</th>
+        <th class="win-loss">Win/Loss</th>
         <th class="winrate">Winrate</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
+        <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
         <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
         </td>
       </tr>
@@ -40,21 +40,25 @@
       <thead>
         <tr>
           <th class="hero">Class</th>
-          <th class="share"><%= sortable_header_link('% Overall', :share) %></th>
-          <th class="win-loss">Win/Loss</th>
+          <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
           <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
         </tr>
       </thead>
       <tbody>
-
-      <% @stats[key].each do |hero, stats| %>
-      <tr>
-        <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
-        <td class="share"><%= percentage(stats[:total], @stats[:overall][:total]) %></td>
-        <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-        <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
-      </tr>
-      <% end %>
+        <% @stats[key].each do |hero, stats| %>
+        <tr>
+          <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
+          <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
+          <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+      <%
+        values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
+          { label: hero.name, value: stats[:total], class: hero.name.downcase }
+        end
+      %>
+      <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>
     </table>
   <% end %>
 <% end %>

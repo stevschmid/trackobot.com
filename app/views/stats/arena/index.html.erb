@@ -20,7 +20,7 @@
     <tr>
       <th class="runs">Runs</th>
       <th class="wins-average">Wins on average</th>
-      <th class="win-loss">Win - Loss</th>
+      <th class="win-loss">Win/Loss</th>
       <th class="winrate">Winrate</th>
     </tr>
   </thead>
@@ -28,7 +28,7 @@
     <tr>
       <td class="runs"><%= @stats[:overall][:runs] %></td>
       <td class="wins-average"><%= ratio(@stats[:overall][:wins], @stats[:overall][:runs]) %></td>
-      <td class="win-loss"><%= @stats[:overall][:wins] %> - <%= @stats[:overall][:losses] %></td>
+      <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
       <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
     </tr>
   </tbody>
@@ -39,10 +39,9 @@
   <thead>
     <tr>
       <th class="hero">Class</th>
-      <th class="share"><%= sortable_header_link('% Overall', :share) %></th>
       <th class="runs">Runs</th>
       <th class="wins-average">Wins on average</th>
-      <th class="win-loss">Win - Loss</th>
+      <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
       <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
     </tr>
   </thead>
@@ -50,13 +49,19 @@
   <% @stats[:as_hero].each do |hero, stats| %>
   <tr>
     <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
-    <td class="share"><%= percentage(stats[:total], @stats[:overall][:total]) %></td>
     <td class="runs"><%= stats[:runs] %></td>
     <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
-    <td class="win-loss"><%= stats[:wins] %>/<%= stats[:losses] %></td>
-    <td class="winrate"><%= winrate(stats[:wins], stats[:losses]) %></td>
+    <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
+    <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
   </tr>
   <% end %>
+  </tbody>
+  <%
+    values = @stats[:as_hero].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
+      { label: hero.name, value: stats[:total], class: hero.name.downcase }
+    end
+  %>
+  <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 5}) %>
 </table>
 <% end %>
 
@@ -72,9 +77,16 @@
   <tbody>
     <tr>
       <td>&nbsp;</td>
-      <td colspan="13" class="bar-graph">
-        <span class="bar" data-gap="25" data-width="100%" data-height="100px"><%= @stats[:count_by_wins].join(',') %></span>
+      <%
+        (0..12).each do |wins| 
+          percent = (100.0 * @stats[:count_by_wins][wins].to_f / @stats[:count_by_wins].max).round(2)
+      %>
+      <td>
+        <div class="bar">
+          <div class="value" style="height: <%=percent%>%;"></div>
+        </div>
       </td>
+      <% end %>
     </tr>
     <tr>
       <td>Count</td>
@@ -85,7 +97,7 @@
     <tr>
       <td>% Overall</td>
       <% (0..12).each do |wins| %>
-        <td><%= percentage(@stats[:count_by_wins][wins], @stats[:overall][:runs], 0, false) %></td>
+        <td><%= percentage(@stats[:count_by_wins][wins], @stats[:overall][:runs], 0) %></td>
       <% end %>
     </tr>
   </tbody>

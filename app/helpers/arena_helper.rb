@@ -1,5 +1,5 @@
 module ArenaHelper
   def arena_result(arena)
-    pluralize(arena.wins.count, 'win')
+    content_tag(:span, pluralize(arena.wins.count, 'win'), class: 'arena-wins justified')
   end
 end
