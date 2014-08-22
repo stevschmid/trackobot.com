@@ -6,8 +6,12 @@
   </div>
 
   <div class="row text-center">
-    <a href="<%= WIN_DOWNLOAD_URL %>" class="btn btn-primary" role="button"><i class='fa fa-windows'></i>&nbsp;Download for Windows</a>
-    <a href="<%= MAC_DOWNLOAD_URL %>" class="btn btn-primary" role="button"><i class='fa fa-apple'></i>&nbsp;Download for Mac (OS X 10.7+)</a>
+    <% if defined?(WIN_DOWNLOAD_URL) %>
+      <a href="<%= WIN_DOWNLOAD_URL %>" class="btn btn-primary" role="button"><i class='fa fa-windows'></i>&nbsp;Download for Windows</a>
+    <% end %>
+    <% if defined?(MAC_DOWNLOAD_URL) %>
+      <a href="<%= MAC_DOWNLOAD_URL %>" class="btn btn-primary" role="button"><i class='fa fa-apple'></i>&nbsp;Download for Mac (OS X 10.7+)</a>
+    <% end %>
     <a href="https://github.com/stevschmid/track-o-bot/releases" class="btn btn-default" role="button"><i class='fa fa-bars'></i>&nbsp;Releases</a>
     <a href="https://github.com/stevschmid/track-o-bot" class="btn btn-default" role="button"><i class='fa fa-github'></i>&nbsp;Source Code</a>
   </div>
