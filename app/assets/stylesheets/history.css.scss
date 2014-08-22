@@ -6,15 +6,16 @@ table.history {
   table-layout: fixed;
 
   td.result {
-    width: 10%;
+    width: 8%;
   }
   td.timeline {
-    width: 10%;
+    text-align: center;
+    width: 8%;
   }
   td.mode {
     width: 12%;
   }
   td.timestamp {
-    width: 25%;
+    width: 23%;
   }
 }
