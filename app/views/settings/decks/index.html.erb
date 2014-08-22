@@ -15,22 +15,24 @@
     </p>
   </div>
 
-  <table class="table table-hover table-condensed">
+  <table class="table table-hover table-condensed decks">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Key cards</th>
-        <th>&nbsp;</th>
+        <th class="hero">Name</th>
+        <th class="keycards">Key cards</th>
+        <th class="buttons">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
     <% @decks.each do |deck| %>
       <tr>
-        <td><%= hero_label(deck.hero.name, deck.name) %></td>
-        <td>
-          <%= deck.cards.order(:name).map(&:name).join(', ') %> 
+        <td class="hero"><%= hero_label(deck.hero.name, deck.name) %></td>
+        <td class="keycards">
+          <small>
+            <%= deck.cards.order(:name).map(&:name).join(', ') %> 
+          </small>
         </td>
-        <td class="text-right">
+        <td class="buttons">
           <%= link_to icon('edit'), edit_profile_settings_deck_path(deck), class: 'show-on-hover' %> 
           <%= link_to icon('minus-circle'), profile_settings_deck_path(deck), method: :delete, class: 'show-on-hover', data: { confirm: 'Are you sure?' } %>
         </td>

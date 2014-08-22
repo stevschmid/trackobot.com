@@ -102,7 +102,6 @@ time {
     width: 20px;
     height: 20px;
     vertical-align: top;
-    position: relative;
     background: image-url("classes/#{nth($hero-color, 1)}.png");
     background-size: 100% 100%;
     display: inline-block;
