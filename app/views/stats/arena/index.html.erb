@@ -15,92 +15,98 @@
 
 <%= render(partial: '/layouts/filter', locals: {name: 'As', label: hero_label(@as_hero.name), param: :as_hero}) if @as_hero %>
 
-<table class="table table-hover table-condensed stats arena-stats">
-  <thead>
-    <tr>
-      <th class="runs">Runs</th>
-      <th class="wins-average">Wins on average</th>
-      <th class="win-loss">Win/Loss</th>
-      <th class="winrate">Winrate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="runs"><%= @stats[:overall][:runs] %></td>
-      <td class="wins-average"><%= ratio(@stats[:overall][:wins], @stats[:overall][:runs]) %></td>
-      <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
-      <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="panel panel-default">
+  <table class="table table-hover table-condensed stats arena-stats">
+    <thead>
+      <tr>
+        <th class="runs">Runs</th>
+        <th class="wins-average">Wins on average</th>
+        <th class="win-loss">Win/Loss</th>
+        <th class="winrate">Winrate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="runs"><%= @stats[:overall][:runs] %></td>
+        <td class="wins-average"><%= ratio(@stats[:overall][:wins], @stats[:overall][:runs]) %></td>
+        <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+        <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <% unless @as_hero %>
-<table class="table table-hover table-condensed stats arena-class-stats">
-  <thead>
+<div class="panel panel-default">
+  <table class="table table-hover table-condensed stats arena-class-stats">
+    <thead>
+      <tr>
+        <th class="hero">Class</th>
+        <th class="runs">Runs</th>
+        <th class="wins-average">Wins on average</th>
+        <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
+        <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @stats[:as_hero].each do |hero, stats| %>
     <tr>
-      <th class="hero">Class</th>
-      <th class="runs">Runs</th>
-      <th class="wins-average">Wins on average</th>
-      <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
-      <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
+      <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
+      <td class="runs"><%= stats[:runs] %></td>
+      <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
+      <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
+      <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
     </tr>
-  </thead>
-  <tbody>
-  <% @stats[:as_hero].each do |hero, stats| %>
-  <tr>
-    <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
-    <td class="runs"><%= stats[:runs] %></td>
-    <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
-    <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
-    <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
-  </tr>
-  <% end %>
-  </tbody>
-  <%
-    values = @stats[:as_hero].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
-      { label: hero.name, value: stats[:total], class: hero.name.downcase }
-    end
-  %>
-  <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 5}) %>
-</table>
+    <% end %>
+    </tbody>
+    <%
+      values = @stats[:as_hero].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
+        { label: hero.name, value: stats[:total], class: hero.name.downcase }
+      end
+    %>
+    <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 5}) %>
+  </table>
+</div>
 <% end %>
 
-<table class="table table-hover table-condensed stats arena-win-distribution-stats">
-  <thead>
-    <tr>
-      <th>Wins</th>
-      <% (0..12).each do |wins| %>
-        <th><%= wins %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>&nbsp;</td>
-      <%
-        (0..12).each do |wins| 
-          percent = (100.0 * @stats[:count_by_wins][wins].to_f / @stats[:count_by_wins].max).round(2)
-      %>
-      <td>
-        <div class="bar">
-          <div class="value" style="height: <%=percent%>%;"></div>
-        </div>
-      </td>
-      <% end %>
-    </tr>
-    <tr>
-      <td>Count</td>
-      <% (0..12).each do |wins| %>
-        <td><%= @stats[:count_by_wins][wins] %></td>
-      <% end %>
-    </tr>
-    <tr>
-      <td>% Overall</td>
-      <% (0..12).each do |wins| %>
-        <td><%= percentage(@stats[:count_by_wins][wins], @stats[:overall][:runs], 0) %></td>
-      <% end %>
-    </tr>
-  </tbody>
-</table>
+<div class="panel panel-default">
+  <table class="table table-hover table-condensed stats arena-win-distribution-stats">
+    <thead>
+      <tr>
+        <th>Wins</th>
+        <% (0..12).each do |wins| %>
+          <th><%= wins %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&nbsp;</td>
+        <%
+          (0..12).each do |wins| 
+            percent = (100.0 * @stats[:count_by_wins][wins].to_f / @stats[:count_by_wins].max).round(2)
+        %>
+        <td>
+          <div class="bar">
+            <div class="value" style="height: <%=percent%>%;"></div>
+          </div>
+        </td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>Count</td>
+        <% (0..12).each do |wins| %>
+          <td><%= @stats[:count_by_wins][wins] %></td>
+        <% end %>
+      </tr>
+      <tr>
+        <td>% Overall</td>
+        <% (0..12).each do |wins| %>
+          <td><%= percentage(@stats[:count_by_wins][wins], @stats[:overall][:runs], 0) %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <% end %>

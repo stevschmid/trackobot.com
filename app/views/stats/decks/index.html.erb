@@ -15,21 +15,23 @@
   <%= render(partial: '/layouts/filter', locals: {name: 'As', label: label_for_deck(@as_deck), param: :as_deck}) if @as_deck %>
   <%= render(partial: '/layouts/filter', locals: {name: 'Versus', label: label_for_deck(@vs_deck), param: :vs_deck}) if @vs_deck %>
 
-  <table class="table table-hover table-condensed stats overall-stats">
-    <thead>
-      <tr>
-        <th class="win-loss">Win/Loss</th>
-        <th class="winrate">Winrate</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
-        <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="panel panel-default">
+    <table class="table table-hover table-condensed stats overall-stats">
+      <thead>
+        <tr>
+          <th class="win-loss">Win/Loss</th>
+          <th class="winrate">Winrate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="win-loss"><%= win_loss(@stats[:overall][:wins], @stats[:overall][:losses]) %></td>
+          <td class="winrate"><%= winrate(@stats[:overall][:wins], @stats[:overall][:losses]) %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <% if current_user.decks.empty? %>
   <p class="alert alert-info">
@@ -41,30 +43,32 @@
       key = "#{type}_deck".to_sym
       next if instance_variable_get("@#{type}_deck")
   %>
-      <table class="table table-hover table-condensed stats deck-stats">
-        <thead>
-          <tr>
-            <th class="deck">Deck</th>
-            <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
-            <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @stats[key].each do |deck, stats| %>
-          <tr>
-            <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
-            <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
-            <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-        <%
-          values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |deck, stats|
-            { label: deck.name, value: stats[:total], class: deck.hero.name.downcase }
-          end
-        %>
-        <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>
-      </table>
+      <div class="panel panel-default">
+        <table class="table table-hover table-condensed stats deck-stats">
+          <thead>
+            <tr>
+              <th class="deck">Deck</th>
+              <th class="win-loss"><%= sortable_header_link('Win/Loss', :share) %></th>
+              <th class="winrate"><%= sortable_header_link('Winrate', :winrate) %></th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @stats[key].each do |deck, stats| %>
+            <tr>
+              <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
+              <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
+              <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+          <%
+            values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |deck, stats|
+              { label: deck.name, value: stats[:total], class: deck.hero.name.downcase }
+            end
+          %>
+          <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>
+        </table>
+      </div>
     <% end %>
   <% end %>
 <% end %>
