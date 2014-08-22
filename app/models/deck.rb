@@ -10,9 +10,9 @@ class Deck < ActiveRecord::Base
 
   def update_results
     eligible_results = user.results.where.not(mode: Result.modes[:arena])
-    # reset old results which this associated deck
-    eligible_results.where(deck_id: id).update_all(deck_id: nil)
-    eligible_results.where(opponent_deck_id: id).update_all(opponent_deck_id: nil)
+    # reset old results which this associated deck/hero
+    eligible_results.where('deck_id = ? OR hero_id = ?', id, hero_id).update_all(deck_id: nil)
+    eligible_results.where('opponent_deck_id = ? OR opponent_id = ?', id, hero_id).update_all(opponent_deck_id: nil)
 
     # find the (new) best matching deck for these results
     player_results_to_update = eligible_results.where('results.deck_id IS NULL')
