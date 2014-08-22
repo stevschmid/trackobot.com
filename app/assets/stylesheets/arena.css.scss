@@ -8,16 +8,10 @@ table.arena {
   td.hero {
   }
   td.timestamp {
-    time {
-      font-size: 75%;
-    }
   }
   td.result {
-    .arena-wins.justified {
-      display: inline-block;
-      width: 3.5em;
-      text-align: right;
-    }
+    text-align: right;
+    padding-right: 10%;
   }
 }
 
