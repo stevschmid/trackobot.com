@@ -1,18 +1,22 @@
 <%
   csv = local_assigns.fetch :csv, false
   json = local_assigns.fetch :json, false
-
-  links = []
-
-  links << link_to('Feedback', new_feedback_path) 
-  links << link_to('Github', 'https://github.com/stevschmid/track-o-bot')
-  links << link_to('This page in JSON', params.merge(format: :json)) if json
-  links << link_to('This page in CSV', params.merge(format: :csv)) if csv
-  links << link_to('Logout', destroy_user_session_path, method: :delete)
 %>
 
-<div class="text-center row">
-  [ <%= links.join(' | ').html_safe %> ]
+<div class="footer">
+  <ul class="left">
+    <li><i class="fa fa-twitter"></i> <%= link_to('Twitter', 'https://twitter.com/trackobot') %></li>
+    <li><i class="fa fa-reddit"></i> <%= link_to('Reddit', 'http://www.reddit.com/r/trackobot/') %></li>
+    <li><i class="fa fa-github"></i> <%= link_to('GitHub', 'https://github.com/stevschmid/track-o-bot') %></li>
+  </ul>
+  <ul class="right">
+    <% if json %>
+      <li><%= link_to('This page in JSON', params.merge(format: :json)) %></li>
+    <% end %>
+    <% if csv %>
+      <li><%= link_to('This page in CSV', params.merge(format: :csv)) %></li>
+    <% end %>
+  </ul>
 </div>
 
 

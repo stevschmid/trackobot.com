@@ -11,14 +11,14 @@ module ApplicationHelper
     end
   end
 
-  def nav_link(link_text, link_path, root = false)
+  def nav_link(link_text, link_path, root = false, opts = {})
     current = current_page?(link_path)
     current ||= root && current_page?(profile_path)
 
     class_name = current ? 'active' : ''
 
     content_tag(:li, :class => class_name) do
-      link_to link_text, link_path
+      link_to link_text, link_path, opts
     end
   end
 
