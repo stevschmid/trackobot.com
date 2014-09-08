@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140820150911) do
+ActiveRecord::Schema.define(version: 20140908160715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140820150911) do
     t.integer "card_id"
     t.integer "result_id"
     t.integer "player"
+    t.integer "turn"
     t.index ["card_id"], :name => "index_card_histories_on_card_id"
     t.index ["result_id"], :name => "index_card_histories_on_result_id"
   end
@@ -133,7 +134,7 @@ ActiveRecord::Schema.define(version: 20140820150911) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "one_time_authentication_token"
-    t.string   "username"
+    t.string   "username",                                   null: false
     t.string   "sign_up_ip"
     t.string   "api_authentication_token"
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

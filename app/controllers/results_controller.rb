@@ -16,7 +16,7 @@ class ResultsController < ApplicationController
     card_history.each do |card_history_item|
       card = Card.find_by_ref(card_history_item[:card_id])
       if card
-        result.card_histories.new(player: card_history_item[:player], card: card)
+        result.card_histories.new(turn: card_history_item[:turn], player: card_history_item[:player], card: card)
       else
         logger.info "Card #{card_history_item[:card_id]} not found in Card Database"
       end
