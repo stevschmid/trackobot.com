@@ -30,7 +30,7 @@
           <td class="hero"><%= hero_label(deck.hero.name, deck.name) %></td>
           <td class="keycards">
             <small>
-              <%= deck.cards.order(:name).map(&:name).join(', ') %> 
+              <%= deck.cards.order(:mana, :name).map(&:name).join(', ') %> 
             </small>
           </td>
           <td class="buttons">
