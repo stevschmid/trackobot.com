@@ -27,9 +27,11 @@ module ApplicationHelper
   end
 
   def profile_name(user)
-    name = user.displayname
-    name ||= user.username.gsub(/[0-9-]/, ' ').titleize
-    name.strip
+    if user.displayname.present?
+      user.displayname
+    else
+      user.username.gsub(/[0-9-]/, ' ').titleize
+    end.strip
   end
 end
 
