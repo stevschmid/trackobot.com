@@ -179,3 +179,19 @@ time {
     }
   }
 }
+
+.profile {
+  .rename, .name {
+    display: inline-block;
+  }
+  .rename-button {
+    cursor: pointer;
+    display: none;
+  }
+  &:hover {
+    .rename-button {
+      display: inline-block;
+    }
+  }
+}
+

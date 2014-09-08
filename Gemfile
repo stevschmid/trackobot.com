@@ -67,3 +67,5 @@ end
 
 # view support
 gem 'schema_plus'
+
+gem 'possessive'

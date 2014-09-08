@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908161617) do
+ActiveRecord::Schema.define(version: 20140908210736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20140908161617) do
     t.string   "username",                                   null: false
     t.string   "sign_up_ip"
     t.string   "api_authentication_token"
+    t.string   "displayname"
     t.index ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   end
 

@@ -21,7 +21,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:create, :show]
+  resources :users, only: [:create, :show] do
+    patch :rename
+  end
+
   resources :one_time_auth, only: [:create, :show]
 
   resources :feedbacks

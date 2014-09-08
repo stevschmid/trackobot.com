@@ -24,6 +24,18 @@ $(document).on 'ready page:load', ->
 
     trigger: "click"
 
+  # user rename
+  profile = $('.profile')
+  $('.rename-button', profile).click ->
+    $('.rename', profile).removeClass('hidden')
+    $('.name, .rename-button', profile).addClass('hidden')
+    $('form input', profile).select().focus()
+
+  $('form', profile).on 'keyup', (e) ->
+    if e.which == 27 # esc
+      $('.rename', profile).addClass('hidden')
+      $('.name, .rename-button', profile).removeClass('hidden')
+
   $(".timeline-button").popover options
 
 # close popover when clicking outside of current popover

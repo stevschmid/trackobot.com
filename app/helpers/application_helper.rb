@@ -25,5 +25,11 @@ module ApplicationHelper
   def show_feedback_button?
     current_user.feedbacks.where('created_at > ?', 1.day.ago).none?
   end
+
+  def profile_name(user)
+    name = user.displayname
+    name ||= user.username.gsub(/[0-9-]/, ' ').titleize
+    name.strip
+  end
 end
 

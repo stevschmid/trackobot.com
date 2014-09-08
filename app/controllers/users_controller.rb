@@ -16,7 +16,21 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
+  def rename
+    user = User.find(params[:user_id])
+    if user != current_user
+      render nothing: true, status: :unauthorized
+    else
+      user.update_attributes(rename_params)
+      redirect_to :back
+    end
+  end
+
   private
+
+  def rename_params
+    params.require(:user).permit(:displayname)
+  end
 
   def ip_address
     request.remote_ip
