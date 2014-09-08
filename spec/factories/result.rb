@@ -6,5 +6,6 @@ FactoryGirl.define do
     coin true
     mode :ranked
     user
+    duration 42
   end
 end

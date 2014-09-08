@@ -35,6 +35,14 @@ describe ResultsController do
     expect(result.win).to eq true
   end
 
+  context 'with duration information' do
+    it 'creates a result' do
+      result_params.merge!(duration: 42)
+      post :create, result: result_params, format: :json
+      result = user.results.last
+      expect(result.duration).to eq 42
+    end
+  end
 
   it 'adds history' do
     post :create, result: result_params.merge(card_history: card_history), format: :json

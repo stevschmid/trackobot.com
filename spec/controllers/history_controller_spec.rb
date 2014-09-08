@@ -36,6 +36,7 @@ describe HistoryController do
       its([:coin]) { should eq(result.coin) }
       its([:result]) { should eq(result.win ? 'win' : 'loss') }
       its([:added]) { should eq(result.created_at.iso8601(3)) }
+      its([:duration]) { should eq(result.duration) }
 
       context 'arena' do
         let!(:result) { FactoryGirl.create(:result, mode: :arena, user: user) }
@@ -50,11 +51,11 @@ describe HistoryController do
       describe 'card history' do
         before do
           # unleash
-          result.card_histories.new(player: 'me', card: Card.find_by_ref('EX1_538'))
+          result.card_histories.new(turn: 3, player: 'me', card: Card.find_by_ref('EX1_538'))
           # flamestrike
-          result.card_histories.new(player: 'opponent', card: Card.find_by_ref('CS2_032'))
+          result.card_histories.new(turn: 4, player: 'opponent', card: Card.find_by_ref('CS2_032'))
           # water elemental
-          result.card_histories.new(player: 'me', card: Card.find_by_ref('CS2_033'))
+          result.card_histories.new(turn: 4, player: 'me', card: Card.find_by_ref('CS2_033'))
           result.save
 
           get :index, format: :json
@@ -74,6 +75,7 @@ describe HistoryController do
             its([:name]) { should eq 'Unleash the Hounds' }
             its([:id]) { should eq 'EX1_538' }
             its([:mana]) { should eq 3 }
+            its([:turn]) { should eq 4 }
           end
 
         end

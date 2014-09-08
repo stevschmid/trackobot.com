@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908160715) do
+ActiveRecord::Schema.define(version: 20140908161617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20140908160715) do
     t.integer  "arena_id"
     t.integer  "deck_id"
     t.integer  "opponent_deck_id"
+    t.integer  "duration"
     t.index ["arena_id"], :name => "index_results_on_arena_id"
     t.index ["deck_id"], :name => "index_results_on_deck_id"
     t.index ["hero_id"], :name => "index_results_on_hero_id"
