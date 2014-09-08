@@ -1,5 +1,8 @@
 <table class="card_history">
-  <% grouped_card_histories.each do |card, card_histories| %>
+  <%
+    grouped_card_histories.each do |card, card_histories| 
+      next if card.type == 'hero' # skip hero power
+  %>
   <tr>
     <td><div class="mana"><%= card.mana || 0 %></div>&nbsp;<%= card.name %> <%= "(#{card_histories.length})" if card_histories.count > 1 %></td>
   </tr>

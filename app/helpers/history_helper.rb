@@ -2,12 +2,15 @@ module HistoryHelper
 
   def card_history_additions(card_histories)
     return {} if card_histories.empty?
+
+    num_cards_played = card_histories.joins(:card).where('cards.type != ?', :hero).length # exclude hero powers
+
     content = escape_once(render(partial: 'card_history', locals: { grouped_card_histories: group_card_histories_by_card_and_sort_by_mana(card_histories) }))
     {
       class: 'has-popover dotted-baseline',
       data: {
         container: 'body',
-        title: "Cards played (#{card_histories.length})",
+        title: "Cards played (#{num_cards_played})",
         trigger: 'hover',
         placement: 'bottom',
         content: content,
