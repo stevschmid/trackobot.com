@@ -68,6 +68,7 @@ describe HistoryController do
           subject { json_card_history.first }
 
           its([:player]) { should eq 'me' }
+          its([:turn]) { should eq 3 }
 
           describe 'card structure' do
             subject { json_card_history.first[:card] }
@@ -75,7 +76,6 @@ describe HistoryController do
             its([:name]) { should eq 'Unleash the Hounds' }
             its([:id]) { should eq 'EX1_538' }
             its([:mana]) { should eq 3 }
-            its([:turn]) { should eq 4 }
           end
 
         end
