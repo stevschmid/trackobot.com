@@ -62,6 +62,10 @@ module HistoryHelper
     content_tag(:span, '', class: "#{name.downcase}-icon")
   end
 
+  def match_duration(secs)
+    "#{(secs / 60.0).ceil} minutes"
+  end
+
   private
 
   def group_card_histories_by_card_and_sort_by_mana(card_histories)

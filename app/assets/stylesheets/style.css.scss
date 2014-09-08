@@ -82,11 +82,23 @@ time {
     .show-on-hover {
       visibility: visible;
     }
+    .show-on-hover-d {
+      display: inline;
+    }
+    .hide-on-hover-d {
+      display: none;
+    }
   }
 
   tr {
     .show-on-hover {
       visibility: hidden;
+    }
+    .show-on-hover-d {
+      display: none;
+    }
+    .hide-on-hover-d {
+      display: inline;
     }
   }
 }
