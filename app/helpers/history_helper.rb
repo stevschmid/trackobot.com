@@ -3,7 +3,7 @@ module HistoryHelper
   def card_history_additions(card_histories)
     return {} if card_histories.empty?
 
-    num_cards_played = card_histories.joins(:card).where('cards.type != ?', :hero).length # exclude hero powers
+    num_cards_played = card_histories.reject { |c| c.card.type == 'hero' }.length
 
     content = escape_once(render(partial: 'card_history', locals: { grouped_card_histories: group_card_histories_by_card_and_sort_by_mana(card_histories) }))
     {
