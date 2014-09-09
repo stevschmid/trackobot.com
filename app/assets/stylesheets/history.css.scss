@@ -17,6 +17,19 @@ table.history {
   }
   td.timestamp {
     width: 23%;
-    color: #aaa;
+
+    .duration {
+      display: none;
+    }
+
+    &.with-duration:hover {
+      .duration {
+        display: inline-block;
+      }
+
+      .added {
+        display: none;
+      }
+    }
   }
 }
