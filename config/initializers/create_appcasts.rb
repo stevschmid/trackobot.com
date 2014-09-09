@@ -9,7 +9,7 @@ if Rails.env.staging? || Rails.env.production?
   mac_releases = releases.select do |rel|
     rel['assets'].any? { |a| a['name'].index('.dmg') }
   end
-  latest_mac_release = mac_releases.max_by { |rel| Gem::Version.new(rel['tag_name']) }
+  latest_mac_release = mac_releases.reject { |rel| rel['prerelease'] }.max_by { |rel| Gem::Version.new(rel['tag_name']) }
   if latest_mac_release
     mac_asset = latest_mac_release['assets'].find { |asset| asset['name'].index('.dmg') }
     MAC_DOWNLOAD_URL = latest_mac_release['html_url'].gsub('/tag/', '/download/') + '/' + mac_asset['name']
@@ -18,7 +18,7 @@ if Rails.env.staging? || Rails.env.production?
   win_releases = releases.select do |rel|
     rel['assets'].any? { |a| a['name'].index('.exe') }
   end
-  latest_win_release = win_releases.max_by { |rel| Gem::Version.new(rel['tag_name']) }
+  latest_win_release = win_releases.reject { |rel| rel['prerelease'] }.max_by { |rel| Gem::Version.new(rel['tag_name']) }
   if latest_win_release
     win_asset = latest_win_release['assets'].find { |asset| asset['name'].index('.exe') }
     WIN_DOWNLOAD_URL = latest_win_release['html_url'].gsub('/tag/', '/download/') + '/' + win_asset['name']
