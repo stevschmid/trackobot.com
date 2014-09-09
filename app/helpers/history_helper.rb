@@ -66,7 +66,7 @@ module HistoryHelper
   end
 
   def match_duration(secs)
-    "#{(secs / 60.0).ceil} minutes"
+    pluralize((secs / 60.0).ceil, "minute")
   end
 
   private
