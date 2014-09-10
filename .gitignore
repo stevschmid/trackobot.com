@@ -20,6 +20,5 @@
 
 # Deployment
 config/deploy*
-config/initializers/errbit.rb
 config/newrelic.yml
 config/unicorn.rb
