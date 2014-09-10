@@ -12,11 +12,10 @@
   h1 {
     font-weight: bold;
   }
-  
+
   h2 {
     margin-top: 1em;
-    border-bottom: 1px solid #CECECE;
-  }  
+  }
 
   li {
     padding-bottom: 0.3em;
@@ -36,5 +35,9 @@
 
   .steps {
     margin-top: 2em;
+  }
+
+  .gallery {
+    height: 400px;
   }
 }
