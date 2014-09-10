@@ -81,4 +81,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Please compile vendor assets images
+  config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
 end

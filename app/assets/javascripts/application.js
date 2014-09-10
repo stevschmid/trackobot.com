@@ -17,5 +17,5 @@
 //= require turbolinks
 //= require local_time
 //= require jquery.peity.min
-//= require jquery.bxslider.min
+//= require bxslider
 //= require_tree .
