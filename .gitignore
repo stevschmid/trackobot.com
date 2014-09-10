@@ -17,3 +17,8 @@
 /public/appcast*.xml
 
 /config/database.yml
+
+# Deployment
+config/deploy*
+config/initializers/errbit.rb
+config/newrelic.yml
