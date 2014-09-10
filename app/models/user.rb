@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   def regenerate_one_time_authentication_token
     self.one_time_authentication_token = loop do
       token = Devise.friendly_token
-      break token unless self.class.where(one_time_authentication_token: token).first
+      break token unless self.class.where(one_time_authentication_token: token).exists?
     end
   end
 
@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   def regenerate_api_authentication_token
     self.api_authentication_token = loop do
       token = Devise.friendly_token
-      break token unless self.class.where(api_authentication_token: token).first
+      break token unless self.class.where(api_authentication_token: token).exists?
     end
   end
 
