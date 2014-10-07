@@ -3,7 +3,7 @@
 This is the Rails app which fuels [trackobot.com](https://trackobot.com). 
 
 # Contributing
-Feel free to submit pull requests or suggest new features. **Please propose new features in the issues before actually developing them. Track-o-Bot is about simplicity and a streamlined experience. Only features which benefit all users will be considered.**
+Feel free to submit pull requests or suggest new features. **Please propose new features in the issues before actually developing them. Track-o-Bot is about simplicity and usability. Only features which benefit all users will be considered.**
 Pull-requests which implement new features should be accompanied by tests. Please follow the coding style.
 
 # License
