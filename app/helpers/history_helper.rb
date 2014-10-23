@@ -80,13 +80,15 @@ module HistoryHelper
 
     current_card_group = []
     current_player = nil
+    current_turn = nil
 
     card_histories.each do |card_history|
-      if current_player && current_player != card_history.player
+      if (current_player && current_player != card_history.player) || (current_turn && card_history.turn != current_turn)
         groups << current_card_group
         current_card_group = []
       end
       current_player = card_history.player
+      current_turn = card_history.turn
       current_card_group << card_history
     end
 
