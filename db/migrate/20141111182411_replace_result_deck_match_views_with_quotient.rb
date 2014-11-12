@@ -27,7 +27,7 @@ class ReplaceResultDeckMatchViewsWithQuotient < ActiveRecord::Migration
              user_id,
              deck_id,
              player,
-		  	 cards_count_match * 10000 / LEAST(cards_count_deck, cards_count_result) + cards_count_deck AS cards_quotient
+             cards_count_match * 10000 / LEAST(cards_count_deck, cards_count_result) + cards_count_deck AS cards_quotient
 	  FROM match_decks_with_results 
 	}
     create_view :match_best_decks_with_results, %q{
