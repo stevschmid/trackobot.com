@@ -8,6 +8,7 @@ class Card < ActiveRecord::Base
     # select cards which were recorded as played
     where('EXISTS(SELECT card_histories.id FROM card_histories WHERE card_histories.card_id = cards.id LIMIT 1)')
     .where.not(ref: [ # remove duplicated cards
+      # IMPORANT: This list is also in the match_decks_with_results view
       'EX1_165t1', # druid of the claw minion
       'EX1_165t2' , # druid of the claw minion
       'CS2_mirror', # mirror image minion
