@@ -1,0 +1,108 @@
+class ReplaceResultDeckMatchViewsWithQuotient < ActiveRecord::Migration
+  def up
+    drop_view :match_best_decks_with_results
+    drop_view :match_decks_with_results
+    create_view :match_decks_with_results, %{
+      SELECT results.id AS result_id,
+             results.user_id,
+             cards_decks.deck_id,
+             card_histories.player,
+             COUNT(DISTINCT card_histories.card_id) AS cards_count_match,
+             (
+                SELECT COUNT(c_cards_decks.card_id)
+                FROM cards_decks AS c_cards_decks
+                WHERE c_cards_decks.deck_id = cards_decks.deck_id
+             ) AS cards_count_deck,
+             (
+                SELECT COUNT(DISTINCT c_card_histories.card_id)
+                FROM card_histories AS c_card_histories
+                JOIN cards AS c_cards ON c_card_histories.card_id = c_cards.id
+                WHERE c_card_histories.result_id = results.id AND c_card_histories.player = 0
+                  AND c_cards.ref != 'GAME_005'   -- the coin (not in card model but needed here)
+                  AND c_cards.ref != 'EX1_165t1' -- druid of the claw minion
+                  AND c_cards.ref != 'EX1_165t2'  -- druid of the claw minion
+                  AND c_cards.ref != 'CS2_mirror' -- mirror image minion
+                  AND c_cards.ref != 'ds1_whelptoken' -- whelp
+                  AND c_cards.ref != 'EX1_116t' -- whelp
+                  AND c_cards.ref != 'TU4c_006' -- bananas
+                  AND c_cards.ref != 'TU4c_006e' -- bananas
+                  AND c_cards.ref != 'EX1_158t' -- treant
+                  AND c_cards.ref != 'EX1_573t' -- treant
+                  AND c_cards.ref != 'EX1_tk9' -- treant
+                  AND c_cards.ref != 'NEW1_040t' -- gnoll
+                  AND c_cards.ref != 'TU4a_003' -- gnoll
+                  AND c_cards.ref != 'tt_010a' -- spellbender minion
+                  AND c_cards.ref != 'FP1_007t' -- nerubian
+                  AND c_cards.ref != 'NAX1_03' -- nerubian
+                  AND c_cards.ref != 'NAX2_05' -- worshipper
+                  AND c_cards.ref != 'NAX2_05H'-- worshipper
+             ) AS cards_count_result
+      FROM results
+        JOIN decks ON decks.user_id = results.user_id
+        JOIN cards_decks ON cards_decks.deck_id = decks.id
+        JOIN card_histories ON card_histories.result_id = results.id
+          AND card_histories.card_id = cards_decks.card_id
+		  AND (card_histories.player = 0 OR decks.name not like '%(ME)')
+          AND ((card_histories.player = 0 AND decks.hero_id = results.hero_id) OR (card_histories.player = 1 AND decks.hero_id = results.opponent_id))
+      GROUP BY results.id,
+               results.user_id,
+               cards_decks.deck_id,
+               card_histories.player
+      HAVING count(card_histories.id) > 0
+    }
+    create_view :match_decks_with_results_quotient, %{
+      SELECT result_id,
+             user_id,
+             deck_id,
+             player,
+             cards_count_match * 10000 / LEAST(cards_count_deck, cards_count_result) + cards_count_deck AS cards_quotient
+	  FROM match_decks_with_results 
+	}
+    create_view :match_best_decks_with_results, %q{
+      SELECT s.result_id,
+             s.user_id,
+             s.deck_id,
+             s.player,
+             s.cards_quotient
+      FROM match_decks_with_results_quotient s
+      JOIN (
+          SELECT result_id, user_id, player, MAX(cards_quotient) AS max_cards_quotient FROM match_decks_with_results_quotient GROUP BY result_id, user_id, player
+      ) m ON s.result_id = m.result_id AND s.cards_quotient = m.max_cards_quotient AND s.user_id = m.user_id AND s.player = m.player
+    }
+  end
+
+  def down
+    drop_view :match_best_decks_with_results
+    drop_view :match_decks_with_results_quotient
+    drop_view :match_decks_with_results
+    create_view :match_decks_with_results, %{
+      SELECT results.id AS result_id,
+             results.user_id,
+             cards_decks.deck_id,
+             card_histories.player,
+             count(card_histories.id) AS cards_matched
+      FROM results
+        JOIN decks ON decks.user_id = results.user_id
+        JOIN cards_decks ON cards_decks.deck_id = decks.id
+        JOIN card_histories ON card_histories.result_id = results.id
+          AND card_histories.card_id = cards_decks.card_id
+          AND ((card_histories.player = 0 AND decks.hero_id = results.hero_id) OR (card_histories.player = 1 AND decks.hero_id = results.opponent_id))
+      GROUP BY results.id,
+               results.user_id,
+               cards_decks.deck_id,
+               card_histories.player
+      HAVING count(card_histories.id) > 0
+    }
+    create_view :match_best_decks_with_results, %q{
+      SELECT s.result_id,
+             s.user_id,
+             s.deck_id,
+             s.player,
+             s.cards_matched
+      FROM match_decks_with_results s
+      JOIN (
+          SELECT result_id, user_id, player, MAX(cards_matched) AS max_cards_matched FROM match_decks_with_results GROUP BY result_id, user_id, player
+      ) m ON s.result_id = m.result_id AND s.cards_matched = m.max_cards_matched AND s.user_id = m.user_id AND s.player = m.player
+    }
+  end
+end
