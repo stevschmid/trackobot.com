@@ -7,7 +7,7 @@ class ReplaceResultDeckMatchViewsWithQuotient < ActiveRecord::Migration
              results.user_id,
              cards_decks.deck_id,
              card_histories.player,
-             COUNT(card_histories.id) AS cards_count_match,
+             COUNT(DISTINCT card_histories.card_id) AS cards_count_match,
              (
                 SELECT COUNT(deck_id)
                 FROM cards_decks AS c_cards_decks
