@@ -44,6 +44,26 @@ describe ResultsController do
     end
   end
 
+  context 'with rank information' do
+    let(:chicken) { 25 }
+
+    it 'creates a result' do
+      result_params.merge!(rank: chicken)
+      post :create, result: result_params, format: :json
+      result = user.results.last
+      expect(result.rank).to eq chicken
+    end
+  end
+
+  context 'with legend information' do
+    it 'creates a result' do
+      result_params.merge!(legend: 1337)
+      post :create, result: result_params, format: :json
+      result = user.results.last
+      expect(result.legend).to eq 1337
+    end
+  end
+
   it 'adds history' do
     post :create, result: result_params.merge(card_history: card_history), format: :json
     result = user.results.last
@@ -57,40 +77,6 @@ describe ResultsController do
     expect(result.card_histories.second.card.name).to eq 'The Coin'
     expect(result.card_histories.second).to be_me
     expect(result.card_histories.second.turn).to eq 3
-  end
-
-  shared_examples 'inverts coin' do
-    it 'inverts coin' do
-      request.stub(:user_agent).and_return(useragent)
-      post :create, result: result_params, format: :json
-      result = user.results.last
-      expect(result.coin).to_not eq result_params[:coin]
-    end
-  end
-
-  shared_examples 'does not invert coin' do
-    it 'inverts coin' do
-      request.stub(:user_agent).and_return(useragent)
-      post :create, result: result_params, format: :json
-      result = user.results.last
-      expect(result.coin).to eq result_params[:coin]
-    end
-  end
-
-  describe 'coin fix' do
-    ['Mozilla/5.0', 'Track-o-Bot/0.2.1win32', 'Track-o-Bot/0.1.1337swag', 'Track-o-Bot/0.2.1mac'].each do |ua|
-      context "with #{ua}" do
-        let(:useragent) { ua }
-        include_examples 'inverts coin'
-      end
-    end
-
-    ['Track-o-Bot/0.2.2win32', 'Track-o-Bot/1.2.1win32', 'Swag-o-Bot'].each do |ua|
-      context "with #{ua}" do
-        let(:useragent) { ua }
-        include_examples 'does not invert coin'
-      end
-    end
   end
 
   describe 'deck support' do

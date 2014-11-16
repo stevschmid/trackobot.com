@@ -24,27 +24,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    fix_params(params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration))
-  end
-
-  def fix_params(params)
-    # ToB <= 0.2.1 delivers the wrong coin information
-    fix_necessary = false
-
-    if request.user_agent.index("Mozilla") # old version without explicit User-Agent
-      fix_necessary = true
-    elsif request.user_agent =~ /Track-o-Bot\/(\d+\.\d+\.\d+)/
-      version = Gem::Version.new($1)
-      if version <= Gem::Version.new('0.2.1')
-        fix_necessary = true
-      end
-    end
-
-    if fix_necessary
-      params[:coin] = !params[:coin]
-    end
-
-    params
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend)
   end
 
 end

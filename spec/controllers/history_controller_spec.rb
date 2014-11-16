@@ -43,6 +43,17 @@ describe HistoryController do
         its([:arena_id]) { should eq(result.arena.id) }
       end
 
+      context 'ranked' do
+        describe 'rank' do
+          let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, rank: 25) }
+          its([:rank]) { should eq(result.rank) }
+        end
+        describe 'legend' do
+          let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, legend: 101) }
+          its([:legend]) { should eq(result.legend) }
+        end
+      end
+
       context 'no arena' do
         let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user) }
         it { should_not include(:arena_id) }
