@@ -38,6 +38,8 @@ $(document).on 'ready page:load', ->
 
   $(".timeline-button").popover options
 
+  $('.banner').unslider()
+
 # close popover when clicking outside of current popover
 $(document).on "mousedown", (e) ->
   $(".has-popover, .timeline-button").each ->
