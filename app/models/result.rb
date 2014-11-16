@@ -86,7 +86,7 @@ class Result < ActiveRecord::Base
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << [:id, :mode, :hero, :opponent, :result, :coin, :arena_id, :duration, :added]
+      csv << [:id, :mode, :hero, :opponent, :result, :coin, :arena_id, :duration, :rank, :legend, :added]
 
       all.each do |result|
         csv << [
@@ -98,6 +98,8 @@ class Result < ActiveRecord::Base
           result.coin,
           result.arena && result.arena.id,
           result.duration,
+          result.rank,
+          result.legend,
           result.created_at
         ]
       end
