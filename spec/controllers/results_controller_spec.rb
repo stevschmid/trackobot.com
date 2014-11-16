@@ -79,40 +79,6 @@ describe ResultsController do
     expect(result.card_histories.second.turn).to eq 3
   end
 
-  shared_examples 'inverts coin' do
-    it 'inverts coin' do
-      request.stub(:user_agent).and_return(useragent)
-      post :create, result: result_params, format: :json
-      result = user.results.last
-      expect(result.coin).to_not eq result_params[:coin]
-    end
-  end
-
-  shared_examples 'does not invert coin' do
-    it 'inverts coin' do
-      request.stub(:user_agent).and_return(useragent)
-      post :create, result: result_params, format: :json
-      result = user.results.last
-      expect(result.coin).to eq result_params[:coin]
-    end
-  end
-
-  describe 'coin fix' do
-    ['Mozilla/5.0', 'Track-o-Bot/0.2.1win32', 'Track-o-Bot/0.1.1337swag', 'Track-o-Bot/0.2.1mac'].each do |ua|
-      context "with #{ua}" do
-        let(:useragent) { ua }
-        include_examples 'inverts coin'
-      end
-    end
-
-    ['Track-o-Bot/0.2.2win32', 'Track-o-Bot/1.2.1win32', 'Swag-o-Bot'].each do |ua|
-      context "with #{ua}" do
-        let(:useragent) { ua }
-        include_examples 'does not invert coin'
-      end
-    end
-  end
-
   describe 'deck support' do
     let!(:miracle) { user.decks.create!(name: 'Miracle', hero: Hero.find_by_name('Rogue'), card_ids: Card.where(name: 'Gadgetzan Auctioneer').pluck(:id)) }
     let!(:handlock) { user.decks.create!(name: 'Handlock', hero: Hero.find_by_name('Warlock'), card_ids: Card.where(name: 'Mountain Giant').pluck(:id)) }
