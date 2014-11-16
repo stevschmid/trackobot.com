@@ -44,6 +44,26 @@ describe ResultsController do
     end
   end
 
+  context 'with rank information' do
+    let(:chicken) { 25 }
+
+    it 'creates a result' do
+      result_params.merge!(rank: chicken)
+      post :create, result: result_params, format: :json
+      result = user.results.last
+      expect(result.rank).to eq chicken
+    end
+  end
+
+  context 'with legend information' do
+    it 'creates a result' do
+      result_params.merge!(legend: 1337)
+      post :create, result: result_params, format: :json
+      result = user.results.last
+      expect(result.legend).to eq 1337
+    end
+  end
+
   it 'adds history' do
     post :create, result: result_params.merge(card_history: card_history), format: :json
     result = user.results.last

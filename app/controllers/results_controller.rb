@@ -24,7 +24,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    fix_params(params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration))
+    fix_params(params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend))
   end
 
   def fix_params(params)
