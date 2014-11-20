@@ -10,7 +10,7 @@
           values.each do |v| 
             percent = (100.0 * v[:value].to_f / total).round(3)
         %><span class="<%= v[:class] %> entry has-tooltip" style="width: <%= percent %>%;"
-            data-toggle="tooltip" data-placement="bottom" title="<%= v[:label] %> <%= percent.round(1) %>%">&nbsp;</span><% end %>
+            data-toggle="tooltip" data-placement="bottom" title="<%= v[:label] %> <%= percent.round(1) %>%" data-target-path="<%= v[:link] %>">&nbsp;</span><% end %>
       </div>
     </td>
   </tr>

@@ -34,7 +34,7 @@
   </div>
 
   <%
-    %i[as vs].each do |type| 
+    %i[as vs].each do |type|
       next if instance_variable_get("@#{type}_hero")
       key = "#{type}_class".to_sym
   %>
@@ -58,7 +58,7 @@
         </tbody>
         <%
           values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
-            { label: hero.name, value: stats[:total], class: hero.name.downcase }
+          { label: hero.name, value: stats[:total], class: hero.name.downcase, link: url_for(params.merge("#{type}_hero" => hero.name.downcase)) }
           end
         %>
         <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>

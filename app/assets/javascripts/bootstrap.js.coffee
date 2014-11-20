@@ -10,6 +10,9 @@ $(document).on 'ready page:load', ->
   $("span.bar").peity "bar",
     fill: ["#3498db"]
 
+  $("[data-target-path]").click ->
+    self.location.href = $(this).data('target-path')
+
   # timeline
   options =
     placement: (context, source) ->
