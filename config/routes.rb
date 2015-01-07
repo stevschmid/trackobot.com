@@ -7,7 +7,11 @@ Rails.application.routes.draw do
     get '/' => 'history#index'
     resources :history, only: [:index]
     resources :arena, only: [:index]
-    resources :results, only: [:create, :show]
+    resources :results, only: [:create, :show] do
+      collection do
+        delete :bulk_delete
+      end
+    end
 
     namespace :stats do
       resources :classes, only: :index

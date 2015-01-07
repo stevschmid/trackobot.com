@@ -2,18 +2,28 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-input[type="submit"] {
+td.choose {
+  width: 4%;
+  text-align: center;
+}
+
+.bulk-edit-control {
   display: none;
+}
+
+tr:hover {
+  .bulk-edit-picker {
+    display: inline;
+  }
+}
+
+.bulk-edit-on {
+  display: inline;
 }
 
 table.history {
   table-layout: fixed;
 
-  td.choose {
-    width: 8%;
-    text-align: center;
-    display: none;
-  }
   td.result {
     width: 8%;
   }
