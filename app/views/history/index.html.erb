@@ -1,5 +1,6 @@
 <%= profile_page 'History', json: true, csv: true do %>
-  <h2>History</h2>
+  <h2>History<%= button_tag "Edit History", class: "btn pull-right", id: "edit_history" %></h2>
+
   <%= render partial: '/layouts/notifications' %>
 
   <% if Result.modes.has_key?(params[:mode]) %>
@@ -15,11 +16,13 @@
     No results uploaded yet. Play a game or two while Track-o-Bot is running.
   </p>
   <% else %>
+    <%= form_tag do %>
     <div class="panel panel-default">
       <table class="table table-hover table-condensed history">
         <tbody>
         <% @results.each do |result| %>
           <tr>
+            <td class="choose"><%= check_box_tag "result_ids[]", result.id %></td>
             <td class="player"><%= player_label_for_result result, card_history_additions(result.player_card_histories) %></td>
             <td class="opponent">vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
@@ -36,6 +39,8 @@
         </tbody>
       </table>
     </div>
+    <%= submit_tag "Delete Selected", class: "btn btn-danger pull-left" %>
+    <% end %>
   <% end %>
 
   <div class="text-right">

@@ -2,9 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+input[type="submit"] {
+  display: none;
+}
+
 table.history {
   table-layout: fixed;
 
+  td.choose {
+    width: 8%;
+    text-align: center;
+    display: none;
+  }
   td.result {
     width: 8%;
   }
