@@ -22,12 +22,14 @@
         <tbody>
         <% @results.each do |result| %>
           <tr>
-            <td class="player">
+            <td class="choose">
               <% if result.arena? %>
                 <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker", disabled: true%>
               <% else %>
                 <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker"%>
               <% end %>
+            </td>
+            <td class="player">
               <%= player_label_for_result result, card_history_additions(result.player_card_histories) %>
             </td>
             <td class="opponent">vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>

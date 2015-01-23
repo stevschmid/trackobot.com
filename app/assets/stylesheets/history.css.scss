@@ -2,13 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-td.choose {
-  width: 4%;
-  text-align: center;
-}
-
 .bulk-edit-control {
   display: none;
+}
+
+.bulk-edit-on {
+  display: inline;
 }
 
 tr:hover {
@@ -17,12 +16,13 @@ tr:hover {
   }
 }
 
-.bulk-edit-on {
-  display: inline;
-}
-
 table.history {
   table-layout: fixed;
+
+  td.choose {
+    width: 4%;
+    text-align: center;
+  }
 
   td.result {
     width: 8%;
