@@ -24,9 +24,9 @@
           <tr>
             <td class="choose">
               <% if result.arena? %>
-                <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker", disabled: true%>
+                <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker", title: "Arena results cannot be edited currently", disabled: true%>
               <% else %>
-                <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker"%>
+                <%= check_box_tag "result_ids[]", result.id, false, autocomplete: "off", class: "bulk-edit-control bulk-edit-picker"%>
               <% end %>
             </td>
             <td class="player">
