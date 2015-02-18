@@ -11,7 +11,7 @@ class ResultsController < ApplicationController
   end
 
   def bulk_delete
-    Result.destroy(params[:result_ids])
+    Result.destroy(params[:result_ids]) if params[:result_ids]
     redirect_to profile_history_index_path
   end
 
