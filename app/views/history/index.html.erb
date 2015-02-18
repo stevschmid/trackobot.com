@@ -1,4 +1,10 @@
 <%= profile_page 'History', json: true, csv: true do %>
+  <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
+  <div class="pull-right">
+    <%= submit_tag "Delete Selected", class: "btn btn-danger bulk-edit-control",
+                                      data: { confirm: "Are you sure you want to permanently delete all the selected results?" } %>
+    <%= button_tag "Cancel", type: :reset, id: "bulk_edit_cancel", class: "btn bulk-edit-control" %>
+  </div>
   <h2>History</h2>
 
   <%= render partial: '/layouts/notifications' %>
@@ -16,7 +22,6 @@
     No results uploaded yet. Play a game or two while Track-o-Bot is running.
   </p>
   <% else %>
-    <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
     <div class="panel panel-default">
       <table class="table table-hover table-condensed history">
         <tbody>
@@ -47,10 +52,9 @@
         </tbody>
       </table>
     </div>
-    <%= submit_tag "Delete Selected", class: "btn btn-danger bulk-edit-control" %>
-    <% end %>
-    <%= button_tag "Cancel", id: "bulk_edit_cancel", class: "btn bulk-edit-control" %>
   <% end %>
+
+  <% end %> <!-- form end -->
 
   <div class="text-right">
     <%= page_entries_info @results %>

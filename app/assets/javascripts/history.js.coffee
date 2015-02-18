@@ -7,11 +7,7 @@
 # Canceling or unchecking all boxes goes back to hover behavior
 
 jQuery ->
-  $(".bulk-edit-picker").click ->
-    if $(".bulk-edit-picker").is(":checked")
-      $(".bulk-edit-control").addClass("bulk-edit-on")
-    else
-      $(".bulk-edit-control").removeClass("bulk-edit-on")
-  $("#bulk_edit_cancel").click ->
-    $(".bulk-edit-picker").prop("checked", false)
-    $(".bulk-edit-control").removeClass("bulk-edit-on")
+  $('html').on 'click', '.bulk-edit-picker', ->
+    $('.bulk-edit-control').toggleClass('bulk-edit-on', $('.bulk-edit-picker').is(':checked'))
+  $('html').on 'click', '#bulk_edit_cancel', ->
+    $('.bulk-edit-control').removeClass('bulk-edit-on')
