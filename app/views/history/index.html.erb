@@ -2,7 +2,7 @@
   <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
   <div class="pull-right">
     <%= submit_tag "Delete Selected", class: "btn btn-danger bulk-edit-control",
-                                      data: { confirm: "Are you sure you want to permanently delete all the selected results?" } %>
+                                      data: { confirm: "Are you sure you want to permanently delete the selected results?" } %>
     <%= button_tag "Cancel", type: :reset, id: "bulk_edit_cancel", class: "btn bulk-edit-control" %>
   </div>
   <h2>History</h2>
