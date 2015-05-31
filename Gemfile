@@ -23,6 +23,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 
+gem 'builder'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails', require: false

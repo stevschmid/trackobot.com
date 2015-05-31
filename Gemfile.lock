@@ -223,6 +223,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   bootstrap_form
+  builder
   capistrano-rails
   chosen-rails
   coffee-rails (~> 4.0.0)
