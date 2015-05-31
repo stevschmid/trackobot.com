@@ -42,8 +42,6 @@ gem 'active_model_serializers'
 
 gem 'font-awesome-sass'
 
-gem 'airbrake'
-
 gem 'redcarpet'
 
 gem 'local_time'
@@ -60,8 +58,6 @@ gem 'dotenv-rails'
 group :development do
   # Use Capistrano for deployment
   gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
-  gem 'capistrano3-unicorn'
 end
 
 # view support
