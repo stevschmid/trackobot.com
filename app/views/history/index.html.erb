@@ -35,7 +35,7 @@
             </td>
             <td class="opponent">vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
-            <td class="timeline"><%= button_tag image_tag('crossed_swords_14.png'), timeline_additions(result) if result.card_histories.any? %></td>
+            <td class="timeline"><%= link_to image_tag('crossed_swords_14.png'), 'javascript:;', timeline_additions(result) if result.card_histories.any? %></td>
             <td class="timestamp <%= 'with-duration' if result.duration %>">
               <span class="added"><%= local_time_ago(result.created_at) %></span>
               <% if result.duration %>
