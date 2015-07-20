@@ -26,7 +26,8 @@ class Result < ActiveRecord::Base
 
   before_create :create_or_update_associated_arena, if: :arena?
   after_create :connect_to_decks, unless: :arena?
-  before_destroy :ensure_not_arena
+
+  after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
   # scopes to use to mass update results after a deck gets updated
   scope :match_with_deck, ->(deck) { joins('INNER JOIN match_best_decks_with_results rb ON rb.result_id = results.id AND rb.user_id = results.user_id').where('rb.deck_id = ?', deck.id) }
@@ -109,7 +110,7 @@ class Result < ActiveRecord::Base
 
   private
 
-    def ensure_not_arena
-      false if arena?
-    end
+  def delete_arena_if_last_remaining_result
+    arena.destroy if arena && arena.results.count == 0
+  end
 end

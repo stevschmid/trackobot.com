@@ -1,52 +1,41 @@
 require 'spec_helper'
 
 describe Result do
-  let(:result) { FactoryGirl.create(:result) }
 
   describe 'arena result' do
-    before { result.arena! }
+    let(:result) { FactoryGirl.create(:result, mode: :arena) }
+    let(:arena) { result.arena }
 
-    it 'should not be deleted until we figure out how to manage arena results' do
-      expect{result.destroy}.to_not change(Result, :count).by(-1)
+    context 'result is the last remaining result of arena' do
+      it 'deletes the arena' do
+        expect { result.destroy }.to change { arena.destroyed? }
+      end
+    end
+
+    context 'result is one among many results of arena' do
+      before do
+        2.times { FactoryGirl.create(:result, arena: arena) }
+      end
+
+      it 'does not delete the arena' do
+        expect { result.destroy }.to_not change { arena.destroyed? }
+      end
     end
   end
 
   describe 'card_history associations' do
-    let!(:first_play) do
-      FactoryGirl.create(:card_history, result: result)
-    end
+    let(:result) { FactoryGirl.create(:result, mode: :ranked) }
 
-    let!(:second_play) do
-      FactoryGirl.create(:card_history, result: result)
-    end
+    let!(:first_play) { FactoryGirl.create(:card_history, result: result) }
+    let!(:second_play) { FactoryGirl.create(:card_history, result: result) }
 
-    it 'should have the right card_histories in the right order' do
+    it 'has card_histories in the right order' do
       expect(result.card_histories.to_a).to eq [first_play, second_play]
     end
 
-    it 'should destroy associated card_histories' do
-      card_histories = result.card_histories.to_a
-      result.destroy
-      expect(card_histories).to_not be_empty
-      card_histories.each do |card_history|
-        expect(CardHistory.where(id: card_history.id)).to be_empty
-      end
+    it 'destroys associated card_histories' do
+      expect { result.destroy }.to change { result.card_histories.count }.by(-2)
     end
-
-    describe 'arena result' do
-      before { result.arena! }
-
-      its 'card_histories should not be deleted' do
-        card_histories = result.card_histories.to_a
-        result.destroy
-        expect(card_histories).to_not be_empty
-        card_histories.each do |card_history|
-          expect(CardHistory.where(id: card_history.id)).to_not be_empty
-        end
-      end
-
-    end
-
   end
 
 end
