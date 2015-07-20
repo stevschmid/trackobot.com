@@ -1,6 +1,7 @@
 // Place all the styles related to the History controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'tagging';
 
 .bulk-edit-control {
   display: none;
@@ -34,8 +35,8 @@ table.history {
     padding-bottom: 4px;
     opacity: 0.5;
   }
-  td.mode {
-    width: 12%;
+  td.tagColor {
+    width: 23%;
   }
   td.rank {
     padding: 0;
@@ -58,7 +59,7 @@ table.history {
     }
   }
   td.timestamp {
-    width: 23%;
+    width: 18%;
 
     .duration {
       display: none;
@@ -72,6 +73,24 @@ table.history {
       .added {
         display: none;
       }
+    }
+  }
+
+  .tags li {
+    &.ranked {
+      @include tagColor(#ADBAEB);
+    }
+
+    &.casual {
+      @include tagColor(#60DEDD);
+    }
+
+    &.arena {
+      @include tagColor(#D8D36C);
+    }
+
+    &.friendly {
+      @include tagColor(#E6B2D3);
     }
   }
 }
