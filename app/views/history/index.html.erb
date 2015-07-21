@@ -40,9 +40,6 @@
         <tbody>
         <% @results.each do |result| %>
           <tr>
-            <td class="choose">
-              <%= check_box_tag 'result_ids[]', result.id, false, autocomplete: 'off', class: 'bulk-edit-control bulk-edit-picker' %>
-            </td>
             <td class="player">
               <%= player_label_for_result result, card_history_additions(result.player_card_histories) %>
             </td>
@@ -70,6 +67,9 @@
               <% if result.duration %>
                 <span class="duration"><i class="fa fa-clock-o"></i> <%= match_duration(result.duration) %></span>
               <% end %>
+            </td>
+            <td class="choose">
+              <%= check_box_tag 'result_ids[]', result.id, false, autocomplete: 'off', class: 'bulk-edit-control bulk-edit-picker' %>
             </td>
           </tr>
         <% end %>
