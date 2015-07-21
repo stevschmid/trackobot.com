@@ -11,3 +11,4 @@ jQuery ->
     $('.bulk-edit-control').toggleClass('bulk-edit-on', $('.bulk-edit-picker').is(':checked'))
   $('html').on 'click', '#bulk_edit_cancel', ->
     $('.bulk-edit-control').removeClass('bulk-edit-on')
+    $('.bulk-edit-picker').prop('checked', false)

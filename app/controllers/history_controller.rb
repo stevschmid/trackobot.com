@@ -8,12 +8,25 @@ class HistoryController < ApplicationController
       @arena = current_user.arenas.find(params[:arena_id])
       @unpaged_results = @unpaged_results.where(arena_id: @arena.id)
     end
+
+    @query = params.fetch(:query, '').strip.downcase
+    if @query.present?
+      if Result.modes.keys.include?(@query)
+        @unpaged_results = @unpaged_results.where(mode: Result.modes[@query])
+      elsif hero = Hero.where('name ILIKE ?', @query).first
+        @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
+      else
+        @unpaged_results = @unpaged_results.where('EXISTS ( SELECT t.tag FROM tags t WHERE t.result_id = results.id AND t.tag = ? )', @query)
+      end
+    end
+
     @results = @unpaged_results.page(params[:page])
     @results.includes!(:card_histories => :card)
             .includes!(:player_card_histories => :card)
             .includes!(:opponent_card_histories => :card)
             .includes!(:hero)
             .includes!(:opponent)
+            .includes!(:tags)
 
     respond_to do |format|
       format.html

@@ -1,11 +1,15 @@
 <%= profile_page 'History', json: true, csv: true do %>
-  <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
-  <div class="pull-right">
-    <%= submit_tag "Delete", class: "btn btn-danger bulk-edit-control",
-                                      data: { confirm: "Are you sure you want to permanently delete the selected results?" } %>
-    <%= button_tag "Cancel", type: :reset, id: "bulk_edit_cancel", class: "btn bulk-edit-control" %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h2>History</h2>
+    </div>
+    <div class="col-md-4">
+      <%= form_tag params, method: :get do %>
+        <%= text_field_tag :query, @query, class: 'history-query form-control input-sm' %>
+      <% end %>
+    </div>
   </div>
-  <h2>History</h2>
 
   <%= render partial: '/layouts/notifications' %>
 
@@ -17,9 +21,15 @@
     <%= render(partial: '/layouts/filter', locals: {name: 'Arena Run', label: "#{hero_label(@arena.hero.name)} (#{arena_result(@arena)})", param: :arena_id}) %>
   <% end %>
 
+  <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
+
   <% if @results.empty? %>
   <p class="alert alert-info">
-    No results uploaded yet. Play a game or two while Track-o-Bot is running.
+    <% if @query.present? %>
+      No results found matching <kbd><%= @query %></kbd>
+    <% else %>
+      No results uploaded yet. Play a game or two while Track-o-Bot is running.
+    <% end %>
   </p>
   <% else %>
     <div class="panel panel-default">
@@ -28,7 +38,7 @@
         <% @results.each do |result| %>
           <tr>
             <td class="choose">
-              <%= check_box_tag "result_ids[]", result.id, false, autocomplete: "off", class: "bulk-edit-control bulk-edit-picker"%>
+              <%= check_box_tag 'result_ids[]', result.id, false, autocomplete: 'off', class: 'bulk-edit-control bulk-edit-picker' %>
             </td>
             <td class="player">
               <%= player_label_for_result result, card_history_additions(result.player_card_histories) %>
@@ -64,13 +74,23 @@
     </div>
   <% end %>
 
-  <% end %> <!-- form end -->
+  <div class="row">
+    <div class="col-md-12">
+      <%= submit_tag 'Delete', class: 'btn btn-sm btn-danger bulk-edit-control',
+        data: { confirm: 'Are you sure you want to permanently delete the selected results?' } %>
+      <%= button_tag 'Cancel', type: :reset, id: 'bulk_edit_cancel', class: 'btn btn-sm bulk-edit-control' %>
 
-  <div class="text-right">
-    <%= page_entries_info @results %>
+      <div class="pull-right">
+        <%= page_entries_info @results %>
+      </div>
+    </div>
   </div>
 
-  <div class="text-center">
-    <%= paginate @results, window: 1 %>
+  <% end %> <!-- form end -->
+
+  <div class="row text-center">
+    <div class="col-md-12">
+      <%= paginate @results, window: 1 %>
+    </div>
   </div>
 <% end %>
