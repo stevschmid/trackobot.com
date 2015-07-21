@@ -7,7 +7,7 @@ class ResultsController < ApplicationController
       add_card_history_for_result(@result, card_history)
     end
     @result.save
-    respond_with(:profile, @result)
+    respond_with(:profile, @result.reload)
   end
 
   def set_tags

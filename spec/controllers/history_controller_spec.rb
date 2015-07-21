@@ -59,6 +59,16 @@ describe HistoryController do
         it { should_not include(:arena_id) }
       end
 
+      context 'decks' do
+        let(:deck) { FactoryGirl.create(:deck) }
+        let(:opponent_deck) { FactoryGirl.create(:deck) }
+
+        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, deck: deck, opponent_deck: opponent_deck) }
+
+        its([:opponent_deck]) { should eq(result.opponent_deck.name) }
+        its([:hero_deck]) { should eq(result.deck.name) }
+      end
+
       describe 'card history' do
         before do
           # unleash

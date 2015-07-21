@@ -1,5 +1,5 @@
 class ResultSerializer < ActiveModel::Serializer
-  attributes :id, :mode, :hero, :opponent, :coin, :result, :arena_id, :duration, :rank, :legend
+  attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck, :coin, :result, :arena_id, :duration, :rank, :legend
   attribute :created_at, key: :added
 
   has_many :card_histories, key: :card_history
@@ -12,8 +12,16 @@ class ResultSerializer < ActiveModel::Serializer
     object.hero.name
   end
 
+  def hero_deck
+    object.deck ? object.deck.name : nil
+  end
+
   def opponent
     object.opponent.name
+  end
+
+  def opponent_deck
+    object.opponent_deck ? object.opponent_deck.name : nil
   end
 
   def include_arena_id?
