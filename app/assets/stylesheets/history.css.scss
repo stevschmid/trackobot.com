@@ -78,19 +78,19 @@ table.history {
 
   .tags li {
     &.ranked {
-      @include tagColor(#ADBAEB);
+      @include tagColor(#558286);
     }
 
     &.casual {
-      @include tagColor(#60DEDD);
+      @include tagColor(#7C73B2);
     }
 
     &.arena {
-      @include tagColor(#D8D36C);
+      @include tagColor(#A97A2F);
     }
 
     &.friendly {
-      @include tagColor(#E6B2D3);
+      @include tagColor(#BB56BB);
     }
   }
 }
