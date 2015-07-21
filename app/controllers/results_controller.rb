@@ -20,7 +20,7 @@ class ResultsController < ApplicationController
 
   def bulk_delete
     current_user.results.where(id: params[:result_ids]).destroy_all if params[:result_ids]
-    redirect_to profile_history_index_path
+    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 
   private
