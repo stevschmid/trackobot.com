@@ -2,12 +2,36 @@
 $(document).on 'ready page:load', ->
   $('.tagging .input').attr('size', 1)
 
+  $.fn.triggerUpdate = ->
+    tags = this
+    url = $(tags).data('update-url')
+    return unless url?
+
+    method = $(tags).data('update-method') || 'POST'
+    timer = $(tags).data('timer')
+
+    clearTimeout(timer) if timer
+
+    tagTexts = ($(li).text() for li in $('li', tags))
+      .filter (tagText) ->
+        !$(tags).isImmutableTag(tagText)
+      .join ','
+       
+    sendTags = ->
+      $.ajax
+        url: url
+        type: method
+        data: 
+          tags: tagTexts
+
+    $(this).data('timer', setTimeout(sendTags, 1000))
+
   $.fn.isImmutableTag = (tagText) ->
     str = $(this).data('immutable-tags') || ''
     array = str.split(',')
     return tagText in array
 
-  $.fn.addTag = (tagText) ->
+  $.fn.addTag = (tagText, opts = {update: true}) ->
     tagText = tagText
       .toLowerCase()
       .replace(',', '')
@@ -16,9 +40,10 @@ $(document).on 'ready page:load', ->
     return if tagText.length == 0
 
     # remove potential duplicated entry
-    $('li', this).filter(->
-      $.text([ this ]) == tagText
-    ).remove() 
+    $('li', this)
+      .filter (index, li) ->
+        $(li).text() == tagText
+      .remove()
 
     # add new tag
     li = $('<li>')
@@ -29,25 +54,29 @@ $(document).on 'ready page:load', ->
     unless $(this).isImmutableTag(tagText)
       # delete link
       $('<i class="delete-tag fa fa-times"></i>').click(->
-        $(this).parent().remove()
+        $(this).closest('.tags').removeTag $(this).closest('li').text()
       ).appendTo(li)
+
+      $(this).triggerUpdate() if opts.update
 
   $.fn.removeTag = (tagText) ->
     unless $(this).isImmutableTag(tagText)
-      $('li', this).filter(->
-        $.text([ this ]) == tagText
-      ).remove() 
+      $('li', this)
+        .filter (index, li) ->
+          $(li).text() == tagText
+        .remove()
+
+      $(this).triggerUpdate()
 
   $.each $('.tagging .tags li'), (i, li) ->
-    parent = $(li).parent()
+    tags = $(li).closest('.tags')
     $(li).remove()
-    $(parent).addTag $(li).text()
+    $(tags).addTag $(li).text(), update: false
 
   $('.tagging').on 'click', (e) ->
     $('.input', this).focus()
 
   $('.tagging .tags li').on 'click', (e) ->
-    console.log('click')
     return false
 
   $('.tagging .input').on 'blur', (e) ->
@@ -74,5 +103,5 @@ $(document).on 'ready page:load', ->
     # auto resize input
     $(this).attr('size', $(this).val().length + 1)
 
-    return !ignore 
+    return !ignore
 

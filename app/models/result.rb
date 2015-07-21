@@ -15,6 +15,8 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :arena
 
+  has_many :tags
+
   has_many :card_histories, -> { order(:id) }, dependent: :destroy
 
   # explicit assocations we can eager load
@@ -107,8 +109,6 @@ class Result < ActiveRecord::Base
       end
     end
   end
-
-  private
 
   def delete_arena_if_last_remaining_result
     arena.destroy if arena && arena.results.count == 0

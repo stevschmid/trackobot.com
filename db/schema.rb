@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141116154730) do
+ActiveRecord::Schema.define(version: 20150721090250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,8 +104,8 @@ ActiveRecord::Schema.define(version: 20141116154730) do
     t.index ["win"], :name => "index_results_on_win"
   end
 
-  create_view "match_decks_with_results", " SELECT results.id AS result_id,\n    results.user_id,\n    cards_decks.deck_id,\n    card_histories.player,\n    count(card_histories.id) AS cards_matched\n   FROM (((results\n     JOIN decks ON ((decks.user_id = results.user_id)))\n     JOIN cards_decks ON ((cards_decks.deck_id = decks.id)))\n     JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id))))))\n  GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player\n HAVING (count(card_histories.id) > 0)", :force => true
-  create_view "match_best_decks_with_results", " SELECT s.result_id,\n    s.user_id,\n    s.deck_id,\n    s.player,\n    s.cards_matched\n   FROM (match_decks_with_results s\n     JOIN ( SELECT match_decks_with_results.result_id,\n            match_decks_with_results.user_id,\n            match_decks_with_results.player,\n            max(match_decks_with_results.cards_matched) AS max_cards_matched\n           FROM match_decks_with_results\n          GROUP BY match_decks_with_results.result_id, match_decks_with_results.user_id, match_decks_with_results.player) m ON (((((s.result_id = m.result_id) AND (s.cards_matched = m.max_cards_matched)) AND (s.user_id = m.user_id)) AND (s.player = m.player))))", :force => true
+  create_view "match_decks_with_results", " SELECT results.id AS result_id,\n    results.user_id,\n    cards_decks.deck_id,\n    card_histories.player,\n    count(card_histories.id) AS cards_matched\n   FROM (((results\n   JOIN decks ON ((decks.user_id = results.user_id)))\n   JOIN cards_decks ON ((cards_decks.deck_id = decks.id)))\n   JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id))))))\n  GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player\n HAVING (count(card_histories.id) > 0)", :force => true
+  create_view "match_best_decks_with_results", " SELECT s.result_id,\n    s.user_id,\n    s.deck_id,\n    s.player,\n    s.cards_matched\n   FROM (match_decks_with_results s\n   JOIN ( SELECT match_decks_with_results.result_id,\n            match_decks_with_results.user_id,\n            match_decks_with_results.player,\n            max(match_decks_with_results.cards_matched) AS max_cards_matched\n           FROM match_decks_with_results\n          GROUP BY match_decks_with_results.result_id, match_decks_with_results.user_id, match_decks_with_results.player) m ON (((((s.result_id = m.result_id) AND (s.cards_matched = m.max_cards_matched)) AND (s.user_id = m.user_id)) AND (s.player = m.player))))", :force => true
   create_table "notification_reads", force: true do |t|
     t.integer  "notification_id"
     t.integer  "user_id"
@@ -123,6 +123,15 @@ ActiveRecord::Schema.define(version: 20141116154730) do
     t.boolean  "hidden",     default: false
   end
 
+  create_table "tags", force: true do |t|
+    t.integer  "result_id"
+    t.string   "tag",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["result_id"], :name => "index_tags_on_result_id"
+    t.index ["tag"], :name => "index_tags_on_tag"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                         default: "", null: false
     t.string   "encrypted_password",            default: "", null: false
@@ -137,7 +146,7 @@ ActiveRecord::Schema.define(version: 20141116154730) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "one_time_authentication_token"
-    t.string   "username",                                   null: false
+    t.string   "username"
     t.string   "sign_up_ip"
     t.string   "api_authentication_token"
     t.string   "displayname"

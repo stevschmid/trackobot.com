@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     resources :history, only: [:index]
     resources :arena, only: [:index]
     resources :results, only: [:create, :show] do
+      member do
+        put :set_tags
+      end
       collection do
         delete :bulk_delete
       end

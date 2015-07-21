@@ -143,4 +143,28 @@ describe ResultsController do
     end
   end
 
+  describe 'PUT set_tags' do
+    let(:result) { FactoryGirl.create(:result, user: user) }
+
+    let(:tags_array) { ['misplay', 'cool match'] }
+    let(:tags) { tags_array.join ',' }
+
+    it 'sets the tags' do
+      expect {
+        put :set_tags, id: result.id, tags: tags
+      }.to change { result.reload.tags.collect(&:tag) }.to eq tags_array
+    end
+
+    context 'as another user' do
+      let(:another_user) { FactoryGirl.create(:user) }
+      let(:result) { FactoryGirl.create(:result, user: another_user) }
+
+      it 'yields 404' do
+        expect {
+          put :set_tags, id: result.id, tags: tags
+        }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
 end
