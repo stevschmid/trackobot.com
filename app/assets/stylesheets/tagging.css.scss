@@ -31,13 +31,16 @@
 
       .delete-tag {
         cursor: pointer;
-        padding-left: 2px;
+        padding-left: 0px;
 
         display: none;
       }
     }
 
-    li:hover {
+    li.mutable:hover {
+      padding-left: 0px;
+      padding-right: 0px;
+
       .delete-tag {
         display: inline-block;
       }

@@ -52,6 +52,7 @@ $(document).on 'ready page:load', ->
       .appendTo(this)
 
     unless $(this).isImmutableTag(tagText)
+      li.addClass('mutable')
       # delete link
       $('<i class="delete-tag fa fa-times"></i>').click(->
         $(this).closest('.tags').removeTag $(this).closest('li').text()
@@ -82,7 +83,8 @@ $(document).on 'ready page:load', ->
   $('.tagging .input').on 'blur', (e) ->
     tags = $('.tags', $(this).parent())
     $(tags).addTag $(this).val()
-    $(this).val ''
+    $(this).val('').attr('size', 1)
+    $(this).attr('size', $(this).val().length + 1)
 
   $('.tagging .input').on 'keydown', (e) ->
     ignore = false
@@ -102,6 +104,5 @@ $(document).on 'ready page:load', ->
 
     # auto resize input
     $(this).attr('size', $(this).val().length + 1)
-
     return !ignore
 
