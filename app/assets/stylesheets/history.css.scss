@@ -39,7 +39,11 @@ table.history {
     width: 4%;
     text-align: center;
   }
-
+  td.opponent, td.player {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
   td.result {
     width: 8%;
   }
