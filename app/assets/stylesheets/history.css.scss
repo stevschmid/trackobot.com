@@ -35,8 +35,12 @@ tr:hover {
 table.history {
   table-layout: fixed;
 
+  td {
+    font-size: 13px;
+  }
+
   td.choose {
-    width: 4%;
+    width: 30px;
     text-align: center;
   }
   td.opponent, td.player {
@@ -45,17 +49,17 @@ table.history {
     white-space: nowrap;
   }
   td.result {
-    width: 8%;
+    width: 50px;
   }
   td.timeline {
     text-align: center;
-    width: 8%;
+    width: 30px;
     padding-top: 4px;
     padding-bottom: 4px;
     opacity: 0.5;
   }
-  td.tagColor {
-    width: 23%;
+  td.mode {
+    width: 200px;
   }
   td.rank {
     padding: 0;
@@ -78,7 +82,7 @@ table.history {
     }
   }
   td.timestamp {
-    width: 18%;
+    width: 100px;
 
     .duration {
       display: none;

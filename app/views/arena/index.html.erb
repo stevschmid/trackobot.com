@@ -10,7 +10,6 @@
           <td class="hero"><%= hero_label(arena.hero.name) %></td>
           <td class="result"><%= link_to arena_result(arena), profile_history_index_path(arena_id: arena.id) %></td>
           <td class="timestamp"><%= local_time_ago(arena.results.order('created_at DESC').first.created_at) %></td>
-          <td></td>
         </tr>
       <% end %>
       </tbody>

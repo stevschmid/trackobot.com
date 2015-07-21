@@ -6,13 +6,12 @@ table.arena {
   table-layout: fixed;
 
   td.hero {
-    width: 20%;
-  }
-  td.timestamp {
-    text-align: right;
+    width: 120px;
   }
   td.result {
-    width: 10%;
+  }
+  td.timestamp {
+    width: 130px;
   }
 }
 
