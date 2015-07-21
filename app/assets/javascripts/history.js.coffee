@@ -12,3 +12,5 @@ jQuery ->
   $('html').on 'click', '#bulk_edit_cancel', ->
     $('.bulk-edit-control').removeClass('bulk-edit-on')
     $('.bulk-edit-picker').prop('checked', false)
+  $('html').on 'click', '.history-query-clear', ->
+    $('.history-query').val('').closest('form').submit()

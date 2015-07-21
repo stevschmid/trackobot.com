@@ -15,6 +15,17 @@
   margin-top: 24px;
 }
 
+.history-query-clear {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  margin-top: 28px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+}
+
 tr:hover {
   .bulk-edit-picker {
     display: inline;

@@ -78,6 +78,10 @@ $(document).on 'ready page:load', ->
     $('.input', this).focus()
 
   $('.tagging .tags li').on 'click', (e) ->
+    tags = $(this).closest('.tags')
+    url = $(tags).data('tag-url')
+    if url
+      self.location.href = url.replace(escape(':tag:'), $(this).text())
     return false
 
   $('.tagging .input').on 'blur', (e) ->

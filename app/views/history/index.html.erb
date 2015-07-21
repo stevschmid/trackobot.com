@@ -4,10 +4,13 @@
     <div class="col-md-8">
       <h2>History</h2>
     </div>
-    <div class="col-md-4">
-      <%= form_tag params, method: :get do %>
-        <%= text_field_tag :query, @query, class: 'history-query form-control input-sm' %>
-      <% end %>
+    <div class="col-md-4 text-right">
+      <div class="btn-group">
+        <%= form_tag params, method: :get do %>
+          <%= text_field_tag :query, @query, class: 'history-query form-control input-sm' %>
+          <%= content_tag :i, '', class: 'fa fa-times-circle-o history-query-clear' %>
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -51,6 +54,7 @@
               <div class="tagging">
                 <ul class="tags" 
                   data-immutable-tags="<%= Result.modes.keys.join(',') %>"
+                  data-tag-url="<%= url_for params.merge(query: ':tag:')  %>"
                   data-update-url="<%= set_tags_profile_result_path(result) %>"
                   data-update-method="PUT">
                   <li><%= result.mode %></li>
