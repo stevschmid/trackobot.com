@@ -13,10 +13,10 @@ class HistoryController < ApplicationController
     if @query.present?
       if Result.modes.keys.include?(@query)
         @unpaged_results = @unpaged_results.where(mode: Result.modes[@query])
-      elsif hero = Hero.where('name ILIKE ?', @query).first
-        @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
-      elsif deck = current_user.decks.where('name ILIKE ?', @query).first
+      elsif deck = current_user.decks.where('name ILIKE ?', "%#{@query}%").first
         @unpaged_results = @unpaged_results.where('deck_id = ? OR opponent_deck_id = ?', deck.id, deck.id)
+      elsif hero = Hero.where('name ILIKE ?', "%#{@query}%").first
+        @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
       else
         @unpaged_results = @unpaged_results.where('EXISTS ( SELECT t.tag FROM tags t WHERE t.result_id = results.id AND t.tag = ? )', @query)
       end
