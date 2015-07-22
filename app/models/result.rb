@@ -31,12 +31,39 @@ class Result < ActiveRecord::Base
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
+  def best_deck_for_hero(hero_id)
+    result_card_ids = card_histories.collect(&:card_id).uniq
+
+    # only consider decks with of the specified class
+    matching_decks = user.decks.where(hero_id: hero_id)
+
+    # compute quotient for each deck
+    quotient_per_decks = matching_decks.inject({}) do |hash, deck|
+      hash[deck] = quotient_for_deck(deck, result_card_ids)
+      hash
+    end
+
+    # remove decks with no match
+    quotient_per_decks.reject! { |_, quotient| quotient <= 0 }
+
+    # find best matching deck
+    best_deck, _ = quotient_per_decks.max { |(_, q1), (_, q2)| q1 <=> q2 }
+    best_deck
+  end
+
+  def quotient_for_deck(deck, card_ids)
+    deck_card_ids = deck.cards.collect(&:id).uniq
+    matching_cards = deck_card_ids & card_ids
+
+    matching_cards.length.to_f / deck_card_ids.length.to_f
+  end
+
   def determine_best_matching_player_deck
-    Deck.find_by_sql(["SELECT deck_id AS id FROM match_best_decks_with_results WHERE result_id = ? AND player = ?", id, CardHistory.players[:me]]).first
+    best_deck_for_hero(hero.id)
   end
 
   def determine_best_matching_opponent_deck
-    Deck.find_by_sql(["SELECT deck_id AS id FROM match_best_decks_with_results WHERE result_id = ? AND player = ?", id, CardHistory.players[:opponent]]).first
+    best_deck_for_hero(opponent.id)
   end
 
   def hero=(hero)
@@ -69,7 +96,7 @@ class Result < ActiveRecord::Base
   def connect_to_decks
     self.deck ||= determine_best_matching_player_deck
     self.opponent_deck ||= determine_best_matching_opponent_deck
-    self.save
+    self.save!
   end
 
   def result

@@ -24,10 +24,15 @@ describe Result do
   end
 
   describe 'card_history associations' do
+    let(:first_play) { FactoryGirl.create(:card_history) }
+    let(:second_play) { FactoryGirl.create(:card_history) }
+
     let(:result) { FactoryGirl.create(:result, mode: :ranked) }
 
-    let!(:first_play) { FactoryGirl.create(:card_history, result: result) }
-    let!(:second_play) { FactoryGirl.create(:card_history, result: result) }
+    before do
+      result.card_histories << first_play
+      result.card_histories << second_play
+    end
 
     it 'has card_histories in the right order' do
       expect(result.card_histories.to_a).to eq [first_play, second_play]
@@ -66,17 +71,36 @@ describe Result do
     let!(:zoolock) { create_deck 'Warlock', 'zoolock', zoolock_cards }
     let!(:demonlock) { create_deck 'Warlock', 'demonlock', demonlock_cards }
 
-    it 'assigns the best matched deck (most cards matched) to all affected results' do
+
+    it 'assigns the best matched deck (quotient-based) to all affected results' do
+      # handlock: 3/4
+      # zoolock: 2/4
+      # demonlock: 1/3
       expect { result.save! }.to change { result.deck }.to handlock
     end
 
-    describe 'number of same card should not matter' do
-      let!(:result) { build_result 'Warlock', 'Rogue',
-                      me: ['Ancient Watcher'] * 10 + ['Flame Imp', 'Knife Juggler'],
-                      opponent: ['Southsea Deckhand', 'Ironbeak Owl', 'Sludge Belcher'] }
+    it 'assigns only decks with the matching class' do
+      handlock.update_attributes(hero_id: Hero.find_by_name('Rogue').id)
+      expect { result.save! }.to change { result.deck }.to zoolock
+    end
+
+    context 'no card matches' do
+      let(:result) { build_result 'Warlock', 'Rogue',
+                      me: ['Azure Drake'],
+                      opponent: [] }
+
+      it 'does not assign any deck' do
+        expect { result.save! }.to_not change { result.deck }
+      end
+    end
+
+    context 'multiples of the same card' do
+      let(:result) { build_result 'Rogue', 'Warlock',
+                      me: [],
+                      opponent: ['Voidcaller'] * 10 + ['Flame Imp', 'Knife Juggler'] }
 
       it 'ignores the amount of the same card' do
-        expect { result.save! }.to change { result.deck }.to zoolock
+        expect { result.save! }.to change { result.opponent_deck }.to zoolock
       end
     end
 
