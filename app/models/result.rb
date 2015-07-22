@@ -31,11 +31,6 @@ class Result < ActiveRecord::Base
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
-  # scopes to use to mass update results after a deck gets updated
-  scope :match_with_deck, ->(deck) { joins('INNER JOIN match_best_decks_with_results rb ON rb.result_id = results.id AND rb.user_id = results.user_id').where('rb.deck_id = ?', deck.id) }
-  scope :match_with_player_deck, ->(deck) { match_with_deck(deck).where('rb.player = ?', CardHistory.players[:me]) }
-  scope :match_with_opponent_deck, ->(deck) { match_with_deck(deck).where('rb.player = ?', CardHistory.players[:opponent]) }
-
   def determine_best_matching_player_deck
     Deck.find_by_sql(["SELECT deck_id AS id FROM match_best_decks_with_results WHERE result_id = ? AND player = ?", id, CardHistory.players[:me]]).first
   end
