@@ -13,20 +13,6 @@ $(document).on 'ready page:load', ->
   $("[data-target-path]").click ->
     self.location.href = $(this).data('target-path')
 
-  # timeline
-  options =
-    placement: (context, source) ->
-      position = $(source).position()
-      # the timeline is max ~550px in height
-      if position.top - 280 < 0 
-        # rearrange to bottom
-        # otherwise it is cut off the top
-        "bottom"
-      else
-        "right"
-
-    trigger: "click"
-
   # user rename
   profile = $('.profile')
   $('.rename-button', profile).click ->
@@ -38,10 +24,6 @@ $(document).on 'ready page:load', ->
     if e.which == 27 # esc
       $('.rename', profile).addClass('hidden')
       $('.name, .rename-button', profile).removeClass('hidden')
-
-  $(".timeline-button").popover options
-
-  $('.banner').unslider()
 
 # close popover when clicking outside of current popover
 $(document).on "mousedown", (e) ->

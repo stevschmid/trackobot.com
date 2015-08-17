@@ -6,11 +6,30 @@
 # When selecting a checkbox show all bulk-edit checkboxes (remove hover?)
 # Canceling or unchecking all boxes goes back to hover behavior
 
-jQuery ->
-  $('html').on 'click', '.bulk-edit-picker', ->
+$(document).on 'ready page:load', ->
+  # bulk edit
+  $('.bulk-edit-picker').click ->
     $('.bulk-edit-control').toggleClass('bulk-edit-on', $('.bulk-edit-picker').is(':checked'))
-  $('html').on 'click', '#bulk_edit_cancel', ->
+
+  $('#bulk_edit_cancel').click ->
     $('.bulk-edit-control').removeClass('bulk-edit-on')
     $('.bulk-edit-picker').prop('checked', false)
-  $('html').on 'click', '.history-query-clear', ->
+
+  $('.history-query-clear').click ->
     $('.history-query').val('').closest('form').submit()
+
+  # timeline
+  options =
+    placement: (context, source) ->
+      position = $(source).position()
+      # the timeline is max ~550px in height
+      if position.top - 280 < 0 
+        # rearrange to bottom
+        # otherwise it is cut off the top
+        "bottom"
+      else
+        "right"
+
+    trigger: "click"
+
+  $(".timeline-button").popover options
