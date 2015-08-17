@@ -1,7 +1,7 @@
 module Stats
   extend ActiveSupport::Concern
 
-  TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month]
+  TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month custom]
 
   SORT_BY_FIELDS = %w[winrate share]
   DEFAULT_SORT_BY = :winrate
@@ -16,7 +16,9 @@ module Stats
   def user_results
     @results ||= begin
                    results = current_user.results
-                   results = results.where('created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
+                   if @time_range
+                     results = results.where('created_at >= ? AND created_at <= ?', @time_range_start, @time_range_end)
+                   end
                    results = results.where(mode: Result.modes[@mode]) if @mode
                    results = results.where(hero_id: @as_hero.id) if @as_hero
                    results = results.where(deck_id: @as_deck.id) if @as_deck
@@ -29,7 +31,9 @@ module Stats
   def user_arenas
     @user_arenas ||= begin
                        user_arenas = current_user.arenas
-                       user_arenas = user_arenas.where('arenas.created_at >= ?', min_date_for_time_range(@time_range)) if @time_range
+                       if @time_range
+                         user_arenas = user_arenas.where('arenas.created_at >= ? AND arenas.created_at <= ?', @time_range_start, @time_range_end)
+                       end
                        user_arenas = user_arenas.where('arenas.hero_id = ?', @as_hero.id) if @as_hero
                        user_arenas = user_arenas.where('arenas.opponent_id = ?', @vs_hero.id) if @vs_hero
                        user_arenas
@@ -43,6 +47,13 @@ module Stats
 
     if params[:time_range].present? && TIME_RANGE_FILTERS.include?(params[:time_range])
       @time_range = params[:time_range].to_sym
+
+      if @time_range == :custom
+        @custom_range = Date.parse(params[:start])..Date.parse(params[:end])
+      end
+
+      @time_range_start = min_date_for_time_range
+      @time_range_end = max_date_for_time_range
     end
 
     @sort_by ||= DEFAULT_SORT_BY
@@ -72,14 +83,27 @@ module Stats
     end
   end
 
-  def min_date_for_time_range(time_range)
-    case time_range
+  def min_date_for_time_range
+    case @time_range
     when :last_24_hours
       24.hours.ago
     when :last_3_days
       3.days.ago
     when :current_month
       Date.today.beginning_of_month
+    when :custom
+      @custom_range.min
+    else
+      Date.today
+    end
+  end
+
+  def max_date_for_time_range
+    case @time_range
+    when :custom
+      @custom_range.max
+    else
+      Date.tomorrow
     end
   end
 

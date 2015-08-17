@@ -18,4 +18,6 @@
 //= require local_time
 //= require jquery.peity.min
 //= require unslider.min
+//= require moment.min
+//= require daterangepicker
 //= require_tree .

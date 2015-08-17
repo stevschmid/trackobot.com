@@ -1,14 +1,16 @@
 <%= profile_page 'Class Stats', json: true do %>
   <div class="row">
-    <div class="col-sm-4">
-      <h3>Class Statistics</h3>
+    <div class="col-sm-3">
+      <h3>Class Stats</h3>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-9">
       <h3>
         <%= render partial: '/stats/shared/toolbar' %>
       </h3>
     </div>
   </div>
+
+  <%= render partial: '/stats/shared/custom_range' %>
 
   <%= render partial: '/layouts/notifications' %>
 
