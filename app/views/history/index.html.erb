@@ -62,6 +62,15 @@
                 <input class="input">
               </div>
             </td>
+            <td class="rank" >
+              <% if result.legend && result.legend > 0 %>
+                <div class="legend ranks-legend" title="Legend: <%= result.legend %>"><%= result.legend %></div>
+              <% elsif result.rank && result.rank > 0 %>
+                <div class="ranks-rank<%= result.rank %>" title="Rank <%= result.rank %>"></div>
+              <% else %>
+                &nbsp;
+              <% end %>
+            </td>
             <td class="timestamp <%= 'with-duration' if result.duration %>">
               <span class="added"><%= local_time_ago(result.created_at) %></span>
               <% if result.duration %>
