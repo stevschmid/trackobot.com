@@ -28,6 +28,8 @@ gem 'builder'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails', require: false
+  gem 'pry-rails'
+  gem 'timecop'
 end
 
 gem 'therubyracer'

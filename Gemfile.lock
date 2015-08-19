@@ -66,6 +66,7 @@ GEM
       railties (>= 3.0)
       sass-rails (>= 3.2)
     chunky_png (1.3.1)
+    coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -130,6 +131,7 @@ GEM
       coffee-rails
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
     mime-types (2.5)
     minitest (5.6.1)
     multi_json (1.11.0)
@@ -140,6 +142,12 @@ GEM
     orm_adapter (0.5.0)
     pg (0.17.1)
     possessive (1.0.1)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     rack (1.5.3)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -194,6 +202,7 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    slop (3.6.0)
     spring (1.1.2)
     sprockets (2.11.0)
       hike (~> 1.2)
@@ -214,6 +223,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    timecop (0.8.0)
     turbolinks (2.2.2)
       coffee-rails
     tzinfo (1.2.2)
@@ -254,6 +264,7 @@ DEPENDENCIES
   newrelic_rpm
   pg
   possessive
+  pry-rails
   rails (= 4.1.10)
   rails-erd
   redcarpet
@@ -263,6 +274,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   spring
   therubyracer
+  timecop
   turbolinks
   twitter-bootstrap-rails!
   uglifier (>= 1.3.0)
