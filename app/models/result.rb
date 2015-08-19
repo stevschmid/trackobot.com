@@ -105,4 +105,8 @@ class Result < ActiveRecord::Base
       end
     end
   end
+
+  def self.youngest
+    self.all.order(created_at: :desc).first
+  end
 end

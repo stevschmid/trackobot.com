@@ -3,6 +3,7 @@ module Meta
 
   def meta(object)
     {
+      updated_at: Result.youngest.updated_at,
       current_page: object.current_page,
       next_page: object.next_page,
       prev_page: object.prev_page,
