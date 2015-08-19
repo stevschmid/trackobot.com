@@ -71,11 +71,11 @@ describe ResultsController do
     expect(result.card_histories).to have(2).items
 
     expect(result.card_histories.first.card.name).to eq 'Shieldbearer'
-    expect(result.card_histories.first).to be_opponent
+    expect(result.card_histories.first.player).to eq 'opponent'
     expect(result.card_histories.first.turn).to be_nil # make sure we can add card history elements without turn info
 
     expect(result.card_histories.second.card.name).to eq 'The Coin'
-    expect(result.card_histories.second).to be_me
+    expect(result.card_histories.second.player).to eq 'me'
     expect(result.card_histories.second.turn).to eq 3
   end
 

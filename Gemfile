@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.12'
+gem 'rails', '4.2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
+# respond_with/respond_to
+gem 'responders', '~> 2.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -29,6 +31,7 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
+  gem 'web-console', '~> 2.0'
 end
 
 gem 'therubyracer'
@@ -41,7 +44,7 @@ gem 'chosen-rails'
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 
-gem 'active_model_serializers'
+gem 'active_model_serializers', github: 'rails-api/active_model_serializers', branch: '0-8-stable'
 
 gem 'font-awesome-sass'
 

@@ -77,7 +77,7 @@ describe HistoryController do
           result.card_histories.new(turn: 4, player: 'opponent', card: Card.find_by_ref('CS2_032'))
           # water elemental
           result.card_histories.new(turn: 4, player: 'me', card: Card.find_by_ref('CS2_033'))
-          result.save
+          result.save!
 
           get :index, format: :json
         end
