@@ -12,7 +12,7 @@ class Result < ActiveRecord::Base
   belongs_to :deck
   belongs_to :opponent_deck, class_name: 'Deck'
 
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :arena
 
   has_many :card_histories, -> { order(:id) }

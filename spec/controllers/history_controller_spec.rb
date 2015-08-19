@@ -22,7 +22,7 @@ describe HistoryController do
     end
 
     it 'has meta pagination information' do
-      expect(json[:meta].keys).to include(:current_page, :next_page, :prev_page, :total_pages, :total_items)
+      expect(json[:meta].keys).to include(:updated_at, :current_page, :next_page, :prev_page, :total_pages, :total_items)
     end
 
     describe 'result structure' do

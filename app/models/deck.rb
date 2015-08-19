@@ -1,6 +1,6 @@
 class Deck < ActiveRecord::Base
   belongs_to :hero
-  belongs_to :user
+  belongs_to :user, touch: true
 
   validates_presence_of :name
 

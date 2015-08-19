@@ -28,6 +28,8 @@ gem 'builder'
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails', require: false
+  gem 'pry-rails'
+  gem 'timecop'
 end
 
 gem 'therubyracer'
@@ -60,6 +62,9 @@ gem 'dotenv-rails'
 group :development do
   # Use Capistrano for deployment
   gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-unicorn'
+  gem 'rails-erd'
 end
 
 # view support

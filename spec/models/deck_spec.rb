@@ -65,4 +65,14 @@ describe Deck do
 
   end
 
+  describe 'update' do
+    it 'touches user' do
+      user = create(:user)
+      deck = build(:deck, user: user)
+      Timecop.freeze(Date.today + 30) do
+        deck.save
+      end
+      expect(user.updated_at).to eq(deck.updated_at)
+    end
+  end
 end
