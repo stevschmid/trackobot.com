@@ -63,6 +63,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
   gem 'capistrano3-unicorn'
+  gem 'rails-erd'
 end
 
 # view support

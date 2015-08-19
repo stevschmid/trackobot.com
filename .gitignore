@@ -22,3 +22,6 @@
 config/deploy*
 config/newrelic.yml
 config/unicorn.rb
+
+# Development
+erd.pdf
