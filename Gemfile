@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.7'
+gem 'rails', '4.1.10'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -24,6 +23,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 
+gem 'builder'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails', require: false
@@ -42,8 +43,6 @@ gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'active_model_serializers'
 
 gem 'font-awesome-sass'
-
-gem 'airbrake'
 
 gem 'redcarpet'
 
