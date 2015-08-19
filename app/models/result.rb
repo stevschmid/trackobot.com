@@ -12,7 +12,7 @@ class Result < ActiveRecord::Base
   belongs_to :deck
   belongs_to :opponent_deck, class_name: 'Deck'
 
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :arena
 
   has_many :card_histories, -> { order(:id) }
@@ -104,9 +104,5 @@ class Result < ActiveRecord::Base
         ]
       end
     end
-  end
-
-  def self.youngest
-    self.all.order(created_at: :desc).first
   end
 end
