@@ -5,7 +5,6 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'database_cleaner'
-DatabaseCleaner.strategy = :truncation
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -21,7 +20,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    DatabaseCleaner.clean
+    DatabaseCleaner.clean_with :truncation, except: %w[cards]
   end
 
   # ## Mock Framework

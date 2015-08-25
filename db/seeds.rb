@@ -33,26 +33,29 @@ def attributes_by_json_card(card)
   }
 end
 
-card_count_before = Card.count
+# rake db:seed update_cards=true
+if Card.count == 0 || ENV["update_cards"]
+  card_count_before = Card.count
 
-cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
-cards.each do |card|
-  db_card = Card.where(ref: card[:id]).first_or_initialize
-  db_card.update_attributes(ref: card[:id],
-                            name: card[:name],
-                            description: card[:description],
-                            mana: card[:mana],
-                            type: card[:type],
-                            hero: card[:class],
-                            set: card[:set],
-                            quality: card[:legendary],
-                            race: card[:race],
-                            attack: card[:attack],
-                            health: card[:health])
+  cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
+  cards.each do |card|
+    db_card = Card.where(ref: card[:id]).first_or_initialize
+    db_card.update_attributes(ref: card[:id],
+                              name: card[:name],
+                              description: card[:description],
+                              mana: card[:mana],
+                              type: card[:type],
+                              hero: card[:class],
+                              set: card[:set],
+                              quality: card[:legendary],
+                              race: card[:race],
+                              attack: card[:attack],
+                              health: card[:health])
+  end
+
+  cards_added = Card.count - card_count_before
+  puts "#{cards_added} cards added"
 end
-
-cards_added = Card.count - card_count_before
-puts "#{cards_added} cards added" if cards_added > 0
 
 if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
