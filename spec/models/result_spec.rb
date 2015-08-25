@@ -27,12 +27,7 @@ describe Result do
     let(:first_play) { FactoryGirl.create(:card_history) }
     let(:second_play) { FactoryGirl.create(:card_history) }
 
-    let(:result) { FactoryGirl.create(:result, mode: :ranked) }
-
-    before do
-      result.card_histories << first_play
-      result.card_histories << second_play
-    end
+    let(:result) { FactoryGirl.create(:result, mode: :ranked, card_histories: [first_play, second_play]) }
 
     it 'has card_histories in the right order' do
       expect(result.card_histories.to_a).to eq [first_play, second_play]

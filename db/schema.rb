@@ -23,8 +23,7 @@ ActiveRecord::Schema.define(version: 20150721121725) do
     t.integer  "user_id",    index: {name: "index_arenas_on_user_id"}
   end
 
-  create_table "card_histories", id: false, force: :cascade do |t|
-    t.integer "id",        default: { expr: "nextval('card_histories_id_seq'::regclass)" }, default: "nextval('card_histories_id_seq'::regclass)", null: false
+  create_table "card_histories", force: :cascade do |t|
     t.integer "card_id",   index: {name: "index_card_histories_on_card_id"}
     t.integer "result_id", index: {name: "index_card_histories_on_result_id"}
     t.integer "player"
