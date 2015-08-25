@@ -66,6 +66,14 @@ class Result < ActiveRecord::Base
     best_deck_for_hero(opponent.id)
   end
 
+  def card_history_list
+    CardHistoryListCoder.load(self.card_history_data)
+  end
+
+  def card_history_list=(card_history_list)
+    self.card_history_data = CardHistoryListCoder.dump(card_history_list)
+  end
+
   def hero=(hero)
     if hero.kind_of?(String)
       hero = Hero.where('lower(name) = ?', hero.downcase).first

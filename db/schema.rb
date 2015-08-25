@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721121725) do
+ActiveRecord::Schema.define(version: 20150821102505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,20 +78,21 @@ ActiveRecord::Schema.define(version: 20150721121725) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer  "mode",             index: {name: "index_results_on_mode"}
+    t.integer  "mode",              index: {name: "index_results_on_mode"}
     t.boolean  "coin"
-    t.boolean  "win",              index: {name: "index_results_on_win"}
-    t.integer  "hero_id",          index: {name: "index_results_on_hero_id"}
-    t.integer  "opponent_id",      index: {name: "index_results_on_opponent_id"}
+    t.boolean  "win",               index: {name: "index_results_on_win"}
+    t.integer  "hero_id",           index: {name: "index_results_on_hero_id"}
+    t.integer  "opponent_id",       index: {name: "index_results_on_opponent_id"}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",          index: {name: "index_results_on_user_id"}
-    t.integer  "arena_id",         index: {name: "index_results_on_arena_id"}
-    t.integer  "deck_id",          index: {name: "index_results_on_deck_id"}
-    t.integer  "opponent_deck_id", index: {name: "index_results_on_opponent_deck_id"}
+    t.integer  "user_id",           index: {name: "index_results_on_user_id"}
+    t.integer  "arena_id",          index: {name: "index_results_on_arena_id"}
+    t.integer  "deck_id",           index: {name: "index_results_on_deck_id"}
+    t.integer  "opponent_deck_id",  index: {name: "index_results_on_opponent_deck_id"}
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
+    t.binary   "card_history_data"
   end
 
   create_view "match_decks_with_results", <<-'END_VIEW_MATCH_DECKS_WITH_RESULTS', :force => true
