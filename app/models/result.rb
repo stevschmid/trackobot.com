@@ -17,11 +17,11 @@ class Result < ActiveRecord::Base
 
   has_many :tags
 
-  has_many :card_histories, -> { order(:id) }, dependent: :destroy
+  # has_many :card_histories, -> { order(:id) }, dependent: :destroy
 
-  # explicit assocations we can eager load
-  has_many :player_card_histories, -> { where(player: CardHistory.players[:me]).order(:id) }, class_name: 'CardHistory'
-  has_many :opponent_card_histories, -> { where(player: CardHistory.players[:opponent]).order(:id) }, class_name: 'CardHistory'
+  # # explicit assocations we can eager load
+  # has_many :player_card_histories, -> { where(player: CardHistory.players[:me]).order(:id) }, class_name: 'CardHistory'
+  # has_many :opponent_card_histories, -> { where(player: CardHistory.players[:opponent]).order(:id) }, class_name: 'CardHistory'
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
