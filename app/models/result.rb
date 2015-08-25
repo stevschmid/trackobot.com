@@ -47,7 +47,9 @@ class Result < ActiveRecord::Base
     quotient_per_decks.reject! { |_, quotient| quotient <= 0 }
 
     # find best matching deck
-    best_deck, _ = quotient_per_decks.max { |(_, q1), (_, q2)| q1 <=> q2 }
+    best_deck, _ = quotient_per_decks.max do |(deck1, q1), (deck2, q2)|
+      q1 == q2 ? (deck1.cards.count <=> deck2.cards.count) : (q1 <=> q2)
+    end
     best_deck
   end
 
