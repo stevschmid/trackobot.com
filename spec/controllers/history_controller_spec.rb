@@ -71,13 +71,15 @@ describe HistoryController do
 
       describe 'card history' do
         before do
-          # unleash
-          result.card_histories.new(turn: 3, player: 'me', card: Card.find_by_ref('EX1_538'))
-          # flamestrike
-          result.card_histories.new(turn: 4, player: 'opponent', card: Card.find_by_ref('CS2_032'))
-          # water elemental
-          result.card_histories.new(turn: 4, player: 'me', card: Card.find_by_ref('CS2_033'))
-          result.save!
+          list = [
+            # unleash
+            CardHistoryEntry.new(turn: 3, player: :me, card: Card.find_by_ref('EX1_538')),
+            # flamestrike
+            CardHistoryEntry.new(turn: 4, player: :opponent, card: Card.find_by_ref('CS2_032')),
+            # water elemental
+            CardHistoryEntry.new(turn: 4, player: :me, card: Card.find_by_ref('CS2_033'))
+          ]
+          result.update_attributes(card_history_list: list)
 
           get :index, format: :json
         end

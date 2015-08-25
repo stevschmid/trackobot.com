@@ -2,7 +2,7 @@ class ResultSerializer < ActiveModel::Serializer
   attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck, :coin, :result, :arena_id, :duration, :rank, :legend
   attribute :created_at, key: :added
 
-  has_many :card_histories, key: :card_history
+  has_many :card_history_list, key: :card_history, serializer: CardHistoryEntrySerializer
 
   def card_histories
     object.card_histories.order(:id)
