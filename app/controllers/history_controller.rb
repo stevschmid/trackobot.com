@@ -40,6 +40,7 @@ class HistoryController < ApplicationController
 
   def timeline
     @result = Result.find(params[:id])
+    @card_histories = @result.card_history_list
     render layout: false
   end
 
