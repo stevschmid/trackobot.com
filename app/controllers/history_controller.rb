@@ -23,9 +23,7 @@ class HistoryController < ApplicationController
     end
 
     @results = @unpaged_results.page(params[:page])
-    @results.includes!(:card_histories => :card)
-            .includes!(:player_card_histories => :card)
-            .includes!(:opponent_card_histories => :card)
+    @results.includes!(:card_histories)
             .includes!(:hero)
             .includes!(:opponent)
             .includes!(:tags)
@@ -39,6 +37,18 @@ class HistoryController < ApplicationController
         render text: @unpaged_results.to_csv
       end
     end
+  end
+
+  def timeline
+    @result = Result.find(params[:id])
+    render layout: false
+  end
+
+  def card_stats
+    result = Result.find(params[:id])
+    player = params[:player].to_sym
+    @card_histories = result.card_histories.where(player: CardHistory.players[player])
+    render layout: false
   end
 
 end

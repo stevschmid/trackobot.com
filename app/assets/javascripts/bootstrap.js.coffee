@@ -27,7 +27,7 @@ $(document).on 'ready page:load', ->
 
 # close popover when clicking outside of current popover
 $(document).on "mousedown", (e) ->
-  $(".has-popover, .timeline-button").each ->
+  $(".has-popover").each ->
     #the 'is' for buttons that trigger popups
     #the 'has' for icons within a button that triggers a popup
     $(this).popover "hide"  if not $(this).is(e.target) and $(this).has(e.target).length is 0 and $(".popover").has(e.target).length is 0

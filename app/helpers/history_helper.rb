@@ -1,20 +1,13 @@
 module HistoryHelper
 
-  def card_history_additions(card_histories)
-    return {} if card_histories.empty?
-
-    num_cards_played = card_histories.reject { |c| c.card.type == 'hero' }.length
-
-    content = escape_once(render(partial: 'card_history', locals: { grouped_card_histories: group_card_histories_by_card_and_sort_by_mana(card_histories) }))
+  def card_stats_additions(result, player)
+    return {} if result.card_histories.empty?
     {
-      class: 'has-popover dotted-baseline',
+      class: 'dotted-baseline card-history-button',
       data: {
-        container: 'body',
-        title: "Cards played (#{num_cards_played})",
-        trigger: 'hover',
-        placement: 'bottom',
-        content: content,
-        html: true
+        :'content-path' => card_stats_profile_history_path(result, player: player),
+        title: "Card history",
+        trigger: 'hover'
       }
     }
   end
@@ -22,14 +15,12 @@ module HistoryHelper
   def timeline_additions(result)
     return {} if result.card_histories.empty?
     header = escape_once(render(partial: 'timeline_header', locals: { result: result }))
-    content = escape_once(render(partial: 'timeline', locals: { grouped_card_histories: group_card_histories_chronologically(result.card_histories) }))
     {
       class: 'btn btn-default btn-xs timeline-button',
       data: {
-        container: 'body',
+        :'content-path' => timeline_profile_history_path(result),
         title: header,
-        content: content,
-        html: true
+        trigger: 'click'
       }
     }
   end

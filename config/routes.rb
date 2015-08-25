@@ -5,7 +5,12 @@ Rails.application.routes.draw do
 
   namespace :profile, module: false do
     get '/' => 'history#index'
-    resources :history, only: [:index]
+    resources :history, only: [:index] do
+      member do
+        get :timeline
+        get :card_stats
+      end
+    end
     resources :arena, only: [:index]
     resources :results, only: [:create, :show] do
       member do

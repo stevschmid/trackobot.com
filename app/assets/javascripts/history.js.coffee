@@ -19,17 +19,22 @@ $(document).on 'ready page:load', ->
     $('.history-query').val('').closest('form').submit()
 
   # timeline
-  options =
-    placement: (context, source) ->
-      position = $(source).position()
-      # the timeline is max ~550px in height
-      if position.top - 280 < 0 
-        # rearrange to bottom
-        # otherwise it is cut off the top
-        "bottom"
-      else
-        "right"
+  loadContentForPopover = (cls, event, options) ->
+    options = $.extend {}, options
 
-    trigger: "click"
+    $(cls)[event] ->
+      btn = $(this)
 
-  $(".timeline-button").popover options
+      return unless btn.data('content-path') and !btn.hasClass('has-popover')
+      $.get btn.data('content-path'), (content) ->
+        options = $.extend options,
+          html: true
+          container: 'body'
+          trigger: event
+          content: content
+
+        btn.unbind(event).addClass('has-popover')
+        btn.popover(options).popover('show')
+
+  loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
+  loadContentForPopover '.timeline-button', 'click', placement: 'bottom'

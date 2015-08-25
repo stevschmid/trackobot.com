@@ -1,5 +1,6 @@
 <table class="card_history">
   <%
+    grouped_card_histories = group_card_histories_by_card_and_sort_by_mana(@card_histories)
     grouped_card_histories.each do |card, card_histories| 
       next if card.type == 'hero' # skip hero power
   %>
