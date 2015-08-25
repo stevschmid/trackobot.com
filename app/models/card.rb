@@ -6,8 +6,8 @@ class Card < ActiveRecord::Base
   # Card.playable.group_by { |x| x['name'] }.select { |n,c| c.length > 1 }.values.flatten.map(&:ref)
   scope :playable, -> do
     # select cards which were recorded as played
-    where('EXISTS(SELECT card_histories.id FROM card_histories WHERE card_histories.card_id = cards.id LIMIT 1)')
-    .where.not(ref: [ # remove duplicated cards
+    where(playable: true).
+    where.not(ref: [ # remove duplicated cards
       'EX1_165t1', # druid of the claw minion
       'EX1_165t2' , # druid of the claw minion
       'CS2_mirror', # mirror image minion
@@ -26,5 +26,10 @@ class Card < ActiveRecord::Base
       'NAX2_05', # worshipper
       'NAX2_05H' # worshipper
     ])
+  end
+
+  def mark_as_playable!
+    return if playable?
+    update_attributes(playable: true)
   end
 end
