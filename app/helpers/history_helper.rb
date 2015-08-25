@@ -1,7 +1,7 @@
 module HistoryHelper
 
   def card_stats_additions(result, player)
-    return {} if result.card_histories.empty?
+    return {} unless result.card_history_data?
     {
       class: 'dotted-baseline card-history-button',
       data: {
@@ -13,7 +13,7 @@ module HistoryHelper
   end
 
   def timeline_additions(result)
-    return {} if result.card_histories.empty?
+    return {} unless result.card_history_data?
     header = escape_once(render(partial: 'timeline_header', locals: { result: result }))
     {
       class: 'btn btn-default btn-xs timeline-button',

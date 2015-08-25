@@ -43,10 +43,12 @@ class Result
 
       # convert list of hashes into card history list
       raw_list.collect do |entry|
+        card = cards[entry[:card_id]]
+        next unless card
         CardHistoryEntry.new(player: entry[:self] ? :me : :opponent,
                              turn: entry[:turn],
-                             card: cards[entry[:card_id]])
-      end
+                             card: card)
+      end.compact
     end
 
   end

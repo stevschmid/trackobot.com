@@ -4,7 +4,7 @@ class ResultsController < ApplicationController
   def create
     @result = current_user.results.new(safe_params)
     if card_history = params[:result][:card_history]
-      add_card_history_for_result(@result, card_history)
+      add_card_history_to_result(@result, card_history)
     end
     @result.save
     respond_with(:profile, @result.reload)
@@ -25,15 +25,18 @@ class ResultsController < ApplicationController
 
   private
 
-  def add_card_history_for_result(result, card_history)
-    card_history.each do |card_history_item|
+  def add_card_history_to_result(result, card_history)
+    result.card_history_list = card_history.collect do |card_history_item|
       card = Card.find_by_ref(card_history_item[:card_id])
       if card
-        result.card_histories.new(turn: card_history_item[:turn], player: card_history_item[:player], card: card)
+        CardHistoryEntry.new(turn: card_history_item[:turn],
+                             player: card_history_item[:player].to_sym,
+                             card: card)
       else
         logger.info "Card #{card_history_item[:card_id]} not found in Card Database"
+        nil
       end
-    end
+    end.compact
   end
 
   def safe_params

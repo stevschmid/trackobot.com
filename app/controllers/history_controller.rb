@@ -23,8 +23,7 @@ class HistoryController < ApplicationController
     end
 
     @results = @unpaged_results.page(params[:page])
-    @results.includes!(:card_histories)
-            .includes!(:hero)
+    @results.includes!(:hero)
             .includes!(:opponent)
             .includes!(:tags)
 
@@ -47,7 +46,7 @@ class HistoryController < ApplicationController
   def card_stats
     result = Result.find(params[:id])
     player = params[:player].to_sym
-    @card_histories = result.card_histories.where(player: CardHistory.players[player])
+    @card_histories = result.card_history_list.select { |entry| entry.player == player }
     render layout: false
   end
 

@@ -32,7 +32,7 @@ class Result < ActiveRecord::Base
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
   def best_deck_for_hero(hero_id)
-    result_card_ids = card_histories.collect(&:card_id).uniq
+    result_card_ids = card_history_list.collect { |card_history_entry| card_history_entry.card.id }.uniq
 
     # only consider decks with of the specified class
     matching_decks = user.decks.where(hero_id: hero_id)
@@ -67,11 +67,12 @@ class Result < ActiveRecord::Base
   end
 
   def card_history_list
-    CardHistoryListCoder.load(self.card_history_data)
+    @card_history_list ||= CardHistoryListCoder.load(self.card_history_data)
   end
 
   def card_history_list=(card_history_list)
     self.card_history_data = CardHistoryListCoder.dump(card_history_list)
+    @card_history_list = card_history_list
   end
 
   def hero=(hero)

@@ -23,18 +23,14 @@ describe Result do
     end
   end
 
-  describe 'card_history associations' do
-    let(:first_play) { FactoryGirl.create(:card_history) }
-    let(:second_play) { FactoryGirl.create(:card_history) }
+  describe 'card history list' do
+    let(:first_play) { FactoryGirl.build(:card_history_entry, player: :me) }
+    let(:second_play) { FactoryGirl.build(:card_history_entry, player: :opponent) }
 
-    let(:result) { FactoryGirl.create(:result, mode: :ranked, card_histories: [first_play, second_play]) }
+    let(:result) { FactoryGirl.create(:result, mode: :ranked, card_history_list: [first_play, second_play]) }
 
-    it 'has card_histories in the right order' do
-      expect(result.card_histories.to_a).to eq [first_play, second_play]
-    end
-
-    it 'destroys associated card_histories' do
-      expect { result.destroy }.to change { result.card_histories.count }.by(-2)
+    it 'has card_history_list in the right order' do
+      expect(result.card_history_list.collect(&:player)).to eq [:me, :opponent]
     end
   end
 
@@ -46,9 +42,13 @@ describe Result do
 
     def build_result(as, vs, opts)
       FactoryGirl.build(:result, mode: mode, hero: Hero.find_by_name(as), opponent: Hero.find_by_name(vs), user: user).tap do |result|
+        list = []
         opts.each_pair do |player, card_names|
-          Card.where(name: card_names).pluck(:id).each { |card_id| result.card_histories.new(card_id: card_id, player: player) }
+          Card.where(name: card_names).each do |card|
+            list << CardHistoryEntry.new(turn: 1, player: player, card: card)
+          end
         end
+        result.card_history_list = list
       end
     end
 
