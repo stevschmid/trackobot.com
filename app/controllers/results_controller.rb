@@ -1,6 +1,8 @@
 class ResultsController < ApplicationController
   respond_to :json, :html
 
+  before_filter :deny_api_calls!
+
   def create
     @result = current_user.results.new(safe_params)
     if card_history = params[:result][:card_history]
@@ -65,6 +67,10 @@ class ResultsController < ApplicationController
 
   def safe_params
     params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend)
+  end
+
+  def deny_api_calls!
+    head :unauthorized if params[:token].present?
   end
 
 end
