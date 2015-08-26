@@ -15,6 +15,14 @@
   margin-top: 24px;
 }
 
+.bulk-edit-buttons {
+  margin-top: -5px;
+  margin-bottom: 20px;
+  form {
+    display: inline-block;
+  }
+}
+
 .history-query-clear {
   position: absolute;
   right: 5px;

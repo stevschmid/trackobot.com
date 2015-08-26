@@ -18,6 +18,16 @@ $(document).on 'ready page:load', ->
   $('.history-query-clear').click ->
     $('.history-query').val('').closest('form').submit()
 
+  $('.bulk-edit-form').submit (event) ->
+    form = this
+    $('.bulk-edit-picker:checked').each ->
+      $('<input/>', type: 'hidden', name: 'result_ids[]', value: this.value)
+        .appendTo(form)
+
+  $('select', '.bulk-edit-form').chosen
+    width: '150px',
+    allow_single_deselect: true
+
   # timeline
   loadContentForPopover = (cls, event, options) ->
     options = $.extend {}, options

@@ -24,8 +24,6 @@
     <%= render(partial: '/layouts/filter', locals: {name: 'Arena Run', label: "#{hero_label(@arena.hero.name)} (#{arena_result(@arena)})", param: :arena_id}) %>
   <% end %>
 
-  <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
-
   <% if @results.empty? %>
   <p class="alert alert-info">
     <% if @query.present? %>
@@ -88,18 +86,26 @@
   <% end %>
 
   <div class="row">
-    <div class="col-md-12">
-      <%= submit_tag 'Delete', class: 'btn btn-sm btn-danger bulk-edit-control',
-        data: { confirm: 'Are you sure you want to permanently delete the selected results?' } %>
-      <%= button_tag 'Cancel', type: :reset, id: 'bulk_edit_cancel', class: 'btn btn-sm bulk-edit-control' %>
-
-      <div class="pull-right">
-        <%= page_entries_info @results %>
-      </div>
+    <div class="col-md-12 bulk-edit-buttons bulk-edit-control">
+      <%= form_tag bulk_update_profile_results_path, method: :put, class: 'bulk-edit-form' do %>
+        <%= collection_select :as_deck, nil, @decks, :id, :name, { include_blank: true } %> 
+        vs
+        <%= collection_select :vs_deck, nil, @decks, :id, :name, { include_blank: true } %> 
+        <%= submit_tag 'Update', class: 'btn btn-sm btn-primary' %>
+      <% end %>
+      <%= form_tag bulk_delete_profile_results_path, method: :delete, class: 'bulk-edit-form' do %>
+        <%= submit_tag 'Delete', class: 'btn btn-sm btn-danger',
+          data: { confirm: 'Are you sure you want to permanently delete the selected results?' } %>
+      <% end %>
+      <%= button_tag 'Cancel', type: :reset, id: 'bulk_edit_cancel', class: 'btn btn-sm btn-default' %>
     </div>
   </div>
 
-  <% end %> <!-- form end -->
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <%= page_entries_info @results %>
+    </div>
+  </div>
 
   <div class="row text-center">
     <div class="col-md-12">

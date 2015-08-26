@@ -27,6 +27,8 @@ class HistoryController < ApplicationController
             .includes!(:opponent)
             .includes!(:tags)
 
+    @decks = current_user.decks
+
     respond_to do |format|
       format.html
       format.json do

@@ -23,6 +23,24 @@ class ResultsController < ApplicationController
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 
+  def bulk_update
+    if as_deck = Deck.find_by_id(params[:as_deck])
+      current_user.results
+        .where(id: params[:result_ids])
+        .where(hero: as_deck.hero)
+        .update_all(deck_id: as_deck.id)
+    end
+
+    if vs_deck = Deck.find_by_id(params[:vs_deck])
+      current_user.results
+        .where(id: params[:result_ids])
+        .where(opponent: vs_deck.hero)
+        .update_all(opponent_deck_id: vs_deck.id)
+    end
+
+    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }
+  end
+
   private
 
   def add_card_history_to_result(result, card_history)

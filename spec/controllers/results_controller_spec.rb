@@ -160,6 +160,42 @@ describe ResultsController do
     end
   end
 
+  describe 'PUT bulk_update' do
+    let(:result_user) { user }
+
+    let(:shaman) { Hero.find_by_name('Shaman') }
+    let(:warrior) { Hero.find_by_name('Warrior') }
+    let(:priest) { Hero.find_by_name('Priest') }
+
+    let(:shaman_deck) { FactoryGirl.create(:deck, hero: shaman, user: result_user) }
+    let(:warrior_deck) { FactoryGirl.create(:deck, hero: warrior, user: result_user) }
+
+    let!(:first_result) { FactoryGirl.create(:result, user: result_user, hero: shaman, opponent: warrior) }
+    let!(:second_result) { FactoryGirl.create(:result, user: result_user, hero: shaman, opponent: priest) }
+
+    it 'sets the selected results' do
+      put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
+      expect(first_result.reload.deck).to eq shaman_deck
+      expect(second_result.reload.deck).to eq shaman_deck
+    end
+
+    it 'respects the class' do
+      put :bulk_update, { result_ids: [first_result.id, second_result.id], vs_deck: warrior_deck.id }
+      expect(first_result.reload.opponent_deck).to eq warrior_deck
+      expect(second_result.reload.opponent_deck).to_not eq warrior_deck
+    end
+
+    context 'as another user' do
+      let(:result_user) { FactoryGirl.create(:user) }
+
+      it 'can\'t touch this' do
+        expect {
+          put :bulk_update, { result_ids: [first_result.id, second_result.id] }
+        }.to_not change { first_result.reload.updated_at }
+      end
+    end
+  end
+
   describe 'PUT set_tags' do
     let(:result) { FactoryGirl.create(:result, user: user) }
 

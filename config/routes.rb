@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       end
       collection do
         delete :bulk_delete
+        put :bulk_update
       end
     end
 
