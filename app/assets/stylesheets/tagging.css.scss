@@ -1,6 +1,7 @@
 @mixin tagColor($color) {
-  background: transparentize($color, 0.75);
-  color: darken($color, 30%);
+  background: transparentize($color, 0.90);
+  color: darken($color, 50%);
+  border: 1px solid lighten($color, 10%);
 
   &:hover {
     color: darken($color, 10%);
