@@ -15,7 +15,7 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :arena
 
-  has_many :card_histories, -> { order(:id) }
+  has_many :card_histories, -> { order(:id) }, dependent: :destroy
 
   # explicit assocations we can eager load
   has_many :player_card_histories, -> { where(player: CardHistory.players[:me]).order(:id) }, class_name: 'CardHistory'
@@ -26,6 +26,7 @@ class Result < ActiveRecord::Base
 
   before_create :create_or_update_associated_arena, if: :arena?
   after_create :connect_to_decks, unless: :arena?
+  before_destroy :ensure_not_arena
 
   # scopes to use to mass update results after a deck gets updated
   scope :match_with_deck, ->(deck) { joins('INNER JOIN match_best_decks_with_results rb ON rb.result_id = results.id AND rb.user_id = results.user_id').where('rb.deck_id = ?', deck.id) }
@@ -105,4 +106,10 @@ class Result < ActiveRecord::Base
       end
     end
   end
+
+  private
+
+    def ensure_not_arena
+      false if arena?
+    end
 end

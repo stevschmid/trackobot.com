@@ -1,5 +1,12 @@
 <%= profile_page 'History', json: true, csv: true do %>
+  <%= form_tag bulk_delete_profile_results_path, method: :delete do %>
+  <div class="pull-right">
+    <%= submit_tag "Delete Selected", class: "btn btn-danger bulk-edit-control",
+                                      data: { confirm: "Are you sure you want to permanently delete the selected results?" } %>
+    <%= button_tag "Cancel", type: :reset, id: "bulk_edit_cancel", class: "btn bulk-edit-control" %>
+  </div>
   <h2>History</h2>
+
   <%= render partial: '/layouts/notifications' %>
 
   <% if Result.modes.has_key?(params[:mode]) %>
@@ -20,7 +27,16 @@
         <tbody>
         <% @results.each do |result| %>
           <tr>
-            <td class="player"><%= player_label_for_result result, card_history_additions(result.player_card_histories) %></td>
+            <td class="choose">
+              <% if result.arena? %>
+                <%= check_box_tag "result_ids[]", result.id, false, class: "bulk-edit-control bulk-edit-picker", title: "Arena results cannot be edited currently", disabled: true%>
+              <% else %>
+                <%= check_box_tag "result_ids[]", result.id, false, autocomplete: "off", class: "bulk-edit-control bulk-edit-picker"%>
+              <% end %>
+            </td>
+            <td class="player">
+              <%= player_label_for_result result, card_history_additions(result.player_card_histories) %>
+            </td>
             <td class="opponent">vs <%= opponent_label_for_result result, card_history_additions(result.opponent_card_histories) %></td>
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
             <td class="timeline"><%= button_tag image_tag('crossed_swords_14.png'), timeline_additions(result) if result.card_histories.any? %></td>
@@ -37,6 +53,8 @@
       </table>
     </div>
   <% end %>
+
+  <% end %> <!-- form end -->
 
   <div class="text-right">
     <%= page_entries_info @results %>

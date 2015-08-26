@@ -10,6 +10,11 @@ class ResultsController < ApplicationController
     respond_with(:profile, @result)
   end
 
+  def bulk_delete
+    Result.destroy(params[:result_ids]) if params[:result_ids]
+    redirect_to profile_history_index_path
+  end
+
   private
 
   def add_card_history_for_result(result, card_history)

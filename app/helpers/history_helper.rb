@@ -62,7 +62,7 @@ module HistoryHelper
   end
 
   def hero_icon(name)
-    content_tag(:span, '', class: "#{name.downcase}-icon")
+    content_tag(:span, '', class: "#{name.downcase}-icon hero-icon")
   end
 
   def match_duration(secs)

@@ -121,4 +121,16 @@ describe ResultsController do
     end
   end
 
+  describe 'DELETE bulk_delete' do
+    let!(:first_result) { FactoryGirl.create(:result) }
+    let!(:second_result) { FactoryGirl.create(:result) }
+
+    it 'destroys the requested results' do
+      expect{
+        delete :bulk_delete, { result_ids: [first_result.id, second_result.id] }
+      }.to change(Result, :count).by(-2)
+    end
+
+  end
+
 end
