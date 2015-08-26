@@ -56,27 +56,23 @@
       <li>Mac &amp; Windows compatibility</li>
       <li>Written in C++ using the Qt Framework</li>
     </ul>
-  </div>
-
-  <div class="row">
-    <div class="banner">
-      <ul>
-        <li><%= image_tag 'screenshot_history.jpg' %></li>
-        <li><%= image_tag 'screenshot_class_stats.jpg' %></li>
-        <li><%= image_tag 'screenshot_deck_stats.jpg' %></li>
-        <li><%= image_tag 'screenshot_arena.jpg' %></li>
-      </ul>
-    </div>
+    <ul class="gallery">
+      <li><%= link_to image_tag('screenshot_history.png'), image_path('screenshot_history.png'), target: '_blank' %></li>
+      <li><%= link_to image_tag('screenshot_class_stats.png'), image_path('screenshot_class_stats.png'), target: '_blank' %></li>
+      <li><%= link_to image_tag('screenshot_deck_stats.png'), image_path('screenshot_deck_stats.png'), target: '_blank'  %></li>
+      <li><%= link_to image_tag('screenshot_arena.png'), image_path('screenshot_arena.png'), target: '_blank' %></li>
+    </ul>
   </div>
 
   <div class="row">
     <h2>Troubleshooting</h2>
-    <ul>
-      <li><em>Why doesn't Track-o-Bot track my matches?</em><br/>Make sure you restart Hearthstone after you installed or updated Track-o-Bot. There is also the possibility that you moved your Hearthstone folder recently. In this case, use <%= link_to "Scan and Repair", image_path('faq_scanrepair.jpg'), target: '_blank' %> in the Battle.net launcher and restart Track-o-Bot.</li>
-      <li><em>Can I use the same account on multiple computers?</em><br/>Yes! Use the import/export function in Track-o-Bot's settings.</li>
-      <li><em>It is safe to use?</em><br/>Track-o-Bot reads data any other app on your system could access (game log). It doesn't interact with Hearthstone in any illegimate way (e.g. capturing network packages, reading memory etc.).</li>
-      <li><em>Where can I see what's going on?</em><br/>There is a log accessible via the settings in Track-o-Bot.</li>
-      <li><em>Does it work on Linux?</em><br/>Check out this <a href="https://github.com/BOSSoNe0013/track-o-bot">fork</a> which includes native support for linux.</li>
+    <ul class="troubleshoot">
+      <li><em>Q: Why doesn't Track-o-Bot track my matches?</em><br/>Make sure you restart Hearthstone after you installed or updated Track-o-Bot. There is also the possibility that you moved your Hearthstone folder recently. In this case, use <%= link_to "Scan and Repair", image_path('faq_scanrepair.jpg'), target: '_blank' %> in the Battle.net launcher and restart Track-o-Bot.</li>
+      <li><em>Q: Can I use the same account on multiple computers?</em><br/>Yes! Use the import/export function in Track-o-Bot's settings.</li>
+      <li><em>Q: It is safe to use?</em><br/><a href="https://twitter.com/bdbrode/status/511151446038179840" target="_blank">Yes.</a></li>
+      <li><em>Q: I installed Track-o-Bot and suddenly Hearthstone lags!</em><br/>The built-in logging of Hearthstone might be slowing down your computer. Check out this <a href="https://www.reddit.com/r/trackobot/comments/3ag3an/hearthstones_logging_function_causing_lags_and/" target="_blank">thread</a> for further informations.</li>
+      <li><em>Q: Where can I see what's going on?</em><br/>There is a log accessible via the settings in Track-o-Bot.</li>
+      <li><em>Q: Does it work on Linux?</em><br/>Check out this <a href="https://github.com/BOSSoNe0013/track-o-bot" target="_blank">fork</a> which includes native support for linux.</li>
     </ul>
   </div>
 
