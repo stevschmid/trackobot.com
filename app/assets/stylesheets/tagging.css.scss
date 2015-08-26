@@ -1,7 +1,7 @@
 @mixin tagColor($color) {
   background: transparentize($color, 0.90);
-  color: darken($color, 50%);
-  border: 1px solid lighten($color, 20%);
+  color: darken($color, 30%);
+  border: 1px solid lighten($color, 30%);
 
   &:hover {
     color: darken($color, 10%);
@@ -21,7 +21,7 @@
     list-style: none;
 
     li {
-      @include tagColor(#E5CA5A);
+      @include tagColor(#e4b700);
 
       font-size: 11px;
       float: left;
