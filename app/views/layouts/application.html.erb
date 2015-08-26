@@ -2,8 +2,8 @@
 <html>
 <head>
   <title><%= [ content_for?(:title) ? yield(:title) : nil, 'Track-o-Bot' ].compact.join(' - ') %></title>
-  <meta name="description" content="Automated Open Source Tracking Software for Hearthstone" />
-  <meta name="keywords" content="Hearthstone, Tracker, App, Open Source" />
+  <meta name="description" content="Open Source Hearthstone Tracker for Windows and Mac. Tracks the cards you and your opponent play and gives you access to sophisticated statistics." />
+  <meta name="keywords" content="Hearthstone, Tracker, Windows, Mac, App, Open Source" />
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -18,6 +18,27 @@
     ga('send', 'pageview');
 
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context" : "http://schema.org",
+    "@type" : "SoftwareApplication",
+    "name" : "Track-o-Bot",
+    "description" :  "Everyone, get in here! Open Source Hearthstone Tracker for Windows and Mac. Tracks the cards you and your opponent play and gives you access to sophisticated statistics."
+    "image" : "<%= image_url 'images/screenshot_history.jpg' %>",
+    "url" : "<%= root_url %>",
+    "publisher" : {
+      "@type" : "Person",
+      "name" : "Steven Schmid"
+    },
+    "applicationCategory" : "Application, Game",
+    "applicationSubCategory":	"Hearthstone Tracker",
+    "applicationSuite": "Hearthstone",
+    "operatingSystem" : "Windows, Mac OS X",
+    "requirements" : "Windows Vista, Mac OS X 10.7+"
+  }
+  </script>
+
   <% end %>
 </head>
 <body>
