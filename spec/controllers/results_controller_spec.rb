@@ -185,13 +185,21 @@ describe ResultsController do
       expect(second_result.reload.opponent_deck).to_not eq warrior_deck
     end
 
+    it 'ignores update for arenas' do
+      first_result.update_attributes(mode: :arena)
+      expect {
+        put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
+      }.to_not change { first_result.reload.deck }
+    end
+
     context 'as another user' do
       let(:result_user) { FactoryGirl.create(:user) }
 
       it 'can\'t touch this' do
         expect {
-          put :bulk_update, { result_ids: [first_result.id, second_result.id] }
+          put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
         }.to_not change { first_result.reload.updated_at }
+        expect(first_result.reload.deck).to_not eq shaman_deck
       end
     end
   end

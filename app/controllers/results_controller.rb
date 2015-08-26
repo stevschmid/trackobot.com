@@ -26,16 +26,18 @@ class ResultsController < ApplicationController
   end
 
   def bulk_update
+    selected_results = current_user.results
+      .where(id: params[:result_ids])
+      .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
+
     if as_deck = Deck.find_by_id(params[:as_deck])
-      current_user.results
-        .where(id: params[:result_ids])
+      selected_results
         .where(hero: as_deck.hero)
         .update_all(deck_id: as_deck.id)
     end
 
     if vs_deck = Deck.find_by_id(params[:vs_deck])
-      current_user.results
-        .where(id: params[:result_ids])
+      selected_results
         .where(opponent: vs_deck.hero)
         .update_all(opponent_deck_id: vs_deck.id)
     end
