@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
   respond_to :json, :html
 
-  before_filter :deny_api_calls!
+  before_filter :deny_api_calls!, except: %i[create]
 
   def create
     @result = current_user.results.new(safe_params)

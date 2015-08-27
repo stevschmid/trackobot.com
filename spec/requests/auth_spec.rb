@@ -49,11 +49,6 @@ describe 'Authentication' do
         expect(response.code).to eq '200'
       end
 
-      it 'cannot create results' do
-        post '/profile/results', username: user.username, token: token
-        expect(response.code).to eq '401'
-      end
-
       it 'cannot delete results' do
         delete '/profile/results/bulk_delete', username: user.username, token: token
         expect(response.code).to eq '401'
