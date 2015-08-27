@@ -1,11 +1,6 @@
 @mixin tagColor($color) {
-  background: transparentize($color, 0.90);
-  color: darken($color, 30%);
-  border: 1px solid lighten($color, 30%);
-
-  &:hover {
-    color: darken($color, 10%);
-  }
+  background: transparentize($color, 0.8);
+  color: darken($color, 35%);
 }
 
 .tagging {
@@ -21,7 +16,7 @@
     list-style: none;
 
     li {
-      @include tagColor(#e4b700);
+      @include tagColor(#f9df1a);
 
       font-size: 11px;
       float: left;
