@@ -41,13 +41,13 @@ class HistoryController < ApplicationController
   end
 
   def timeline
-    @result = Result.find(params[:id])
+    @result = current_user.results.find(params[:id])
     @card_histories = @result.card_history_list
     render layout: false
   end
 
   def card_stats
-    result = Result.find(params[:id])
+    result = current_user.results.find(params[:id])
     player = params[:player].to_sym
     @card_histories = result.card_history_list.select { |entry| entry.player == player }
     render layout: false
