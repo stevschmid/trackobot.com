@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825205135) do
+ActiveRecord::Schema.define(version: 20150829131553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,6 @@ ActiveRecord::Schema.define(version: 20150825205135) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id",    index: {name: "index_arenas_on_user_id"}
-  end
-
-  create_table "card_histories", force: :cascade do |t|
-    t.integer "card_id",   index: {name: "index_card_histories_on_card_id"}
-    t.integer "result_id", index: {name: "index_card_histories_on_result_id"}
-    t.integer "player"
-    t.integer "turn"
   end
 
   create_table "card_history_data", force: :cascade do |t|
@@ -78,6 +71,21 @@ ActiveRecord::Schema.define(version: 20150825205135) do
     t.datetime "updated_at"
   end
 
+  create_table "notification_reads", force: :cascade do |t|
+    t.integer  "notification_id", index: {name: "index_notification_reads_on_notification_id"}
+    t.integer  "user_id",         index: {name: "index_notification_reads_on_user_id"}
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "kind",       limit: 255
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "hidden",     default: false
+  end
+
   create_table "results", force: :cascade do |t|
     t.integer  "mode",              index: {name: "index_results_on_mode"}
     t.boolean  "coin"
@@ -94,50 +102,6 @@ ActiveRecord::Schema.define(version: 20150825205135) do
     t.integer  "rank"
     t.integer  "legend"
     t.binary   "card_history_data"
-  end
-
-  create_view "match_decks_with_results", <<-'END_VIEW_MATCH_DECKS_WITH_RESULTS', :force => true
- SELECT results.id AS result_id,
-    results.user_id,
-    cards_decks.deck_id,
-    card_histories.player,
-    count(card_histories.id) AS cards_matched
-   FROM (((results
-     JOIN decks ON ((decks.user_id = results.user_id)))
-     JOIN cards_decks ON ((cards_decks.deck_id = decks.id)))
-     JOIN card_histories ON ((((card_histories.result_id = results.id) AND (card_histories.card_id = cards_decks.card_id)) AND (((card_histories.player = 0) AND (decks.hero_id = results.hero_id)) OR ((card_histories.player = 1) AND (decks.hero_id = results.opponent_id))))))
-  GROUP BY results.id, results.user_id, cards_decks.deck_id, card_histories.player
- HAVING (count(card_histories.id) > 0)
-  END_VIEW_MATCH_DECKS_WITH_RESULTS
-
-  create_view "match_best_decks_with_results", <<-'END_VIEW_MATCH_BEST_DECKS_WITH_RESULTS', :force => true
- SELECT s.result_id,
-    s.user_id,
-    s.deck_id,
-    s.player,
-    s.cards_matched
-   FROM (match_decks_with_results s
-     JOIN ( SELECT match_decks_with_results.result_id,
-            match_decks_with_results.user_id,
-            match_decks_with_results.player,
-            max(match_decks_with_results.cards_matched) AS max_cards_matched
-           FROM match_decks_with_results
-          GROUP BY match_decks_with_results.result_id, match_decks_with_results.user_id, match_decks_with_results.player) m ON (((((s.result_id = m.result_id) AND (s.cards_matched = m.max_cards_matched)) AND (s.user_id = m.user_id)) AND (s.player = m.player))))
-  END_VIEW_MATCH_BEST_DECKS_WITH_RESULTS
-
-  create_table "notification_reads", force: :cascade do |t|
-    t.integer  "notification_id", index: {name: "index_notification_reads_on_notification_id"}
-    t.integer  "user_id",         index: {name: "index_notification_reads_on_user_id"}
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "notifications", force: :cascade do |t|
-    t.string   "kind",       limit: 255
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "hidden",     default: false
   end
 
   create_table "tags", force: :cascade do |t|
