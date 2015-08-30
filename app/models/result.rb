@@ -48,9 +48,10 @@ class Result < ActiveRecord::Base
   end
 
   def quotient_for_deck(deck, card_ids)
+    return 0.0 if deck.cards.empty?
     deck_card_ids = deck.cards.collect(&:id).uniq
-    matching_cards = deck_card_ids & card_ids
 
+    matching_cards = deck_card_ids & card_ids
     matching_cards.length.to_f / deck_card_ids.length.to_f
   end
 

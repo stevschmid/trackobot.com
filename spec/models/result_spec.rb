@@ -66,7 +66,6 @@ describe Result do
     let!(:zoolock) { create_deck 'Warlock', 'zoolock', zoolock_cards }
     let!(:demonlock) { create_deck 'Warlock', 'demonlock', demonlock_cards }
 
-
     it 'assigns the best matched deck (quotient-based) to all affected results' do
       # handlock: 3/4
       # zoolock: 2/4
@@ -105,6 +104,16 @@ describe Result do
       it 'does NOT assign decks to arena results' do
         result.save!
         expect(result.reload.deck_id).to be_nil
+      end
+    end
+
+    context 'when a deck has no cards' do
+      before do
+        handlock.update_attributes(cards: [])
+      end
+
+      it 'still works' do
+        expect { result.save! }.to_not raise_error
       end
     end
   end
