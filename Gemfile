@@ -66,7 +66,4 @@ group :development do
   gem 'capistrano-rails'
 end
 
-# view support
-gem 'schema_plus'
-
 gem 'possessive'
