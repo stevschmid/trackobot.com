@@ -58,9 +58,11 @@ describe Result do
     let(:handlock_cards) { ['Ancient Watcher', 'Molten Giant', 'Mountain Giant', 'Twilight Drake'] }
     let(:zoolock_cards) { ['Abusive Sergeant', 'Doomguard', 'Flame Imp', 'Knife Juggler'] }
     let(:demonlock_cards) { ['Voidcaller', 'Doomguard', 'Molten Giant'] }
-    let(:result) { build_result 'Warlock', 'Rogue',
-                    me: ['Abusive Sergeant', 'Ancient Watcher', 'Doomguard', 'Doomguard', 'Mountain Giant', 'Twilight Drake'],
-                    opponent: ['Southsea Deckhand', 'Ironbeak Owl', 'Sludge Belcher'] }
+
+    let(:player_cards_played) { ['Abusive Sergeant', 'Ancient Watcher', 'Doomguard', 'Doomguard', 'Mountain Giant', 'Twilight Drake'] }
+    let(:opponent_cards_played) { ['Southsea Deckhand', 'Ironbeak Owl', 'Sludge Belcher']  }
+
+    let(:result) { build_result 'Warlock', 'Rogue', me: player_cards_played, opponent: opponent_cards_played }
 
     let!(:handlock) { create_deck 'Warlock', 'handlock', handlock_cards }
     let!(:zoolock) { create_deck 'Warlock', 'zoolock', zoolock_cards }
@@ -76,6 +78,11 @@ describe Result do
     it 'assigns only decks with the matching class' do
       handlock.update_attributes(hero_id: Hero.find_by_name('Rogue').id)
       expect { result.save! }.to change { result.deck }.to zoolock
+    end
+
+    it 'only looks at cards played by the player' do
+      result = build_result 'Warlock', 'Warlock', me: handlock_cards.sample(1), opponent: zoolock.cards.sample(3)
+      expect { result.save! }.to change { result.deck }.to handlock
     end
 
     context 'no card matches' do

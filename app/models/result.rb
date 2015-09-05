@@ -25,8 +25,9 @@ class Result < ActiveRecord::Base
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
-  def best_deck_for_hero(hero_id)
-    result_card_ids = card_history_list.collect { |card_history_entry| card_history_entry.card.id }.uniq
+  def best_deck_for_card_histories_and_hero(card_histories, hero_id)
+    result_card_ids = card_histories
+      .collect { |card_history_entry| card_history_entry.card.id }.uniq
 
     # only consider decks with of the specified class
     matching_decks = user.decks.where(hero_id: hero_id)
@@ -55,12 +56,16 @@ class Result < ActiveRecord::Base
     matching_cards.length.to_f / deck_card_ids.length.to_f
   end
 
+  def card_histories_by_player(player)
+    card_history_list.select { |card_history_entry| card_history_entry.player == player }
+  end
+
   def determine_best_matching_player_deck
-    best_deck_for_hero(hero.id)
+    best_deck_for_card_histories_and_hero card_histories_by_player(:me), hero.id
   end
 
   def determine_best_matching_opponent_deck
-    best_deck_for_hero(opponent.id)
+    best_deck_for_card_histories_and_hero card_histories_by_player(:opponent), opponent.id
   end
 
   def card_history_list
