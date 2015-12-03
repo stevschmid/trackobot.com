@@ -63,8 +63,6 @@
             <td class="rank" >
               <% if result.legend && result.legend > 0 %>
                 <div class="legend ranks-legend" title="Legend: <%= result.legend %>"><%= result.legend %></div>
-              <% elsif result.rank && result.rank > 0 %>
-                <div class="ranks-rank<%= result.rank %>" title="Rank <%= result.rank %>"></div>
               <% else %>
                 &nbsp;
               <% end %>
