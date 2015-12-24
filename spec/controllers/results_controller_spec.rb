@@ -14,7 +14,8 @@ describe ResultsController do
         opponent: 'Warrior',
         mode: 'ranked',
         coin: true,
-        win: true
+        win: true,
+        added: Date.today
       }
     end
 
@@ -34,6 +35,7 @@ describe ResultsController do
       expect(result.mode).to eq 'ranked'
       expect(result.coin).to eq true
       expect(result.win).to eq true
+      expect(result.added).to eq Date.today
     end
 
     context 'with duration information' do
