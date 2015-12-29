@@ -41,6 +41,23 @@ class Settings::DecksController < ApplicationController
     redirect_to profile_settings_decks_path
   end
 
+  def import_decks
+    begin
+      decks_array = JSON.parse(params[:decks_json])
+      decks_array.each do |deck|
+        current_user.decks.create(deck)
+      end
+      flash[:success] = "Decks successfully imported."
+    rescue
+      flash[:error] = "Decks couldn't be imported"
+    end
+    redirect_to profile_settings_decks_path
+  end
+
+  def export
+    @decks_json = current_user.decks.collect{|deck| DeckSerializer.new(deck, root: false).as_json}.to_json
+  end
+
   private
 
   def safe_params

@@ -30,7 +30,13 @@ Rails.application.routes.draw do
 
     namespace :settings do
       resource :api, only: [:show, :update]
-      resources :decks
+      resources :decks do
+        collection do
+          get :import
+          get :export
+          post :import_decks
+        end
+      end
     end
   end
 
