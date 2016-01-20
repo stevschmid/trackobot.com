@@ -4,7 +4,7 @@ class Settings::DecksController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: {decks: @decks}
+        render json: @decks
       end
     end
   end
