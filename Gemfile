@@ -28,11 +28,13 @@ gem 'builder'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rspec-its'
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
-  gem 'web-console', '~> 2.0'
 end
+
+gem 'web-console', '~> 2.0', group: :development
 
 gem 'therubyracer'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS

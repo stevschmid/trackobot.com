@@ -71,7 +71,7 @@ describe ResultsController do
       post :create, result: result_params.merge(card_history: card_history), format: :json
       result = user.results.last
 
-      expect(result.card_history_list).to have(2).items
+      expect(result.card_history_list.count).to eq 2
 
       expect(result.card_history_list.first.card.name).to eq 'Shieldbearer'
       expect(result.card_history_list.first.player).to eq :opponent
