@@ -15,7 +15,7 @@ describe ResultsController do
         mode: 'ranked',
         coin: true,
         win: true,
-        added: Date.today
+        added: '2016-02-02T21:06:00Z'
       }
     end
 
@@ -35,7 +35,7 @@ describe ResultsController do
       expect(result.mode).to eq 'ranked'
       expect(result.coin).to eq true
       expect(result.win).to eq true
-      expect(result.added).to eq Date.today
+      expect(result.added).to eq Time.parse('2016-02-02T21:06:00Z')
     end
 
     context 'with duration information' do

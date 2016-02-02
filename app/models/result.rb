@@ -25,6 +25,14 @@ class Result < ActiveRecord::Base
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
+  def added=(timestamp)
+    self.created_at = timestamp
+  end
+
+  def added
+    self.created_at
+  end
+
   def best_deck_for_card_histories_and_hero(card_histories, hero_id)
     result_card_ids = card_histories
       .collect { |card_history_entry| card_history_entry.card.id }.uniq
