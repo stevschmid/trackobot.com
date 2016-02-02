@@ -52,8 +52,8 @@ module Stats
         @custom_range = Date.parse(params[:start])..Date.parse(params[:end])
       end
 
-      @time_range_start = min_date_for_time_range
-      @time_range_end = max_date_for_time_range
+      @time_range_start = min_date_for_time_range.beginning_of_day
+      @time_range_end = max_date_for_time_range.end_of_day
     end
 
     @sort_by ||= DEFAULT_SORT_BY
