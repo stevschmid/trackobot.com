@@ -57,7 +57,7 @@ group :staging, :production do
   gem 'newrelic_rpm'
 
   # Use unicorn as the app server
-  gem 'unicorn'
+  gem 'unicorn', '~> 4.8.3'
 end
 
 gem 'dotenv-rails'
