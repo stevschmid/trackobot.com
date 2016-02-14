@@ -70,3 +70,5 @@ group :development do
 end
 
 gem 'possessive'
+
+gem 'pundit'
