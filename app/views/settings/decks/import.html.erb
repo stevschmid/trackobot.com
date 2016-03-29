@@ -1,0 +1,8 @@
+<%= profile_page 'Import Decks' do %>
+  <h2>Settings</h2>
+  <h3>Paste the deck list</h3>
+  <%= form_tag(import_decks_profile_settings_decks_path) do %>
+    <%= text_area_tag 'decks_json', '', style: 'width: 600px; height: 400px;' %>
+  <%= submit_tag("Import", class: 'btn btn-primary') %>
+<% end %>
+<% end %>
