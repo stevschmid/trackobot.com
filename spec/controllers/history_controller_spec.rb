@@ -18,7 +18,7 @@ describe HistoryController do
     let(:json) { JSON.parse(response.body, symbolize_names: true) }
 
     it 'has history' do
-      expect(json[:history]).to have(1).item
+      expect(json[:history].count).to eq 1
     end
 
     it 'has meta pagination information' do
@@ -84,7 +84,7 @@ describe HistoryController do
           get :index, format: :json
         end
 
-        its([:card_history]) { should have(3).items }
+        specify { expect(subject[:card_history].count).to eq 3 }
 
         describe 'card_history structure' do
           let(:json_card_history) { json_result[:card_history] }

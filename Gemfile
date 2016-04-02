@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.5.1'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0'
+gem 'compass-rails', '~> 2.0.4'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -28,11 +29,13 @@ gem 'builder'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rspec-its'
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
-  gem 'web-console', '~> 2.0'
 end
+
+gem 'web-console', '~> 2.0', group: :development
 
 gem 'therubyracer'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
@@ -57,7 +60,7 @@ group :staging, :production do
   gem 'newrelic_rpm'
 
   # Use unicorn as the app server
-  gem 'unicorn'
+  gem 'unicorn', '~> 4.8.3'
 end
 
 gem 'dotenv-rails'

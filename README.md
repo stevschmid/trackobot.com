@@ -1,4 +1,4 @@
-# trackobot.com
+# trackobot.com  [![Circle CI](https://circleci.com/gh/stevschmid/trackobot.com.svg?style=svg)](https://circleci.com/gh/stevschmid/trackobot.com)
 
 This is the Rails app which fuels [trackobot.com](https://trackobot.com). 
 

@@ -19,7 +19,7 @@ describe ArenaController do
     let(:json) { JSON.parse(response.body, symbolize_names: true) }
 
     it 'has arenas' do
-      expect(json[:arena]).to have(1).item
+      expect(json[:arena].count).to eq 1
     end
 
     it 'has meta pagination information' do
@@ -33,8 +33,7 @@ describe ArenaController do
       its([:hero]) { should eq(arena.hero.name) }
       its([:wins]) { should eq(arena.wins.count) }
       its([:losses]) { should eq(arena.losses.count) }
-
-      its([:results]) { should have(1).items }
+      specify { expect(subject[:results].count).to eq 1 }
     end
   end
 

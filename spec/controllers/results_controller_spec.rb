@@ -14,7 +14,8 @@ describe ResultsController do
         opponent: 'Warrior',
         mode: 'ranked',
         coin: true,
-        win: true
+        win: true,
+        added: '2016-02-02T21:06:00Z'
       }
     end
 
@@ -34,6 +35,7 @@ describe ResultsController do
       expect(result.mode).to eq 'ranked'
       expect(result.coin).to eq true
       expect(result.win).to eq true
+      expect(result.added).to eq Time.parse('2016-02-02T21:06:00Z')
     end
 
     context 'with duration information' do
@@ -69,7 +71,7 @@ describe ResultsController do
       post :create, result: result_params.merge(card_history: card_history), format: :json
       result = user.results.last
 
-      expect(result.card_history_list).to have(2).items
+      expect(result.card_history_list.count).to eq 2
 
       expect(result.card_history_list.first.card.name).to eq 'Shieldbearer'
       expect(result.card_history_list.first.player).to eq :opponent
