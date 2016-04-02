@@ -3,6 +3,6 @@ class DeckSerializer < ActiveModel::Serializer
   attribute :created_at, key: :added
 
   def hero
-    object.hero.name
+    object.hero ? object.hero.name : nil
   end
 end
