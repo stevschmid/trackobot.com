@@ -81,7 +81,7 @@ describe Result do
     end
 
     it 'only looks at cards played by the player' do
-      result = build_result 'Warlock', 'Warlock', me: handlock_cards.sample(1), opponent: zoolock.cards.sample(3)
+      result = build_result 'Warlock', 'Warlock', me: ['Mountain Giant'], opponent: ['Abusive Sergeant']
       expect { result.save! }.to change { result.deck }.to handlock
     end
 
