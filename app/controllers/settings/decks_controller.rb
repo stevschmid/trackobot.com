@@ -1,6 +1,12 @@
 class Settings::DecksController < ApplicationController
   def index
     @decks = current_user.decks.order(:hero_id)
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: @decks
+      end
+    end
   end
 
   def new
