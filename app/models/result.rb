@@ -17,6 +17,8 @@ class Result < ActiveRecord::Base
 
   has_many :tags
 
+  attr_accessor :deck_name, :opponent_deck_name
+
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
 
@@ -113,8 +115,18 @@ class Result < ActiveRecord::Base
   end
 
   def connect_to_decks
-    self.deck ||= determine_best_matching_player_deck
-    self.opponent_deck ||= determine_best_matching_opponent_deck
+    if self.deck_name.kind_of?(String)
+      self.deck = user.decks.where(name: self.deck_name).first
+    else
+      self.deck ||= determine_best_matching_player_deck
+    end
+
+    if self.opponent_deck_name.kind_of?(String)
+      self.opponent_deck = user.decks.where(name: self.opponent_deck_name).first
+    else
+      self.opponent_deck ||= determine_best_matching_opponent_deck
+    end
+
     self.save!
   end
 
