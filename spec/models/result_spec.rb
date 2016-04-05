@@ -125,9 +125,12 @@ describe Result do
     end
 
     context 'when deck names are specified manually via API' do
-      let(:result) {r = build_result 'Warlock', 'Rogue', me: player_cards_played, opponent: opponent_cards_played
-                      r.deck_name = 'demonlock'
-                      r }
+      let(:result) {
+        r = build_result 'Warlock', 'Rogue', me: player_cards_played, opponent: opponent_cards_played
+        r.deck_name = 'demonlock'
+        r
+      }
+
       it 'uses the specified deck' do
         expect { result.save! }.to change { result.deck }.to demonlock
       end
