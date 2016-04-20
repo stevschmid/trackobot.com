@@ -40,8 +40,6 @@ Rails.application.routes.draw do
 
   resources :one_time_auth, only: [:create, :show]
 
-  resources :feedbacks
-
   resources :notifications, only: [] do
     member do
       put :mark_as_read
