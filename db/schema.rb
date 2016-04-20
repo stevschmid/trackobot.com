@@ -17,19 +17,17 @@ ActiveRecord::Schema.define(version: 20150829131553) do
   enable_extension "plpgsql"
 
   create_table "arenas", force: :cascade do |t|
-    t.integer  "hero_id",    index: {name: "index_arenas_on_hero_id"}
+    t.integer  "hero_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",    index: {name: "index_arenas_on_user_id"}
+    t.integer  "user_id"
   end
 
-  create_table "card_history_data", force: :cascade do |t|
-    t.json    "data"
-    t.integer "result_id", index: {name: "index_card_history_data_on_result_id"}
-  end
+  add_index "arenas", ["hero_id"], name: "index_arenas_on_hero_id", using: :btree
+  add_index "arenas", ["user_id"], name: "index_arenas_on_user_id", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.string   "ref",         limit: 255, index: {name: "index_cards_on_ref"}
+    t.string   "ref",         limit: 255
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.integer  "mana"
@@ -42,8 +40,11 @@ ActiveRecord::Schema.define(version: 20150829131553) do
     t.integer  "health"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "playable",    default: false, index: {name: "index_cards_on_playable"}
+    t.boolean  "playable",                default: false
   end
+
+  add_index "cards", ["playable"], name: "index_cards_on_playable", using: :btree
+  add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
 
   create_table "cards_decks", id: false, force: :cascade do |t|
     t.integer "card_id"
@@ -52,17 +53,16 @@ ActiveRecord::Schema.define(version: 20150829131553) do
 
   create_table "decks", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.integer  "hero_id",    index: {name: "index_decks_on_hero_id"}
-    t.integer  "user_id",    index: {name: "index_decks_on_user_id"}
+    t.integer  "hero_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "decks", ["hero_id"], name: "index_decks_on_hero_id", using: :btree
+  add_index "decks", ["user_id"], name: "index_decks_on_user_id", using: :btree
+
   create_table "feedbacks", force: :cascade do |t|
-    t.integer  "user_id",    index: {name: "index_feedbacks_on_user_id"}
-    t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "heros", force: :cascade do |t|
@@ -72,52 +72,67 @@ ActiveRecord::Schema.define(version: 20150829131553) do
   end
 
   create_table "notification_reads", force: :cascade do |t|
-    t.integer  "notification_id", index: {name: "index_notification_reads_on_notification_id"}
-    t.integer  "user_id",         index: {name: "index_notification_reads_on_user_id"}
+    t.integer  "notification_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "notification_reads", ["notification_id"], name: "index_notification_reads_on_notification_id", using: :btree
+  add_index "notification_reads", ["user_id"], name: "index_notification_reads_on_user_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.string   "kind",       limit: 255
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "hidden",     default: false
+    t.boolean  "hidden",                 default: false
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer  "mode",              index: {name: "index_results_on_mode"}
+    t.integer  "mode"
     t.boolean  "coin"
-    t.boolean  "win",               index: {name: "index_results_on_win"}
-    t.integer  "hero_id",           index: {name: "index_results_on_hero_id"}
-    t.integer  "opponent_id",       index: {name: "index_results_on_opponent_id"}
+    t.boolean  "win"
+    t.integer  "hero_id"
+    t.integer  "opponent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id",           index: {name: "index_results_on_user_id"}
-    t.integer  "arena_id",          index: {name: "index_results_on_arena_id"}
-    t.integer  "deck_id",           index: {name: "index_results_on_deck_id"}
-    t.integer  "opponent_deck_id",  index: {name: "index_results_on_opponent_deck_id"}
+    t.integer  "user_id"
+    t.integer  "arena_id"
+    t.integer  "deck_id"
+    t.integer  "opponent_deck_id"
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
     t.binary   "card_history_data"
   end
 
+  add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
+  add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
+  add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
+  add_index "results", ["mode"], name: "index_results_on_mode", using: :btree
+  add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
+  add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
+  add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
+  add_index "results", ["win"], name: "index_results_on_win", using: :btree
+
   create_table "tags", force: :cascade do |t|
-    t.integer  "result_id",  index: {name: "index_tags_on_result_id"}
-    t.string   "tag",        null: false, index: {name: "index_tags_on_tag"}
+    t.integer  "result_id"
+    t.string   "tag",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "tags", ["result_id"], name: "index_tags_on_result_id", using: :btree
+  add_index "tags", ["tag"], name: "index_tags_on_tag", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                         limit: 255, default: "", null: false
     t.string   "encrypted_password",            limit: 255, default: "", null: false
-    t.string   "reset_password_token",          limit: 255, index: {name: "index_users_on_reset_password_token", unique: true}
+    t.string   "reset_password_token",          limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 default: 0,  null: false
+    t.integer  "sign_in_count",                             default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",            limit: 255
@@ -130,5 +145,7 @@ ActiveRecord::Schema.define(version: 20150829131553) do
     t.string   "api_authentication_token",      limit: 255
     t.string   "displayname",                   limit: 255
   end
+
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
