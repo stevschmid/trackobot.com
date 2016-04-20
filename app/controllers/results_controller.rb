@@ -3,8 +3,12 @@ class ResultsController < ApplicationController
 
   before_filter :deny_api_calls!, except: %i[create]
 
+  after_filter :verify_authorized
+  after_filter :verify_policy_scoped
+
   def create
-    @result = current_user.results.new(safe_params)
+    @result = policy_scope(Result).new(safe_params)
+    authorize @result
     if card_history = params[:result][:card_history]
       add_card_history_to_result(@result, card_history)
     end
@@ -13,7 +17,8 @@ class ResultsController < ApplicationController
   end
 
   def set_tags
-    @result = current_user.results.find(params[:id])
+    @result = policy_scope(Result).find(params[:id])
+    authorize @result, :update?
     @result.tags.destroy_all
     tags = params[:tags].present? ? params[:tags].split(',') : []
     tags.each { |tag| @result.tags.create!(tag: tag) }
@@ -21,14 +26,26 @@ class ResultsController < ApplicationController
   end
 
   def bulk_delete
-    current_user.results.where(id: params[:result_ids]).destroy_all if params[:result_ids]
+    results = policy_scope(Result).where(id: (params[:result_ids] || []))
+    if results.any?
+      results.each { |result| authorize result, :destroy? }
+      results.destroy_all
+    else
+      skip_authorization
+    end
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 
   def bulk_update
-    selected_results = current_user.results
+    selected_results = policy_scope(Result)
       .where(id: params[:result_ids])
       .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
+
+    if selected_results.any?
+      selected_results.each { |result| authorize result, :update? }
+    else
+      skip_authorization
+    end
 
     if as_deck = Deck.find_by_id(params[:as_deck])
       selected_results
