@@ -1,6 +1,6 @@
-class UserPolicy < ApplicationPolicy
+class UserPolicy < OwnerPolicy
 
-  def update?
+  def owner?
     user == record
   end
 
