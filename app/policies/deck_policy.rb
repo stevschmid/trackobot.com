@@ -1,8 +1,8 @@
-class ResultPolicy < ApplicationPolicy
+class DeckPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      user.results
+      user.decks
     end
   end
 

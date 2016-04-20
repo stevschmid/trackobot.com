@@ -11,11 +11,13 @@ module Stats
 
   included do
     before_action :read_params
+
+    after_action :verify_policy_scoped
   end
 
   def user_results
     @results ||= begin
-                   results = current_user.results
+                   results = policy_scope(Result)
                    if @time_range
                      results = results.where('created_at >= ? AND created_at <= ?', @time_range_start, @time_range_end)
                    end
@@ -30,7 +32,7 @@ module Stats
 
   def user_arenas
     @user_arenas ||= begin
-                       user_arenas = current_user.arenas
+                       user_arenas = policy_scope(Arena)
                        if @time_range
                          user_arenas = user_arenas.where('arenas.created_at >= ? AND arenas.created_at <= ?', @time_range_start, @time_range_end)
                        end

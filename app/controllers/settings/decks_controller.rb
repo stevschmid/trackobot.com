@@ -1,6 +1,10 @@
 class Settings::DecksController < ApplicationController
+
+  after_action :verify_policy_scoped
+  after_action :verify_authorized, except: :index
+
   def index
-    @decks = current_user.decks.order(:hero_id)
+    @decks = policy_scope(Deck).order(:hero_id)
     respond_to do |format|
       format.html
       format.json do
@@ -10,15 +14,18 @@ class Settings::DecksController < ApplicationController
   end
 
   def new
-    @deck = current_user.decks.new
+    @deck = policy_scope(Deck).new
+    authorize @deck
   end
 
   def edit
-    @deck = current_user.decks.find(params[:id])
+    @deck = policy_scope(Deck).find(params[:id])
+    authorize @deck
   end
 
   def update
-    @deck = current_user.decks.find(params[:id])
+    @deck = policy_scope(Deck).find(params[:id])
+    authorize @deck
     if @deck.update_attributes(safe_params)
       redirect_to profile_settings_decks_path, flash: { success: 'Deck updated.' }
     else
@@ -28,7 +35,8 @@ class Settings::DecksController < ApplicationController
   end
 
   def create
-    @deck = current_user.decks.new(safe_params)
+    @deck = policy_scope(Deck).new(safe_params)
+    authorize @deck
     if @deck.save
       redirect_to profile_settings_decks_path, flash: { success: 'Deck added.' }
     else
@@ -38,7 +46,8 @@ class Settings::DecksController < ApplicationController
   end
 
   def destroy
-    @deck = current_user.decks.find(params[:id])
+    @deck = policy_scope(Deck).find(params[:id])
+    authorize @deck
     if @deck.destroy
       flash[:success] = "Deck deleted."
     else

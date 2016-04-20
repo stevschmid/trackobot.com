@@ -38,10 +38,6 @@ class ApplicationPolicy
     Pundit.policy_scope!(user, record.class)
   end
 
-  def owner?
-    record.user_id == user.id
-  end
-
   class Scope
     attr_reader :user, :scope
 

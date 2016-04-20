@@ -3,7 +3,7 @@ class ResultsController < ApplicationController
 
   before_filter :deny_api_calls!, except: %i[create]
 
-  after_filter :verify_authorized
+  after_filter :verify_authorized, except: %i[bulk_delete bulk_update]
   after_filter :verify_policy_scoped
 
   def create
@@ -26,13 +26,7 @@ class ResultsController < ApplicationController
   end
 
   def bulk_delete
-    results = policy_scope(Result).where(id: (params[:result_ids] || []))
-    if results.any?
-      results.each { |result| authorize result, :destroy? }
-      results.destroy_all
-    else
-      skip_authorization
-    end
+    policy_scope(Result).where(id: (params[:result_ids] || [])).destroy_all
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 
@@ -40,12 +34,6 @@ class ResultsController < ApplicationController
     selected_results = policy_scope(Result)
       .where(id: params[:result_ids])
       .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
-
-    if selected_results.any?
-      selected_results.each { |result| authorize result, :update? }
-    else
-      skip_authorization
-    end
 
     if as_deck = Deck.find_by_id(params[:as_deck])
       selected_results
