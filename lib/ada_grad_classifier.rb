@@ -28,6 +28,8 @@ class AdaGradClassifier
     # make sure input is a hash vector
     x = HashVector[x]
 
+    p "Train #{x} #{y}"
+
     # compute gradient at time t and add it to our history
     gradient = self.class.compute_gradient(x, y, weights)
     gradient.each_key do |key, g|
@@ -74,10 +76,10 @@ class AdaGradClassifier
   def import(settings = {})
     @master_learn_rate = settings[:master_learn_rate] if settings[:master_learn_rate]
 
-    @sum_of_squared_gradients = settings[:sum_of_squared_gradients].dup if settings[:sum_of_squared_gradients]
+    @sum_of_squared_gradients = HashVector[settings[:sum_of_squared_gradients]] if settings[:sum_of_squared_gradients]
     @sum_of_squared_gradients.default = 0.0
 
-    @weights = settings[:weights].dup if settings[:weights]
+    @weights = HashVector[settings[:weights]] if settings[:weights]
     @weights.default = 0.0
   end
 

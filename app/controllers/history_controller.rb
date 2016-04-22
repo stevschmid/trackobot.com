@@ -13,7 +13,7 @@ class HistoryController < ApplicationController
     if @query.present?
       if Result.modes.keys.include?(@query)
         @unpaged_results = @unpaged_results.where(mode: Result.modes[@query])
-      elsif deck = current_user.decks.where('name ILIKE ?', "%#{@query}%").first
+      elsif deck = Deck.where('name ILIKE ?', "%#{@query}%").first
         @unpaged_results = @unpaged_results.where('deck_id = ? OR opponent_deck_id = ?', deck.id, deck.id)
       elsif hero = Hero.where('name ILIKE ?', "%#{@query}%").first
         @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
@@ -27,7 +27,7 @@ class HistoryController < ApplicationController
             .includes!(:opponent)
             .includes!(:tags)
 
-    @decks = current_user.decks
+    @decks = Deck.all
 
     respond_to do |format|
       format.html

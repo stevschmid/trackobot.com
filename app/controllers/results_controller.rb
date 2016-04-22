@@ -34,12 +34,20 @@ class ResultsController < ApplicationController
       selected_results
         .where(hero: as_deck.hero)
         .update_all(deck_id: as_deck.id)
+
+      # retrain classifier
+      clf = HeroDeckClassification.new(result.hero, result.counts_by_card_ref_for_player(:me))
+      clf.train as_deck
     end
 
     if vs_deck = Deck.find_by_id(params[:vs_deck])
       selected_results
         .where(opponent: vs_deck.hero)
         .update_all(opponent_deck_id: vs_deck.id)
+
+      # retrain classifier
+      clf = HeroDeckClassification.new(result.opponent, result.counts_by_card_ref_for_player(:opponent))
+      clf.train vs_deck
     end
 
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }

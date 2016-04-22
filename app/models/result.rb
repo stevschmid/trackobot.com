@@ -33,47 +33,22 @@ class Result < ActiveRecord::Base
     self.created_at
   end
 
-  def best_deck_for_card_histories_and_hero(card_histories, hero_id)
-    result_card_ids = card_histories
-      .collect { |card_history_entry| card_history_entry.card.id }.uniq
-
-    # only consider decks with of the specified class
-    matching_decks = user.decks.where(hero_id: hero_id)
-
-    # compute quotient for each deck
-    quotient_per_decks = matching_decks.inject({}) do |hash, deck|
-      hash[deck] = quotient_for_deck(deck, result_card_ids)
-      hash
-    end
-
-    # remove decks with no match
-    quotient_per_decks.reject! { |_, quotient| quotient <= 0 }
-
-    # find best matching deck
-    best_deck, _ = quotient_per_decks.max do |(deck1, q1), (deck2, q2)|
-      q1 == q2 ? (deck1.cards.count <=> deck2.cards.count) : (q1 <=> q2)
-    end
-    best_deck
-  end
-
-  def quotient_for_deck(deck, card_ids)
-    return 0.0 if deck.cards.empty?
-    deck_card_ids = deck.cards.collect(&:id).uniq
-
-    matching_cards = deck_card_ids & card_ids
-    matching_cards.length.to_f / deck_card_ids.length.to_f
-  end
-
   def card_histories_by_player(player)
     card_history_list.select { |card_history_entry| card_history_entry.player == player }
   end
 
+  def counts_by_card_ref_for_player(player)
+    Hash[card_histories_by_player(player).group_by(&:card).collect do |card, items|
+      [card.ref, items.count]
+    end]
+  end
+
   def determine_best_matching_player_deck
-    best_deck_for_card_histories_and_hero card_histories_by_player(:me), hero.id
+    HeroDeckClassification.new(hero, counts_by_card_ref_for_player(:me)).predict
   end
 
   def determine_best_matching_opponent_deck
-    best_deck_for_card_histories_and_hero card_histories_by_player(:opponent), opponent.id
+    HeroDeckClassification.new(opponent, counts_by_card_ref_for_player(:opponent)).predict
   end
 
   def card_history_list
@@ -157,3 +132,4 @@ class Result < ActiveRecord::Base
     arena.destroy if arena && arena.results.count == 0
   end
 end
+

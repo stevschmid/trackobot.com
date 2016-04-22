@@ -3,6 +3,8 @@ class Deck < ActiveRecord::Base
 
   serialize :classifier, AdaGradClassifier
 
+  validates_presence_of :hero, :name
+
   def to_s
     name
   end
