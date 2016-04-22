@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150829131553) do
+ActiveRecord::Schema.define(version: 20160422144438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,12 +46,12 @@ ActiveRecord::Schema.define(version: 20150829131553) do
   add_index "cards", ["playable"], name: "index_cards_on_playable", using: :btree
   add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
 
-  create_table "cards_decks", id: false, force: :cascade do |t|
+  create_table "cards_custom_decks", id: false, force: :cascade do |t|
     t.integer "card_id"
-    t.integer "deck_id"
+    t.integer "custom_deck_id"
   end
 
-  create_table "decks", force: :cascade do |t|
+  create_table "custom_decks", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "hero_id"
     t.integer  "user_id"
@@ -59,10 +59,13 @@ ActiveRecord::Schema.define(version: 20150829131553) do
     t.datetime "updated_at"
   end
 
-  add_index "decks", ["hero_id"], name: "index_decks_on_hero_id", using: :btree
-  add_index "decks", ["user_id"], name: "index_decks_on_user_id", using: :btree
+  add_index "custom_decks", ["hero_id"], name: "index_custom_decks_on_hero_id", using: :btree
+  add_index "custom_decks", ["user_id"], name: "index_custom_decks_on_user_id", using: :btree
 
-  create_table "feedbacks", force: :cascade do |t|
+  create_table "decks", force: :cascade do |t|
+    t.string  "name"
+    t.integer "hero_id"
+    t.text    "classifier"
   end
 
   create_table "heros", force: :cascade do |t|
@@ -99,8 +102,8 @@ ActiveRecord::Schema.define(version: 20150829131553) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "arena_id"
-    t.integer  "deck_id"
-    t.integer  "opponent_deck_id"
+    t.integer  "custom_deck_id"
+    t.integer  "opponent_custom_deck_id"
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
@@ -108,10 +111,10 @@ ActiveRecord::Schema.define(version: 20150829131553) do
   end
 
   add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
-  add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
+  add_index "results", ["custom_deck_id"], name: "index_results_on_custom_deck_id", using: :btree
   add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
   add_index "results", ["mode"], name: "index_results_on_mode", using: :btree
-  add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
+  add_index "results", ["opponent_custom_deck_id"], name: "index_results_on_opponent_custom_deck_id", using: :btree
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
   add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
   add_index "results", ["win"], name: "index_results_on_win", using: :btree
