@@ -1,5 +1,14 @@
 class AdaGradClassifier
   class HashVector < Hash
+    def initialize(*args)
+      super
+      symbolize_keys!
+    end
+
+    def self.[](*args)
+      super.symbolize_keys
+    end
+
     def dot(other)
       dup_keys = self.keys & other.keys
       dup_keys.inject(0.0) do |sum, key|
@@ -27,8 +36,6 @@ class AdaGradClassifier
 
     # make sure input is a hash vector
     x = HashVector[x]
-
-    p "Train #{x} #{y}"
 
     # compute gradient at time t and add it to our history
     gradient = self.class.compute_gradient(x, y, weights)

@@ -17,5 +17,10 @@ class MigrateDecksToNewDeckSystem < ActiveRecord::Migration
 
       t.datetime
     end
+
+    change_table :results do |t|
+      t.references :deck, index: true
+      t.references :opponent_deck, index: true
+    end
   end
 end

@@ -31,23 +31,29 @@ class ResultsController < ApplicationController
       .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
 
     if as_deck = Deck.find_by_id(params[:as_deck])
+      # learn true label
+      selected_results.each do |result|
+        next if result.deck == as_deck
+        ClassifyDeckForResult.new(result).learn_deck_for_player! as_deck
+      end
+
+      # update
       selected_results
         .where(hero: as_deck.hero)
         .update_all(deck_id: as_deck.id)
-
-      # retrain classifier
-      clf = HeroDeckClassification.new(result.hero, result.counts_by_card_ref_for_player(:me))
-      clf.train as_deck
     end
 
     if vs_deck = Deck.find_by_id(params[:vs_deck])
+      # learn true label
+      selected_results.each do |result|
+        next if result.opponent_deck == vs_deck
+        ClassifyDeckForResult.new(result).learn_deck_for_opponent! vs_deck
+      end
+
+      # update
       selected_results
         .where(opponent: vs_deck.hero)
         .update_all(opponent_deck_id: vs_deck.id)
-
-      # retrain classifier
-      clf = HeroDeckClassification.new(result.opponent, result.counts_by_card_ref_for_player(:opponent))
-      clf.train vs_deck
     end
 
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }

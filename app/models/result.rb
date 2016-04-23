@@ -33,24 +33,6 @@ class Result < ActiveRecord::Base
     self.created_at
   end
 
-  def card_histories_by_player(player)
-    card_history_list.select { |card_history_entry| card_history_entry.player == player }
-  end
-
-  def counts_by_card_ref_for_player(player)
-    Hash[card_histories_by_player(player).group_by(&:card).collect do |card, items|
-      [card.ref, items.count]
-    end]
-  end
-
-  def determine_best_matching_player_deck
-    HeroDeckClassification.new(hero, counts_by_card_ref_for_player(:me)).predict
-  end
-
-  def determine_best_matching_opponent_deck
-    HeroDeckClassification.new(opponent, counts_by_card_ref_for_player(:opponent)).predict
-  end
-
   def card_history_list
     @card_history_list ||= CardHistoryListCoder.load(self.card_history_data)
   end
@@ -88,8 +70,9 @@ class Result < ActiveRecord::Base
   end
 
   def connect_to_decks
-    self.deck ||= determine_best_matching_player_deck
-    self.opponent_deck ||= determine_best_matching_opponent_deck
+    classify = ClassifyDeckForResult.new(self)
+    self.deck ||= classify.predict_deck_for_player
+    self.opponent_deck ||= classify.predict_deck_for_opponent
     self.save!
   end
 

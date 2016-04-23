@@ -1,4 +1,4 @@
-class HeroDeckClassification
+class ClassifyDeckForHero
   attr_reader :hero, :counts_by_card
 
   def initialize(hero, counts_by_card)
@@ -27,12 +27,13 @@ class HeroDeckClassification
     best_score = nil
     best_deck = nil
 
-    p "Classify for #{hero} #{counts_by_card} (norm: #{normalized_counts_by_card}"
+    Rails.logger.info "[Classify] Predict for #{hero} #{counts_by_card} (norm: #{normalized_counts_by_card}"
 
     eligible_decks.each do |deck|
       score = deck.classifier.predict_score(normalized_counts_by_card)
 
-      p "Deck #{deck} score #{score}"
+      Rails.logger.info "[Classify] Deck #{deck} score #{score}"
+
 
       if best_score.nil? || score > best_score
         best_deck = deck
@@ -40,20 +41,24 @@ class HeroDeckClassification
       end
     end
 
-    puts
-    p "Best #{best_deck} score #{best_score}"
+    Rails.logger.info "[Classify] Best deck #{best_deck} score #{best_score}"
 
     # return nil if we are uncertain
-    best_score >= 1.0 ? best_deck : nil
+    (best_score && best_score >= 1.0) ? best_deck : nil
   end
 
-  def train(true_deck)
-    raise "True deck not in deck list" unless eligible_decks.include?(true_deck)
+  def learn! true_deck
+    unless eligible_decks.include?(true_deck)
+      Rails.logger.warn "[Classify] learn! called for ineligible deck #{true_deck} #{hero}"
+      return
+    end
 
     eligible_decks.each do |deck|
       label = true_deck == deck ? 1 : -1
+      Rails.logger.info "[Classify] Learn hero: #{hero} true_deck: #{true_deck} classifier: #{deck} label: #{label}"
       deck.classifier.train(normalized_counts_by_card, label)
       deck.save!
     end
   end
+
 end

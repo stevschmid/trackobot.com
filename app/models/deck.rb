@@ -8,4 +8,8 @@ class Deck < ActiveRecord::Base
   def to_s
     name
   end
+
+  def self.reset_all_classifiers!
+    Deck.update_all(classifier: nil)
+  end
 end
