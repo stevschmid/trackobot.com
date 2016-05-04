@@ -22,7 +22,8 @@ $(document).on 'ready page:load', ->
         url: url
         type: method
         data: 
-          tags: tagTexts
+          result:
+            tags: tagTexts
 
     $(this).data('timer', setTimeout(sendTags, 1000))
 

@@ -15,15 +15,14 @@ class ResultsController < ApplicationController
   def update
     @result = current_user.results.find(params[:id])
     @result.update_attributes(safe_params)
+    if params[:result].has_key?(:tags)
+      @result.tags.destroy_all
+      tags = (params[:result][:tags] || '').split(',')
+      tags.each do |tag|
+        @result.tags.create!(tag: tag)
+      end
+    end
     respond_with(:profile, @result.reload)
-  end
-
-  def set_tags
-    @result = current_user.results.find(params[:id])
-    @result.tags.destroy_all
-    tags = params[:tags].present? ? params[:tags].split(',') : []
-    tags.each { |tag| @result.tags.create!(tag: tag) }
-    render nothing: true
   end
 
   def bulk_delete

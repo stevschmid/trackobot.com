@@ -54,7 +54,7 @@
                 <ul class="tags"
                   data-immutable-tags="<%= Result.modes.keys.join(',') %>"
                   data-tag-url="<%= url_for params.merge(query: ':tag:')  %>"
-                  data-update-url="<%= set_tags_profile_result_path(result) %>"
+                  data-update-url="<%= profile_result_path(result) %>"
                   data-update-method="PUT">
                   <li><%= result.mode %></li>
                   <% result.tags.each do |tag| %>
