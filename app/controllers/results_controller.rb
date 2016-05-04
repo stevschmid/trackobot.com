@@ -12,6 +12,12 @@ class ResultsController < ApplicationController
     respond_with(:profile, @result.reload)
   end
 
+  def update
+    @result = current_user.results.find(params[:id])
+    @result.update_attributes(safe_params)
+    respond_with(:profile, @result.reload)
+  end
+
   def set_tags
     @result = current_user.results.find(params[:id])
     @result.tags.destroy_all
@@ -68,7 +74,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added)
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id)
   end
 
   def deny_api_calls!

@@ -3,7 +3,7 @@ module HistoryHelper
   def card_stats_additions(result, player)
     return {} unless result.card_history_data?
     {
-      class: 'dotted-baseline card-history-button',
+      class: %w[dotted-baseline card-history-button],
       data: {
         :'content-path' => card_stats_profile_history_path(result, player: player),
         title: "Card history",
@@ -16,7 +16,7 @@ module HistoryHelper
     return {} unless result.card_history_data?
     header = escape_once(render(partial: 'timeline_header', locals: { result: result }))
     {
-      class: 'btn btn-default btn-xs timeline-button',
+      class: %w[btn btn-default btn-xs timeline-button],
       data: {
         :'content-path' => timeline_profile_history_path(result),
         title: header,
@@ -26,6 +26,8 @@ module HistoryHelper
   end
 
   def hero_label(hero_name, label = hero_name, additions = {})
+    additions[:class] ||= []
+    additions[:class] << 'hero-label'
     [
       hero_icon(hero_name),
       content_tag(:span, label, additions)
@@ -53,7 +55,7 @@ module HistoryHelper
   end
 
   def hero_icon(name)
-    content_tag(:span, '', class: "#{name.downcase}-icon hero-icon")
+    content_tag(:span, '', class: ["#{name.downcase}-icon", 'hero-icon'])
   end
 
   def match_duration(secs)

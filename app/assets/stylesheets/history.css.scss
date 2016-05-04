@@ -15,6 +15,16 @@
   margin-top: 24px;
 }
 
+.deck-edit-form {
+  display: inline-block;
+}
+
+.deck-edit-button {
+  cursor: pointer;
+  display: none;
+  opacity: 0.3;
+}
+
 .bulk-edit-buttons {
   margin-top: -5px;
   margin-bottom: 20px;
@@ -59,6 +69,12 @@ table.history {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:hover {
+      .deck-edit-button {
+        display: inline-block;
+      }
+    }
   }
   td.result {
     width: 50px;

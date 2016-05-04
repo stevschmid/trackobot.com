@@ -46,5 +46,22 @@ $(document).on 'ready page:load', ->
         btn.unbind(event).addClass('has-popover')
         btn.popover(options).popover('show')
 
+  $('.deck-edit-button').click ->
+    $(this).siblings('.hero-label').hide()
+    $(this).siblings('form').toggleClass('hidden')
+    $(this).addClass('hidden')
+
+  $("select[name='result[deck_id]'], select[name='result[opponent_deck_id]']").change (event) ->
+    selected = $("option:selected", this).text()
+    form = $(this).parent('form')
+    $.ajax
+      type: form.attr('method')
+      url: form.attr('action')
+      data: form.serialize(),
+      success: ->
+        $(form).siblings('.hero-label').text(selected).show()
+        $(form).siblings('.deck-edit-button').removeClass('hidden')
+        form.addClass('hidden')
+
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
   loadContentForPopover '.timeline-button', 'click', placement: 'bottom'

@@ -1,0 +1,5 @@
+<%= form_for [:profile, result], html: { class: %w[deck-edit-form hidden] } do |f| %>
+  <%= f.collection_select field, @decks.select { |d| d.hero_id == hero_id }, :id, :name, 
+    { include_blank: hero_name, selected: result.send(field) } %>
+<% end %>
+<%= icon 'pencil', class: 'deck-edit-button' %>

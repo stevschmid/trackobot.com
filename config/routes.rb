@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       end
     end
     resources :arena, only: [:index]
-    resources :results, only: [:create, :show] do
+    resources :results, only: [:create, :show, :update] do
       member do
         put :set_tags
       end
