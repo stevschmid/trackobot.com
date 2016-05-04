@@ -47,9 +47,16 @@ $(document).on 'ready page:load', ->
         btn.popover(options).popover('show')
 
   $('.deck-edit-button').click ->
-    $(this).siblings('.hero-label').hide()
-    $(this).siblings('form').toggleClass('hidden')
-    $(this).addClass('hidden')
+    button = $(this).addClass('hidden')
+    label = $(this).siblings('.hero-label').addClass('hidden')
+    form = $(this).siblings('form').removeClass('hidden')
+
+    $('select', form).focus() # for esc
+    $(form).on 'keyup', (e) ->
+      if e.which == 27 # esc
+        button.removeClass('hidden')
+        label.removeClass('hidden')
+        form.addClass('hidden')
 
   $("select[name='result[deck_id]'], select[name='result[opponent_deck_id]']").change (event) ->
     selected = $("option:selected", this).text()
@@ -59,7 +66,7 @@ $(document).on 'ready page:load', ->
       url: form.attr('action')
       data: form.serialize(),
       success: ->
-        $(form).siblings('.hero-label').text(selected).show()
+        $(form).siblings('.hero-label').text(selected).removeClass('hidden')
         $(form).siblings('.deck-edit-button').removeClass('hidden')
         form.addClass('hidden')
 
