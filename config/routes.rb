@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     resources :results, only: [:create, :show, :update] do
       collection do
         delete :bulk_delete
-        put :bulk_update
       end
     end
 
