@@ -48,23 +48,22 @@ $(document).on 'ready page:load', ->
     form = $(this).siblings('form').removeClass('hidden')
 
     $('select', form).focus() # for esc
-    $(form).on 'keyup', (e) ->
-      if e.which == 27 # esc
-        button.removeClass('hidden')
-        label.removeClass('hidden')
-        form.addClass('hidden')
+    $('select', form).on 'blur', (e) ->
+      button.removeClass('hidden')
+      label.removeClass('hidden')
+      form.addClass('hidden')
 
   $("select[name='result[deck_id]'], select[name='result[opponent_deck_id]']").change (event) ->
-    selected = $("option:selected", this).text()
-    form = $(this).parent('form')
+    select = $(this)
+    selected = $("option:selected", select).text()
+    form = $(select).parent('form')
     $.ajax
       type: form.attr('method')
       url: form.attr('action')
       data: form.serialize(),
       success: ->
-        $(form).siblings('.hero-label').text(selected).removeClass('hidden')
-        $(form).siblings('.deck-edit-button').removeClass('hidden')
-        form.addClass('hidden')
+        $(form).siblings('.hero-label').text(selected)
+        $(select).blur()
 
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
   loadContentForPopover '.timeline-button', 'click', placement: 'bottom'
