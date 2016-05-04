@@ -206,6 +206,51 @@ describe ResultsController do
     end
   end
 
+  describe 'PUT update' do
+    let(:deck1) { FactoryGirl.create(:deck, user: user) }
+    let(:deck2) { FactoryGirl.create(:deck, user: user) }
+
+    let(:result_owner) { user }
+    let(:result) { FactoryGirl.create(:result, user: result_owner, deck: deck1) }
+
+    describe 'decks' do
+      describe 'new deck_id' do
+        it 'changes the deck' do
+          expect {
+            put :update, id: result.id, result: { deck_id: deck2.id }
+          }.to change { result.reload.deck }.from(deck1).to(deck2)
+        end
+      end
+
+      describe 'empty deck_id' do
+        it 'clears the deck' do
+          expect {
+            put :update, id: result.id, result: { deck_id: nil }
+          }.to change { result.reload.deck }.from(deck1).to(nil)
+        end
+      end
+    end
+
+    describe 'user' do
+      it 'cannot change the associated user' do
+        expect {
+          put :update, id: result.id, result: { user_id: user.id + 1 }
+        }.not_to change { result.reload.user }
+      end
+    end
+
+    describe 'result owned by somebody else' do
+      let(:result_owner) { FactoryGirl.create(:user) }
+
+      it 'denies' do
+        expect {
+          put :update, id: result.id, result: { deck_id: deck2.id }
+        }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+
+  end
+
   describe 'PUT set_tags' do
     let(:result) { FactoryGirl.create(:result, user: user) }
 
