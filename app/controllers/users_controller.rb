@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
 
-  respond_to :json
-
+  before_action :check_ip_spam, only: [:create], unless: -> { Rails.env.development? }
   skip_before_action :authenticate_user!, only: [:create]
 
-  before_action :check_ip_spam, only: [:create], unless: -> { Rails.env.development? }
+  after_action :verify_authorized
+
+  respond_to :json
 
   def create
+    skip_authorization
+
     username = generate_unique_username
     @generated_password = generate_password
     @user = User.create(username: username,
@@ -17,13 +20,10 @@ class UsersController < ApplicationController
   end
 
   def rename
-    user = User.find(params[:user_id])
-    if user != current_user
-      render nothing: true, status: :unauthorized
-    else
-      user.update_attributes(rename_params)
-      redirect_to :back
-    end
+    @user = User.find(params[:user_id])
+    authorize @user, :update?
+    @user.update_attributes(rename_params)
+    redirect_to :back
   end
 
   private
