@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
     namespace :settings do
       resource :api, only: [:show, :update]
-      resources :decks
+      resources :decks, only: :index
     end
   end
 

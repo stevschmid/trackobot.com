@@ -4,44 +4,19 @@
 
   <div class="alert alert-info"><p>
     <p>
-      Add decks to refine your match-ups! Decks are composed of key cards which will identify a deck.
-    </p>
-    <p>
-      See <%= link_to 'a configuration example', image_path('decks_settings_example.png'), target: '_blank' %>
-      and the <%= link_to 'the resulting changes', image_path('decks_history_example.png'), target: '_blank' %>.
-    </p>
-    <p>
-      Track-o-Bot will <strong>only assign the deck when the result is uploaded</strong>. If you would like to assign decks manually, click on the checkbox when you hover over a result to start editing.
+      <span class="label label-success">NEW</span>
+      Track-o-Bot automatically detects the most common decks. No configuration required.
     </p>
   </div>
 
-  <div class="panel panel-default">
-    <table class="table table-hover table-condensed decks">
-      <thead>
-        <tr>
-          <th class="hero">Name</th>
-          <th class="keycards">Key cards</th>
-          <th class="buttons">&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @decks.each do |deck| %>
-        <tr>
-          <td class="hero"><%= hero_label(deck.hero.name, deck.name) %></td>
-          <td class="keycards">
-            <small>
-              <%= deck.cards.order(:mana, :name).map(&:name).join(', ') %> 
-            </small>
-          </td>
-          <td class="buttons">
-            <%= link_to icon('edit'), edit_profile_settings_deck_path(deck), class: 'show-on-hover' %> 
-            <%= link_to icon('minus-circle'), profile_settings_deck_path(deck), method: :delete, class: 'show-on-hover', data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+  <div class="meta-decks">
+    <% Deck.all.group_by(&:hero).each do |hero, decks| %>
+      <ul>
+        <% decks.each do |deck| %>
+          <li><%= hero_label(hero.name, deck.name) %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 
-  <%= link_to 'Add Deck', new_profile_settings_deck_path, class: 'btn btn-default' %>
 <% end %>
