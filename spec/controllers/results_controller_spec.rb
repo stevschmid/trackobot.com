@@ -162,72 +162,60 @@ describe ResultsController do
     end
   end
 
-  describe 'PUT bulk_update' do
-    let(:result_user) { user }
+  describe 'PUT update' do
+    let(:deck1) { FactoryGirl.create(:deck, user: user) }
+    let(:deck2) { FactoryGirl.create(:deck, user: user) }
 
-    let(:shaman) { Hero.find_by_name('Shaman') }
-    let(:warrior) { Hero.find_by_name('Warrior') }
-    let(:priest) { Hero.find_by_name('Priest') }
+    let(:result_owner) { user }
+    let(:result) { FactoryGirl.create(:result, user: result_owner, deck: deck1) }
 
-    let(:shaman_deck) { FactoryGirl.create(:deck, hero: shaman, user: result_user) }
-    let(:warrior_deck) { FactoryGirl.create(:deck, hero: warrior, user: result_user) }
+    describe 'decks' do
+      describe 'new deck_id' do
+        it 'changes the deck' do
+          expect {
+            put :update, id: result.id, result: { deck_id: deck2.id }
+          }.to change { result.reload.deck }.from(deck1).to(deck2)
+        end
+      end
 
-    let!(:first_result) { FactoryGirl.create(:result, user: result_user, hero: shaman, opponent: warrior) }
-    let!(:second_result) { FactoryGirl.create(:result, user: result_user, hero: shaman, opponent: priest) }
-
-    it 'sets the selected results' do
-      put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
-      expect(first_result.reload.deck).to eq shaman_deck
-      expect(second_result.reload.deck).to eq shaman_deck
-    end
-
-    it 'respects the class' do
-      put :bulk_update, { result_ids: [first_result.id, second_result.id], vs_deck: warrior_deck.id }
-      expect(first_result.reload.opponent_deck).to eq warrior_deck
-      expect(second_result.reload.opponent_deck).to_not eq warrior_deck
-    end
-
-    it 'ignores update for arenas' do
-      first_result.update_attributes(mode: :arena)
-      expect {
-        put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
-      }.to_not change { first_result.reload.deck }
-    end
-
-    context 'as another user' do
-      let(:result_user) { FactoryGirl.create(:user) }
-
-      it 'can\'t touch this' do
-        expect {
-          put :bulk_update, { result_ids: [first_result.id, second_result.id], as_deck: shaman_deck.id }
-        }.to_not change { first_result.reload.updated_at }
-        expect(first_result.reload.deck).to_not eq shaman_deck
+      describe 'empty deck_id' do
+        it 'clears the deck' do
+          expect {
+            put :update, id: result.id, result: { deck_id: nil }
+          }.to change { result.reload.deck }.from(deck1).to(nil)
+        end
       end
     end
-  end
 
-  describe 'PUT set_tags' do
-    let(:result) { FactoryGirl.create(:result, user: user) }
+    describe 'tags' do
+      let(:tags_array) { ['misplay', 'cool match'] }
+      let(:tags) { tags_array.join ',' }
 
-    let(:tags_array) { ['misplay', 'cool match'] }
-    let(:tags) { tags_array.join ',' }
-
-    it 'sets the tags' do
-      expect {
-        put :set_tags, id: result.id, tags: tags
-      }.to change { result.reload.tags.collect(&:tag) }.to eq tags_array
+      it 'sets the tags' do
+        expect {
+          put :update, id: result.id, result: { tags: tags }
+        }.to change { result.reload.tags.collect(&:tag) }.to eq tags_array
+      end
     end
 
-    context 'as another user' do
-      let(:another_user) { FactoryGirl.create(:user) }
-      let(:result) { FactoryGirl.create(:result, user: another_user) }
-
-      it 'yields 404' do
+    describe 'user' do
+      it 'cannot change the associated user' do
         expect {
-          put :set_tags, id: result.id, tags: tags
+          put :update, id: result.id, result: { user_id: user.id + 1 }
+        }.not_to change { result.reload.user }
+      end
+    end
+
+    describe 'result owned by somebody else' do
+      let(:result_owner) { FactoryGirl.create(:user) }
+
+      it 'denies' do
+        expect {
+          put :update, id: result.id, result: { deck_id: deck2.id }
         }.to raise_error ActiveRecord::RecordNotFound
       end
     end
+
   end
 
 end

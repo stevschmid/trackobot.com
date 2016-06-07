@@ -24,10 +24,6 @@ $(document).on 'ready page:load', ->
       $('<input/>', type: 'hidden', name: 'result_ids[]', value: this.value)
         .appendTo(form)
 
-  $('select', '.bulk-edit-form').chosen
-    width: '150px',
-    allow_single_deselect: true
-
   # timeline
   loadContentForPopover = (cls, event, options) ->
     options = $.extend {}, options
@@ -45,6 +41,29 @@ $(document).on 'ready page:load', ->
 
         btn.unbind(event).addClass('has-popover')
         btn.popover(options).popover('show')
+
+  $('.deck-edit-button').click ->
+    button = $(this).addClass('hidden')
+    label = $(this).siblings('.hero-label').addClass('hidden')
+    form = $(this).siblings('form').removeClass('hidden')
+
+    $('select', form).focus() # for esc
+    $('select', form).on 'blur', (e) ->
+      button.removeClass('hidden')
+      label.removeClass('hidden')
+      form.addClass('hidden')
+
+  $("select[name='result[deck_id]'], select[name='result[opponent_deck_id]']").change (event) ->
+    select = $(this)
+    selected = $("option:selected", select).text()
+    form = $(select).parent('form')
+    $.ajax
+      type: form.attr('method')
+      url: form.attr('action')
+      data: form.serialize(),
+      success: ->
+        $(form).siblings('.hero-label').text(selected)
+        $(select).blur()
 
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
   loadContentForPopover '.timeline-button', 'click', placement: 'bottom'

@@ -12,51 +12,37 @@ class ResultsController < ApplicationController
     respond_with(:profile, @result.reload)
   end
 
-  def set_tags
+  def update
     @result = current_user.results.find(params[:id])
-    @result.tags.destroy_all
-    tags = params[:tags].present? ? params[:tags].split(',') : []
-    tags.each { |tag| @result.tags.create!(tag: tag) }
-    render nothing: true
+
+    # Learn label provided by user
+    if safe_params[:deck_id].present?
+      deck = Deck.find_by_id(safe_params[:deck_id])
+      ClassifyDeckForResult.new(@result).learn_deck_for_player! deck
+    end
+
+    if safe_params[:opponent_deck_id].present?
+      opponent_deck = Deck.find_by_id(safe_params[:opponent_deck_id])
+      ClassifyDeckForResult.new(@result).learn_deck_for_opponent! opponent_deck
+    end
+
+    # Now update
+    @result.update_attributes(safe_params)
+
+    if params[:result].has_key?(:tags)
+      @result.tags.destroy_all
+      tags = (params[:result][:tags] || '').split(',')
+      tags.each do |tag|
+        @result.tags.create!(tag: tag)
+      end
+    end
+
+    respond_with(:profile, @result.reload)
   end
 
   def bulk_delete
     current_user.results.where(id: params[:result_ids]).destroy_all if params[:result_ids]
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
-  end
-
-  def bulk_update
-    selected_results = current_user.results
-      .where(id: params[:result_ids])
-      .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
-
-    if as_deck = Deck.find_by_id(params[:as_deck])
-      # learn true label
-      selected_results.each do |result|
-        next if result.deck == as_deck
-        ClassifyDeckForResult.new(result).learn_deck_for_player! as_deck
-      end
-
-      # update
-      selected_results
-        .where(hero: as_deck.hero)
-        .update_all(deck_id: as_deck.id)
-    end
-
-    if vs_deck = Deck.find_by_id(params[:vs_deck])
-      # learn true label
-      selected_results.each do |result|
-        next if result.opponent_deck == vs_deck
-        ClassifyDeckForResult.new(result).learn_deck_for_opponent! vs_deck
-      end
-
-      # update
-      selected_results
-        .where(opponent: vs_deck.hero)
-        .update_all(opponent_deck_id: vs_deck.id)
-    end
-
-    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }
   end
 
   private
@@ -82,7 +68,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added)
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id)
   end
 
   def deny_api_calls!

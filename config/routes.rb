@@ -12,13 +12,9 @@ Rails.application.routes.draw do
       end
     end
     resources :arena, only: [:index]
-    resources :results, only: [:create, :show] do
-      member do
-        put :set_tags
-      end
+    resources :results, only: [:create, :show, :update] do
       collection do
         delete :bulk_delete
-        put :bulk_update
       end
     end
 

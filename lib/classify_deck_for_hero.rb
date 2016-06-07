@@ -20,7 +20,7 @@ class ClassifyDeckForHero
   end
 
   def eligible_decks
-    Deck.where(hero: hero)
+    @eligible_decks ||= Deck.where(hero: hero)
   end
 
   def predict
