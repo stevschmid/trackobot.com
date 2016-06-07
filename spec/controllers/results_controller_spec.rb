@@ -97,47 +97,8 @@ describe ResultsController do
     end
 
     describe 'deck support' do
-      let!(:miracle) { user.decks.create!(name: 'Miracle', hero: Hero.find_by_name('Rogue'), card_ids: Card.where(name: 'Gadgetzan Auctioneer').pluck(:id)) }
-      let!(:handlock) { user.decks.create!(name: 'Handlock', hero: Hero.find_by_name('Warlock'), card_ids: Card.where(name: 'Mountain Giant').pluck(:id)) }
-
-      let(:result_params) do
-        {
-          hero: 'Rogue',
-          opponent: 'Warlock',
-          mode: 'ranked',
-          coin: true,
-          win: true
-        }
-      end
-
-      let(:card_history) do
-        [
-          {card_id: 'EX1_105', player: 'opponent'}, # opponent played handlock
-          {card_id: 'EX1_095', player: 'me'} # I played miracle
-        ]
-      end
-
-      context 'for non-arenas' do
-        it 'assigns decks on upload' do
-          post :create, result: result_params.merge(card_history: card_history), format: :json
-          result = user.results.last
-
-          expect(result.deck).to eq miracle
-          expect(result.opponent_deck).to eq handlock
-        end
-      end
-
-      context 'for arenas' do
-        it 'does not assign decks on upload' do
-          post :create, result: result_params.merge(mode: 'arena', card_history: card_history), format: :json
-          result = user.results.last
-
-          expect(result.deck).to be_nil
-          expect(result.opponent_deck).to be_nil
-        end
-      end
+      pending
     end
-
   end
 
   describe 'DELETE bulk_delete' do
@@ -163,8 +124,8 @@ describe ResultsController do
   end
 
   describe 'PUT update' do
-    let(:deck1) { FactoryGirl.create(:deck, user: user) }
-    let(:deck2) { FactoryGirl.create(:deck, user: user) }
+    let(:deck1) { FactoryGirl.create(:deck) }
+    let(:deck2) { FactoryGirl.create(:deck) }
 
     let(:result_owner) { user }
     let(:result) { FactoryGirl.create(:result, user: result_owner, deck: deck1) }

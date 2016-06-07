@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Settings::DecksController do
 
   let(:user) { FactoryGirl.create(:user) }
-  let!(:deck) { FactoryGirl.create(:deck, user: user, name: 'test deck') }
+  let!(:deck) { FactoryGirl.create(:deck, name: 'test deck') }
 
   before do
     sign_in user

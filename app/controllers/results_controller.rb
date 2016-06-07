@@ -17,7 +17,7 @@ class ResultsController < ApplicationController
   end
 
   def update
-    @result = current_user.results.find(params[:id])
+    @result = policy_scope(Result).find(params[:id])
     authorize @result
 
     # Learn label provided by user
