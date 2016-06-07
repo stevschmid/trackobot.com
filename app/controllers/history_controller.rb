@@ -1,11 +1,14 @@
 class HistoryController < ApplicationController
   include Meta
 
+  after_filter :verify_authorized, except: :index
+  after_filter :verify_policy_scoped
+
   def index
-    @unpaged_results = current_user.results.order('results.created_at DESC')
+    @unpaged_results = policy_scope(Result).order('results.created_at DESC')
     @unpaged_results = @unpaged_results.where(mode: Result.modes[params[:mode]]) if params[:mode].present? && Result.modes.has_key?(params[:mode])
     if params[:arena_id].present?
-      @arena = current_user.arenas.find(params[:arena_id])
+      @arena = policy_scope(Arena).find(params[:arena_id])
       @unpaged_results = @unpaged_results.where(arena_id: @arena.id)
     end
 
@@ -41,13 +44,15 @@ class HistoryController < ApplicationController
   end
 
   def timeline
-    @result = current_user.results.find(params[:id])
+    @result = policy_scope(Result).find(params[:id])
+    authorize @result, :show?
     @card_histories = @result.card_history_list
     render layout: false
   end
 
   def card_stats
-    result = current_user.results.find(params[:id])
+    result = policy_scope(Result).find(params[:id])
+    authorize result, :show?
     player = params[:player].to_sym
     @card_histories = result.card_history_list.select { |entry| entry.player == player }
     render layout: false

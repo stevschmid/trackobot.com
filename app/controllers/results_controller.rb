@@ -3,8 +3,12 @@ class ResultsController < ApplicationController
 
   before_filter :deny_api_calls!, except: %i[create]
 
+  after_filter :verify_authorized, except: %i[bulk_delete bulk_update]
+  after_filter :verify_policy_scoped
+
   def create
-    @result = current_user.results.new(safe_params)
+    @result = policy_scope(Result).new(safe_params)
+    authorize @result
     if card_history = params[:result][:card_history]
       add_card_history_to_result(@result, card_history)
     end
@@ -14,6 +18,7 @@ class ResultsController < ApplicationController
 
   def update
     @result = current_user.results.find(params[:id])
+    authorize @result
 
     # Learn label provided by user
     if safe_params[:deck_id].present?
@@ -41,7 +46,7 @@ class ResultsController < ApplicationController
   end
 
   def bulk_delete
-    current_user.results.where(id: params[:result_ids]).destroy_all if params[:result_ids]
+    policy_scope(Result).where(id: (params[:result_ids] || [])).destroy_all
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 

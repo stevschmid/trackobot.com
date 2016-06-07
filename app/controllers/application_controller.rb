@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   include Devise::Controllers::Rememberable
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :follow_the_rules
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -33,5 +36,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     profile_history_index_path
+  end
+
+  def follow_the_rules
+    render text: 'Unauthorized', status: :unauthorized
   end
 end
