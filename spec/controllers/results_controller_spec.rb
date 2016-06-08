@@ -124,8 +124,8 @@ describe ResultsController do
   end
 
   describe 'PUT update' do
-    let(:deck1) { FactoryGirl.create(:deck) }
-    let(:deck2) { FactoryGirl.create(:deck) }
+    let(:deck1) { Deck.first }
+    let(:deck2) { Deck.second }
 
     let(:result_owner) { user }
     let(:result) { FactoryGirl.create(:result, user: result_owner, deck: deck1) }

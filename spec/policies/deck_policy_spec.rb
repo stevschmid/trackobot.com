@@ -7,7 +7,7 @@ describe DeckPolicy do
   subject { described_class }
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:item) { FactoryGirl.create(:deck) }
+  let(:item) { Deck.first }
 
   permissions :show? do
     specify { expect(subject).to permit(user, item) }

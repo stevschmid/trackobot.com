@@ -60,8 +60,8 @@ describe HistoryController do
       end
 
       context 'decks' do
-        let(:deck) { FactoryGirl.create(:deck) }
-        let(:opponent_deck) { FactoryGirl.create(:deck) }
+        let(:deck) { Deck.first }
+        let(:opponent_deck) { Deck.second }
 
         let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, deck: deck, opponent_deck: opponent_deck) }
 

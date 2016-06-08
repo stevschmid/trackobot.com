@@ -1,0 +1,120 @@
+{
+  "shaman": [
+    {
+      "key": "midrange",
+      "name": "Midrange"
+    },
+    {
+      "key": "aggro",
+      "name": "Aggro"
+    }
+  ],
+  "warlock": [
+    {
+      "key": "zoo",
+      "name": "Zoo"
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
+    }
+  ],
+  "warrior": [
+    {
+      "key": "aggro",
+      "name": "Aggro"
+    },
+    {
+      "key": "tempo",
+      "name": "Tempo"
+    },
+    {
+      "key": "control",
+      "name": "Control"
+    },
+    {
+      "key": "cthun",
+      "name": "C'Thun"
+    }
+  ],
+  "rogue": [
+    {
+      "key": "miracle",
+      "name": "Miracle"
+    },
+    {
+      "key": "nzoth",
+      "name": "N'Zoth"
+    },
+    {
+      "key": "malygos",
+      "name": "Malygos"
+    }
+  ],
+  "hunter": [
+    {
+      "key": "midrange",
+      "name": "Midrange"
+    },
+    {
+      "key": "aggro",
+      "name": "Aggro"
+    }
+  ],
+  "mage": [
+    {
+      "key": "tempo",
+      "name": "Tempo"
+    },
+    {
+      "key": "freeze",
+      "name": "Freeze"
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
+    }
+  ],
+  "paladin": [
+    {
+      "key": "aggro",
+      "name": "Aggro"
+    },
+    {
+      "key": "nzoth",
+      "name": "N'Zoth"
+    }
+  ],
+  "druid": [
+    {
+      "key": "cthun",
+      "name": "C'Thun"
+    },
+    {
+      "key": "beast",
+      "name": "Beast"
+    },
+    {
+      "key": "ramp",
+      "name": "Ramp"
+    }
+  ],
+  "priest": [
+    {
+      "key": "control",
+      "name": "Control"
+    },
+    {
+      "key": "dragon",
+      "name": "Dragon"
+    },
+    {
+      "key": "nzoth",
+      "name": "N'Zoth"
+    },
+    {
+      "key": "cthun",
+      "name": "C'Thun"
+    }
+  ]
+}
