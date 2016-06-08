@@ -24,6 +24,8 @@ class ClassifyDeckForHero
   end
 
   def predict
+    return nil if counts_by_card.values.sum == 0
+
     best_score = nil
     best_deck = nil
 
@@ -33,7 +35,6 @@ class ClassifyDeckForHero
       score = deck.classifier.predict_score(normalized_counts_by_card)
 
       Rails.logger.info "[Classify] Deck #{deck} score #{score}"
-
 
       if best_score.nil? || score > best_score
         best_deck = deck
