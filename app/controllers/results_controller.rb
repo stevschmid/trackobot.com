@@ -20,19 +20,22 @@ class ResultsController < ApplicationController
     @result = policy_scope(Result).find(params[:id])
     authorize @result
 
-    # Learn label provided by user
-    if safe_params[:deck_id].present?
-      deck = Deck.find_by_id(safe_params[:deck_id])
-      ClassifyDeckForResult.new(@result).learn_deck_for_player! deck
-    end
-
-    if safe_params[:opponent_deck_id].present?
-      opponent_deck = Deck.find_by_id(safe_params[:opponent_deck_id])
-      ClassifyDeckForResult.new(@result).learn_deck_for_opponent! opponent_deck
-    end
-
     # Now update
-    @result.update_attributes(safe_params)
+    @result.assign_attributes(safe_params)
+
+    if @result.valid? && !@result.arena?
+      unless exclude_result_from_learning?(@result)
+        if @result.deck_id_changed?
+          ClassifyDeckForResult.new(@result).learn_deck_for_player! @result.deck
+        end
+
+        if @result.opponent_deck_id_changed?
+          ClassifyDeckForResult.new(@result).learn_deck_for_opponent! @result.opponent_deck
+        end
+      end
+    end
+
+    @result.save
 
     if params[:result].has_key?(:tags)
       @result.tags.destroy_all
@@ -51,6 +54,14 @@ class ResultsController < ApplicationController
   end
 
   private
+
+  def exclude_result_from_learning?(result)
+    last_updated_result = result.user.results
+                            .where('created_at != updated_at')
+                            .order(:updated_at)
+                            .last
+    last_updated_result && last_updated_result.updated_at > 1.hour.ago
+  end
 
   def add_card_history_to_result(result, card_history)
     result.card_history_list = card_history.collect do |card_history_item|

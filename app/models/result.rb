@@ -4,6 +4,11 @@ class Result < ActiveRecord::Base
   validates_presence_of :mode, :hero_id, :opponent_id, :user_id
   validates_inclusion_of :win, in: [true, false]
 
+  validates_absence_of :deck_id, if: :arena?
+  validates_absence_of :opponent_deck_id, if: :arena?
+
+  validate :decks_belong_to_rightful_class
+
   enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   belongs_to :hero
@@ -24,6 +29,11 @@ class Result < ActiveRecord::Base
   after_create :connect_to_decks, unless: :arena?
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
+
+  def decks_belong_to_rightful_class
+    errors.add(:deck_id, 'is invalid') if deck && deck.hero_id != hero_id
+    errors.add(:opponent_deck_id, 'is invalid') if opponent_deck && opponent_deck.hero_id != opponent_id
+  end
 
   def added=(timestamp)
     self.created_at = timestamp
