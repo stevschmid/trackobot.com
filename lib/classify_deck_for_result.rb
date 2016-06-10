@@ -33,7 +33,9 @@ class ClassifyDeckForResult
 
   def count_by_cards_for player
     card_histories = result.card_history_list.select do |card_history_entry|
-      card_history_entry.player == player
+      card_history_entry.player == player # only from specified player
+    end.reject do |card_history_entry|
+      card_history_entry.card.type == 'hero' # ignore hero powers
     end
 
     Hash[card_histories.group_by(&:card).collect do |card, items|

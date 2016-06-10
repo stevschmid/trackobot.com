@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Result do
 
+  include ResultHelpers
+
   describe 'arena result' do
     let(:result) { FactoryGirl.create(:result, mode: :arena) }
     let(:arena) { result.arena }
@@ -47,21 +49,6 @@ describe Result do
 
     let(:shaman_cards) { Card.all.select { |card| card.hero == 'shaman' } }
 
-    def build_result(as, vs, opts)
-      FactoryGirl.build(:result, mode: mode, hero: Hero.find_by_name(as), opponent: Hero.find_by_name(vs), user: user).tap do |result|
-        list = []
-        opts.each_pair do |player, card_names|
-          cards = Card.where(name: card_names).group_by(&:name)
-          card_names.inject(1) do |turn, card_name|
-            list << CardHistoryEntry.new(turn: turn, player: player, card: cards[card_name].first)
-            turn + 1
-          end
-        end
-
-        result.card_history_list = list
-      end
-    end
-
     def build_card_list(prob_matrix, cards)
       deck = prob_matrix.keys.sample
       probs = prob_matrix[deck]
@@ -80,7 +67,7 @@ describe Result do
       [deck, card_list]
     end
 
-    it 'bla' do
+    it 'does the ring at the right time for the right reasons' do
       NUM_LEARN_RUNS = 20
       NUM_VALIDATION_RUNS = 10
 
@@ -98,7 +85,7 @@ describe Result do
       learn_results = NUM_LEARN_RUNS.times.collect do
         true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
 
-        result = build_result 'Shaman', 'Warrior', me: card_list,  opponent: []
+        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
         result.save!
 
         [true_deck, result]
@@ -110,7 +97,7 @@ describe Result do
 
       accuracy = NUM_VALIDATION_RUNS.times.collect do
         true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-        result = build_result 'Shaman', 'Warrior', me: card_list,  opponent: []
+        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
         result.save!
         result.deck == true_deck ? 1 : 0
       end.sum / NUM_VALIDATION_RUNS.to_f
