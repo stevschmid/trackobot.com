@@ -180,28 +180,6 @@ describe ResultsController do
     end
   end
 
-  describe 'DELETE bulk_delete' do
-    let(:result_user) { user }
-    let!(:first_result) { FactoryGirl.create(:result, user: result_user) }
-    let!(:second_result) { FactoryGirl.create(:result, user: result_user) }
-
-    it 'destroys the requested results' do
-      expect{
-        delete :bulk_delete, { result_ids: [first_result.id, second_result.id] }
-      }.to change(Result, :count).by(-2)
-    end
-
-    context 'as another user' do
-      let(:result_user) { FactoryGirl.create(:user) }
-
-      it 'gives you the finger' do
-        expect {
-          delete :bulk_delete, { result_ids: [first_result.id, second_result.id] }
-        }.to_not change(Result, :count)
-      end
-    end
-  end
-
   describe 'PUT update' do
     let(:result_owner) { user }
     let!(:result) { FactoryGirl.create(:result, user: result_owner, hero: warlock, opponent: rogue, deck_id: existing_deck_id, mode: mode) }

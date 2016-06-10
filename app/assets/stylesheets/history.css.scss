@@ -3,14 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import 'tagging';
 
-.bulk-edit-control {
-  display: none;
-}
-
-.bulk-edit-on {
-  display: inline;
-}
-
 .history-query {
   margin-top: 24px;
 }
@@ -25,18 +17,6 @@
   opacity: 0.3;
 }
 
-.bulk-edit-buttons {
-  margin-top: -5px;
-  margin-bottom: 20px;
-  form {
-    display: inline-block;
-  }
-}
-
-.bulk-edit-picker {
-  margin: 2px 0 0 !important;
-}
-
 .history-query-clear {
   position: absolute;
   right: 5px;
@@ -46,12 +26,6 @@
   font-size: 20px;
   cursor: pointer;
   color: #ccc;
-}
-
-tr:hover {
-  .bulk-edit-picker {
-    display: inline;
-  }
 }
 
 table.history {

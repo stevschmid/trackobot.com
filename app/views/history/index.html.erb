@@ -90,16 +90,6 @@
   <% end %>
 
   <div class="row">
-    <div class="col-md-12 bulk-edit-buttons bulk-edit-control">
-      <%= form_tag bulk_delete_profile_results_path, method: :delete, class: 'bulk-edit-form' do %>
-        <%= submit_tag 'Delete', class: 'btn btn-sm btn-danger',
-          data: { confirm: 'Are you sure you want to permanently delete the selected results?' } %>
-      <% end %>
-      <%= button_tag 'Cancel', type: :reset, id: 'bulk_edit_cancel', class: 'btn btn-sm btn-default' %>
-    </div>
-  </div>
-
-  <div class="row">
     <div class="col-md-12 text-right">
       <%= page_entries_info @results %>
     </div>

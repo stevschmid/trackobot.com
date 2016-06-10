@@ -3,7 +3,7 @@ class ResultsController < ApplicationController
 
   before_filter :deny_api_calls!, except: %i[create]
 
-  after_filter :verify_authorized, except: %i[bulk_delete bulk_update]
+  after_filter :verify_authorized
   after_filter :verify_policy_scoped
 
   def create
@@ -53,11 +53,6 @@ class ResultsController < ApplicationController
     authorize @result
     @result.destroy
     respond_with(:profile, @result)
-  end
-
-  def bulk_delete
-    policy_scope(Result).where(id: (params[:result_ids] || [])).destroy_all
-    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
   end
 
   private
