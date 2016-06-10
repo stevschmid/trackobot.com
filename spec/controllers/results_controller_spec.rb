@@ -104,6 +104,9 @@ describe ResultsController do
       end
 
       before do
+        stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_PREDICTION', 1)
+        stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_LEARNING', 1)
+
         # learn the classifier
         post :create, result: result_params, format: :json
         result = assigns(:result)

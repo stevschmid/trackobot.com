@@ -1,4 +1,7 @@
 class ClassifyDeckForHero
+  MIN_CARDS_FOR_PREDICTION = 5
+  MIN_CARDS_FOR_LEARNING   = 8
+
   attr_reader :hero, :counts_by_card
 
   def initialize(hero, counts_by_card)
@@ -24,7 +27,7 @@ class ClassifyDeckForHero
   end
 
   def predict
-    return nil if counts_by_card.values.sum == 0
+    return nil if counts_by_card.values.sum < MIN_CARDS_FOR_PREDICTION
 
     best_score = nil
     best_deck = nil
@@ -49,6 +52,8 @@ class ClassifyDeckForHero
   end
 
   def learn! true_deck
+    return false if counts_by_card.values.sum < MIN_CARDS_FOR_LEARNING
+
     if true_deck && eligible_decks.exclude?(true_deck)
       Rails.logger.warn "[Classify] learn! called for ineligible deck #{true_deck} #{hero}"
       return
@@ -56,10 +61,12 @@ class ClassifyDeckForHero
 
     eligible_decks.each do |deck|
       label = true_deck == deck ? 1 : -1
-      Rails.logger.info "[Classify] Learn hero: #{hero} true_deck: #{true_deck} classifier: #{deck} label: #{label}"
+      Rails.logger.info "[Classify] Learn hero: #{hero} true_deck: #{true_deck} classifier: #{deck.classifier} label: #{label}"
       deck.classifier.train(normalized_counts_by_card, label)
       deck.save!
     end
+
+    true
   end
 
 end

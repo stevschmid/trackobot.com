@@ -10,7 +10,11 @@ describe ClassifyDeckForHero do
   let(:input) do
     {
       'Lava Burst' => 1,
-      'Totem Golem' => 2
+      'Totem Golem' => 2,
+      'Lightning Bolt' => 2,
+      'Flametongue Totem' => 2,
+      'Tunnel Trogg' => 1,
+      'Rockbiter Weapon' => 2,
     }
   end
 
@@ -30,8 +34,12 @@ describe ClassifyDeckForHero do
   describe '#predict' do
     it 'uses a normalized card count (so the total cards amounts to 30)' do
       expect(classifiers['aggro']).to receive(:predict_score).with({
-        'Lava Burst' => 10,
-        'Totem Golem' => 20
+        'Lava Burst' => 3,
+        'Totem Golem' => 6,
+        'Lightning Bolt' => 6,
+        'Flametongue Totem' => 6,
+        'Tunnel Trogg' => 3,
+        'Rockbiter Weapon' => 6,
       })
       subject.predict
     end
@@ -48,8 +56,13 @@ describe ClassifyDeckForHero do
       expect(subject.predict).to eq nil
     end
 
-    context 'empty input' do
-      let(:input) { {} }
+    context 'not enough cards' do
+      let(:input) do
+        {
+          'Lava Burst' => 1,
+          'Totem Golem' => 2,
+        }
+      end
 
       specify { expect(subject.predict).to eq nil }
 
@@ -58,20 +71,39 @@ describe ClassifyDeckForHero do
         subject.predict
       end
     end
+
   end
 
   describe '#learn' do
     it 'learns the true deck' do
       expect(classifiers['midrange']).to receive(:train).with(anything, -1)
       expect(classifiers['aggro']).to receive(:train).with(anything, 1)
-      expect { subject.learn! aggro }.to change { aggro.reload.classifier }
+      expect_any_instance_of(Deck).to receive(:save!)
+      subject.learn! aggro
     end
 
     it 'accepts nil' do
       expect(classifiers['midrange']).to receive(:train).with(anything, -1)
       expect(classifiers['aggro']).to receive(:train).with(anything, -1)
-      expect { subject.learn! nil }.to change { aggro.reload.classifier }
+      expect_any_instance_of(Deck).to receive(:save!)
+      subject.learn! nil
     end
+
+    context 'not enough cards supplied' do
+      let(:input) do
+        {
+          'Lava Burst' => 1,
+          'Totem Golem' => 2,
+          'Lightning Bolt' => 2
+        }
+      end
+
+      it 'does not learn' do
+        expect_any_instance_of(Deck).not_to receive(:save!)
+        subject.learn! aggro
+      end
+    end
+
   end
 
 end
