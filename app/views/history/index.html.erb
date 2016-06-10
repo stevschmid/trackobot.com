@@ -80,7 +80,7 @@
               <% end %>
             </td>
             <td class="choose">
-              <%= check_box_tag 'result_ids[]', result.id, false, autocomplete: 'off', class: 'bulk-edit-control bulk-edit-picker' %>
+              <%= link_to icon('remove'), profile_result_path(result), class: 'result-delete-button', method: :delete, remote: true %>
             </td>
           </tr>
         <% end %>

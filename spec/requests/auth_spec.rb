@@ -50,12 +50,7 @@ describe 'Authentication' do
       end
 
       it 'cannot delete results' do
-        delete '/profile/results/bulk_delete', username: user.username, token: token
-        expect(response.code).to eq '401'
-      end
-
-      it 'cannot update results' do
-        delete '/profile/results/bulk_delete', username: user.username, token: token
+        delete '/profile/results/1', username: user.username, token: token
         expect(response.code).to eq '401'
       end
     end

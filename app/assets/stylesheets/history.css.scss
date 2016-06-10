@@ -64,6 +64,18 @@ table.history {
   td.choose {
     width: 30px;
     text-align: center;
+
+    .result-delete-button {
+      visibility: hidden;
+      cursor: pointer;
+      color: red;
+    }
+
+    &:hover {
+      .result-delete-button {
+        visibility: visible;
+      }
+    }
   }
   td.opponent, td.player {
     overflow: hidden;

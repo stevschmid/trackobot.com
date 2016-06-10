@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       end
     end
     resources :arena, only: [:index]
-    resources :results, only: [:create, :show, :update] do
+    resources :results, only: [:create, :show, :update, :destroy] do
       collection do
         delete :bulk_delete
       end

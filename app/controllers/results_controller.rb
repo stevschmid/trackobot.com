@@ -48,6 +48,13 @@ class ResultsController < ApplicationController
     respond_with(:profile, @result.reload)
   end
 
+  def destroy
+    @result = policy_scope(Result).find(params[:id])
+    authorize @result
+    @result.destroy
+    respond_with(:profile, @result)
+  end
+
   def bulk_delete
     policy_scope(Result).where(id: (params[:result_ids] || [])).destroy_all
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }

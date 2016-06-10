@@ -160,6 +160,26 @@ describe ResultsController do
     end
   end
 
+  describe 'DELETE destroy' do
+    let!(:result) { FactoryGirl.create(:result, user: result_user) }
+
+    context 'my result' do
+      let(:result_user) { user }
+      specify {
+        expect { delete :destroy, id: result.id }.to change(Result, :count).by(-1)
+      }
+    end
+
+    context 'foreign result' do
+      let(:result_user) { FactoryGirl.create(:user) }
+      specify {
+        expect {
+          delete :destroy, id: result.id
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      }
+    end
+  end
+
   describe 'DELETE bulk_delete' do
     let(:result_user) { user }
     let!(:first_result) { FactoryGirl.create(:result, user: result_user) }

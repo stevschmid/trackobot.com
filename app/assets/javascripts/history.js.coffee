@@ -42,6 +42,10 @@ $(document).on 'ready page:load', ->
         btn.unbind(event).addClass('has-popover')
         btn.popover(options).popover('show')
 
+  $('.result-delete-button').on 'ajax:success', (e, data, status, xhr) ->
+    $(this).closest('tr').fadeOut 500, ->
+      $(this).remove()
+
   $('.deck-edit-button').click ->
     button = $(this).addClass('hidden')
     label = $(this).siblings('.hero-label').addClass('hidden')
