@@ -69,11 +69,11 @@ module Stats
     end
 
     if params[:as_deck].present?
-      @as_deck = current_user.decks.find_by_id(params[:as_deck])
+      @as_deck = Deck.find_by_id(params[:as_deck])
     end
 
     if params[:vs_deck].present?
-      @vs_deck = current_user.decks.find_by_id(params[:vs_deck])
+      @vs_deck = Deck.find_by_id(params[:vs_deck])
     end
 
     if params[:as_hero].present?

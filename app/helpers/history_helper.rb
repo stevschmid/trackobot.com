@@ -38,7 +38,7 @@ module HistoryHelper
     if result.deck
       label_for_deck(result.deck, additions)
     else
-      hero_label(result.hero.name, result.hero.name, additions)
+      hero_label(result.hero.name, 'Other', additions)
     end
   end
 
@@ -46,7 +46,7 @@ module HistoryHelper
     if result.opponent_deck
       label_for_deck(result.opponent_deck, additions)
     else
-      hero_label(result.opponent.name, result.opponent.name, additions)
+      hero_label(result.opponent.name, 'Other', additions)
     end
   end
 
