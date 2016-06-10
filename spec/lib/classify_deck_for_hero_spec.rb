@@ -66,6 +66,12 @@ describe ClassifyDeckForHero do
       expect(classifiers['aggro']).to receive(:train).with(anything, 1)
       expect { subject.learn! aggro }.to change { aggro.reload.classifier }
     end
+
+    it 'accepts nil' do
+      expect(classifiers['midrange']).to receive(:train).with(anything, -1)
+      expect(classifiers['aggro']).to receive(:train).with(anything, -1)
+      expect { subject.learn! nil }.to change { aggro.reload.classifier }
+    end
   end
 
 end

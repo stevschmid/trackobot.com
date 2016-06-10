@@ -49,7 +49,7 @@ class ClassifyDeckForHero
   end
 
   def learn! true_deck
-    unless eligible_decks.include?(true_deck)
+    if true_deck && eligible_decks.exclude?(true_deck)
       Rails.logger.warn "[Classify] learn! called for ineligible deck #{true_deck} #{hero}"
       return
     end
