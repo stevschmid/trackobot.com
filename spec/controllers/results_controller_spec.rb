@@ -93,20 +93,6 @@ describe ResultsController do
         expect(result.card_history_list.second.player).to eq :me
         expect(result.card_history_list.second.turn).to eq 3
       end
-
-      describe 'card playable status' do
-        let(:card) { Card.find_by_ref(card_history.first[:card_id]) }
-
-        before do
-          card.update_attributes(playable: false)
-        end
-
-        it 'mark cards as playable when they are seen for the first time' do
-          expect {
-            post :create, result: result_params.merge(card_history: card_history), format: :json
-          }.to change { card.reload.playable? }
-        end
-      end
     end
 
     describe 'deck support' do

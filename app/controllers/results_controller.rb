@@ -69,12 +69,6 @@ class ResultsController < ApplicationController
     result.card_history_list = card_history.collect do |card_history_item|
       card = Card.find_by_ref(card_history_item[:card_id])
       if card
-        # HS cards are heavily redundant
-        # To make sure we can distinguish between playable
-        # non-playable cards, mark them here the first time
-        # are played
-        card.mark_as_playable!
-
         CardHistoryEntry.new(turn: card_history_item[:turn],
                              player: card_history_item[:player].to_sym,
                              card: card)
