@@ -53,6 +53,16 @@ describe 'Authentication' do
         delete '/profile/results/1', username: user.username, token: token
         expect(response.code).to eq '401'
       end
+
+      it 'cannot regenerate api keys' do
+        put '/profile/settings/api', username: user.username, token: token
+        expect(response.code).to eq '401'
+      end
+
+      it 'cannot reset the account' do
+        post '/profile/settings/account/reset', username: user.username, token: token, result_modes: %w[ranked casual]
+        expect(response.code).to eq '401'
+      end
     end
 
     context 'invalid token' do

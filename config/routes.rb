@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     namespace :settings do
       resource :api, only: [:show, :update]
       resources :decks, only: :index
+      resource :account, only: :show do
+        post :reset
+      end
     end
   end
 

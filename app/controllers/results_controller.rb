@@ -1,6 +1,7 @@
 class ResultsController < ApplicationController
   respond_to :json, :html
 
+  include ApiDenier
   before_filter :deny_api_calls!, except: %i[create]
 
   after_filter :verify_authorized
@@ -81,10 +82,6 @@ class ResultsController < ApplicationController
 
   def safe_params
     params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id)
-  end
-
-  def deny_api_calls!
-    head :unauthorized if params[:token].present?
   end
 
 end
