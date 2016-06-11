@@ -3,7 +3,7 @@ class Settings::DecksController < ApplicationController
   after_action :verify_policy_scoped, except: :toggle
 
   def index
-    @decks = policy_scope(Deck).order(:hero_id)
+    @decks = policy_scope(Deck)
     respond_to do |format|
       format.html
       format.json do

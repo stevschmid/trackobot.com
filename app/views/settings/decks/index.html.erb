@@ -15,7 +15,11 @@
   </div>
 
   <div class="meta-decks">
-    <% Deck.all.group_by(&:hero).each do |hero, decks| %>
+    <% 
+      decks_by_hero = @decks.group_by(&:hero) 
+      sorted_decks_by_hero = Hash[decks_by_hero.sort_by { |_, decks| decks.count }.reverse]
+    %>
+    <% sorted_decks_by_hero.each do |hero, decks| %>
       <ul>
         <% decks.each do |deck| %>
           <li><%= hero_label(hero.name, label: deck.name) %></li>
