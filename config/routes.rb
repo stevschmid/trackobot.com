@@ -22,7 +22,11 @@ Rails.application.routes.draw do
 
     namespace :settings do
       resource :api, only: [:show, :update]
-      resources :decks, only: :index
+      resources :decks, only: :index do
+        collection do
+          put :toggle
+        end
+      end
       resource :account, only: :show do
         post :reset
       end

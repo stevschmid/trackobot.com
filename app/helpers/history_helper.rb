@@ -25,7 +25,7 @@ module HistoryHelper
     }
   end
 
-  def hero_label(hero_name, label = hero_name, additions = {})
+  def hero_label(hero_name, label: hero_name, additions: {})
     additions[:class] ||= []
     additions[:class] << 'hero-label'
     [
@@ -34,24 +34,29 @@ module HistoryHelper
     ].join(' ').html_safe
   end
 
-  def player_label_for_result(result, additions = {})
+  def player_label_for_result(result, additions: {})
+    return hero_label(result.hero.name, additions: additions) unless current_user.deck_tracking?
+
     if result.deck
-      label_for_deck(result.deck, additions)
+      label_for_deck(result.deck, additions: additions)
     else
-      hero_label(result.hero.name, 'Other', additions)
+      hero_label(result.hero.name, label: 'Other', additions: additions)
     end
   end
 
-  def opponent_label_for_result(result, additions = {})
+  def opponent_label_for_result(result, additions: {})
+    return hero_label(result.opponent.name, additions: additions) unless current_user.deck_tracking?
+
     if result.opponent_deck
-      label_for_deck(result.opponent_deck, additions)
+      label_for_deck(result.opponent_deck, additions: additions)
     else
-      hero_label(result.opponent.name, 'Other', additions)
+      hero_label(result.opponent.name, label: 'Other', additions: additions)
     end
   end
 
-  def label_for_deck(deck, additions = {})
-    hero_label(deck.hero.name, deck.name, additions)
+  def label_for_deck(deck, additions: {})
+    return hero_label(deck.hero.name, additions: additions) unless current_user.deck_tracking?
+    hero_label(deck.hero.name, label: deck.name, additions: additions)
   end
 
   def hero_icon(name)

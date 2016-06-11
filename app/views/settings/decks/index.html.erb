@@ -4,16 +4,21 @@
 
   <div class="alert alert-info"><p>
     <p>
-      <span class="label label-success">NEW</span>
       Track-o-Bot automatically detects the most common decks. No configuration required.
     </p>
+    <%= form_tag toggle_profile_settings_decks_path, method: :put, class: 'form-horizontal', role: 'form' do %>
+      <label>
+        <%= check_box 'user', 'deck_tracking', {checked: current_user.deck_tracking?}, 'true', 'false' %> Deck tracking enabled
+      </label>
+      <button type="submit" class="btn btn-default btn-xs">Save</button>
+    <% end %>
   </div>
 
   <div class="meta-decks">
     <% Deck.all.group_by(&:hero).each do |hero, decks| %>
       <ul>
         <% decks.each do |deck| %>
-          <li><%= hero_label(hero.name, deck.name) %></li>
+          <li><%= hero_label(hero.name, label: deck.name) %></li>
         <% end %>
       </ul>
     <% end %>

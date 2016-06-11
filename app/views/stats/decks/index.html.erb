@@ -57,7 +57,7 @@
             deck = @decks_by_id[stats[:deck_id]] if stats[:deck_id]
           %>
           <tr>
-            <td class="deck"><%= type %> <%= deck ? link_to(label_for_deck(deck), params.merge("#{type}_deck" => deck.id)) : hero_label(hero.name, 'Other') %></td>
+            <td class="deck"><%= type %> <%= deck ? link_to(label_for_deck(deck), params.merge("#{type}_deck" => deck.id)) : hero_label(hero.name, label: 'Other') %></td>
             <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
             <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
           </tr>
