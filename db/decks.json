@@ -21,8 +21,12 @@
   ],
   "warrior": [
     {
-      "key": "aggro",
-      "name": "Aggro"
+      "key": "pirate",
+      "name": "Pirate"
+    },
+    {
+      "key": "dragon",
+      "name": "Dragon"
     },
     {
       "key": "tempo",
@@ -57,8 +61,8 @@
       "name": "Midrange"
     },
     {
-      "key": "aggro",
-      "name": "Aggro"
+      "key": "face",
+      "name": "Face"
     }
   ],
   "mage": [
@@ -69,10 +73,6 @@
     {
       "key": "freeze",
       "name": "Freeze"
-    },
-    {
-      "key": "reno",
-      "name": "Reno"
     }
   ],
   "paladin": [
@@ -91,8 +91,8 @@
       "name": "C'Thun"
     },
     {
-      "key": "beast",
-      "name": "Beast"
+      "key": "token",
+      "name": "Token"
     },
     {
       "key": "ramp",
