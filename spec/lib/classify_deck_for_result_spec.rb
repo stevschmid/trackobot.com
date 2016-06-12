@@ -20,13 +20,34 @@ describe ClassifyDeckForResult do
     subject.predict_deck_for_opponent
   end
 
-  describe 'hero powers' do
-    let(:player_cards) { ['Totem Golem', 'Totemic Call'] }
+  describe 'card filter' do
+    context 'hero powers' do
+      let(:player_cards) { ['Totem Golem', 'Totemic Call'] }
 
-    it 'ignores hero powers' do
-      expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1 }).and_call_original
-      subject.predict_deck_for_player
+      specify {
+        expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1 }).and_call_original
+        subject.predict_deck_for_player
+      }
     end
+
+    context 'coin' do
+      let(:player_cards) { ['Totem Golem', 'The Coin'] }
+
+      specify {
+        expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1 }).and_call_original
+        subject.predict_deck_for_player
+      }
+    end
+
+    context 'cards from other classes' do
+      let(:player_cards) { ['Totem Golem', 'Shield Slam', 'Abusive Sergeant'] }
+
+      specify {
+        expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1, 'CS2_188' => 1 }).and_call_original
+        subject.predict_deck_for_player
+      }
+    end
+
   end
 
 end

@@ -61,8 +61,10 @@ class ClassifyDeckForHero
 
     eligible_decks.each do |deck|
       label = true_deck == deck ? 1 : -1
-      Rails.logger.info "[Classify] Learn hero: #{hero} true_deck: #{true_deck} classifier: #{deck.classifier} label: #{label}"
+      before_score = deck.classifier.predict_score(normalized_counts_by_card)
       deck.classifier.train(normalized_counts_by_card, label)
+      after_score = deck.classifier.predict_score(normalized_counts_by_card)
+      Rails.logger.info "[Classify] Learn classifier_deck: #{deck.full_name} true_deck: #{true_deck.full_name} before_score: #{before_score} after_score: #{after_score} label: #{label}"
       deck.save!
     end
 
