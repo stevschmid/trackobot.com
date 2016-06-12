@@ -52,10 +52,6 @@ table.history {
     }
   }
   td.opponent, td.player {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
     &:hover {
       .deck-edit-button {
         display: inline-block;
@@ -73,7 +69,7 @@ table.history {
     opacity: 0.5;
   }
   td.mode {
-    width: 160px;
+    width: 110px;
   }
   td.rank {
     padding: 0;
