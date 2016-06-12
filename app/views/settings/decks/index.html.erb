@@ -24,7 +24,7 @@
     <% sorted_decks_by_hero.each do |hero, decks| %>
       <ul>
         <% decks.each do |deck| %>
-          <li><%= hero_label(hero.name, label: "#{deck.name} #{deck.hero.name}") %></li>
+          <li><%= hero_label(hero.name, label: deck.full_name) %></li>
         <% end %>
       </ul>
     <% end %>

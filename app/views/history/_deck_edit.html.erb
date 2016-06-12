@@ -4,7 +4,7 @@
 
 <% if !result.arena? && eligible_decks.any? && current_user.deck_tracking? %>
   <%= form_for [:profile, result], html: { class: %w[deck-edit-form hidden] } do |f| %>
-    <%= f.collection_select field, eligible_decks, :id, :name, 
+    <%= f.collection_select field, eligible_decks, :id, :full_name, 
       { include_blank: blank_name, selected: result.send(field) } %>
   <% end %>
   <%= icon 'pencil', class: 'deck-edit-button' %>

@@ -56,7 +56,7 @@ module HistoryHelper
 
   def label_for_deck(deck, additions: {})
     return hero_label(deck.hero.name, additions: additions) unless current_user.deck_tracking?
-    hero_label(deck.hero.name, label: [deck.name, deck.hero.name].join(' '), additions: additions)
+    hero_label(deck.hero.name, label: deck.full_name, additions: additions)
   end
 
   def hero_icon(name)

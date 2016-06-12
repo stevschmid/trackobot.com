@@ -38,14 +38,14 @@ $(document).on 'ready page:load', ->
 
   $("select[name='result[deck_id]'], select[name='result[opponent_deck_id]']").change (event) ->
     select = $(this)
-    selected = $("option:selected", select).text()
+    full_name = $("option:selected", select).data('full-name')
     form = $(select).parent('form')
     $.ajax
       type: form.attr('method')
       url: form.attr('action')
       data: form.serialize(),
       success: ->
-        $(form).siblings('.hero-label').text(selected)
+        $(form).siblings('.hero-label').text(full_name)
         $(select).blur()
 
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'

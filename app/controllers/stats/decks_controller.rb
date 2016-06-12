@@ -38,7 +38,7 @@ class Stats::DecksController < ApplicationController
 
     grouped = user_results.group(:win, key_id, key_deck_id).count
     @decks.each do |deck|
-      key = "#{deck.name} #{deck.hero.name}"
+      key = deck.full_name
       stat = (stats[key] ||= {})
       stat[:deck_id] = deck.id
       stat[:hero_id] = deck.hero_id
