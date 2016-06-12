@@ -40,12 +40,21 @@ describe ClassifyDeckForResult do
     end
 
     context 'cards from other classes' do
-      let(:player_cards) { ['Totem Golem', 'Shield Slam', 'Abusive Sergeant'] }
+      context 'player' do
+        let(:player_cards) { ['Totem Golem', 'Shield Slam', 'Abusive Sergeant'] }
+        specify {
+          expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1, 'CS2_188' => 1 }).and_call_original
+          subject.predict_deck_for_player
+        }
+      end
 
-      specify {
-        expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'AT_052' => 1, 'CS2_188' => 1 }).and_call_original
-        subject.predict_deck_for_player
-      }
+      context 'opponent' do
+        let(:opponent_cards) { ['Fiery War Axe', 'Totem Golem'] }
+        specify {
+          expect(ClassifyDeckForHero).to receive(:new).with(anything, { 'CS2_106' => 1 }).and_call_original
+          subject.predict_deck_for_opponent
+        }
+      end
     end
 
   end

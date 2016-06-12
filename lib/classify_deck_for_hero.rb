@@ -64,7 +64,7 @@ class ClassifyDeckForHero
       before_score = deck.classifier.predict_score(normalized_counts_by_card)
       deck.classifier.train(normalized_counts_by_card, label)
       after_score = deck.classifier.predict_score(normalized_counts_by_card)
-      Rails.logger.info "[Classify] Learn classifier_deck: #{deck.full_name} true_deck: #{true_deck.full_name} before_score: #{before_score} after_score: #{after_score} label: #{label}"
+      Rails.logger.info "[Classify] Learn classifier_deck: #{deck.full_name} true_deck: #{true_deck ? true_deck.full_name : nil} before_score: #{before_score} after_score: #{after_score} label: #{label}"
       deck.save!
     end
 
