@@ -6,12 +6,14 @@
     <p>
       Track-o-Bot automatically detects the most common decks. No configuration required.
     </p>
-    <%= form_tag toggle_profile_settings_decks_path, method: :put, class: 'form-horizontal', role: 'form' do %>
-      <label>
-        <%= check_box 'user', 'deck_tracking', {checked: current_user.deck_tracking?}, 'true', 'false' %> Deck tracking enabled
-      </label>
-      <button type="submit" class="btn btn-default btn-xs">Save</button>
-    <% end %>
+    <p>
+      <%= form_tag toggle_profile_settings_decks_path, method: :put, class: 'form-horizontal', role: 'form' do %>
+        <label>
+          <%= check_box 'user', 'deck_tracking', {checked: current_user.deck_tracking?}, 'true', 'false' %> Deck tracking enabled
+        </label>
+        <button type="submit" class="btn btn-default btn-xs">Save</button>
+      <% end %>
+    </p>
   </div>
 
   <div class="meta-decks">
@@ -22,7 +24,7 @@
     <% sorted_decks_by_hero.each do |hero, decks| %>
       <ul>
         <% decks.each do |deck| %>
-          <li><%= hero_label(hero.name, label: deck.name) %></li>
+          <li><%= hero_label(hero.name, label: "#{deck.name} #{deck.hero.name}") %></li>
         <% end %>
       </ul>
     <% end %>
