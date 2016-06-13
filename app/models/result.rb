@@ -26,7 +26,7 @@ class Result < ActiveRecord::Base
   scope :losses, ->{ where(win: false) }
 
   before_create :create_or_update_associated_arena, if: :arena?
-  after_create :connect_to_decks, unless: :arena?
+  before_create :connect_to_decks, unless: :arena?
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
 
@@ -83,7 +83,6 @@ class Result < ActiveRecord::Base
     classify = ClassifyDeckForResult.new(self)
     self.deck ||= classify.predict_deck_for_player
     self.opponent_deck ||= classify.predict_deck_for_opponent
-    self.save!
   end
 
   def result
