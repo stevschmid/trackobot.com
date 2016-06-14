@@ -16,8 +16,8 @@ class HistoryController < ApplicationController
     if @query.present?
       if Result.modes.keys.include?(@query)
         @unpaged_results = @unpaged_results.where(mode: Result.modes[@query])
-      elsif deck = Deck.where('name ILIKE ?', "%#{@query}%").first
-        @unpaged_results = @unpaged_results.where('deck_id = ? OR opponent_deck_id = ?', deck.id, deck.id)
+      elsif (decks = Deck.where('name ILIKE ?', "%#{@query}%")) && decks.any?
+        @unpaged_results = @unpaged_results.where('deck_id IN (?) OR opponent_deck_id IN (?)', decks.pluck(:id), decks.pluck(:id))
       elsif hero = Hero.where('name ILIKE ?', "%#{@query}%").first
         @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
       else
