@@ -7,6 +7,9 @@
       Track-o-Bot automatically detects the most common decks. No configuration required.
     </p>
     <p>
+      If Track-o-Bot assigned the wrong deck, you can manually assign the correct one (with <%= icon 'pencil' %>).
+    </p>
+    <p>
       <%= form_tag toggle_profile_settings_decks_path, method: :put, class: 'form-horizontal', role: 'form' do %>
         <label>
           <%= check_box 'user', 'deck_tracking', {checked: current_user.deck_tracking?}, 'true', 'false' %> Deck tracking enabled
