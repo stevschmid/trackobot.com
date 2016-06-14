@@ -21,6 +21,9 @@ $(document).on 'ready page:load', ->
         btn.unbind(event).addClass('has-popover')
         btn.popover(options).popover('show')
 
+  $('.history-query-clear').click ->
+    $('.history-query').val('').closest('form').submit()
+
   $('.result-delete-button').on 'ajax:success', (e, data, status, xhr) ->
     $(this).closest('tr').fadeOut 500, ->
       $(this).remove()
