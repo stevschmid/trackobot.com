@@ -48,5 +48,26 @@ $(document).on 'ready page:load', ->
         $(form).siblings('.hero-label').text(selected)
         $(select).blur()
 
+  $('.note-edit-button').click ->
+    button = $(this)
+    current_note = button.attr('data-original-title')
+    new_note = prompt('Enter note:', current_note)
+
+    if new_note != null && current_note != new_note
+      $.ajax
+        type: 'PUT'
+        url: button.attr('href')
+        data: 
+          result: 
+            note: new_note
+        success: ->
+          button.attr('data-original-title', new_note).tooltip('show')
+          if !new_note.trim()
+            button.removeClass('note-present')
+          else
+            button.addClass('note-present')
+
+    false
+
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
   loadContentForPopover '.timeline-button', 'click', placement: 'bottom'

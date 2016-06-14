@@ -21,7 +21,7 @@ class HistoryController < ApplicationController
       elsif hero = Hero.where('name ILIKE ?', "%#{@query}%").first
         @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
       else
-        @unpaged_results = @unpaged_results.where('EXISTS ( SELECT t.tag FROM tags t WHERE t.result_id = results.id AND t.tag = ? )', @query)
+        @unpaged_results = @unpaged_results.where('note LIKE ?', "%#{@query}%")
       end
     end
 

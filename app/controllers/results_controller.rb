@@ -38,14 +38,6 @@ class ResultsController < ApplicationController
 
     @result.save
 
-    if params[:result].has_key?(:tags)
-      @result.tags.destroy_all
-      tags = (params[:result][:tags] || '').split(',')
-      tags.each do |tag|
-        @result.tags.create!(tag: tag)
-      end
-    end
-
     respond_with(:profile, @result.reload)
   end
 
@@ -81,7 +73,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id)
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id, :note)
   end
 
 end

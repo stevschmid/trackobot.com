@@ -1,8 +1,6 @@
 // Place all the styles related to the History controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import 'tagging';
-
 .history-query {
   margin-top: 24px;
 }
@@ -59,17 +57,43 @@ table.history {
     }
   }
   td.result {
-    width: 45px;
+    width: 50px;
   }
   td.timeline {
     text-align: center;
-    width: 30px;
+    width: 40px;
     padding-top: 4px;
     padding-bottom: 4px;
     opacity: 0.5;
   }
   td.mode {
-    width: 110px;
+    width: 60px;
+
+    a {
+      background: rgba(153,153,153,0.2);
+      font-size: 11px;
+      border-radius: 3px;
+      padding: 2px 4px;
+      color: #404040;
+    }
+  }
+  td.note {
+    width: 30px;
+
+    .note-edit-button {
+      display: none;
+      color: rgb(251, 189, 0);
+
+      &.note-present {
+        display: inline-block;
+      }
+    }
+
+    &:hover {
+      .note-edit-button {
+        display: inline-block;
+      }
+    }
   }
   td.rank {
     padding: 0;
@@ -87,7 +111,7 @@ table.history {
   }
   tr:hover {
     opacity: 1;
-    td.rank, td.timeline {
+    td.rank, td.timeline, td.mode, td.note {
       opacity: 1;
     }
   }
@@ -107,12 +131,6 @@ table.history {
       .added {
         display: none;
       }
-    }
-  }
-
-  .tags li {
-    &.ranked, &.casual, &.arena, &.friendly {
-      @include tagColor(#999);
     }
   }
 }

@@ -21,7 +21,8 @@ describe ResultsController do
       coin: true,
       win: true,
       added: '2016-02-02T21:06:00Z',
-      card_history: card_history
+      card_history: card_history,
+      note: 'test note'
     }
   end
 
@@ -39,6 +40,7 @@ describe ResultsController do
       expect(result.mode).to eq mode
       expect(result.coin).to eq true
       expect(result.win).to eq true
+      expect(result.note).to eq 'test note'
       expect(result.added).to eq Time.parse('2016-02-02T21:06:00Z')
     end
 
@@ -279,17 +281,6 @@ describe ResultsController do
             end
           end
         end
-      end
-    end
-
-    describe 'tags' do
-      let(:tags_array) { ['misplay', 'cool match'] }
-      let(:tags) { tags_array.join ',' }
-
-      it 'sets the tags' do
-        expect {
-          put :update, id: result.id, result: { tags: tags }
-        }.to change { result.reload.tags.collect(&:tag) }.to eq tags_array
       end
     end
 

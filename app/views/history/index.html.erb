@@ -49,20 +49,10 @@
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
             <td class="timeline"><%= link_to image_tag('crossed_swords_14.png'), 'javascript:;', timeline_additions(result) if result.card_history_data? %></td>
             <td class="mode">
-              <%# <%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %1> %>
-              <div class="tagging">
-                <ul class="tags"
-                  data-immutable-tags="<%= Result.modes.keys.join(',') %>"
-                  data-tag-url="<%= url_for params.merge(query: ':tag:')  %>"
-                  data-update-url="<%= profile_result_path(result) %>"
-                  data-update-method="PUT">
-                  <li><%= result.mode %></li>
-                  <% result.tags.each do |tag| %>
-                    <%= content_tag :li, tag.tag %>
-                  <% end %>
-                </ul>
-                <input class="input" placeholder="&hellip;">
-              </div>
+              <%= link_to result.mode, params.merge(mode: result.mode).except(:page) %>
+            </td>
+            <td class="note">
+              <%= link_to icon('sticky-note'), profile_result_path(result), title: result.note, class: "note-edit-button has-tooltip #{result.note.present? ? 'note-present' : ''}" %>
             </td>
             <td class="rank" >
               <% if result.legend && result.legend > 0 %>
