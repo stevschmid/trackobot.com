@@ -39,12 +39,16 @@ class ResultsController < ApplicationController
       selected_results
         .where(hero: as_deck.hero)
         .update_all(deck_id: as_deck.id)
+    else
+      selected_results.update_all(deck_id: nil)
     end
 
     if vs_deck = Deck.find_by_id(params[:vs_deck])
       selected_results
         .where(opponent: vs_deck.hero)
         .update_all(opponent_deck_id: vs_deck.id)
+    else
+      selected_results.update_all(opponent_deck_id: nil)
     end
 
     redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }
