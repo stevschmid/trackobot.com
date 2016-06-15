@@ -59,6 +59,11 @@ describe HistoryController do
         it { should_not include(:arena_id) }
       end
 
+      describe 'note' do
+        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, note: 'test') }
+        its([:note]) { should eq('test') }
+      end
+
       describe 'decks' do
         let(:hero) { Hero.find_by_name('Rogue') }
         let(:opponent) { Hero.find_by_name('Warrior') }
