@@ -80,7 +80,14 @@
   <% end %>
 
   <div class="row">
-    <div class="col-md-12 text-right">
+    <div class="col-md-6">
+      Total 
+      <%=
+        won, lost = @results.partition(&:win)
+        win_loss won.count, lost.count
+      %>
+    </div>
+    <div class="col-md-6 text-right">
       <%= page_entries_info @results %>
     </div>
   </div>
