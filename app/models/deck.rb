@@ -1,12 +1,19 @@
 class Deck < ActiveRecord::Base
   belongs_to :hero
-  belongs_to :user
 
-  validates_presence_of :name
+  serialize :classifier, AdaGradClassifier
 
-  has_and_belongs_to_many :cards
+  validates_presence_of :hero, :name
 
   def to_s
     name
+  end
+
+  def self.reset_all_classifiers!
+    Deck.update_all(classifier: nil)
+  end
+
+  def full_name
+    "#{name} #{hero.name}"
   end
 end

@@ -12,15 +12,7 @@ Rails.application.routes.draw do
       end
     end
     resources :arena, only: [:index]
-    resources :results, only: [:create, :show] do
-      member do
-        put :set_tags
-      end
-      collection do
-        delete :bulk_delete
-        put :bulk_update
-      end
-    end
+    resources :results, only: [:create, :show, :update, :destroy]
 
     namespace :stats do
       resources :classes, only: :index
@@ -30,7 +22,14 @@ Rails.application.routes.draw do
 
     namespace :settings do
       resource :api, only: [:show, :update]
-      resources :decks
+      resources :decks, only: :index do
+        collection do
+          put :toggle
+        end
+      end
+      resource :account, only: :show do
+        post :reset
+      end
     end
   end
 

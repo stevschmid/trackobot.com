@@ -16,10 +16,8 @@ body {
   padding-bottom: 20px;
 }
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.container {
+  max-width: 768px;
 }
 
 .table {
