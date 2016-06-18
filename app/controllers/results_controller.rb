@@ -73,7 +73,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added)
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :deck_name, :opponent_deck_name, :coin, :duration, :rank, :legend, :added)
   end
 
   def deny_api_calls!
