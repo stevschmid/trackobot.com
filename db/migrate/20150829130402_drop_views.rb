@@ -1,7 +1,9 @@
 class DropViews < ActiveRecord::Migration
   def up
-    drop_view :match_best_decks_with_results
-    drop_view :match_decks_with_results
+    if respond_to?(:drop_view)
+      drop_view :match_best_decks_with_results
+      drop_view :match_decks_with_results
+    end
   end
 
   def down
