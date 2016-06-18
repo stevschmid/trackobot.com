@@ -38,6 +38,11 @@ describe HistoryController do
       its([:added]) { should eq(result.created_at.iso8601(3)) }
       its([:duration]) { should eq(result.duration) }
 
+      context 'arena' do
+        let!(:result) { FactoryGirl.create(:result, mode: :arena, user: user) }
+        its([:arena_id]) { should eq(result.arena.id) }
+      end
+
       context 'ranked' do
         describe 'rank' do
           let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, rank: 25) }
@@ -49,29 +54,16 @@ describe HistoryController do
         end
       end
 
-      context 'arena' do
-        let!(:result) { FactoryGirl.create(:result, mode: :arena, user: user) }
-        its([:arena_id]) { should eq(result.arena.id) }
-      end
-
       context 'no arena' do
         let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user) }
         it { should_not include(:arena_id) }
       end
 
-      describe 'note' do
-        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, note: 'test') }
-        its([:note]) { should eq('test') }
-      end
+      context 'decks' do
+        let(:deck) { FactoryGirl.create(:deck) }
+        let(:opponent_deck) { FactoryGirl.create(:deck) }
 
-      describe 'decks' do
-        let(:hero) { Hero.find_by_name('Rogue') }
-        let(:opponent) { Hero.find_by_name('Warrior') }
-
-        let(:deck) { Deck.where(hero: hero).first }
-        let(:opponent_deck) { Deck.where(hero: opponent).first }
-
-        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, hero: hero, opponent: opponent, deck: deck, opponent_deck: opponent_deck) }
+        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, deck: deck, opponent_deck: opponent_deck) }
 
         its([:opponent_deck]) { should eq(result.opponent_deck.name) }
         its([:hero_deck]) { should eq(result.deck.name) }

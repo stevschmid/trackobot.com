@@ -51,7 +51,6 @@
         </thead>
         <tbody>
           <% @stats[key].each do |hero, stats| %>
-          <% next if stats[:total] == 0 %>
           <tr>
             <td class="hero"><%= type %> <%= link_to hero_label(hero.name), params.merge("#{type}_hero" => hero.name.downcase) %></td>
             <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>

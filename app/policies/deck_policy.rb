@@ -1,25 +1,9 @@
-class DeckPolicy < ApplicationPolicy
+class DeckPolicy < OwnerPolicy
 
   class Scope < Scope
     def resolve
-      Deck.all
+      user.decks
     end
-  end
-
-  def show?
-    true
-  end
-
-  def create?
-    false
-  end
-
-  def update?
-    false
-  end
-
-  def destroy?
-    false
   end
 
 end

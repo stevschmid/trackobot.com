@@ -6,7 +6,7 @@
     <%= (@mode && @mode.capitalize) || 'Mode' %> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <%= content_tag(:li, class: (@mode.nil? ? 'active' : '')) { link_to 'All modes', params.merge(mode: 'all') } %>
+    <%= content_tag(:li, class: (@mode.nil? ? 'active' : '')) { link_to 'All modes', params.except(:mode) } %>
     <% modes.each do |mode| %>
       <%= content_tag(:li, class: (@mode == mode ? 'active' : '')) { link_to mode.capitalize, params.merge(mode: mode) } %>
     <% end %>

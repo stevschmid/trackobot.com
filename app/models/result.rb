@@ -4,11 +4,6 @@ class Result < ActiveRecord::Base
   validates_presence_of :mode, :hero_id, :opponent_id, :user_id
   validates_inclusion_of :win, in: [true, false]
 
-  validates_absence_of :deck_id, if: :arena?
-  validates_absence_of :opponent_deck_id, if: :arena?
-
-  validate :decks_belong_to_rightful_class
-
   enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   belongs_to :hero
@@ -26,14 +21,9 @@ class Result < ActiveRecord::Base
   scope :losses, ->{ where(win: false) }
 
   before_create :create_or_update_associated_arena, if: :arena?
-  before_create :connect_to_decks, unless: :arena?
+  after_create :connect_to_decks, unless: :arena?
 
   after_destroy :delete_arena_if_last_remaining_result, if: :arena?
-
-  def decks_belong_to_rightful_class
-    errors.add(:deck_id, 'is invalid') if deck && deck.hero_id != hero_id
-    errors.add(:opponent_deck_id, 'is invalid') if opponent_deck && opponent_deck.hero_id != opponent_id
-  end
 
   def added=(timestamp)
     self.created_at = timestamp
@@ -41,6 +31,49 @@ class Result < ActiveRecord::Base
 
   def added
     self.created_at
+  end
+
+  def best_deck_for_card_histories_and_hero(card_histories, hero_id)
+    result_card_ids = card_histories
+      .collect { |card_history_entry| card_history_entry.card.id }.uniq
+
+    # only consider decks with of the specified class
+    matching_decks = user.decks.where(hero_id: hero_id)
+
+    # compute quotient for each deck
+    quotient_per_decks = matching_decks.inject({}) do |hash, deck|
+      hash[deck] = quotient_for_deck(deck, result_card_ids)
+      hash
+    end
+
+    # remove decks with no match
+    quotient_per_decks.reject! { |_, quotient| quotient <= 0 }
+
+    # find best matching deck
+    best_deck, _ = quotient_per_decks.max do |(deck1, q1), (deck2, q2)|
+      q1 == q2 ? (deck1.cards.count <=> deck2.cards.count) : (q1 <=> q2)
+    end
+    best_deck
+  end
+
+  def quotient_for_deck(deck, card_ids)
+    return 0.0 if deck.cards.empty?
+    deck_card_ids = deck.cards.collect(&:id).uniq
+
+    matching_cards = deck_card_ids & card_ids
+    matching_cards.length.to_f / deck_card_ids.length.to_f
+  end
+
+  def card_histories_by_player(player)
+    card_history_list.select { |card_history_entry| card_history_entry.player == player }
+  end
+
+  def determine_best_matching_player_deck
+    best_deck_for_card_histories_and_hero card_histories_by_player(:me), hero.id
+  end
+
+  def determine_best_matching_opponent_deck
+    best_deck_for_card_histories_and_hero card_histories_by_player(:opponent), opponent.id
   end
 
   def card_history_list
@@ -80,9 +113,9 @@ class Result < ActiveRecord::Base
   end
 
   def connect_to_decks
-    classify = ClassifyDeckForResult.new(self)
-    self.deck ||= classify.predict_deck_for_player
-    self.opponent_deck ||= classify.predict_deck_for_opponent
+    self.deck ||= determine_best_matching_player_deck
+    self.opponent_deck ||= determine_best_matching_opponent_deck
+    self.save!
   end
 
   def result
@@ -124,4 +157,3 @@ class Result < ActiveRecord::Base
     arena.destroy if arena && arena.results.count == 0
   end
 end
-
