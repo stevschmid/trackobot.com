@@ -271,12 +271,28 @@ describe ResultsController do
 
             context 'learning twice after a long period' do
               let(:updated_at) { 2.hours.ago }
-              it 'learns' do
-                expect(ClassifyDeckForResult).to receive(:new).and_call_original
-                subject
 
-                expect(ClassifyDeckForResult).not_to receive(:new)
-                subject
+              subject do
+                put :update, id: result.id, result: { deck_id: new_deck_id }, format: :json
+                put :update, id: result.id, result: { deck_id: existing_deck_id }, format: :json
+              end
+
+              context 'default' do
+                it 'learns only once' do
+                  expect(ClassifyDeckForResult).to receive(:new).once.and_call_original
+                  subject
+                end
+              end
+
+              context 'as admin' do
+                before do
+                  user.update_attributes(admin: true)
+                end
+                let(:updated_at) { 2.hours.ago }
+                it 'learns always' do
+                  expect(ClassifyDeckForResult).to receive(:new).twice.and_call_original
+                  subject
+                end
               end
             end
           end

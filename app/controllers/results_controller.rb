@@ -55,7 +55,7 @@ class ResultsController < ApplicationController
                             .where('created_at != updated_at')
                             .order(:updated_at)
                             .last
-    last_updated_result && last_updated_result.updated_at > 1.hour.ago && !Rails.env.development?
+    last_updated_result && last_updated_result.updated_at > 1.hour.ago && !current_user.admin?
   end
 
   def add_card_history_to_result(result, card_history)
