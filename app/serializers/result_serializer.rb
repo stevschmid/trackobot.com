@@ -1,6 +1,6 @@
 class ResultSerializer < ActiveModel::Serializer
   attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck,
-    :coin, :result, :arena_id, :duration, :rank, :legend, :note, :added
+    :coin, :result, :arena_id, :duration, :rank, :legend, :added
 
   has_many :card_history_list, key: :card_history, serializer: CardHistoryEntrySerializer
 

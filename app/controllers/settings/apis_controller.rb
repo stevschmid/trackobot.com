@@ -1,7 +1,4 @@
 class Settings::ApisController < ApplicationController
-  include ApiDenier
-  before_filter :deny_api_calls!
-
   def show
   end
 

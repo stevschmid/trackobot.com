@@ -1,0 +1,53 @@
+@mixin tagColor($color) {
+  background: transparentize($color, 0.8);
+  color: darken($color, 35%);
+}
+
+.tagging {
+  overflow: auto; // auto height
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .tags {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      @include tagColor(#f9df1a);
+
+      font-size: 11px;
+      float: left;
+      border-radius: 3px;
+      padding: 2px 4px;
+      margin-right: 4px;
+
+      .delete-tag {
+        cursor: pointer;
+        padding-left: 0px;
+
+        display: none;
+      }
+    }
+
+    li.mutable:hover {
+      padding-left: 0px;
+      padding-right: 0px;
+
+      .delete-tag {
+        display: inline-block;
+      }
+    }
+  }
+
+  .input {
+    float: left;
+    border: 0;
+    outline: 0;
+    background: none;
+    font-size: 11px;
+    padding-top: 2px;
+  }
+}

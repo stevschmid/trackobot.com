@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe Result do
 
-  include ResultHelpers
-
   describe 'arena result' do
     let(:result) { FactoryGirl.create(:result, mode: :arena) }
     let(:arena) { result.arena }
@@ -37,74 +35,94 @@ describe Result do
   end
 
   describe 'deck assignment' do
-    # this is some kind of elaborate integration test
-    # for the whole deck system
-    let(:user) { FactoryGirl.create(:user) }
-    let(:mode) { :ranked }
+    def create_deck(hero_name, deck_name, card_names)
+      card_ids = Card.where(name: card_names).pluck(:id)
+      FactoryGirl.create(:deck, name: deck_name, hero: Hero.find_by_name(hero_name), user: user, card_ids: card_ids)
+    end
 
-    let(:shaman) { Hero.find_by_name('Shaman') }
-
-    let(:midrange_shaman) { Deck.find_by!(key: 'midrange', hero: shaman) }
-    let(:aggro_shaman) { Deck.find_by!(key: 'aggro', hero: shaman) }
-
-    let(:shaman_cards) { Card.all.select { |card| card.hero == 'shaman' } }
-
-    def build_card_list(prob_matrix, cards)
-      deck = prob_matrix.keys.sample
-      probs = prob_matrix[deck]
-
-      # avg 12, stddev 5
-      card_list = rand(7..17).times.collect do
-        roll = rand
-        chosen = nil
-        probs.inject(0.0) do |sum, (name, prob)|
-          chosen ||= name if roll <= sum + prob
-          sum + prob
+    def build_result(as, vs, opts)
+      FactoryGirl.build(:result, mode: mode, hero: Hero.find_by_name(as), opponent: Hero.find_by_name(vs), user: user).tap do |result|
+        list = []
+        opts.each_pair do |player, card_names|
+          Card.where(name: card_names).each do |card|
+            list << CardHistoryEntry.new(turn: 1, player: player, card: card)
+          end
         end
-        chosen
-      end.compact
-
-      [deck, card_list]
+        result.card_history_list = list
+      end
     end
 
-    it 'does the ring at the right time for the right reasons' do
-      NUM_LEARN_RUNS = 20
-      NUM_VALIDATION_RUNS = 10
+    let(:user) { FactoryGirl.create(:user) }
 
-      shaman_prob_matrix = {
-        midrange_shaman => {
-          'Totem Golem' => 0.9,
-          'Lava Burst' => 0.1,
-        },
-        aggro_shaman => {
-          'Totem Golem' => 0.1,
-          'Lava Burst' => 0.9,
-        }
-      }
+    let(:mode) { :ranked }
+    let(:handlock_cards) { ['Ancient Watcher', 'Molten Giant', 'Mountain Giant', 'Twilight Drake'] }
+    let(:zoolock_cards) { ['Abusive Sergeant', 'Doomguard', 'Flame Imp', 'Knife Juggler'] }
+    let(:demonlock_cards) { ['Voidcaller', 'Doomguard', 'Molten Giant'] }
 
-      learn_results = NUM_LEARN_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
+    let(:player_cards_played) { ['Abusive Sergeant', 'Ancient Watcher', 'Doomguard', 'Doomguard', 'Mountain Giant', 'Twilight Drake'] }
+    let(:opponent_cards_played) { ['Southsea Deckhand', 'Ironbeak Owl', 'Sludge Belcher']  }
 
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        result.save!
+    let(:result) { build_result 'Warlock', 'Rogue', me: player_cards_played, opponent: opponent_cards_played }
 
-        [true_deck, result]
-      end
+    let!(:handlock) { create_deck 'Warlock', 'handlock', handlock_cards }
+    let!(:zoolock) { create_deck 'Warlock', 'zoolock', zoolock_cards }
+    let!(:demonlock) { create_deck 'Warlock', 'demonlock', demonlock_cards }
 
-      learn_results.each do |true_deck, result|
-        ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
-      end
-
-      accuracy = NUM_VALIDATION_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        result.save!
-        result.deck == true_deck ? 1 : 0
-      end.sum / NUM_VALIDATION_RUNS.to_f
-
-      expect(accuracy).to be >= 0.9
+    it 'assigns the best matched deck (quotient-based) to all affected results' do
+      # handlock: 3/4
+      # zoolock: 2/4
+      # demonlock: 1/3
+      expect { result.save! }.to change { result.deck }.to handlock
     end
 
+    it 'assigns only decks with the matching class' do
+      handlock.update_attributes(hero_id: Hero.find_by_name('Rogue').id)
+      expect { result.save! }.to change { result.deck }.to zoolock
+    end
+
+    it 'only looks at cards played by the player' do
+      result = build_result 'Warlock', 'Warlock', me: ['Mountain Giant'], opponent: ['Abusive Sergeant']
+      expect { result.save! }.to change { result.deck }.to handlock
+    end
+
+    context 'no card matches' do
+      let(:result) { build_result 'Warlock', 'Rogue',
+                      me: ['Azure Drake'],
+                      opponent: [] }
+
+      it 'does not assign any deck' do
+        expect { result.save! }.to_not change { result.deck }
+      end
+    end
+
+    context 'multiples of the same card' do
+      let(:result) { build_result 'Rogue', 'Warlock',
+                      me: [],
+                      opponent: ['Voidcaller'] * 10 + ['Flame Imp', 'Knife Juggler'] }
+
+      it 'ignores the amount of the same card' do
+        expect { result.save! }.to change { result.opponent_deck }.to zoolock
+      end
+    end
+
+    context 'arena games' do
+      let(:mode) { :arena }
+
+      it 'does NOT assign decks to arena results' do
+        result.save!
+        expect(result.reload.deck_id).to be_nil
+      end
+    end
+
+    context 'when a deck has no cards' do
+      before do
+        handlock.update_attributes(cards: [])
+      end
+
+      it 'still works' do
+        expect { result.save! }.to_not raise_error
+      end
+    end
   end
 
 end

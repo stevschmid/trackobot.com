@@ -22,7 +22,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    DatabaseCleaner.clean_with :truncation, except: %w[cards decks]
+    DatabaseCleaner.clean_with :truncation, except: %w[cards]
   end
 
   # ## Mock Framework
