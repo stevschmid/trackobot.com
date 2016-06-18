@@ -2,7 +2,7 @@ class ResultsController < ApplicationController
   respond_to :json, :html
 
   include ApiDenier
-  before_filter :deny_api_calls!, except: %i[create]
+  before_filter :deny_api_calls!, except: %i[create update]
 
   after_filter :verify_authorized
   after_filter :verify_policy_scoped
