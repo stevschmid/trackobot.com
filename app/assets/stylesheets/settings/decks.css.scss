@@ -16,3 +16,17 @@ table.decks {
     }
   }
 }
+
+div.meta-decks {
+  display: flex;
+  flex-wrap: wrap;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      width: 150px;
+      margin: 6px 0 0 0;
+    }
+  }
+}

@@ -27,9 +27,4 @@ class Card < ActiveRecord::Base
       'NAX2_05H' # worshipper
     ])
   end
-
-  def mark_as_playable!
-    return if playable?
-    update_attributes(playable: true)
-  end
 end

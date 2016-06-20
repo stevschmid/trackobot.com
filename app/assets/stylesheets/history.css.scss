@@ -1,30 +1,18 @@
 // Place all the styles related to the History controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import 'tagging';
-
-.bulk-edit-control {
-  display: none;
-}
-
-.bulk-edit-on {
-  display: inline;
-}
-
 .history-query {
   margin-top: 24px;
 }
 
-.bulk-edit-buttons {
-  margin-top: -5px;
-  margin-bottom: 20px;
-  form {
-    display: inline-block;
-  }
+.deck-edit-form {
+  display: inline-block;
 }
 
-.bulk-edit-picker {
-  margin: 2px 0 0 !important;
+.deck-edit-button {
+  cursor: pointer;
+  display: none;
+  opacity: 0.3;
 }
 
 .history-query-clear {
@@ -38,12 +26,6 @@
   color: #ccc;
 }
 
-tr:hover {
-  .bulk-edit-picker {
-    display: inline;
-  }
-}
-
 table.history {
   table-layout: fixed;
 
@@ -54,24 +36,64 @@ table.history {
   td.choose {
     width: 30px;
     text-align: center;
+
+    .result-delete-button {
+      visibility: hidden;
+      cursor: pointer;
+      color: red;
+    }
+
+    &:hover {
+      .result-delete-button {
+        visibility: visible;
+      }
+    }
   }
   td.opponent, td.player {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    &:hover {
+      .deck-edit-button {
+        display: inline-block;
+      }
+    }
   }
   td.result {
     width: 50px;
   }
   td.timeline {
     text-align: center;
-    width: 30px;
+    width: 40px;
     padding-top: 4px;
     padding-bottom: 4px;
     opacity: 0.5;
   }
   td.mode {
-    width: 160px;
+    width: 60px;
+
+    a {
+      background: rgba(153,153,153,0.2);
+      font-size: 11px;
+      border-radius: 3px;
+      padding: 2px 4px;
+      color: #404040;
+    }
+  }
+  td.note {
+    width: 30px;
+
+    .note-edit-button {
+      display: none;
+      color: rgb(251, 189, 0);
+
+      &.note-present {
+        display: inline-block;
+      }
+    }
+
+    &:hover {
+      .note-edit-button {
+        display: inline-block;
+      }
+    }
   }
   td.rank {
     padding: 0;
@@ -89,7 +111,7 @@ table.history {
   }
   tr:hover {
     opacity: 1;
-    td.rank, td.timeline {
+    td.rank, td.timeline, td.mode, td.note {
       opacity: 1;
     }
   }
@@ -109,12 +131,6 @@ table.history {
       .added {
         display: none;
       }
-    }
-  }
-
-  .tags li {
-    &.ranked, &.casual, &.arena, &.friendly {
-      @include tagColor(#999);
     }
   }
 }

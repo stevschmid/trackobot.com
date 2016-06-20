@@ -39,26 +39,20 @@
         <% @results.each do |result| %>
           <tr>
             <td class="player">
-              <%= player_label_for_result result, card_stats_additions(result, :me) %>
+              <%= player_label_for_result result, additions: card_stats_additions(result, :me) %>
+              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.hero_id, blank_name: 'Other', field: :deck_id }) %>
             </td>
-            <td class="opponent">vs <%= opponent_label_for_result result, card_stats_additions(result, :opponent) %></td>
+            <td class="opponent">
+              vs <%= opponent_label_for_result result, additions: card_stats_additions(result, :opponent) %>
+              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.opponent_id, blank_name: 'Other', field: :opponent_deck_id }) %>
+            </td>
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
             <td class="timeline"><%= link_to image_tag('crossed_swords_14.png'), 'javascript:;', timeline_additions(result) if result.card_history_data? %></td>
             <td class="mode">
-              <%# <%= link_to result.mode.capitalize, params.merge(mode: result.mode).except(:page) %1> %>
-              <div class="tagging">
-                <ul class="tags"
-                  data-immutable-tags="<%= Result.modes.keys.join(',') %>"
-                  data-tag-url="<%= url_for params.merge(query: ':tag:')  %>"
-                  data-update-url="<%= set_tags_profile_result_path(result) %>"
-                  data-update-method="PUT">
-                  <li><%= result.mode %></li>
-                  <% result.tags.each do |tag| %>
-                    <%= content_tag :li, tag.tag %>
-                  <% end %>
-                </ul>
-                <input class="input" placeholder="&hellip;">
-              </div>
+              <%= link_to result.mode, params.merge(mode: result.mode).except(:page) %>
+            </td>
+            <td class="note">
+              <%= link_to icon('sticky-note'), profile_result_path(result), title: result.note, class: "note-edit-button has-tooltip #{result.note.present? ? 'note-present' : ''}" %>
             </td>
             <td class="rank" >
               <% if result.legend && result.legend > 0 %>
@@ -76,7 +70,7 @@
               <% end %>
             </td>
             <td class="choose">
-              <%= check_box_tag 'result_ids[]', result.id, false, autocomplete: 'off', class: 'bulk-edit-control bulk-edit-picker' %>
+              <%= link_to icon('remove'), profile_result_path(result), class: 'result-delete-button', method: :delete, remote: true %>
             </td>
           </tr>
         <% end %>
@@ -86,23 +80,14 @@
   <% end %>
 
   <div class="row">
-    <div class="col-md-12 bulk-edit-buttons bulk-edit-control">
-      <%= form_tag bulk_update_profile_results_path, method: :put, class: 'bulk-edit-form' do %>
-        <%= collection_select :as_deck, nil, @decks, :id, :name, { include_blank: true } %> 
-        vs
-        <%= collection_select :vs_deck, nil, @decks, :id, :name, { include_blank: true } %> 
-        <%= submit_tag 'Update', class: 'btn btn-sm btn-primary' %>
-      <% end %>
-      <%= form_tag bulk_delete_profile_results_path, method: :delete, class: 'bulk-edit-form' do %>
-        <%= submit_tag 'Delete', class: 'btn btn-sm btn-danger',
-          data: { confirm: 'Are you sure you want to permanently delete the selected results?' } %>
-      <% end %>
-      <%= button_tag 'Cancel', type: :reset, id: 'bulk_edit_cancel', class: 'btn btn-sm btn-default' %>
+    <div class="col-md-6">
+      Total 
+      <%=
+        won, lost = @results.partition(&:win)
+        win_loss won.count, lost.count
+      %>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 text-right">
+    <div class="col-md-6 text-right">
       <%= page_entries_info @results %>
     </div>
   </div>
