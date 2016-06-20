@@ -40,11 +40,11 @@
           <tr>
             <td class="player">
               <%= player_label_for_result result, additions: card_stats_additions(result, :me) %>
-              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.hero_id, blank_name: 'Other', field: :deck_id }) %>
+              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.hero_id, blank_name: "Other #{result.hero.name}", field: :deck_id }) %>
             </td>
             <td class="opponent">
               vs <%= opponent_label_for_result result, additions: card_stats_additions(result, :opponent) %>
-              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.opponent_id, blank_name: 'Other', field: :opponent_deck_id }) %>
+              <%= render(partial: 'deck_edit', locals: { result: result, hero_id: result.opponent_id, blank_name: "Other #{result.opponent.name}", field: :opponent_deck_id }) %>
             </td>
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
             <td class="timeline"><%= link_to image_tag('crossed_swords_14.png'), 'javascript:;', timeline_additions(result) if result.card_history_data? %></td>
