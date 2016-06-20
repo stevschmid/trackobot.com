@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Settings::DecksController do
 
   let(:user) { FactoryGirl.create(:user) }
-  let!(:deck) { FactoryGirl.create(:deck, user: user, name: 'test deck') }
 
   before do
     sign_in user
@@ -17,7 +16,7 @@ describe Settings::DecksController do
       get :index, format: :json
     end
 
-    its([:name]) { is_expected.to eq 'test deck' }
+    specify { expect(Deck.all.collect(&:name)).to include(subject[:name]) }
   end
 
   context 'html' do

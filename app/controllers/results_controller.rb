@@ -1,9 +1,10 @@
 class ResultsController < ApplicationController
   respond_to :json, :html
 
-  before_filter :deny_api_calls!, except: %i[create]
+  include ApiDenier
+  before_filter :deny_api_calls!, except: %i[create update]
 
-  after_filter :verify_authorized, except: %i[bulk_delete bulk_update]
+  after_filter :verify_authorized
   after_filter :verify_policy_scoped
 
   def create
@@ -16,52 +17,51 @@ class ResultsController < ApplicationController
     respond_with(:profile, @result.reload)
   end
 
-  def set_tags
+  def update
     @result = policy_scope(Result).find(params[:id])
-    authorize @result, :update?
-    @result.tags.destroy_all
-    tags = params[:tags].present? ? params[:tags].split(',') : []
-    tags.each { |tag| @result.tags.create!(tag: tag) }
-    render nothing: true
-  end
+    authorize @result
 
-  def bulk_delete
-    policy_scope(Result).where(id: (params[:result_ids] || [])).destroy_all
-    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) deleted.' }
-  end
+    # Now update
+    @result.assign_attributes(safe_params)
 
-  def bulk_update
-    selected_results = policy_scope(Result)
-      .where(id: params[:result_ids])
-      .where.not(mode: Result.modes[:arena]) # arena results are not eligible for update
+    if @result.valid? && !@result.arena?
+      unless exclude_result_from_learning?(@result)
+        if @result.deck_id_changed?
+          ClassifyDeckForResult.new(@result).learn_deck_for_player! @result.deck
+        end
 
-    if as_deck = Deck.find_by_id(params[:as_deck])
-      selected_results
-        .where(hero: as_deck.hero)
-        .update_all(deck_id: as_deck.id)
+        if @result.opponent_deck_id_changed?
+          ClassifyDeckForResult.new(@result).learn_deck_for_opponent! @result.opponent_deck
+        end
+      end
     end
 
-    if vs_deck = Deck.find_by_id(params[:vs_deck])
-      selected_results
-        .where(opponent: vs_deck.hero)
-        .update_all(opponent_deck_id: vs_deck.id)
-    end
+    @result.save
 
-    redirect_to profile_history_index_path, flash: { success: 'Selected result(s) updated.' }
+    respond_with(:profile, @result.reload)
+  end
+
+  def destroy
+    @result = policy_scope(Result).find(params[:id])
+    authorize @result
+    @result.destroy
+    respond_with(:profile, @result)
   end
 
   private
+
+  def exclude_result_from_learning?(result)
+    last_updated_result = result.user.results
+                            .where('created_at != updated_at')
+                            .order(:updated_at)
+                            .last
+    last_updated_result && last_updated_result.updated_at > 1.hour.ago && !current_user.admin?
+  end
 
   def add_card_history_to_result(result, card_history)
     result.card_history_list = card_history.collect do |card_history_item|
       card = Card.find_by_ref(card_history_item[:card_id])
       if card
-        # HS cards are heavily redundant
-        # To make sure we can distinguish between playable
-        # non-playable cards, mark them here the first time
-        # are played
-        card.mark_as_playable!
-
         CardHistoryEntry.new(turn: card_history_item[:turn],
                              player: card_history_item[:player].to_sym,
                              card: card)
@@ -73,11 +73,7 @@ class ResultsController < ApplicationController
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added)
-  end
-
-  def deny_api_calls!
-    head :unauthorized if params[:token].present?
+    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id, :note)
   end
 
 end

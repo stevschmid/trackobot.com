@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420121605) do
+ActiveRecord::Schema.define(version: 20160618140215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,12 +46,12 @@ ActiveRecord::Schema.define(version: 20160420121605) do
   add_index "cards", ["playable"], name: "index_cards_on_playable", using: :btree
   add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
 
-  create_table "cards_decks", id: false, force: :cascade do |t|
+  create_table "cards_custom_decks", id: false, force: :cascade do |t|
     t.integer "card_id"
-    t.integer "deck_id"
+    t.integer "custom_deck_id"
   end
 
-  create_table "decks", force: :cascade do |t|
+  create_table "custom_decks", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "hero_id"
     t.integer  "user_id"
@@ -59,8 +59,20 @@ ActiveRecord::Schema.define(version: 20160420121605) do
     t.datetime "updated_at"
   end
 
+  add_index "custom_decks", ["hero_id"], name: "index_custom_decks_on_hero_id", using: :btree
+  add_index "custom_decks", ["user_id"], name: "index_custom_decks_on_user_id", using: :btree
+
+  create_table "decks", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "hero_id"
+    t.text     "classifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "key"
+  end
+
   add_index "decks", ["hero_id"], name: "index_decks_on_hero_id", using: :btree
-  add_index "decks", ["user_id"], name: "index_decks_on_user_id", using: :btree
+  add_index "decks", ["key", "hero_id"], name: "index_decks_on_key_and_hero_id", unique: true, using: :btree
 
   create_table "heros", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -96,18 +108,23 @@ ActiveRecord::Schema.define(version: 20160420121605) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "arena_id"
-    t.integer  "deck_id"
-    t.integer  "opponent_deck_id"
+    t.integer  "custom_deck_id"
+    t.integer  "opponent_custom_deck_id"
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
     t.binary   "card_history_data"
+    t.integer  "deck_id"
+    t.integer  "opponent_deck_id"
+    t.string   "note"
   end
 
   add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
+  add_index "results", ["custom_deck_id"], name: "index_results_on_custom_deck_id", using: :btree
   add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
   add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
   add_index "results", ["mode"], name: "index_results_on_mode", using: :btree
+  add_index "results", ["opponent_custom_deck_id"], name: "index_results_on_opponent_custom_deck_id", using: :btree
   add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
   add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
@@ -124,12 +141,12 @@ ActiveRecord::Schema.define(version: 20160420121605) do
   add_index "tags", ["tag"], name: "index_tags_on_tag", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                         limit: 255, default: "", null: false
-    t.string   "encrypted_password",            limit: 255, default: "", null: false
+    t.string   "email",                         limit: 255, default: "",    null: false
+    t.string   "encrypted_password",            limit: 255, default: "",    null: false
     t.string   "reset_password_token",          limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                             default: 0,  null: false
+    t.integer  "sign_in_count",                             default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",            limit: 255
@@ -137,10 +154,12 @@ ActiveRecord::Schema.define(version: 20160420121605) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "one_time_authentication_token", limit: 255
-    t.string   "username",                      limit: 255,              null: false
+    t.string   "username",                      limit: 255,                 null: false
     t.string   "sign_up_ip",                    limit: 255
     t.string   "api_authentication_token",      limit: 255
     t.string   "displayname",                   limit: 255
+    t.boolean  "deck_tracking",                             default: true
+    t.boolean  "admin",                                     default: false
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

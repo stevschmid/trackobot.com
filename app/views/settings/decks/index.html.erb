@@ -4,44 +4,33 @@
 
   <div class="alert alert-info"><p>
     <p>
-      Add decks to refine your match-ups! Decks are composed of key cards which will identify a deck.
+      Track-o-Bot automatically detects the most common decks. No configuration required.
     </p>
     <p>
-      See <%= link_to 'a configuration example', image_path('decks_settings_example.png'), target: '_blank' %>
-      and the <%= link_to 'the resulting changes', image_path('decks_history_example.png'), target: '_blank' %>.
+      If Track-o-Bot assigned the wrong deck, you can manually assign the correct one (with <%= icon 'pencil' %>).
     </p>
     <p>
-      Track-o-Bot will <strong>only assign the deck when the result is uploaded</strong>. If you would like to assign decks manually, click on the checkbox when you hover over a result to start editing.
-    </p>
-  </div>
-
-  <div class="panel panel-default">
-    <table class="table table-hover table-condensed decks">
-      <thead>
-        <tr>
-          <th class="hero">Name</th>
-          <th class="keycards">Key cards</th>
-          <th class="buttons">&nbsp;</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @decks.each do |deck| %>
-        <tr>
-          <td class="hero"><%= hero_label(deck.hero.name, deck.name) %></td>
-          <td class="keycards">
-            <small>
-              <%= deck.cards.order(:mana, :name).map(&:name).join(', ') %> 
-            </small>
-          </td>
-          <td class="buttons">
-            <%= link_to icon('edit'), edit_profile_settings_deck_path(deck), class: 'show-on-hover' %> 
-            <%= link_to icon('minus-circle'), profile_settings_deck_path(deck), method: :delete, class: 'show-on-hover', data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
+      <%= form_tag toggle_profile_settings_decks_path, method: :put, class: 'form-horizontal', role: 'form' do %>
+        <label>
+          <%= check_box 'user', 'deck_tracking', {checked: current_user.deck_tracking?}, 'true', 'false' %> Deck tracking enabled
+        </label>
+        <button type="submit" class="btn btn-default btn-xs">Save</button>
       <% end %>
-      </tbody>
-    </table>
+    </p>
   </div>
 
-  <%= link_to 'Add Deck', new_profile_settings_deck_path, class: 'btn btn-default' %>
+  <div class="meta-decks">
+    <% 
+      decks_by_hero = @decks.group_by(&:hero) 
+      sorted_decks_by_hero = Hash[decks_by_hero.sort_by { |_, decks| decks.count }.reverse]
+    %>
+    <% sorted_decks_by_hero.each do |hero, decks| %>
+      <ul>
+        <% decks.each do |deck| %>
+          <li><%= hero_label(hero.name, label: deck.full_name) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
 <% end %>

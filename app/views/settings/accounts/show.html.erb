@@ -1,0 +1,34 @@
+<%= profile_page 'Account Reset' do %>
+  <h2>Settings</h2>
+  <h3>Account Reset</h3>
+
+  <div class="alert alert-danger">
+    <p>
+      <%= icon 'exclamation-triangle' %> Here you can reset your account. This will remove <b>all</b> results from the selected game modes below. Please note that this action is irreversible!
+    </p>
+  </div>
+
+  <%= form_tag reset_profile_settings_account_path, method: :post, class: 'form-horizontal', role: 'form' do %>
+    <div class="row">
+      <div class="col-md-12">
+        <% Result.modes.each do |mode, id| %>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="reset_modes[]" value="<%= mode %>" checked> <%= mode.titleize %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" name="regenerate_api_token" id="regenerate_api_token" class="btn btn-danger" value="1" 
+          onclick="return confirm('Are you sure you want to reset your account? This action is irreversible!')">Reset account</button>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
