@@ -35,9 +35,10 @@ module HistoryHelper
   end
 
   def player_label_for_result(result, additions: {})
-    return hero_label(result.hero.name, additions: additions) unless current_user.deck_tracking?
-
-    if result.deck
+    case
+    when result.arena? || !current_user.deck_tracking?
+      hero_label(result.hero.name, additions: additions)
+    when result.deck
       label_for_deck(result.deck, additions: additions)
     else
       hero_label(result.hero.name, label: "Other #{result.hero.name}", additions: additions)
@@ -45,9 +46,10 @@ module HistoryHelper
   end
 
   def opponent_label_for_result(result, additions: {})
-    return hero_label(result.opponent.name, additions: additions) unless current_user.deck_tracking?
-
-    if result.opponent_deck
+    case
+    when result.arena? || !current_user.deck_tracking?
+      hero_label(result.opponent.name, additions: additions)
+    when result.opponent_deck
       label_for_deck(result.opponent_deck, additions: additions)
     else
       hero_label(result.opponent.name, label: "Other #{result.opponent.name}", additions: additions)
