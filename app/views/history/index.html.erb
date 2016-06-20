@@ -52,7 +52,7 @@
               <%= link_to result.mode, params.merge(mode: result.mode).except(:page) %>
             </td>
             <td class="note">
-              <%= link_to icon('sticky-note'), profile_result_path(result), title: result.note, class: "note-edit-button has-tooltip #{result.note.present? ? 'note-present' : ''}" %>
+              <%= link_to icon('comment'), profile_result_path(result), title: result.note, class: "note-edit-button has-tooltip #{result.note.present? ? 'note-present' : ''}" %>
             </td>
             <td class="rank" >
               <% if result.legend && result.legend > 0 %>
