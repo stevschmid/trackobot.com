@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :results
   has_many :arenas
 
-  has_many :decks
+  has_many :custom_decks
 
   validates_presence_of :username
 
