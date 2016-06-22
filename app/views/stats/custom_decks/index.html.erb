@@ -15,8 +15,8 @@
 
   <%= render partial: '/layouts/notifications' %>
 
-  <%= render(partial: '/layouts/filter', locals: {name: 'As', label: label_for_deck(@as_deck), param: :as_deck}) if @as_deck %>
-  <%= render(partial: '/layouts/filter', locals: {name: 'Versus', label: label_for_deck(@vs_deck), param: :vs_deck}) if @vs_deck %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'As', label: label_for_deck(@as_deck), param: :as_custom_deck}) if @as_deck %>
+  <%= render(partial: '/layouts/filter', locals: {name: 'Versus', label: label_for_deck(@vs_deck), param: :vs_custom_deck}) if @vs_deck %>
 
   <div class="panel panel-default">
     <table class="table table-hover table-condensed stats overall-stats">
@@ -54,7 +54,7 @@
         <% @stats[key].each do |name, stats| %>
           <% deck = @decks_by_id[stats[:deck_id]] if stats[:deck_id] %>
           <tr>
-            <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_deck" => deck.id) %></td>
+            <td class="deck"><%= type %> <%= link_to label_for_deck(deck), params.merge("#{type}_custom_deck" => deck.id) %></td>
             <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
             <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
           </tr>
@@ -63,7 +63,7 @@
         <%
           values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |name, stats|
             deck = @decks_by_id[stats[:deck_id]] if stats[:deck_id]
-            { label: deck.name, value: stats[:total], class: deck.hero.name.downcase, link: url_for(params.merge("#{type}_deck" => deck.id)) }
+            { label: deck.name, value: stats[:total], class: deck.hero.name.downcase, link: url_for(params.merge("#{type}_custom_deck" => deck.id)) }
           end
         %>
         <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>

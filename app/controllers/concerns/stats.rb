@@ -24,8 +24,10 @@ module Stats
                    results = results.where(mode: Result.modes[@mode]) if @mode
                    results = results.where(hero_id: @as_hero.id) if @as_hero
                    results = results.where(deck_id: @as_deck.id) if @as_deck
+                   results = results.where(custom_deck_id: @as_custom_deck.id) if @as_custom_deck
                    results = results.where(opponent_id: @vs_hero.id) if @vs_hero
                    results = results.where(opponent_deck_id: @vs_deck.id) if @vs_deck
+                   results = results.where(opponent_custom_deck_id: @vs_custom_deck.id) if @vs_custom_deck
                    results
                  end
   end
@@ -84,6 +86,14 @@ module Stats
 
     if params[:vs_deck].present?
       @vs_deck = Deck.find_by_id(params[:vs_deck])
+    end
+
+    if params[:as_custom_deck].present?
+      @as_custom_deck = current_user.custom_decks.find_by_id(params[:as_custom_deck])
+    end
+
+    if params[:vs_custom_deck].present?
+      @vs_custom_deck = current_user.custom_decks.find_by_id(params[:vs_custom_deck])
     end
 
     if params[:as_hero].present?
