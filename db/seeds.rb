@@ -77,18 +77,27 @@ end
 
 if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
+  players = [:me, :opponent]
+  all_cards = Card.all
+  all_heroes = Hero.all
 
   100.times do |x|
-    result = Result.new(mode: [:arena, :casual, :practice, :ranked].sample,
-                  hero: Hero.all.sample,
-                  opponent: Hero.all.sample,
+    mode = [:arena, :casual, :practice, :ranked].sample
+    result = Result.new(mode: mode,
+                  hero: all_heroes.sample,
+                  opponent: all_heroes.sample,
                   win: [true, false].sample,
                   coin: [true, false].sample,
                   user: user,
                   created_at: Date.today - rand(0..40).days
                  )
-    rand(2..10).times do
-      result.card_histories.new(player: rand(0..1) == 0 ? 'me' : 'opponent', card: Card.order('RANDOM()').first)
+    result.rank = rand(1..25) if :ranked == mode
+    result.card_history_list = rand(2..10).times.map do |n|
+      CardHistoryEntry.new(
+        player: players[(n + (result.coin ? 1 : 0)) % 2],
+        card: all_cards.sample,
+        turn: n + 1
+      )
     end
     result.save
   end

@@ -156,7 +156,7 @@ GEM
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-    libv8 (3.16.14.13)
+    libv8 (3.16.14.15)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -265,7 +265,7 @@ GEM
       rdoc (~> 4.0)
     shellany (0.0.1)
     slop (3.6.0)
-    spring (1.6.2)
+    spring (1.7.1)
     sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
