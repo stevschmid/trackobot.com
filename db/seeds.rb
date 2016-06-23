@@ -82,7 +82,8 @@ if Rails.env.development? && User.count == 0
   all_heroes = Hero.all
 
   100.times do |x|
-    result = Result.new(mode: [:arena, :casual, :practice, :ranked].sample,
+    mode = [:arena, :casual, :practice, :ranked].sample
+    result = Result.new(mode: mode,
                   hero: all_heroes.sample,
                   opponent: all_heroes.sample,
                   win: [true, false].sample,
@@ -90,6 +91,7 @@ if Rails.env.development? && User.count == 0
                   user: user,
                   created_at: Date.today - rand(0..40).days
                  )
+    result.rank = rand(1..25) if :ranked == mode
     result.card_history_list = rand(2..10).times.map do |n|
       CardHistoryEntry.new(
         player: players[(n + (result.coin ? 1 : 0)) % 2],
