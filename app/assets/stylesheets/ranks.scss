@@ -1,5 +1,4 @@
-﻿/* glue: 0.9.4 hash: 85826b20a5 */
-        .ranks-rank9,
+﻿.ranks-rank9,
 .ranks-rank8,
 .ranks-rank7,
 .ranks-rank6,
@@ -25,197 +24,112 @@
 .ranks-rank10,
 .ranks-rank1,
 .ranks-legend {
-            background-image: image-url('ranks.png');
-            background-repeat: no-repeat;
-        }
-        
-        .ranks-rank9 {
-            background-position: 0 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank8 {
-            background-position: -21px 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank7 {
-            background-position: -42px 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank6 {
-            background-position: 0 -28px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank5 {
-            background-position: -21px -28px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank4 {
-            background-position: -63px 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank3 {
-            background-position: 0 -56px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank25 {
-            background-position: -63px -28px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank24 {
-            background-position: -22px -56px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank23 {
-            background-position: -43px -56px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank22 {
-            background-position: -84px 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank21 {
-            background-position: -84px -28px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank20 {
-            background-position: -84px -56px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank2 {
-            background-position: -105px 0;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank19 {
-            background-position: -105px -28px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank18 {
-            background-position: -105px -56px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank17 {
-            background-position: 0 -84px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank16 {
-            background-position: -22px -84px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank15 {
-            background-position: -43px -84px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank14 {
-            background-position: -64px -84px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank13 {
-            background-position: -86px -84px;
-            width: 22px;
-            height: 28px;
-        }
-        
-        .ranks-rank12 {
-            background-position: -127px 0;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank11 {
-            background-position: -127px -28px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank10 {
-            background-position: -127px -56px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-rank1 {
-            background-position: -127px -84px;
-            width: 21px;
-            height: 28px;
-        }
-        
-        .ranks-legend {
-            background-position: 0 -112px;
-            width: 25px;
-            height: 28px;
-        }
-        
-        @media screen and (-webkit-min-device-pixel-ratio: 1.0), screen and (min--moz-device-pixel-ratio: 1.0), screen and (-o-min-device-pixel-ratio: 100/100), screen and (min-device-pixel-ratio: 1.0), screen and (min-resolution: 1.0dppx) {
-            .ranks-rank9,
-    .ranks-rank8,
-    .ranks-rank7,
-    .ranks-rank6,
-    .ranks-rank5,
-    .ranks-rank4,
-    .ranks-rank3,
-    .ranks-rank25,
-    .ranks-rank24,
-    .ranks-rank23,
-    .ranks-rank22,
-    .ranks-rank21,
-    .ranks-rank20,
-    .ranks-rank2,
-    .ranks-rank19,
-    .ranks-rank18,
-    .ranks-rank17,
-    .ranks-rank16,
-    .ranks-rank15,
-    .ranks-rank14,
-    .ranks-rank13,
-    .ranks-rank12,
-    .ranks-rank11,
-    .ranks-rank10,
-    .ranks-rank1,
-    .ranks-legend {
-                background-image: image-url('ranks.png');
-                -webkit-background-size: 148px 140px;
-                -moz-background-size: 148px 140px;
-                background-size: 148px 140px;
-            }
-        }
-        
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 26px;
+  height: 26px;
+}
+
+.ranks-legend {
+  background-image: image-url('ranks/legend.png');
+}
+
+.ranks-rank1 {
+  background-image: image-url('ranks/1.png');
+}
+
+.ranks-rank2 {
+  background-image: image-url('ranks/2.png');
+}
+
+.ranks-rank3 {
+  background-image: image-url('ranks/3.png');
+}
+
+.ranks-rank4 {
+  background-image: image-url('ranks/4.png');
+}
+
+.ranks-rank5 {
+  background-image: image-url('ranks/5.png');
+}
+
+.ranks-rank6 {
+  background-image: image-url('ranks/6.png');
+}
+
+.ranks-rank7 {
+  background-image: image-url('ranks/7.png');
+}
+
+.ranks-rank8 {
+  background-image: image-url('ranks/8.png');
+}
+
+.ranks-rank9 {
+  background-image: image-url('ranks/9.png');
+}
+
+.ranks-rank10 {
+  background-image: image-url('ranks/10.png');
+}
+
+.ranks-rank11 {
+  background-image: image-url('ranks/11.png');
+}
+
+.ranks-rank12 {
+  background-image: image-url('ranks/12.png');
+}
+
+.ranks-rank13 {
+  background-image: image-url('ranks/13.png');
+}
+
+.ranks-rank14 {
+  background-image: image-url('ranks/14.png');
+}
+
+.ranks-rank15 {
+  background-image: image-url('ranks/15.png');
+}
+
+.ranks-rank16 {
+  background-image: image-url('ranks/16.png');
+}
+
+.ranks-rank17 {
+  background-image: image-url('ranks/17.png');
+}
+
+.ranks-rank18 {
+  background-image: image-url('ranks/18.png');
+}
+
+.ranks-rank19 {
+  background-image: image-url('ranks/19.png');
+}
+
+.ranks-rank20 {
+  background-image: image-url('ranks/20.png');
+}
+
+.ranks-rank21 {
+  background-image: image-url('ranks/21.png');
+}
+
+.ranks-rank22 {
+  background-image: image-url('ranks/22.png');
+}
+
+.ranks-rank23 {
+  background-image: image-url('ranks/23.png');
+}
+
+.ranks-rank24 {
+  background-image: image-url('ranks/24.png');
+}
+
+.ranks-rank25 {
+  background-image: image-url('ranks/25.png');
+}
