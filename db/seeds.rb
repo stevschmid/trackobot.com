@@ -79,11 +79,12 @@ if Rails.env.development? && User.count == 0
   user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
   players = [:me, :opponent]
   all_cards = Card.all
+  all_heroes = Hero.all
 
   100.times do |x|
     result = Result.new(mode: [:arena, :casual, :practice, :ranked].sample,
-                  hero: Hero.all.sample,
-                  opponent: Hero.all.sample,
+                  hero: all_heroes.sample,
+                  opponent: all_heroes.sample,
                   win: [true, false].sample,
                   coin: [true, false].sample,
                   user: user,
