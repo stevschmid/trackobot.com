@@ -76,7 +76,7 @@ if Deck.count == 0 || ENV['update_decks']
 end
 
 if Rails.env.development? && User.count == 0
-  user = User.create(username: 'lolo', password: '123456', password_confirmation: '123456')
+  user = User.create(username: 'dev', password: 'dev', password_confirmation: 'dev')
   players = [:me, :opponent]
   all_cards = Card.all
   all_heroes = Hero.all
