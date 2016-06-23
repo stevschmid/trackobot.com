@@ -45,24 +45,24 @@ module Stats
   end
 
   def read_params
-    session.delete(:mode) if params[:mode] == 'all'
+    cookies.delete(:mode) if params[:mode] == 'all'
     if params[:mode].present? && Result.modes.has_key?(params[:mode].to_sym)
       @mode = params[:mode].to_sym
-      session[:mode] = @mode
+      cookies.permanent[:mode] = @mode
     end
-    @mode ||= session[:mode]
+    @mode ||= cookies[:mode]
 
-    session.delete(:time_range) if params[:time_range] == 'all'
-    time_range = params[:time_range] || session[:time_range]
+    cookies.delete(:time_range) if params[:time_range] == 'all'
+    time_range = params[:time_range] || cookies[:time_range]
     if time_range.present? && TIME_RANGE_FILTERS.include?(time_range)
       @time_range = time_range.to_sym
-      session[:time_range] = @time_range
+      cookies.permanent[:time_range] = @time_range
 
       if @time_range == :custom
-        custom_start = params[:start] || session[:custom_start] || Date.today.to_s
-        custom_end = params[:end] || session[:custom_end] || Date.today.to_s
-        session[:custom_start] = custom_start
-        session[:custom_end] = custom_end
+        custom_start = params[:start] || cookies[:custom_start] || Date.today.to_s
+        custom_end = params[:end] || cookies[:custom_end] || Date.today.to_s
+        cookies.permanent[:custom_start] = custom_start
+        cookies.permanent[:custom_end] = custom_end
         @custom_range = Date.parse(custom_start)..Date.parse(custom_end)
       end
 
