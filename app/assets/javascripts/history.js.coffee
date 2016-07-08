@@ -72,5 +72,32 @@ $(document).on 'ready page:load', ->
 
     false
 
+  $('.rank-edit-button').popover
+    html: true
+    placement: 'right'
+    content: ("<a href='#' data-rank='#{r}'><div class='ranks-rank#{r}' title='Rank #{r}'></div></a>" for r in [1..25]).join('')
+    trigger: 'focus'
+    template: '<div class="popover rank-edit-popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>'
+
+  # Need to stop default behaviour, but popover will still show. Don't create
+  # popover here because it works not "normally" for multiple shows and unshows.
+  $('.rank-edit-button').click ->
+    false
+  
+  # When the popover is created (dynamically) is when we add callbacks to the
+  # rank pins. The elements don't exist until they're shown.
+  $('.rank-edit-button').on 'shown.bs.popover', ->
+    button = $(this)
+    $("#" + $(this).attr('aria-describedby') + " a").click ->
+      new_rank = $(this).data('rank')
+      $.ajax
+        type: 'PUT'
+        url: button.attr('href')
+        data:
+          result:
+            rank: new_rank
+        success: ->
+          button.parent().html("<div class='ranks-rank#{new_rank}' title='Rank #{new_rank}'></div>")
+
   loadContentForPopover '.card-history-button', 'click', placement: 'bottom'
   loadContentForPopover '.timeline-button', 'click', placement: 'bottom'

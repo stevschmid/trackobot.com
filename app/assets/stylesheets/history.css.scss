@@ -108,6 +108,28 @@ table.history {
       line-height: 28px;
       text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
+
+    .rank-edit-button {
+      text-align: center;
+      display: none;
+      width: 21px;
+      padding-top: 4px;
+    }
+
+    &:hover {
+      .rank-edit-button {
+        display: inline-block;
+      }
+    }
+
+    .rank-edit-popover {
+      max-width: 260px;
+      text-align: center;
+      .popover-content div {
+        display: inline-block;
+        margin: 1px 2px;
+      }
+    }
   }
   tr:hover {
     opacity: 1;
