@@ -4,8 +4,14 @@ describe ClassifyDeckForHero do
 
   let(:shaman) { Hero.find_by_name('Shaman') }
 
+
   let(:midrange) { Deck.find_by!(key: 'midrange', hero: shaman) }
   let(:aggro) { Deck.find_by!(key: 'aggro', hero: shaman) }
+
+  before do
+    # in case there are other shaman decks
+    Deck.where(hero: shaman).where.not(id: [midrange.id, aggro.id]).delete_all
+  end
 
   let(:input) do
     {
