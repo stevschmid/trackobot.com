@@ -7,6 +7,10 @@
     {
       "key": "aggro",
       "name": "Aggro"
+    },
+    {
+      "key": "control",
+      "name": "Control"
     }
   ],
   "warlock": [
@@ -39,6 +43,10 @@
     {
       "key": "cthun",
       "name": "C'Thun"
+    },
+    {
+      "key": "worgen",
+      "name": "Worgen"
     }
   ],
   "rogue": [
@@ -83,6 +91,10 @@
     {
       "key": "nzoth",
       "name": "N'Zoth"
+    },
+    {
+      "key": "secret",
+      "name": "Secret"
     }
   ],
   "druid": [
