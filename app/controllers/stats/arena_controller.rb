@@ -3,8 +3,9 @@ class Stats::ArenaController < ApplicationController
 
   include Stats
 
+  before_filter :ensure_arena_mode
+
   def index
-    @mode = :arena
     num_wins_per_arena = user_arenas
       .joins("LEFT JOIN results ON results.arena_id = arenas.id AND results.win = #{ActiveRecord::Base::connection.quote(true)}")
       .group('arenas.id')
@@ -42,6 +43,12 @@ class Stats::ArenaController < ApplicationController
         render json: {stats: @stats}
       end
     end
+  end
+
+  private
+
+  def ensure_arena_mode
+    @mode = :arena
   end
 
 end
