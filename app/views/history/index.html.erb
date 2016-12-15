@@ -60,7 +60,7 @@
               <% elsif result.rank && result.rank > 0 %>
                 <div class="ranks-rank<%= result.rank %>" title="Rank <%= result.rank %>"></div>
               <% else %>
-                &nbsp;
+                <%= link_to icon('cogs'), profile_result_path(result), title: "Set rank manually", class: 'rank-edit-button' %>
               <% end %>
             </td>
             <td class="timestamp <%= 'with-duration' if result.duration %>">
