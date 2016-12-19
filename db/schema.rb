@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219201210) do
+ActiveRecord::Schema.define(version: 20161219201839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,22 +43,6 @@ ActiveRecord::Schema.define(version: 20161219201210) do
   end
 
   add_index "cards", ["ref"], name: "index_cards_on_ref", using: :btree
-
-  create_table "cards_custom_decks", id: false, force: :cascade do |t|
-    t.integer "card_id"
-    t.integer "custom_deck_id"
-  end
-
-  create_table "custom_decks", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "hero_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "custom_decks", ["hero_id"], name: "index_custom_decks_on_hero_id", using: :btree
-  add_index "custom_decks", ["user_id"], name: "index_custom_decks_on_user_id", using: :btree
 
   create_table "decks", force: :cascade do |t|
     t.string   "name"
@@ -107,8 +91,6 @@ ActiveRecord::Schema.define(version: 20161219201210) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "arena_id"
-    t.integer  "custom_deck_id"
-    t.integer  "opponent_custom_deck_id"
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
@@ -119,11 +101,9 @@ ActiveRecord::Schema.define(version: 20161219201210) do
   end
 
   add_index "results", ["arena_id"], name: "index_results_on_arena_id", using: :btree
-  add_index "results", ["custom_deck_id"], name: "index_results_on_custom_deck_id", using: :btree
   add_index "results", ["deck_id"], name: "index_results_on_deck_id", using: :btree
   add_index "results", ["hero_id"], name: "index_results_on_hero_id", using: :btree
   add_index "results", ["mode"], name: "index_results_on_mode", using: :btree
-  add_index "results", ["opponent_custom_deck_id"], name: "index_results_on_opponent_custom_deck_id", using: :btree
   add_index "results", ["opponent_deck_id"], name: "index_results_on_opponent_deck_id", using: :btree
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
   add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree

@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   has_many :results
   has_many :arenas
-  has_many :custom_decks
   has_many :notification_reads
 
   validates_presence_of :username

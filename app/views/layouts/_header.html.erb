@@ -8,7 +8,6 @@
       <ul class="dropdown-menu" role="menu">
         <%= nav_link 'Classes', profile_stats_classes_path %>
         <%= nav_link 'Decks', profile_stats_decks_path if current_user.deck_tracking? %>
-        <%= nav_link "Decks (Old)", profile_stats_custom_decks_path if current_user.custom_decks.any? %>
         <%= nav_link 'Arena', profile_stats_arena_index_path %>
       </ul>
     </li>
