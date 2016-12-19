@@ -1,5 +1,5 @@
 every 1.day, at: '10:00am' do
-  rake 'trackobot:classifier_decay'
+  rake 'trackobot:decay_classifiers'
 end
 
 every 1.day, at: '10:30am' do
