@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
   has_many :notification_reads
 
   validates_presence_of :username
+  validates_presence_of :password, on: :create
 
   before_save :ensure_tokens
+  before_save :encrypt_password, if: -> { password.present? }
 
   attr_accessor :password
-  validates_presence_of :password, on: :create
-  before_save :encrypt_password, if: -> { password.present? }
 
   def encrypt_password
     self.encrypted_password = Security.hash_password(password)

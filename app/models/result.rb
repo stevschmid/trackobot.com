@@ -96,30 +96,6 @@ class Result < ActiveRecord::Base
     end
   end
 
-  def self.to_csv
-    CSV.generate do |csv|
-      csv << [:id, :mode, :hero, :hero_deck, :opponent, :opponent_deck, :result, :coin, :arena_id, :duration, :rank, :legend, :added]
-
-      all.each do |result|
-        csv << [
-          result.id,
-          result.mode,
-          result.hero.name,
-          result.deck ? result.deck.name : nil,
-          result.opponent.name,
-          result.opponent_deck ? result.opponent_deck.name : nil,
-          result.result,
-          result.coin,
-          result.arena && result.arena.id,
-          result.duration,
-          result.rank,
-          result.legend,
-          result.created_at
-        ]
-      end
-    end
-  end
-
   def delete_arena_if_last_remaining_result
     arena.destroy if arena && arena.results.count == 0
   end

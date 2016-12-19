@@ -38,7 +38,7 @@ class HistoryController < ApplicationController
         render json: @results, meta: meta(@results)
       end
       format.csv do
-        render text: @unpaged_results.to_csv
+        render text: ExportResultsToCSV.call(results: @unpaged_results).output
       end
     end
   end

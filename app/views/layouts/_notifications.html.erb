@@ -1,5 +1,5 @@
 <%
-  result = GetUnreadNotifications.call(current_user)
+  result = GetUnreadNotifications.call(user: current_user)
   result.notifications.each do |notification| 
 %>
   <%= content_tag :div, class: "alert alert-dismissable alert-#{ notification.kind || 'info' }" do |div| %>
