@@ -93,13 +93,6 @@ GEM
       sprockets (< 2.13)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
-    devise (3.5.6)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      responders
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     dotenv (2.1.0)
     dotenv-rails (2.1.0)
@@ -134,6 +127,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hike (1.2.3)
     i18n (0.7.0)
+    interactor (3.1.0)
     jbuilder (2.4.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -182,7 +176,6 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    orm_adapter (0.5.0)
     pg (0.18.4)
     possessive (1.0.1)
     pry (0.10.3)
@@ -300,8 +293,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    warden (1.2.6)
-      rack (>= 1.0)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -313,6 +304,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers!
+  bcrypt
   bootstrap_form
   builder
   capistrano-rails
@@ -320,11 +312,11 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   compass-rails (~> 2.0.4)
   database_cleaner
-  devise
   dotenv-rails
   factory_girl_rails
   font-awesome-less
   guard-rspec
+  interactor
   jbuilder (~> 2.0)
   jquery-rails
   kaminari

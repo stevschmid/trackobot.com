@@ -12,10 +12,7 @@ class UsersController < ApplicationController
 
     username = generate_unique_username
     @generated_password = generate_password
-    @user = User.create(username: username,
-                        password: @generated_password,
-                        password_confirmation: @generated_password,
-                        sign_up_ip: ip_address)
+    @user = User.create(username: username, password: @generated_password, sign_up_ip: ip_address)
     respond_with(@user)
   end
 

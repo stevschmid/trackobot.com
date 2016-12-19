@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Result do
 
-  include ResultHelpers
+  include ResultHelper
 
   describe 'arena result' do
     let(:result) { FactoryGirl.create(:result, mode: :arena) }

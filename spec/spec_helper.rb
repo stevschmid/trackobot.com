@@ -25,6 +25,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation, except: %w[cards decks]
   end
 
+  config.include SessionHelper
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -55,5 +57,4 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.infer_spec_type_from_file_location!
-  config.include Devise::TestHelpers, type: :controller
 end

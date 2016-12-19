@@ -29,5 +29,9 @@ module ApplicationHelper
       user.username.gsub(/[0-9-]/, ' ').titleize
     end.strip
   end
+
+  def current_user
+    @current_user
+  end
 end
 

@@ -1,4 +1,4 @@
-module ResultHelpers
+module ResultHelper
   def build_result_with_history(as, vs, mode, user, history)
     FactoryGirl.build(:result, mode: mode, hero: Hero.find_by_name(as), opponent: Hero.find_by_name(vs), user: user).tap do |result|
       list = []

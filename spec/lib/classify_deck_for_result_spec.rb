@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ClassifyDeckForResult do
 
-  include ResultHelpers
+  include ResultHelper
 
   let(:user) { FactoryGirl.create(:user) }
 

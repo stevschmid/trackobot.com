@@ -32,5 +32,6 @@ module Webtracker
 
     # Enable auto loads from lib
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app', 'interactors')
   end
 end
