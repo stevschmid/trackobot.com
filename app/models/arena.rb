@@ -6,7 +6,7 @@ class Arena < ActiveRecord::Base
 
   has_many :results
 
-  validates_presence_of :hero_id, :user_id
+  validates_presence_of :hero, :user
 
   def wins
     results.wins
