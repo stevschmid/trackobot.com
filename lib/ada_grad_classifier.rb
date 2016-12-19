@@ -31,6 +31,12 @@ class AdaGradClassifier
     @weights = HashVector.new(0.0)
   end
 
+  def scale_sum_gradient_by(scalar)
+    @sum_of_squared_gradients.each_pair do |key, value|
+      @sum_of_squared_gradients[key] = scalar * value
+    end
+  end
+
   def train(x, y)
     raise "y must be -1 or 1" unless [-1, 1].include?(y)
 
@@ -97,6 +103,5 @@ class AdaGradClassifier
       weights: @weights
     }
   end
-
 end
 

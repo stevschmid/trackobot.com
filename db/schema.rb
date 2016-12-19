@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219175609) do
+ActiveRecord::Schema.define(version: 20161219180701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20161219175609) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "key"
+    t.datetime "last_decay_at"
   end
 
   add_index "decks", ["hero_id"], name: "index_decks_on_hero_id", using: :btree
