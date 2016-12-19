@@ -28,7 +28,6 @@ class HistoryController < ApplicationController
     @results = @unpaged_results.page(params[:page])
     @results.includes!(:hero)
             .includes!(:opponent)
-            .includes!(:tags)
 
     @decks = Deck.all
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219180701) do
+ActiveRecord::Schema.define(version: 20161219201210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,16 +128,6 @@ ActiveRecord::Schema.define(version: 20161219180701) do
   add_index "results", ["opponent_id"], name: "index_results_on_opponent_id", using: :btree
   add_index "results", ["user_id"], name: "index_results_on_user_id", using: :btree
   add_index "results", ["win"], name: "index_results_on_win", using: :btree
-
-  create_table "tags", force: :cascade do |t|
-    t.integer  "result_id"
-    t.string   "tag",        null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tags", ["result_id"], name: "index_tags_on_result_id", using: :btree
-  add_index "tags", ["tag"], name: "index_tags_on_tag", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                         limit: 255, default: "",    null: false

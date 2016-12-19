@@ -20,8 +20,6 @@ class Result < ActiveRecord::Base
   belongs_to :user
   belongs_to :arena
 
-  has_many :tags
-
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
 
