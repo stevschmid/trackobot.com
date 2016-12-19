@@ -25,17 +25,6 @@ describe Result do
     end
   end
 
-  describe 'card history list' do
-    let(:first_play) { FactoryGirl.build(:card_history_entry, player: :me) }
-    let(:second_play) { FactoryGirl.build(:card_history_entry, player: :opponent) }
-
-    let(:result) { FactoryGirl.create(:result, mode: :ranked, card_history_list: [first_play, second_play]) }
-
-    it 'has card_history_list in the right order' do
-      expect(result.card_history_list.collect(&:player)).to eq [:me, :opponent]
-    end
-  end
-
   describe 'deck assignment' do
     # this is some kind of elaborate integration test
     # for the whole deck system
