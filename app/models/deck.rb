@@ -5,10 +5,6 @@ class Deck < ActiveRecord::Base
 
   validates_presence_of :hero, :name
 
-  def to_s
-    name
-  end
-
   def self.reset_all_classifiers!
     Deck.update_all(classifier: nil)
   end
