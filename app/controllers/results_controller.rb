@@ -59,21 +59,14 @@ class ResultsController < ApplicationController
   end
 
   def add_card_history_to_result(result, card_history)
-    result.card_history_list = card_history.collect do |card_history_item|
-      card = Card.find_by_ref(card_history_item[:card_id])
-      if card
-        CardHistoryEntry.new(turn: card_history_item[:turn],
-                             player: card_history_item[:player].to_sym,
-                             card: card)
-      else
-        logger.info "Card #{card_history_item[:card_id]} not found in Card Database"
-        nil
-      end
-    end.compact
+    result.build_card_history(data: card_history)
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id, :note)
+    params.require(:result).permit(:mode, :win, :hero, :opponent,
+                                   :coin, :duration, :rank, :legend,
+                                   :deck_id, :opponent_deck_id,
+                                   :note, :added)
   end
 
 end

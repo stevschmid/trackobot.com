@@ -84,16 +84,7 @@ describe ResultsController do
       it 'adds history' do
         post :create, result: result_params, format: :json
         result = user.results.last
-
-        expect(result.card_history_list.count).to eq 2
-
-        expect(result.card_history_list.first.card.name).to eq 'Shieldbearer'
-        expect(result.card_history_list.first.player).to eq :opponent
-        expect(result.card_history_list.first.turn).to eq 0 # make sure we can add card history elements without turn info
-
-        expect(result.card_history_list.second.card.name).to eq 'The Coin'
-        expect(result.card_history_list.second.player).to eq :me
-        expect(result.card_history_list.second.turn).to eq 3
+        expect(result.card_history_list).to eq(card_history)
       end
     end
 
@@ -106,6 +97,7 @@ describe ResultsController do
       end
 
       before do
+        ClassifyDeckForHero
         stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_PREDICTION', 1)
         stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_LEARNING', 1)
 

@@ -1,6 +1,8 @@
 class Result < ActiveRecord::Base
   paginates_per 15
 
+  has_one :card_history
+
   validates_presence_of :mode, :hero_id, :opponent_id, :user_id
   validates_inclusion_of :win, in: [true, false]
 
@@ -42,12 +44,7 @@ class Result < ActiveRecord::Base
   end
 
   def card_history_list
-    @card_history_list ||= CardHistoryListCoder.load(self.card_history_data)
-  end
-
-  def card_history_list=(card_history_list)
-    self.card_history_data = CardHistoryListCoder.dump(card_history_list)
-    @card_history_list = card_history_list
+    @card_history_list ||= (card_history.try(:data) || []).map(&:symbolize_keys)
   end
 
   def hero=(hero)

@@ -79,16 +79,11 @@ describe HistoryController do
 
       describe 'card history' do
         before do
-          list = [
-            # unleash
-            CardHistoryEntry.new(turn: 3, player: :me, card: Card.find_by_ref('EX1_538')),
-            # flamestrike
-            CardHistoryEntry.new(turn: 4, player: :opponent, card: Card.find_by_ref('CS2_032')),
-            # water elemental
-            CardHistoryEntry.new(turn: 4, player: :me, card: Card.find_by_ref('CS2_033'))
-          ]
-          result.update_attributes(card_history_list: list)
-
+          result.create_card_history(data: [
+            {turn: 3, player: :me, card_id: 'EX1_538'}, # unleash
+            {turn: 4, player: :opponent, card_id: 'CS2_032'}, # flamestrike
+            {turn: 4, player: :me, card_id: 'CS2_033'} # water elemental
+          ])
           get :index, format: :json
         end
 
@@ -103,7 +98,6 @@ describe HistoryController do
 
           describe 'card structure' do
             subject { json_card_history.first[:card] }
-
             its([:name]) { should eq 'Unleash the Hounds' }
             its([:id]) { should eq 'EX1_538' }
             its([:mana]) { should eq 3 }

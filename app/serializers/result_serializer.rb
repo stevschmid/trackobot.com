@@ -1,11 +1,11 @@
 class ResultSerializer < ActiveModel::Serializer
   attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck,
-    :coin, :result, :arena_id, :duration, :rank, :legend, :note, :added
+    :coin, :result, :arena_id, :duration, :rank, :legend, :note, :added, :card_history
 
-  has_many :card_history_list, key: :card_history, serializer: CardHistoryEntrySerializer
-
-  def card_histories
-    object.card_histories.order(:id)
+  def card_history
+    object.card_history_list.collect do |it|
+      it.merge(card: CARDS[it[:card_id]].to_h)
+    end
   end
 
   def hero

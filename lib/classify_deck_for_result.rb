@@ -24,31 +24,32 @@ class ClassifyDeckForResult
   private
 
   def classify_deck_for_player
-    ClassifyDeckForHero.new(result.hero, count_by_cards_for(:me))
+    ClassifyDeckForHero.new(result.hero, count_by_cards_for('me'))
   end
 
   def classify_deck_for_opponent
-    ClassifyDeckForHero.new(result.opponent, count_by_cards_for(:opponent))
+    ClassifyDeckForHero.new(result.opponent, count_by_cards_for('opponent'))
   end
 
   def count_by_cards_for player
-    card_histories = result.card_history_list.select do |card_history_entry|
-      card_history_entry.player == player # only from specified player
-    end.reject do |card_history_entry|
-      skip_card?(card_history_entry.card, player)
+    card_histories = result.card_history_list.select do |it|
+      it[:player] == player
+    end.reject do |it|
+      skip_card?(it[:card_id], player)
     end
 
-    Hash[card_histories.group_by(&:card).collect do |card, items|
-      [card.ref, items.count]
+    Hash[card_histories.group_by { |it| it[:card_id] }.collect do |card_id, items|
+      [card_id, items.count]
     end]
   end
 
-  def skip_card?(card, player)
-    @hero_names ||= Hero.all.collect(&:name).collect(&:downcase)
+  def skip_card?(card_id, player)
+    card = CARDS[card_id]
+    return true if card.nil?
     return true if card.type == 'hero' # ignore hero powers
     return true if card.name == 'The Coin' # ignore coin
-    return true if (card_hero = hero_from_card(card)) && player == :me && card_hero != result.hero
-    return true if (card_hero = hero_from_card(card)) && player == :opponent && card_hero != result.opponent
+    return true if (card_hero = hero_from_card(card)) && player == 'me' && card_hero != result.hero
+    return true if (card_hero = hero_from_card(card)) && player == 'opponent' && card_hero != result.opponent
     false
   end
 
@@ -56,5 +57,4 @@ class ClassifyDeckForResult
     @heroes ||= Hero.all.index_by { |hero| hero.name.downcase }
     @heroes[card.hero]
   end
-
 end

@@ -16,4 +16,8 @@ namespace :trackobot do
      deck.save!
     end
   end
+
+  task :vacuum_card_history => :environment do
+    CardHistory.where('created_at < ?', 10.days.ago).delete_all
+  end
 end
