@@ -13,7 +13,7 @@ describe Settings::DecksController do
     subject { json[:decks].first }
 
     before do
-      get :index, as: :json
+      get :index, format: :json
     end
 
     specify { expect(Deck.all.collect(&:name)).to include(subject[:name]) }

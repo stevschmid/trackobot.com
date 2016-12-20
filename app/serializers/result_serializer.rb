@@ -1,6 +1,10 @@
 class ResultSerializer < ActiveModel::Serializer
   attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck,
-    :coin, :result, :arena_id, :duration, :rank, :legend, :note, :added, :card_history
+    :coin, :result, :duration, :note, :added, :card_history
+
+  attribute :arena_id, if: -> (r) { r.object.arena? }
+  attribute :rank, if: -> (r) { r.object.ranked? }
+  attribute :legend, if: -> (r) { r.object.ranked? }
 
   def card_history
     object.card_history_list.collect do |it|
@@ -13,7 +17,7 @@ class ResultSerializer < ActiveModel::Serializer
   end
 
   def hero_deck
-    object.deck ? object.deck.name : nil
+    object.deck.try(:name)
   end
 
   def opponent
@@ -21,18 +25,6 @@ class ResultSerializer < ActiveModel::Serializer
   end
 
   def opponent_deck
-    object.opponent_deck ? object.opponent_deck.name : nil
-  end
-
-  def include_arena_id?
-    object.arena?
-  end
-
-  def include_rank?
-    object.ranked?
-  end
-
-  def include_legend?
-    object.ranked?
+    object.opponent_deck.try(:name)
   end
 end

@@ -34,7 +34,7 @@ class HistoryController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: @results, meta: meta(@results)
+        render json: { history: ActiveModelSerializers::SerializableResource.new(@results).as_json, meta: meta(@results) }
       end
       format.csv do
         render text: ExportResultsToCSV.call(results: @unpaged_results).output
