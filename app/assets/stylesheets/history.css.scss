@@ -64,7 +64,6 @@ table.history {
     width: 40px;
     padding-top: 4px;
     padding-bottom: 4px;
-    opacity: 0.5;
   }
   td.mode {
     width: 60px;
@@ -99,7 +98,6 @@ table.history {
     padding: 0;
     padding-top: 2px;
     width: 30px;
-    opacity: 0.7;
 
     .legend {
       text-align: center;
@@ -107,12 +105,6 @@ table.history {
       font-size: 10px;
       line-height: 28px;
       text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    }
-  }
-  tr:hover {
-    opacity: 1;
-    td.rank, td.timeline, td.mode, td.note {
-      opacity: 1;
     }
   }
   td.timestamp {
