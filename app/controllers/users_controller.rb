@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     if User.where(sign_up_ip: ip_address)
            .where('created_at > ?', 10.minutes.ago).count >= 3
     then
-      render nothing: true, status: 429
+      head 429
     end
   end
 

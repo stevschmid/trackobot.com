@@ -17,8 +17,7 @@ describe Result do
 
     let(:shaman_cards) { CARDS.values.select { |card| card.hero == 'shaman' } }
 
-    def build_card_list(prob_matrix, cards)
-      deck = prob_matrix.keys.sample
+    def build_card_list(prob_matrix, deck, cards)
       probs = prob_matrix[deck]
 
       # avg 12, stddev 5
@@ -32,46 +31,50 @@ describe Result do
         chosen
       end.compact
 
-      [deck, card_list]
+      card_list
     end
 
     it 'does the ring at the right time for the right reasons' do
-      NUM_LEARN_RUNS = 20
+      NUM_LEARN_RUNS = 10
       NUM_VALIDATION_RUNS = 10
 
       shaman_prob_matrix = {
         midrange_shaman => {
-          'Totem Golem' => 0.9,
+          'Totem Golem' => 0.7,
+          'Doomhammer' => 0.2,
           'Lava Burst' => 0.1,
         },
         aggro_shaman => {
           'Totem Golem' => 0.1,
-          'Lava Burst' => 0.9,
+          'Doomhammer' => 0.4,
+          'Lava Burst' => 0.5,
         }
       }
 
-      learn_results = NUM_LEARN_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        AssignDecksToResult.call(result: result)
-        result.save!
-
-        [true_deck, result]
+      NUM_LEARN_RUNS.times do
+        shaman_prob_matrix.each_key do |true_deck|
+          card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
+          result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+          ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
+        end
       end
 
-      learn_results.each do |true_deck, result|
-        ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
+      num_correct = 0
+      num_total = 0
+
+      NUM_VALIDATION_RUNS.times do
+        shaman_prob_matrix.each_key do |true_deck|
+          card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
+          result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+          AssignDecksToResult.call(result: result)
+          num_correct += (result.deck == true_deck ? 1 : 0)
+          if result.deck != true_deck
+            Rails.logger.info "[Classify] #{result.deck ? result.deck.full_name : 'NOT_PREDICTED'} #{true_deck.full_name} #{card_list}"
+          end
+          num_total += 1
+        end
       end
-
-      accuracy = NUM_VALIDATION_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        AssignDecksToResult.call(result: result)
-        result.save!
-        result.deck == true_deck ? 1 : 0
-      end.sum / NUM_VALIDATION_RUNS.to_f
-
+      accuracy = num_correct.to_f / num_total
       expect(accuracy).to be >= 0.9
     end
 

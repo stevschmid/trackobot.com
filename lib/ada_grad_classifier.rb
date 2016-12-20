@@ -87,8 +87,11 @@ class AdaGradClassifier
 
   def self.dot(h1, h2)
     h1.inject(0.0) do |sum, (key, _)|
-      return sum unless h2.has_key?(key)
-      sum + h1[key] * h2[key]
+      if h2.has_key?(key)
+        sum + h1[key] * h2[key]
+      else
+        sum
+      end
     end
   end
 
