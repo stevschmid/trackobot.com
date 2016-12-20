@@ -1,17 +1,7 @@
 class Result < ActiveRecord::Base
-  paginates_per 15
+  enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   has_one :card_history
-
-  validates_presence_of :mode, :hero_id, :opponent_id, :user_id
-  validates_inclusion_of :win, in: [true, false]
-
-  validates_absence_of :deck_id, if: :arena?
-  validates_absence_of :opponent_deck_id, if: :arena?
-
-  validate :decks_belong_to_rightful_class
-
-  enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   belongs_to :hero
   belongs_to :opponent, class_name: 'Hero'
@@ -24,6 +14,14 @@ class Result < ActiveRecord::Base
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
+
+  validates_presence_of :mode, :hero_id, :opponent_id, :user_id
+  validates_inclusion_of :win, in: [true, false]
+
+  validates_absence_of :deck_id, if: :arena?
+  validates_absence_of :opponent_deck_id, if: :arena?
+
+  validate :decks_belong_to_rightful_class
 
   before_create :create_or_update_associated_arena, if: :arena?
   before_create :connect_to_decks, unless: :arena?
@@ -81,14 +79,7 @@ class Result < ActiveRecord::Base
   end
 
   def result
-    case win
-    when true
-      'win'
-    when false
-      'loss'
-    else
-      nil
-    end
+    win? ? 'win' : 'loss'
   end
 
   def delete_arena_if_last_remaining_result

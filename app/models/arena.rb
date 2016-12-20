@@ -1,6 +1,4 @@
 class Arena < ActiveRecord::Base
-  paginates_per 15
-
   belongs_to :hero
   belongs_to :user
 
