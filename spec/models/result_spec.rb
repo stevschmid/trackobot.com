@@ -4,27 +4,6 @@ describe Result do
 
   include ResultHelper
 
-  describe 'arena result' do
-    let(:result) { FactoryGirl.create(:result, mode: :arena) }
-    let(:arena) { result.arena }
-
-    context 'result is the last remaining result of arena' do
-      it 'deletes the arena' do
-        expect { result.destroy }.to change { arena.destroyed? }
-      end
-    end
-
-    context 'result is one among many results of arena' do
-      before do
-        2.times { FactoryGirl.create(:result, arena: arena) }
-      end
-
-      it 'does not delete the arena' do
-        expect { result.destroy }.to_not change { arena.destroyed? }
-      end
-    end
-  end
-
   describe 'deck assignment' do
     # this is some kind of elaborate integration test
     # for the whole deck system
@@ -75,6 +54,7 @@ describe Result do
         true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
 
         result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+        AssignDecksToResult.call(result: result)
         result.save!
 
         [true_deck, result]
@@ -87,6 +67,7 @@ describe Result do
       accuracy = NUM_VALIDATION_RUNS.times.collect do
         true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
         result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+        AssignDecksToResult.call(result: result)
         result.save!
         result.deck == true_deck ? 1 : 0
       end.sum / NUM_VALIDATION_RUNS.to_f

@@ -50,7 +50,7 @@ describe HistoryController do
       end
 
       context 'arena' do
-        let!(:result) { FactoryGirl.create(:result, mode: :arena, user: user) }
+        let!(:result) { FactoryGirl.create(:result_with_arena, mode: :arena, user: user) }
         its([:arena_id]) { should eq(result.arena.id) }
       end
 

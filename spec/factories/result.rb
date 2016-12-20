@@ -7,5 +7,10 @@ FactoryGirl.define do
     mode :ranked
     user
     duration 42
+
+    factory :result_with_arena do
+      mode :arena
+      before(:create) { |result, _| AssignArenaToResult.call(result: result) }
+    end
   end
 end

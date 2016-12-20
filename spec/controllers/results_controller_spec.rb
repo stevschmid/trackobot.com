@@ -144,13 +144,35 @@ describe ResultsController do
   end
 
   describe 'DELETE destroy' do
-    let!(:result) { FactoryGirl.create(:result, user: result_user) }
+    let(:mode) { :ranked }
+    let!(:result) { FactoryGirl.create(:result, user: result_user, mode: mode) }
 
     context 'my result' do
       let(:result_user) { user }
       specify {
         expect { delete :destroy, id: result.id }.to change(Result, :count).by(-1)
       }
+
+      describe 'arena' do
+        let(:mode) { :arena }
+        before do
+          AssignArenaToResult.call(result: result)
+          result.save!
+        end
+
+        context 'last result' do
+          specify {
+            expect { delete :destroy, id: result.id }.to change(Arena, :count).by(-1)
+          }
+        end
+
+        context 'not last result' do
+          before { result.arena.results << FactoryGirl.create(:result, mode: :arena) }
+          specify {
+            expect { delete :destroy, id: result.id }.not_to change(Arena, :count)
+          }
+        end
+      end
     end
 
     context 'foreign result' do

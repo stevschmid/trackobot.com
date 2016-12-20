@@ -10,9 +10,18 @@ class ResultsController < ApplicationController
   def create
     @result = policy_scope(Result).new(safe_params)
     authorize @result
+
     if card_history = params[:result][:card_history]
       add_card_history_to_result(@result, card_history)
     end
+
+    case
+    when @result.arena?
+      AssignArenaToResult.call(result: @result)
+    else
+      AssignDecksToResult.call(result: @result)
+    end
+
     @result.save
     respond_with(:profile, @result.reload)
   end
@@ -45,6 +54,9 @@ class ResultsController < ApplicationController
     @result = policy_scope(Result).find(params[:id])
     authorize @result
     @result.destroy
+    if @result.arena && @result.arena.results.count == 0
+      @result.arena.destroy
+    end
     respond_with(:profile, @result)
   end
 

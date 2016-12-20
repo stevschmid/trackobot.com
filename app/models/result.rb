@@ -23,11 +23,6 @@ class Result < ActiveRecord::Base
 
   validate :decks_belong_to_rightful_class
 
-  before_create :create_or_update_associated_arena, if: :arena?
-  before_create :connect_to_decks, unless: :arena?
-
-  after_destroy :delete_arena_if_last_remaining_result, if: :arena?
-
   def decks_belong_to_rightful_class
     errors.add(:deck_id, 'is invalid') if deck && deck.hero_id != hero_id
     errors.add(:opponent_deck_id, 'is invalid') if opponent_deck && opponent_deck.hero_id != opponent_id
@@ -59,31 +54,7 @@ class Result < ActiveRecord::Base
     super(opponent)
   end
 
-  def create_or_update_associated_arena
-    current_arena = user.arenas.order('created_at').last
-    if current_arena &&
-      current_arena.hero == hero &&
-      current_arena.wins.count < 12 &&
-      current_arena.losses.count < 3
-    then
-      self.arena = current_arena
-    end
-
-    self.arena ||= user.arenas.create(hero: hero)
-  end
-
-  def connect_to_decks
-    classify = ClassifyDeckForResult.new(self)
-    self.deck ||= classify.predict_deck_for_player
-    self.opponent_deck ||= classify.predict_deck_for_opponent
-  end
-
   def result
     win? ? 'win' : 'loss'
   end
-
-  def delete_arena_if_last_remaining_result
-    arena.destroy if arena && arena.results.count == 0
-  end
 end
-

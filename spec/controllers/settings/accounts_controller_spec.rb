@@ -40,6 +40,8 @@ describe Settings::AccountsController do
     end
 
     describe 'arena' do
+      before { FactoryGirl.create(:result_with_arena, user: user) }
+
       context 'arena specified' do
         let(:reset_modes) { %w[arena] }
         it 'deletes arena runs' do
