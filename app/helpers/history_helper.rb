@@ -1,7 +1,7 @@
 module HistoryHelper
 
   def card_stats_additions(result, player)
-    return {} unless result.card_history_data?
+    return {} if result.card_history_list.empty?
     {
       class: %w[dotted-baseline card-history-button],
       data: {
@@ -13,7 +13,7 @@ module HistoryHelper
   end
 
   def timeline_additions(result)
-    return {} unless result.card_history_data?
+    return {} if result.card_history_list.empty?
     header = escape_once(render(partial: 'timeline_header', locals: { result: result }))
     {
       class: %w[btn btn-default btn-xs timeline-button],
@@ -72,7 +72,7 @@ module HistoryHelper
   private
 
   def group_card_histories_by_card_and_sort_by_mana(card_histories)
-    card_histories.group_by(&:card).sort_by { |card, _| card.mana || -1 }
+    card_histories.group_by { |e| CARDS[e[:card_id]] }.sort_by { |card, _| card.mana || -1 }
   end
 
   def group_card_histories_chronologically(card_histories)
@@ -83,12 +83,12 @@ module HistoryHelper
     current_turn = nil
 
     card_histories.each do |card_history|
-      if (current_player && current_player != card_history.player) || (current_turn && card_history.turn != current_turn)
+      if (current_player && current_player != card_history[:player]) || (current_turn && card_history[:turn] != current_turn)
         groups << current_card_group
         current_card_group = []
       end
-      current_player = card_history.player
-      current_turn = card_history.turn
+      current_player = card_history[:player]
+      current_turn = card_history[:turn]
       current_card_group << card_history
     end
 

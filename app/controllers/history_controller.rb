@@ -52,8 +52,10 @@ class HistoryController < ApplicationController
   def card_stats
     result = policy_scope(Result).find(params[:id])
     authorize result, :show?
-    player = params[:player].to_sym
-    @card_histories = result.card_history_list.select { |entry| entry.player == player }
+    player = params[:player]
+    @card_histories = result.card_history_list.select do |entry|
+      entry[:player] == player
+    end
     render layout: false
   end
 

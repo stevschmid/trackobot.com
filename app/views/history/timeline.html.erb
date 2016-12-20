@@ -6,15 +6,18 @@
     grouped_card_histories = group_card_histories_chronologically(@card_histories) 
     grouped_card_histories.each do |card_histories| 
 
-    if card_histories.first.turn && turn != card_histories.first.turn
-      turn = card_histories.first.turn
+    if card_histories.first[:turn] && turn != card_histories.first[:turn]
+      turn = card_histories.first[:turn]
     %>
       <li class="turn">Turn <%= turn %></li>
     <% end %>
-    <li class="<%= card_histories.first.player %>">
-    <% card_histories.each do |card_history| %>
+    <li class="<%= card_histories.first[:player] %>">
+    <% 
+      card_histories.each do |card_history| 
+        card = CARDS[card_history[:card_id]]
+    %>
       <div class="card">
-        <div class="mana"><%= card_history.card.mana || 0 %></div>&nbsp;<%= card_history.card.name %>
+        <div class="mana"><%= card.mana || 0 %></div>&nbsp;<%= card.name %>
       </div>
     <% end %>
   </li>
