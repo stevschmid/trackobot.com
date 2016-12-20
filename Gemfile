@@ -18,6 +18,7 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
+  gem 'awesome_print'
   gem 'rails-controller-testing'
 end
 

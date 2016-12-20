@@ -55,6 +55,7 @@ GEM
     arel (7.1.4)
     autoprefixer-rails (6.5.4)
       execjs
+    awesome_print (1.7.0)
     bcrypt (3.1.11)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
@@ -317,6 +318,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  awesome_print
   bcrypt
   bootstrap-sass
   bootstrap_form
