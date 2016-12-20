@@ -102,8 +102,8 @@ describe ResultsController do
         stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_LEARNING', 1)
 
         # learn the classifier
-        post :create, params: { result: result_params }, as: :json
-        result = assigns(:result)
+        result = FactoryGirl.create(:result, result_params.except(:card_history))
+        result.build_card_history(data: card_history)
         classify = ClassifyDeckForResult.new(result)
         classify.learn_deck_for_player! zoo
         classify.learn_deck_for_opponent! miracle
@@ -275,38 +275,32 @@ describe ResultsController do
               result.update_attributes(created_at: created_at, updated_at: updated_at)
             end
 
-            context 'learning twice after a short period' do
+            subject do
+              put :update, params: { id: result.id, result: { deck_id: new_deck_id } }, as: :json
+            end
+
+            describe 'learning twice after a short period' do
               let(:updated_at) { 15.minutes.ago }
               it 'does not learn' do
                 expect(ClassifyDeckForResult).not_to receive(:new)
                 subject
               end
-            end
-
-            context 'learning twice after a long period' do
-              let(:updated_at) { 2.hours.ago }
-
-              subject do
-                put :update, params: { id: result.id, result: { deck_id: new_deck_id } }, as: :json
-                put :update, params: { id: result.id, result: { deck_id: existing_deck_id } }, as: :json
-              end
-
-              context 'default' do
-                it 'learns only once' do
-                  expect(ClassifyDeckForResult).to receive(:new).once.and_call_original
-                  subject
-                end
-              end
 
               context 'as admin' do
-                before do
-                  user.update_attributes(admin: true)
-                end
-                let(:updated_at) { 2.hours.ago }
+                before { user.update_attributes(admin: true) }
                 it 'learns always' do
-                  expect(ClassifyDeckForResult).to receive(:new).twice.and_call_original
+                  expect(ClassifyDeckForResult).to receive(:new).and_call_original
                   subject
                 end
+              end
+            end
+
+            describe 'learning twice after a long period' do
+              let(:updated_at) { 2.hours.ago }
+
+              it 'learns' do
+                expect(ClassifyDeckForResult).to receive(:new).and_call_original
+                subject
               end
             end
           end
