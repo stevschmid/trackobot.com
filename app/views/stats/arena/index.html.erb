@@ -53,7 +53,7 @@
     <tbody>
     <% @stats[:as_hero].each do |hero, stats| %>
     <tr>
-      <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
+      <td class="hero"><%= link_to hero_label(hero.name), stats_params.merge(as_hero: hero.name.downcase) %></td>
       <td class="runs"><%= stats[:runs] %></td>
       <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
       <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>

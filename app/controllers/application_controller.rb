@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     result = RedeemOneTimeAuthToken.call(username: params[:u], token: params[:t])
     if result.success?
       sign_in(result.user)
-      redirect_to url_for(params.except(:u, :t))
+      redirect_to request.path
     else
       follow_the_rules!
     end

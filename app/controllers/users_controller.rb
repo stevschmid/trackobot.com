@@ -11,9 +11,13 @@ class UsersController < ApplicationController
     skip_authorization
 
     username = generate_unique_username
-    @generated_password = generate_password
-    @user = User.create(username: username, password: @generated_password, sign_up_ip: ip_address)
-    respond_with(@user)
+    generated_password = generate_password
+    User.create!(username: username, password: generated_password, sign_up_ip: ip_address)
+
+    render json: {
+      username: username,
+      password: generated_password
+    }
   end
 
   def rename

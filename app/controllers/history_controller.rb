@@ -1,8 +1,8 @@
 class HistoryController < ApplicationController
   include Meta
 
-  after_filter :verify_authorized, except: :index
-  after_filter :verify_policy_scoped
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped
 
   def index
     @unpaged_results = policy_scope(Result).order('results.created_at DESC')

@@ -1,6 +1,6 @@
 class Settings::AccountsController < ApplicationController
   include ApiDenier
-  before_filter :deny_api_calls!
+  before_action :deny_api_calls!
 
   after_action :verify_policy_scoped, except: :show
 

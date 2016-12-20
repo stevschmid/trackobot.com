@@ -44,7 +44,7 @@ gem 'font-awesome-sass'
 
 gem 'redcarpet'
 
-gem 'local_time'
+gem 'local_time', git: 'git@github.com:basecamp/local_time.git', branch: '2-0'
 
 gem 'dotenv-rails'
 

@@ -3,13 +3,14 @@ class Result < ApplicationRecord
 
   has_one :card_history
 
-  belongs_to :hero
-  belongs_to :opponent, class_name: 'Hero', optional: true
+  belongs_to :user
 
-  belongs_to :deck
+  belongs_to :hero
+  belongs_to :opponent, class_name: 'Hero'
+
+  belongs_to :deck, optional: true
   belongs_to :opponent_deck, class_name: 'Deck', optional: true
 
-  belongs_to :user
   belongs_to :arena, optional: true
 
   scope :wins, ->{ where(win: true) }

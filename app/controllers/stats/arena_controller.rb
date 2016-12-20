@@ -3,7 +3,7 @@ class Stats::ArenaController < ApplicationController
 
   include Stats
 
-  before_filter :ensure_arena_mode
+  before_action :ensure_arena_mode
 
   def index
     num_wins_per_arena = user_arenas

@@ -57,7 +57,7 @@
             deck = @decks_by_id[stats[:deck_id]] if stats[:deck_id]
           %>
           <tr>
-            <td class="deck"><%= type %> <%= deck ? link_to(label_for_deck(deck), params.merge("#{type}_deck" => deck.id)) : hero_label(hero.name, label: name) %></td>
+            <td class="deck"><%= type %> <%= deck ? link_to(label_for_deck(deck), stats_params.merge("#{type}_deck" => deck.id)) : hero_label(hero.name, label: name) %></td>
             <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
             <td class="winrate"><%= winrate(stats[:wins], stats[:losses], %w[justified]) %></td>
           </tr>
@@ -65,7 +65,7 @@
         </tbody>
         <%
           values = @stats[key].sort_by { |_, stats| stats[:total] }.reverse.collect do |name, stats|
-            { label: name, value: stats[:total], class: @heroes_by_id[stats[:hero_id]].name.downcase, link: url_for(params.merge("#{type}_deck" => stats[:deck_id])) }
+            { label: name, value: stats[:total], class: @heroes_by_id[stats[:hero_id]].name.downcase, link: url_for(stats_params.merge("#{type}_deck" => stats[:deck_id])) }
           end
         %>
         <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 3}) %>

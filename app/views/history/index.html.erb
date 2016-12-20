@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-4 text-right">
       <div class="btn-group">
-        <%= form_tag params, method: :get do %>
+        <%= form_tag stats_params, method: :get do %>
           <%= text_field_tag :query, @query, placeholder: 'Search...', class: 'history-query form-control input-sm' %>
           <%= content_tag :i, '', class: 'fa fa-times-circle-o history-query-clear' %>
         <% end %>
@@ -49,7 +49,7 @@
             <td class="result"><span class="<%= result.win ? 'win' : 'loss' %>"><%= result.win ? 'Win' : 'Loss' %></span></td>
             <td class="timeline"><%= link_to image_tag('crossed_swords_14.png'), 'javascript:;', timeline_additions(result) unless result.card_history_list.empty? %></td>
             <td class="mode">
-              <%= link_to result.mode, params.merge(mode: result.mode).except(:page) %>
+              <%= link_to result.mode, stats_params.merge(mode: result.mode).except(:page) %>
             </td>
             <td class="note">
               <%= link_to icon('comment'), profile_result_path(result), title: result.note, class: "note-edit-button has-tooltip #{result.note.present? ? 'note-present' : ''}" %>
