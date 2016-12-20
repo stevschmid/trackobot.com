@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :results
   has_many :arenas
   has_many :notification_reads

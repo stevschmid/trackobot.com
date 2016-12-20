@@ -1,4 +1,4 @@
-class Arena < ActiveRecord::Base
+class Arena < ApplicationRecord
   belongs_to :hero
   belongs_to :user
 

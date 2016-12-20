@@ -1,16 +1,16 @@
-class Result < ActiveRecord::Base
+class Result < ApplicationRecord
   enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
   has_one :card_history
 
   belongs_to :hero
-  belongs_to :opponent, class_name: 'Hero'
+  belongs_to :opponent, class_name: 'Hero', optional: true
 
   belongs_to :deck
-  belongs_to :opponent_deck, class_name: 'Deck'
+  belongs_to :opponent_deck, class_name: 'Deck', optional: true
 
   belongs_to :user
-  belongs_to :arena
+  belongs_to :arena, optional: true
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }

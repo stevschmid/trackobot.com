@@ -1,4 +1,4 @@
-class Deck < ActiveRecord::Base
+class Deck < ApplicationRecord
   belongs_to :hero
 
   serialize :classifier, AdaGradClassifier

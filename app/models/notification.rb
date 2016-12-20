@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   validates_presence_of :message
   scope :active, -> { where('hidden = ? AND created_at >= ?', false, 7.days.ago) }
 end
