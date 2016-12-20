@@ -12,7 +12,7 @@ describe HistoryController do
     let!(:result) { FactoryGirl.create(:result, user: user) }
 
     before do
-      get :index, format: :json
+      get :index, as: :json
     end
 
     let(:json) { JSON.parse(response.body, symbolize_names: true) }
@@ -84,7 +84,7 @@ describe HistoryController do
             {turn: 4, player: :opponent, card_id: 'CS2_032'}, # flamestrike
             {turn: 4, player: :me, card_id: 'CS2_033'} # water elemental
           ])
-          get :index, format: :json
+          get :index, as: :json
         end
 
         specify { expect(subject[:card_history].count).to eq 3 }

@@ -19,7 +19,7 @@ describe Settings::AccountsController do
   describe 'POST reset' do
     let(:reset_modes) { %w[ranked casual] }
 
-    subject { post :reset, reset_modes: reset_modes }
+    subject { post :reset, params: { reset_modes: reset_modes } }
 
     it 'deletes the results specified by reset_modes' do
       expect {

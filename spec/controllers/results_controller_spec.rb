@@ -32,7 +32,7 @@ describe ResultsController do
 
   describe 'POST create' do
     it 'creates a result' do
-      post :create, result: result_params, format: :json
+      post :create, params: { result: result_params }, as: :json
       result = user.results.last
 
       expect(result.hero.name).to eq warlock.name
@@ -47,7 +47,7 @@ describe ResultsController do
     context 'with duration information' do
       it 'creates a result' do
         result_params.merge!(duration: 42)
-        post :create, result: result_params, format: :json
+        post :create, params: { result: result_params }, as: :json
         result = user.results.last
         expect(result.duration).to eq 42
       end
@@ -58,7 +58,7 @@ describe ResultsController do
 
       it 'creates a result' do
         result_params.merge!(rank: chicken)
-        post :create, result: result_params, format: :json
+        post :create, params: { result: result_params }, as: :json
         result = user.results.last
         expect(result.rank).to eq chicken
       end
@@ -67,7 +67,7 @@ describe ResultsController do
     context 'with legend information' do
       it 'creates a result' do
         result_params.merge!(legend: 1337)
-        post :create, result: result_params, format: :json
+        post :create, params: { result: result_params }, as: :json
         result = user.results.last
         expect(result.legend).to eq 1337
       end
@@ -82,7 +82,7 @@ describe ResultsController do
       end
 
       it 'adds history' do
-        post :create, result: result_params, format: :json
+        post :create, params: { result: result_params }, as: :json
         result = user.results.last
         expect(result.card_history_list).to eq(card_history)
       end
@@ -102,7 +102,7 @@ describe ResultsController do
         stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_LEARNING', 1)
 
         # learn the classifier
-        post :create, result: result_params, format: :json
+        post :create, params: { result: result_params }, as: :json
         result = assigns(:result)
         classify = ClassifyDeckForResult.new(result)
         classify.learn_deck_for_player! zoo
@@ -112,7 +112,7 @@ describe ResultsController do
       describe 'auto inferral' do
         context 'default (non-arena)' do
           it 'assigns decks on upload' do
-            post :create, result: result_params, format: :json
+            post :create, params: { result: result_params }, as: :json
             result = assigns(:result)
 
             expect(result.deck).to eq zoo
@@ -124,7 +124,7 @@ describe ResultsController do
           let(:mode) { 'arena' }
 
           it 'does not assign decks on upload' do
-            post :create, result: result_params, format: :json
+            post :create, params: { result: result_params }, as: :json
             result = assigns(:result)
 
             expect(result.deck).to eq nil
@@ -135,7 +135,7 @@ describe ResultsController do
 
       describe 'decks supplied' do
         it 'overrides the auto inferring algorithm' do
-          post :create, result: result_params.merge(deck_id: reno.id), format: :json
+          post :create, params: { result: result_params.merge(deck_id: reno.id) }, as: :json
           result = assigns(:result)
           expect(result.deck).to eq reno
         end
@@ -147,10 +147,12 @@ describe ResultsController do
     let(:mode) { :ranked }
     let!(:result) { FactoryGirl.create(:result, user: result_user, mode: mode) }
 
+    subject { delete :destroy, params: { id: result.id } }
+
     context 'my result' do
       let(:result_user) { user }
       specify {
-        expect { delete :destroy, id: result.id }.to change(Result, :count).by(-1)
+        expect { subject }.to change(Result, :count).by(-1)
       }
 
       describe 'arena' do
@@ -162,14 +164,14 @@ describe ResultsController do
 
         context 'last result' do
           specify {
-            expect { delete :destroy, id: result.id }.to change(Arena, :count).by(-1)
+            expect { subject }.to change(Arena, :count).by(-1)
           }
         end
 
         context 'not last result' do
           before { result.arena.results << FactoryGirl.create(:result, mode: :arena) }
           specify {
-            expect { delete :destroy, id: result.id }.not_to change(Arena, :count)
+            expect {subject }.not_to change(Arena, :count)
           }
         end
       end
@@ -178,9 +180,7 @@ describe ResultsController do
     context 'foreign result' do
       let(:result_user) { FactoryGirl.create(:user) }
       specify {
-        expect {
-          delete :destroy, id: result.id
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       }
     end
   end
@@ -194,7 +194,7 @@ describe ResultsController do
 
     let(:result_params) { { deck_id: new_deck_id } }
 
-    subject { put :update, id: result.id, result: result_params, format: :json }
+    subject { put :update, params: { id: result.id, result: result_params }, as: :json }
 
     describe 'decks' do
       describe 'new deck_id' do
@@ -287,8 +287,8 @@ describe ResultsController do
               let(:updated_at) { 2.hours.ago }
 
               subject do
-                put :update, id: result.id, result: { deck_id: new_deck_id }, format: :json
-                put :update, id: result.id, result: { deck_id: existing_deck_id }, format: :json
+                put :update, params: { id: result.id, result: { deck_id: new_deck_id } }, as: :json
+                put :update, params: { id: result.id, result: { deck_id: existing_deck_id } }, as: :json
               end
 
               context 'default' do
@@ -317,7 +317,7 @@ describe ResultsController do
     describe 'user' do
       it 'cannot change the associated user' do
         expect {
-          put :update, id: result.id, result: { user_id: user.id + 1 }
+          put :update, params: { id: result.id, result: { user_id: user.id + 1 } }
         }.not_to change { result.reload.user }
       end
     end
@@ -327,7 +327,7 @@ describe ResultsController do
 
       it 'denies' do
         expect {
-          put :update, id: result.id, result: { deck_id: nil }
+          put :update, params: { id: result.id, result: { deck_id: nil } }
         }.to raise_error ActiveRecord::RecordNotFound
       end
     end

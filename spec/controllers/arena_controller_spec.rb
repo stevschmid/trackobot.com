@@ -13,7 +13,7 @@ describe ArenaController do
     let(:arena) { result.arena }
 
     before do
-      get :index, format: :json
+      get :index, as: :json
     end
 
     let(:json) { JSON.parse(response.body, symbolize_names: true) }
