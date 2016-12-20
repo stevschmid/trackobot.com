@@ -8,19 +8,19 @@ describe AdaGradClassifier do
       let(:gradient) { described_class.compute_gradient(x, y, w) }
 
       context 'when classification ok (no loss)' do
-        let(:w) { AdaGradClassifier::HashVector[a: 0.0, b: 1.0] }
-        let(:x) { AdaGradClassifier::HashVector[b: 1.0, a: 1.0] }
+        let(:w) { HashWithIndifferentAccess[a: 0.0, b: 1.0] }
+        let(:x) { HashWithIndifferentAccess[b: 1.0, a: 1.0] }
         let(:y) { 1 }
 
-        specify { expect(gradient).to eq AdaGradClassifier::HashVector[a: 0.0, b: 0.0] }
+        specify { expect(gradient).to eq HashWithIndifferentAccess[a: 0.0, b: 0.0] }
       end
 
       context 'when classification not ok (loss)' do
-        let(:w) { AdaGradClassifier::HashVector[a: 0.0, b: -1.0] }
-        let(:x) { AdaGradClassifier::HashVector[b: 1.0, a: 0.5] }
+        let(:w) { HashWithIndifferentAccess[a: 0.0, b: -1.0] }
+        let(:x) { HashWithIndifferentAccess[b: 1.0, a: 0.5] }
         let(:y) { 2 }
 
-        specify { expect(gradient).to eq AdaGradClassifier::HashVector[a: -1.0, b: -2.0] }
+        specify { expect(gradient).to eq HashWithIndifferentAccess[a: -1.0, b: -2.0] }
       end
     end
   end
@@ -30,7 +30,7 @@ describe AdaGradClassifier do
   describe '#train' do
     subject { -> { instance.train(x, y) } }
 
-    let(:x) { AdaGradClassifier::HashVector[a: 0.5, b: 2.0] }
+    let(:x) { HashWithIndifferentAccess[a: 0.5, b: 2.0] }
     let(:y) { 1 }
 
     it 'updates the sum of squares' do
@@ -48,7 +48,7 @@ describe AdaGradClassifier do
     end
 
     describe 'two fits' do
-      let(:x2) { AdaGradClassifier::HashVector[b: -1.0, a: 0.5] } # second dim is informative
+      let(:x2) { HashWithIndifferentAccess[b: -1.0, a: 0.5] } # second dim is informative
       let(:y2) { -1 }
 
       it 'updates the weights' do
