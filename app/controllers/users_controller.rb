@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:user_id])
     authorize @user, :update?
     @user.update_attributes(rename_params)
-    redirect_to :back
+    redirect_back(fallback_location: profile_path)
   end
 
   private

@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   def follow_the_rules!
-    render text: 'Unauthorized', status: :unauthorized
+    render body: 'Unauthorized', status: :unauthorized
   end
 
   def sign_in(user)

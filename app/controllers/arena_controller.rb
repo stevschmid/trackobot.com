@@ -16,7 +16,7 @@ class ArenaController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: @arenas, meta: meta(@arenas)
+        render json: @arenas, meta: meta(@arenas), root: 'arena'
       end
     end
   end
