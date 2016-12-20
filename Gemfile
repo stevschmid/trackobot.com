@@ -57,9 +57,6 @@ gem 'local_time'
 group :staging, :production do
   gem 'pg'
   gem 'newrelic_rpm'
-
-  # Use unicorn as the app server
-  gem 'unicorn', '~> 4.8.3'
 end
 
 gem 'dotenv-rails'
@@ -76,3 +73,5 @@ gem 'interactor'
 gem 'bcrypt'
 
 gem 'whenever'
+
+gem 'puma'
