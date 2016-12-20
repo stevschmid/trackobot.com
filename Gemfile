@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.0.0'
 gem 'sass-rails'
-gem 'less-rails'
 gem 'compass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
@@ -34,13 +33,14 @@ end
 
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
 gem 'bootstrap_form'
 gem 'chosen-rails'
 gem 'kaminari'
 gem 'kaminari-bootstrap'
 
 gem 'active_model_serializers'
-gem 'font-awesome-less'
+gem 'font-awesome-sass'
 
 gem 'redcarpet'
 

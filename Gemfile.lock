@@ -45,7 +45,12 @@ GEM
     airbrussh (1.1.1)
       sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
+    autoprefixer-rails (6.5.4)
+      execjs
     bcrypt (3.1.11)
+    bootstrap-sass (3.3.7)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     bootstrap_form (2.5.2)
     builder (3.2.2)
     capistrano (3.7.1)
@@ -108,8 +113,8 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.14)
-    font-awesome-less (4.7.0)
-      less (>= 2.4.0)
+    font-awesome-sass (4.7.0)
+      sass (>= 3.2)
     formatador (0.2.5)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -307,6 +312,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   bcrypt
+  bootstrap-sass
   bootstrap_form
   builder
   capistrano-rails
@@ -316,13 +322,12 @@ DEPENDENCIES
   database_cleaner
   dotenv-rails
   factory_girl_rails
-  font-awesome-less
+  font-awesome-sass
   guard-rspec
   interactor
   jquery-rails
   kaminari
   kaminari-bootstrap
-  less-rails
   local_time
   newrelic_rpm
   pg
