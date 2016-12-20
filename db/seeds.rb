@@ -17,45 +17,6 @@ if Hero.count == 0
   Hero.create(name: 'Druid')
 end
 
-def attributes_by_json_card(card)
-  {
-    ref: card[:id],
-    name: card[:name],
-    description: card[:description],
-    mana: card[:mana],
-    type: card[:type],
-    hero: card[:class],
-    set: card[:set],
-    quality: card[:legendary],
-    race: card[:race],
-    attack: card[:attack],
-    health: card[:health]
-  }
-end
-
-# rake db:seed update_cards=true
-if Card.count == 0 || ENV['update_cards']
-  Card.count.tap do |count_before|
-    cards = JSON.parse(File.read(File.join(Rails.root, 'db', 'cards.json')), symbolize_names: true)
-    cards.each do |card|
-      db_card = Card.where(ref: card[:id]).first_or_initialize
-      db_card.update_attributes(ref: card[:id],
-                                name: card[:name],
-                                description: card[:description],
-                                mana: card[:mana],
-                                type: card[:type],
-                                hero: card[:class],
-                                set: card[:set],
-                                quality: card[:legendary],
-                                race: card[:race],
-                                attack: card[:attack],
-                                health: card[:health])
-    end
-
-    puts "Cards added: #{Card.count - count_before}"
-  end
-end
-
 # rake db:seed update_decks=true
 if Deck.count == 0 || ENV['update_decks']
   Deck.count.tap do |count_before|
