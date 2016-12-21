@@ -8,7 +8,8 @@ class ResultSerializer < ActiveModel::Serializer
 
   def card_history
     object.card_history_list.collect do |it|
-      it.merge(card: CARDS[it[:card_id]].to_h)
+      card = CARDS[it[:card_id]]
+      it.except(:card_id).merge(card: { id: card.id, name: card.name, mana: card.mana })
     end
   end
 
