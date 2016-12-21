@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ClassifyDeckForHero do
 
-  let(:shaman) { Hero.find_by_name('Shaman') }
+  let(:shaman) { 'shaman' }
 
 
   let(:midrange) { Deck.find_by!(key: 'midrange', hero: shaman) }

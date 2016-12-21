@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :arena do
-    hero
+    hero 'shaman'
     user
   end
 end

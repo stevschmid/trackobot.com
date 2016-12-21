@@ -2,7 +2,7 @@ module ResultHelper
   def build_result_with_history(as, vs, mode, user, history)
     @cards_by_name ||= CARDS.values.index_by(&:name)
 
-    FactoryGirl.build(:result, mode: mode, hero: Hero.find_by_name(as), opponent: Hero.find_by_name(vs), user: user).tap do |result|
+    FactoryGirl.build(:result, mode: mode, hero: as, opponent: vs, user: user).tap do |result|
       data = []
 
       history.each_pair do |player, card_names|

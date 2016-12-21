@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :result do
-    hero
-    opponent factory: :hero
+    hero 'priest'
+    opponent 'warrior'
     win true
     coin true
     mode :ranked

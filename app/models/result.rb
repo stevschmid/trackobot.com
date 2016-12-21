@@ -5,8 +5,8 @@ class Result < ApplicationRecord
 
   belongs_to :user
 
-  belongs_to :hero
-  belongs_to :opponent, class_name: 'Hero'
+  enum hero: Hero::MAPPING, _suffix: true
+  enum opponent: Hero::MAPPING, _suffix: true
 
   belongs_to :deck, optional: true
   belongs_to :opponent_deck, class_name: 'Deck', optional: true
@@ -16,7 +16,7 @@ class Result < ApplicationRecord
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
 
-  validates_presence_of :mode, :hero_id, :opponent_id, :user_id
+  validates_presence_of :mode, :hero, :opponent, :user
   validates_inclusion_of :win, in: [true, false]
 
   validates_absence_of :deck_id, if: :arena?
@@ -25,8 +25,8 @@ class Result < ApplicationRecord
   validate :decks_belong_to_rightful_class
 
   def decks_belong_to_rightful_class
-    errors.add(:deck_id, 'is invalid') if deck && deck.hero_id != hero_id
-    errors.add(:opponent_deck_id, 'is invalid') if opponent_deck && opponent_deck.hero_id != opponent_id
+    errors.add(:deck_id, 'is invalid') if deck && deck.hero != self.hero
+    errors.add(:opponent_deck_id, 'is invalid') if opponent_deck && opponent_deck.hero != self.opponent
   end
 
   def added=(timestamp)
@@ -39,20 +39,6 @@ class Result < ApplicationRecord
 
   def card_history_list
     @card_history_list ||= (card_history.try(:data) || []).map(&:symbolize_keys)
-  end
-
-  def hero=(hero)
-    if hero.kind_of?(String)
-      hero = Hero.where('lower(name) = ?', hero.downcase).first
-    end
-    super(hero)
-  end
-
-  def opponent=(opponent)
-    if opponent.kind_of?(String)
-      opponent = Hero.where('lower(name) = ?', opponent.downcase).first
-    end
-    super(opponent)
   end
 
   def result

@@ -18,17 +18,14 @@ class HistoryController < ApplicationController
         @unpaged_results = @unpaged_results.where(mode: Result.modes[@query])
       elsif (decks = Deck.where('name ILIKE ?', "%#{@query}%")) && decks.any?
         @unpaged_results = @unpaged_results.where('deck_id IN (?) OR opponent_deck_id IN (?)', decks.pluck(:id), decks.pluck(:id))
-      elsif hero = Hero.where('name ILIKE ?', "%#{@query}%").first
-        @unpaged_results = @unpaged_results.where('hero_id = ? OR opponent_id = ?', hero.id, hero.id)
+      elsif Hero::MAPPING.has_value?(@query)
+        @unpaged_results = @unpaged_results.where('hero = ? OR opponent = ?', @query)
       else
         @unpaged_results = @unpaged_results.where('note LIKE ?', "%#{@query}%")
       end
     end
 
     @results = @unpaged_results.page(params[:page])
-    @results.includes!(:hero)
-            .includes!(:opponent)
-
     @decks = Deck.all
 
     respond_to do |format|

@@ -1,11 +1,11 @@
 class Deck < ApplicationRecord
-  belongs_to :hero
+  enum hero: Hero::MAPPING, _suffix: true
 
   serialize :classifier, AdaGradClassifier
 
   validates_presence_of :hero, :name
 
   def full_name
-    "#{name} #{hero.name}"
+    "#{name} #{hero.titleize}"
   end
 end

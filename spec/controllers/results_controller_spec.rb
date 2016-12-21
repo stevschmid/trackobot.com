@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ResultsController do
   let(:user) { FactoryGirl.create(:user) }
 
-  let(:rogue) { Hero.find_by_name('Rogue') }
-  let(:warlock) { Hero.find_by_name('Warlock') }
+  let(:rogue) { 'rogue' }
+  let(:warlock) { 'warlock' }
 
   let(:miracle) { Deck.find_by!(key: 'miracle', hero: rogue) }
   let(:zoo) { Deck.find_by!(key: 'zoo', hero: warlock) }
@@ -15,8 +15,8 @@ describe ResultsController do
 
   let(:result_params) do
     {
-      hero: warlock.name,
-      opponent: rogue.name,
+      hero: warlock,
+      opponent: rogue,
       mode: mode,
       coin: true,
       win: true,
@@ -35,8 +35,8 @@ describe ResultsController do
       post :create, params: { result: result_params }, as: :json
       result = user.results.last
 
-      expect(result.hero.name).to eq warlock.name
-      expect(result.opponent.name).to eq rogue.name
+      expect(result.hero).to eq warlock
+      expect(result.opponent).to eq rogue
       expect(result.mode).to eq mode
       expect(result.coin).to eq true
       expect(result.win).to eq true

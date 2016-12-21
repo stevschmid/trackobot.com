@@ -48,13 +48,8 @@ class ClassifyDeckForResult
     return true if card.nil?
     return true if card.type == 'hero' # ignore hero powers
     return true if card.name == 'The Coin' # ignore coin
-    return true if (card_hero = hero_from_card(card)) && player == 'me' && card_hero != result.hero
-    return true if (card_hero = hero_from_card(card)) && player == 'opponent' && card_hero != result.opponent
+    return true if player == 'me' && card[:hero] != result.hero && card[:hero] != 'neutral'
+    return true if player == 'opponent' && card[:hero] != result.opponent && card[:hero] != 'neutral'
     false
-  end
-
-  def hero_from_card(card)
-    @heroes ||= Hero.all.index_by { |hero| hero.name.downcase }
-    @heroes[card.hero]
   end
 end

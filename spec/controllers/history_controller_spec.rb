@@ -31,8 +31,8 @@ describe HistoryController do
 
       its([:id]) { should eq(result.id) }
       its([:mode]) { should eq(result.mode) }
-      its([:hero]) { should eq(result.hero.name) }
-      its([:opponent]) { should eq(result.opponent.name) }
+      its([:hero]) { should eq(result.hero.titleize) }
+      its([:opponent]) { should eq(result.opponent.titleize) }
       its([:coin]) { should eq(result.coin) }
       its([:result]) { should eq(result.win ? 'win' : 'loss') }
       its([:added]) { should eq(result.created_at.iso8601(3)) }
@@ -65,8 +65,8 @@ describe HistoryController do
       end
 
       describe 'decks' do
-        let(:hero) { Hero.find_by_name('Rogue') }
-        let(:opponent) { Hero.find_by_name('Warrior') }
+        let(:hero) { 'rogue' }
+        let(:opponent) { 'warrior' }
 
         let(:deck) { Deck.where(hero: hero).first }
         let(:opponent_deck) { Deck.where(hero: opponent).first }

@@ -15,16 +15,16 @@ class Stats::ArenaController < ApplicationController
     num_wins_per_arena.each { |_, num_wins| count_by_wins[num_wins] += 1 }
 
     as_hero = {}
-    as = user_results.arena.group(:win, :hero_id).count
-    Hero.all.each do |hero|
-      stat = (as_hero[hero] ||= {})
-      stat[:wins]   = as.select { |(win, hero_id), _| win && hero_id == hero.id }.values.sum
-      stat[:losses] = as.select { |(win, hero_id), _| !win && hero_id == hero.id }.values.sum
+    as = user_results.arena.group(:win, :hero).count
+    Hero.all.each do |h|
+      stat = (as_hero[h] ||= {})
+      stat[:wins]   = as.select { |(win, hero), _| win && hero == h }.values.sum
+      stat[:losses] = as.select { |(win, hero), _| !win && hero == h }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
-    num_runs_per_hero = user_arenas.group('arenas.hero_id').count
-    num_runs_per_hero.each { |hero_id, num_runs| as_hero[Hero.find(hero_id)][:runs] = num_runs }
+    num_runs_per_hero = user_arenas.group('arenas.hero').count
+    num_runs_per_hero.each { |hero, num_runs| as_hero[hero][:runs] = num_runs }
 
     @stats = {
       overall: {

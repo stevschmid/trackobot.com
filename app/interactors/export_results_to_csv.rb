@@ -9,9 +9,9 @@ class ExportResultsToCSV
         csv << [
           result.id,
           result.mode,
-          result.hero.name,
+          result.hero.titleize,
           result.deck ? result.deck.name : nil,
-          result.opponent.name,
+          result.opponent.titleize,
           result.opponent_deck ? result.opponent_deck.name : nil,
           result.result,
           result.coin,

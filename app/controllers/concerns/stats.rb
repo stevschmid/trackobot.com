@@ -35,9 +35,11 @@ module Stats
                      results = results.where('created_at >= ? AND created_at <= ?', @time_range_start, @time_range_end)
                    end
                    results = results.where(mode: Result.modes[@mode]) if @mode
-                   results = results.where(hero_id: @as_hero.id) if @as_hero
+
+                   results = results.where(hero: @as_hero) if @as_hero
+                   results = results.where(opponent: @vs_hero) if @vs_hero
+
                    results = results.where(deck_id: @as_deck.id) if @as_deck
-                   results = results.where(opponent_id: @vs_hero.id) if @vs_hero
                    results = results.where(opponent_deck_id: @vs_deck.id) if @vs_deck
                    results
                  end
@@ -49,8 +51,8 @@ module Stats
                        if @time_range
                          user_arenas = user_arenas.where('arenas.created_at >= ? AND arenas.created_at <= ?', @time_range_start, @time_range_end)
                        end
-                       user_arenas = user_arenas.where('arenas.hero_id = ?', @as_hero.id) if @as_hero
-                       user_arenas = user_arenas.where('arenas.opponent_id = ?', @vs_hero.id) if @vs_hero
+                       user_arenas = user_arenas.where('arenas.hero = ?', @as_hero) if @as_hero
+                       user_arenas = user_arenas.where('arenas.opponent = ?', @vs_hero) if @vs_hero
                        user_arenas
                      end
   end
@@ -99,12 +101,12 @@ module Stats
       @vs_deck = Deck.find_by_id(stats_params[:vs_deck])
     end
 
-    if stats_params[:as_hero].present?
-      @as_hero = Hero.where('LOWER(name) = ?', stats_params[:as_hero]).first
+    if Hero::MAPPING.has_value?(stats_params[:as_hero])
+      @as_hero = stats_params[:as_hero]
     end
 
-    if stats_params[:vs_hero].present?
-      @vs_hero = Hero.where('LOWER(name) = ?', stats_params[:vs_hero]).first
+    if Hero::MAPPING.has_value?(stats_params[:vs_hero])
+      @vs_hero = stats_params[:vs_hero]
     end
   end
 

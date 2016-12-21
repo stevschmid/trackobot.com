@@ -1,5 +1,5 @@
 <%
-  eligible_decks = @decks.select { |d| d.hero_id == hero_id }
+  eligible_decks = @decks.select { |d| d.hero == hero }
 %>
 
 <% if !result.arena? && eligible_decks.any? && current_user.deck_tracking? %>

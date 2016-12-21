@@ -30,7 +30,7 @@ describe ArenaController do
       subject { json[:arena].first }
 
       its([:id]) { should eq(arena.id) }
-      its([:hero]) { should eq(arena.hero.name) }
+      its([:hero]) { should eq(arena.hero.titleize) }
       its([:wins]) { should eq(arena.wins.count) }
       its([:losses]) { should eq(arena.losses.count) }
       specify { expect(subject[:results].count).to eq 1 }

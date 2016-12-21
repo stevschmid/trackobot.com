@@ -8,15 +8,15 @@ describe ClassifyDeckForResult do
 
   let(:player_cards) { ['Totem Golem', 'Lightning Bolt', 'Lightning Bolt'] }
   let(:opponent_cards) { ['Fiery War Axe'] }
-  let(:result) { build_result_with_history('Shaman', 'Warrior', :ranked, user, me: player_cards,  opponent: opponent_cards) }
+  let(:result) { build_result_with_history('shaman', 'warrior', :ranked, user, me: player_cards,  opponent: opponent_cards) }
 
   subject { described_class.new(result) }
 
   it 'uses the card list for the specified player' do
-    expect(ClassifyDeckForHero).to receive(:new).with(Hero.find_by_name('Shaman'), { 'AT_052' => 1, 'EX1_238' => 2 }).and_call_original
+    expect(ClassifyDeckForHero).to receive(:new).with('shaman', { 'AT_052' => 1, 'EX1_238' => 2 }).and_call_original
     subject.predict_deck_for_player
 
-    expect(ClassifyDeckForHero).to receive(:new).with(Hero.find_by_name('Warrior'), { 'CS2_106' => 1 }).and_call_original
+    expect(ClassifyDeckForHero).to receive(:new).with('warrior', { 'CS2_106' => 1 }).and_call_original
     subject.predict_deck_for_opponent
   end
 

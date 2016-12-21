@@ -10,7 +10,7 @@ describe Result do
     let(:user) { FactoryGirl.create(:user) }
     let(:mode) { :ranked }
 
-    let(:shaman) { Hero.find_by_name('Shaman') }
+    let(:shaman) { 'shaman' }
 
     let(:midrange_shaman) { Deck.find_by!(key: 'midrange', hero: shaman) }
     let(:aggro_shaman) { Deck.find_by!(key: 'aggro', hero: shaman) }
@@ -54,7 +54,7 @@ describe Result do
       NUM_LEARN_RUNS.times do
         shaman_prob_matrix.each_key do |true_deck|
           card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
-          result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+          result = build_result_with_history 'shaman', 'warrior', mode, user, me: card_list,  opponent: []
           ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
         end
       end
@@ -65,7 +65,7 @@ describe Result do
       NUM_VALIDATION_RUNS.times do
         shaman_prob_matrix.each_key do |true_deck|
           card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
-          result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
+          result = build_result_with_history 'shaman', 'warrior', mode, user, me: card_list,  opponent: []
           AssignDecksToResult.call(result: result)
           num_correct += (result.deck == true_deck ? 1 : 0)
           if result.deck != true_deck

@@ -1,5 +1,6 @@
 class Arena < ApplicationRecord
-  belongs_to :hero
+  enum hero: Hero::MAPPING, _suffix: true
+
   belongs_to :user
 
   has_many :results

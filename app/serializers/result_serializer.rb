@@ -14,7 +14,7 @@ class ResultSerializer < ActiveModel::Serializer
   end
 
   def hero
-    object.hero.name
+    object.hero.titleize
   end
 
   def hero_deck
@@ -22,7 +22,7 @@ class ResultSerializer < ActiveModel::Serializer
   end
 
   def opponent
-    object.opponent.name
+    object.opponent.titleize
   end
 
   def opponent_deck
