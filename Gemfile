@@ -59,3 +59,4 @@ gem 'bcrypt'
 gem 'whenever'
 
 gem 'puma'
+gem 'foreman'
