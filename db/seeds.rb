@@ -4,10 +4,8 @@ if Deck.count == 0 || ENV['update_decks']
     decks_by_hero = JSON.parse(File.read(File.join(Rails.root, 'db', 'decks.json')), symbolize_names: true)
     decks_by_hero.each do |hero_name, decks|
       decks.each do |deck|
-        db_deck = Deck.where(key: deck[:key], hero: hero).first_or_initialize
-        db_deck.update_attributes(key: deck[:key],
-                                  name: deck[:name],
-                                  hero: hero_name.downcase)
+        db_deck = Deck.where(key: deck[:key], hero: hero_name.downcase).first_or_initialize
+        db_deck.update_attributes(name: deck[:name])
       end
     end
 
@@ -16,7 +14,7 @@ if Deck.count == 0 || ENV['update_decks']
 end
 
 if Rails.env.development? && User.count == 0
-  user = User.create(username: 'dev', password: 'dev', password_confirmation: 'dev')
+  user = User.create(username: 'dev', password: 'dev')
   players = [:me, :opponent]
   all_cards = CARDS.values
   all_heroes = Hero::MAPPING.values
