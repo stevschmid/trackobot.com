@@ -1,17 +1,16 @@
 class Result < ApplicationRecord
   enum mode: [:ranked, :casual, :practice, :arena, :friendly]
 
-  has_one :card_history
-
-  belongs_to :user
-
   enum hero: Hero::MAPPING, _suffix: true
   enum opponent: Hero::MAPPING, _suffix: true
 
   belongs_to :deck, optional: true
   belongs_to :opponent_deck, class_name: 'Deck', optional: true
 
+  belongs_to :user
   belongs_to :arena, optional: true
+
+  has_one :card_history
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
