@@ -48,6 +48,10 @@ body {
   cursor: pointer;
 }
 
+.popover {
+ max-width: 100%;
+}
+
 .dotted-baseline {
   border-bottom: 1px dotted $secondary-color;
   cursor: pointer;
