@@ -5,7 +5,7 @@ class Stats::DecksController < ApplicationController
 
   def index
     @decks = policy_scope(Deck)
-    @heroes = Hero.all
+    @heroes = Hero::MAPPING.keys.map(&:to_s)
 
     @decks_by_id = Hash[@decks.collect { |deck| [deck.id, deck] }]
 
@@ -46,13 +46,13 @@ class Stats::DecksController < ApplicationController
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
-    Hero.all.each do |h|
-      key = "Other #{h.name.pluralize}"
+    Hero::MAPPING.keys.map(&:to_s).each do |h|
+      key = "Other #{h.pluralize}"
       stat = (stats[key] ||= {})
       stat[:deck_id] = nil
       stat[:hero] = h
-      stat[:wins]   = grouped.select { |(win, hero, deck_id), _| win && id == hero && deck_id == nil }.values.sum
-      stat[:losses] = grouped.select { |(win, hero, deck_id), _| !win && id == hero && deck_id == nil }.values.sum
+      stat[:wins]   = grouped.select { |(win, hero, deck_id), _| win && h == hero && deck_id == nil }.values.sum
+      stat[:losses] = grouped.select { |(win, hero, deck_id), _| !win && h == hero && deck_id == nil }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
