@@ -101,11 +101,11 @@ module Stats
       @vs_deck = Deck.find_by_id(stats_params[:vs_deck])
     end
 
-    if Hero::MAPPING.has_value?(stats_params[:as_hero])
+    if Hero::LIST.include?(stats_params[:as_hero])
       @as_hero = stats_params[:as_hero]
     end
 
-    if Hero::MAPPING.has_value?(stats_params[:vs_hero])
+    if Hero::LIST.include?(stats_params[:vs_hero])
       @vs_hero = stats_params[:vs_hero]
     end
   end

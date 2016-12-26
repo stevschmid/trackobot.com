@@ -10,4 +10,6 @@ class Hero
     shaman: 8,
     druid: 9
   }
+
+  LIST = MAPPING.keys.map(&:to_s)
 end

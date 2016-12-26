@@ -6,7 +6,7 @@ class Stats::ClassesController < ApplicationController
   def index
     as_class = {}
     as = user_results.group(:win, :hero).count
-    Hero::MAPPING.keys.map(&:to_s).each do |h|
+    Hero::LIST.each do |h|
       stat = (as_class[h] ||= {})
       stat[:wins]   = as.select { |(win, hero), _| win && hero == h }.values.sum
       stat[:losses] = as.select { |(win, hero), _| !win && hero == h }.values.sum
@@ -15,7 +15,7 @@ class Stats::ClassesController < ApplicationController
 
     vs_class = {}
     vs = user_results.group(:win, :opponent).count
-    Hero::MAPPING.keys.map(&:to_s).each do |h|
+    Hero::LIST.each do |h|
       stat = (vs_class[h] ||= {})
       stat[:wins]   = vs.select { |(win, opponent), _| win && opponent == h }.values.sum
       stat[:losses] = vs.select { |(win, opponent), _| !win && opponent == h }.values.sum

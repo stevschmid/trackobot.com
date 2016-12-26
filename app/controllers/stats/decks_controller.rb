@@ -5,7 +5,7 @@ class Stats::DecksController < ApplicationController
 
   def index
     @decks = policy_scope(Deck)
-    @heroes = Hero::MAPPING.keys.map(&:to_s)
+    @heroes = Hero::LIST
 
     @decks_by_id = Hash[@decks.collect { |deck| [deck.id, deck] }]
 
@@ -46,7 +46,7 @@ class Stats::DecksController < ApplicationController
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
-    Hero::MAPPING.keys.map(&:to_s).each do |h|
+    Hero::LIST.each do |h|
       key = "Other #{h.pluralize}"
       stat = (stats[key] ||= {})
       stat[:deck_id] = nil

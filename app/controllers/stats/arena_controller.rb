@@ -16,7 +16,7 @@ class Stats::ArenaController < ApplicationController
 
     as_hero = {}
     as = user_results.arena.group(:win, :hero).count
-    Hero.all.each do |h|
+    Hero::LIST.each do |h|
       stat = (as_hero[h] ||= {})
       stat[:wins]   = as.select { |(win, hero), _| win && hero == h }.values.sum
       stat[:losses] = as.select { |(win, hero), _| !win && hero == h }.values.sum
