@@ -55,7 +55,7 @@ describe Result do
         shaman_prob_matrix.each_key do |true_deck|
           card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
           result = build_result_with_history 'shaman', 'warrior', mode, user, me: card_list,  opponent: []
-          ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
+          LearnPlayerDeckOfResult.call(result: result, player: 'me', deck: true_deck)
         end
       end
 

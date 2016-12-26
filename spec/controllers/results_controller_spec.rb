@@ -97,16 +97,16 @@ describe ResultsController do
       end
 
       before do
-        ClassifyDeckForHero
-        stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_PREDICTION', 1)
-        stub_const('ClassifyDeckForHero::MIN_CARDS_FOR_LEARNING', 1)
+        PredictPlayerDeckOfResult
+        stub_const('PredictPlayerDeckOfResult::MIN_CARDS_FOR_PREDICTION', 1)
+        LearnPlayerDeckOfResult
+        stub_const('LearnPlayerDeckOfResult::MIN_CARDS_FOR_LEARNING', 1)
 
         # learn the classifier
         result = FactoryGirl.create(:result, result_params.except(:card_history))
         result.build_card_history(data: card_history)
-        classify = ClassifyDeckForResult.new(result)
-        classify.learn_deck_for_player! zoo
-        classify.learn_deck_for_opponent! miracle
+        LearnPlayerDeckOfResult.call(result: result, player: 'me', deck: zoo)
+        LearnPlayerDeckOfResult.call(result: result, player: 'opponent', deck: miracle)
       end
 
       describe 'auto inferral' do
@@ -226,7 +226,7 @@ describe ResultsController do
           let(:new_deck_id) { existing_deck_id }
 
           it 'does not learn' do
-            expect(ClassifyDeckForResult).not_to receive(:new)
+            expect(LearnPlayerDeckOfResult).not_to receive(:call)
             subject
           end
         end
@@ -239,9 +239,7 @@ describe ResultsController do
           end
 
           it 'learns the deck provided' do
-            classify = double('classify')
-            expect(ClassifyDeckForResult).to receive(:new).and_return(classify)
-            expect(classify).to receive(:learn_deck_for_player!).with(reno)
+            expect(LearnPlayerDeckOfResult).to receive(:call).with(hash_including(deck: reno))
             subject
           end
 
@@ -249,9 +247,7 @@ describe ResultsController do
             let(:new_deck_id) { nil }
 
             it 'learns that no deck matches' do
-              classify = double('classify')
-              expect(ClassifyDeckForResult).to receive(:new).and_return(classify)
-              expect(classify).to receive(:learn_deck_for_player!).with(nil)
+              expect(LearnPlayerDeckOfResult).to receive(:call).with(hash_including(deck: nil))
               subject
             end
           end
@@ -262,7 +258,7 @@ describe ResultsController do
             let(:mode) { 'arena' }
 
             it 'ignores decks on arena' do
-              expect(ClassifyDeckForResult).not_to receive(:new)
+              expect(LearnPlayerDeckOfResult).not_to receive(:call)
               subject
             end
           end
@@ -282,14 +278,14 @@ describe ResultsController do
             describe 'learning twice after a short period' do
               let(:updated_at) { 15.minutes.ago }
               it 'does not learn' do
-                expect(ClassifyDeckForResult).not_to receive(:new)
+                expect(LearnPlayerDeckOfResult).not_to receive(:new)
                 subject
               end
 
               context 'as admin' do
                 before { user.update_attributes(admin: true) }
                 it 'learns always' do
-                  expect(ClassifyDeckForResult).to receive(:new).and_call_original
+                  expect(LearnPlayerDeckOfResult).to receive(:call).and_call_original
                   subject
                 end
               end
@@ -299,7 +295,7 @@ describe ResultsController do
               let(:updated_at) { 2.hours.ago }
 
               it 'learns' do
-                expect(ClassifyDeckForResult).to receive(:new).and_call_original
+                expect(LearnPlayerDeckOfResult).to receive(:call).and_call_original
                 subject
               end
             end

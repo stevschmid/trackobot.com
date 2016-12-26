@@ -36,11 +36,11 @@ class ResultsController < ApplicationController
     if @result.valid? && !@result.arena?
       unless exclude_result_from_learning?(@result)
         if @result.deck_id_changed?
-          ClassifyDeckForResult.new(@result).learn_deck_for_player! @result.deck
+          LearnPlayerDeckOfResult.call(result: @result, player: 'me', deck: @result.deck)
         end
 
         if @result.opponent_deck_id_changed?
-          ClassifyDeckForResult.new(@result).learn_deck_for_opponent! @result.opponent_deck
+          LearnPlayerDeckOfResult.call(result: @result, player: 'opponent', deck: @result.opponent_deck)
         end
       end
     end

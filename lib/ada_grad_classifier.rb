@@ -33,7 +33,7 @@ class AdaGradClassifier
   end
 
   def predict_score(x)
-    AdaGradClassifier.dot(weights, x)
+    AdaGradClassifier.hash_dot_hash(weights, x)
   end
 
   def self.compute_gradient(x, y, w)
