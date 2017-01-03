@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221191723) do
+ActiveRecord::Schema.define(version: 20170103134930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,12 +97,11 @@ ActiveRecord::Schema.define(version: 20161221191723) do
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
+    t.binary   "card_history_data"
     t.integer  "deck_id"
     t.integer  "opponent_deck_id"
     t.string   "note"
-    t.binary   "card_history_data"
     t.index ["arena_id"], name: "index_results_on_arena_id", using: :btree
-    t.index ["mode"], name: "index_results_on_mode", using: :btree
     t.index ["user_id"], name: "index_results_on_user_id", using: :btree
   end
 
