@@ -11,6 +11,10 @@
     {
       "key": "control",
       "name": "Control"
+    },
+    {
+      "key": "jade",
+      "name": "Jade"
     }
   ],
   "warlock": [
@@ -61,6 +65,10 @@
     {
       "key": "malygos",
       "name": "Malygos"
+    },
+    {
+      "key": "pirate",
+      "name": "Pirate"
     }
   ],
   "hunter": [
@@ -81,6 +89,10 @@
     {
       "key": "freeze",
       "name": "Freeze"
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
     }
   ],
   "paladin": [
@@ -95,6 +107,14 @@
     {
       "key": "secret",
       "name": "Secret"
+    },
+    {
+      "key": "buff",
+      "name": "Buff"
+    },
+    {
+      "key": "murloc",
+      "name": "Murloc"
     }
   ],
   "druid": [
@@ -109,6 +129,10 @@
     {
       "key": "ramp",
       "name": "Ramp"
+    },
+    {
+      "key": "jade",
+      "name": "Jade"
     }
   ],
   "priest": [
@@ -127,6 +151,10 @@
     {
       "key": "cthun",
       "name": "C'Thun"
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
     }
   ]
 }
