@@ -78,7 +78,10 @@ class ResultsController < ApplicationController
     params.require(:result).permit(:mode, :win, :hero, :opponent,
                                    :coin, :duration, :rank, :legend,
                                    :deck_id, :opponent_deck_id,
-                                   :note, :added)
+                                   :note, :added).tap do |p|
+                                     p[:hero].downcase! if p[:hero]
+                                     p[:opponent].downcase! if p[:opponent]
+                                   end
   end
 
 end

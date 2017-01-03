@@ -44,6 +44,14 @@ describe ResultsController do
       expect(result.added).to eq Time.parse('2016-02-02T21:06:00Z')
     end
 
+    context 'upper case heroes' do
+      let(:rogue) { 'Rogue' }
+      it 'creates a result' do
+        post :create, params: { result: result_params }, as: :json
+        expect(response.status).to eq 201
+      end
+    end
+
     context 'with duration information' do
       it 'creates a result' do
         result_params.merge!(duration: 42)
