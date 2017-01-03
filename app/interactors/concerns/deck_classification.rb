@@ -29,7 +29,7 @@ module DeckClassification
   end
 
   def eligible_decks
-    @eligible_decks ||= Deck.where(hero: hero)
+    @eligible_decks ||= Deck.active.where(hero: hero)
   end
 
   def count_card_history?(card_history)

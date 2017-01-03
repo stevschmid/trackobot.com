@@ -7,7 +7,7 @@ namespace :trackobot do
   task :decay_classifiers => :environment do
     λ = Math.log(2) / DECAY_HALF_TIME
 
-    Deck.find_each do |deck|
+    Deck.active.find_each do |deck|
      t  = Time.now - (deck.last_decay_at || Time.now)
      scale = Math.exp(-t*λ)
 

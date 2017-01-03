@@ -3,6 +3,8 @@ require 'ada_grad_classifier'
 class Deck < ApplicationRecord
   enum hero: Hero::MAPPING, _suffix: true
 
+  scope :active, -> { where(active: true) }
+
   class AdaGradClassifier::Serializer
     def self.load(str)
       args = {}

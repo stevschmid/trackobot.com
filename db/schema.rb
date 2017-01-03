@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103140314) do
+ActiveRecord::Schema.define(version: 20170103163751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20170103140314) do
     t.datetime "updated_at"
     t.string   "key"
     t.datetime "last_decay_at"
+    t.boolean  "active",        default: true
     t.index ["hero"], name: "index_decks_on_hero", using: :btree
     t.index ["key", "hero"], name: "index_decks_on_key_and_hero", unique: true, using: :btree
   end
