@@ -1,18 +1,17 @@
-# rake db:seed update_decks=true
-if Deck.count == 0 || ENV['update_decks']
-  Deck.count.tap do |count_before|
-    Deck.update_all(active: false)
+Deck.count.tap do |count_before|
+  Deck.update_all(active: false)
 
-    decks_by_hero = JSON.parse(File.read(File.join(Rails.root, 'db', 'decks.json')), symbolize_names: true)
-    decks_by_hero.each do |hero_name, decks|
-      decks.each do |deck|
-        db_deck = Deck.where(key: deck[:key], hero: hero_name.downcase).first_or_initialize
-        db_deck.update_attributes(name: deck[:name], active: true)
-      end
+  decks_by_hero = JSON.parse(File.read(File.join(Rails.root, 'db', 'decks.json')), symbolize_names: true)
+  decks_by_hero.each do |hero_name, decks|
+    decks.each do |deck|
+      active = deck.has_key?(:active) ? deck[:active] : true
+      db_deck = Deck.where(key: deck[:key], hero: hero_name.downcase).first_or_initialize
+      db_deck.update_attributes(name: deck[:name], active: active)
+      puts "Deactivate #{deck[:name]} #{hero_name}" if !active
     end
-
-    puts "Decks added: #{Deck.count - count_before}"
   end
+
+  puts "Decks added: #{Deck.count - count_before}"
 end
 
 if Rails.env.development? && User.count == 0

@@ -11,6 +11,10 @@
     {
       "key": "control",
       "name": "Control"
+    },
+    {
+      "key": "jade",
+      "name": "Jade"
     }
   ],
   "warlock": [
@@ -34,7 +38,8 @@
     },
     {
       "key": "tempo",
-      "name": "Tempo"
+      "name": "Tempo",
+      "active": false
     },
     {
       "key": "control",
@@ -42,11 +47,13 @@
     },
     {
       "key": "cthun",
-      "name": "C'Thun"
+      "name": "C'Thun",
+      "active": false
     },
     {
       "key": "worgen",
-      "name": "Worgen"
+      "name": "Worgen",
+      "active": false
     }
   ],
   "rogue": [
@@ -56,11 +63,17 @@
     },
     {
       "key": "nzoth",
-      "name": "N'Zoth"
+      "name": "N'Zoth",
+      "active": false
     },
     {
       "key": "malygos",
-      "name": "Malygos"
+      "name": "Malygos",
+      "active": false
+    },
+    {
+      "key": "jade",
+      "name": "Jade"
     }
   ],
   "hunter": [
@@ -70,7 +83,12 @@
     },
     {
       "key": "face",
-      "name": "Face"
+      "name": "Face",
+      "active": false
+    },
+    {
+      "key": "secret",
+      "name": "Secret"
     }
   ],
   "mage": [
@@ -81,6 +99,10 @@
     {
       "key": "freeze",
       "name": "Freeze"
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
     }
   ],
   "paladin": [
@@ -90,31 +112,49 @@
     },
     {
       "key": "nzoth",
-      "name": "N'Zoth"
+      "name": "N'Zoth",
+      "active": false
     },
     {
       "key": "secret",
-      "name": "Secret"
+      "name": "Secret",
+      "active": false
+    },
+    {
+      "key": "murloc",
+      "name": "Murloc"
     }
   ],
   "druid": [
     {
       "key": "cthun",
-      "name": "C'Thun"
+      "name": "C'Thun",
+      "active": false
     },
     {
       "key": "token",
-      "name": "Token"
+      "name": "Token",
+      "active": false
     },
     {
       "key": "ramp",
-      "name": "Ramp"
+      "name": "Ramp",
+      "active": false
+    },
+    {
+      "key": "malygos",
+      "name": "Malygos"
+    },
+    {
+      "key": "jade",
+      "name": "Jade"
     }
   ],
   "priest": [
     {
       "key": "control",
-      "name": "Control"
+      "name": "Control",
+      "active": false
     },
     {
       "key": "dragon",
@@ -122,11 +162,17 @@
     },
     {
       "key": "nzoth",
-      "name": "N'Zoth"
+      "name": "N'Zoth",
+      "active": false
     },
     {
       "key": "cthun",
-      "name": "C'Thun"
+      "name": "C'Thun",
+      "active": false
+    },
+    {
+      "key": "reno",
+      "name": "Reno"
     }
   ]
 }

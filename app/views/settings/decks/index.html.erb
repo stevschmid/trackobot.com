@@ -26,7 +26,7 @@
     %>
     <% sorted_decks_by_hero.each do |hero, decks| %>
       <ul>
-        <% decks.each do |deck| %>
+        <% decks.select(&:active).each do |deck| %>
           <li><%= hero_label(hero.titleize, label: deck.full_name) %></li>
         <% end %>
       </ul>
