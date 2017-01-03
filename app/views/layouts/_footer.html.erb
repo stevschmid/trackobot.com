@@ -12,10 +12,10 @@
   </ul>
   <ul class="right">
     <% if json %>
-      <li><%= link_to('This page in JSON', params.merge(format: :json)) %></li>
+      <li><%= link_to('This page in JSON', stats_params.merge(format: :json)) %></li>
     <% end %>
     <% if csv %>
-      <li><%= link_to('This page in CSV', params.merge(format: :csv)) %></li>
+      <li><%= link_to('This page in CSV', stats_params.merge(format: :csv)) %></li>
     <% end %>
   </ul>
 </div>

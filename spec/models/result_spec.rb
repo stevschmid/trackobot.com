@@ -2,39 +2,7 @@ require 'spec_helper'
 
 describe Result do
 
-  include ResultHelpers
-
-  describe 'arena result' do
-    let(:result) { FactoryGirl.create(:result, mode: :arena) }
-    let(:arena) { result.arena }
-
-    context 'result is the last remaining result of arena' do
-      it 'deletes the arena' do
-        expect { result.destroy }.to change { arena.destroyed? }
-      end
-    end
-
-    context 'result is one among many results of arena' do
-      before do
-        2.times { FactoryGirl.create(:result, arena: arena) }
-      end
-
-      it 'does not delete the arena' do
-        expect { result.destroy }.to_not change { arena.destroyed? }
-      end
-    end
-  end
-
-  describe 'card history list' do
-    let(:first_play) { FactoryGirl.build(:card_history_entry, player: :me) }
-    let(:second_play) { FactoryGirl.build(:card_history_entry, player: :opponent) }
-
-    let(:result) { FactoryGirl.create(:result, mode: :ranked, card_history_list: [first_play, second_play]) }
-
-    it 'has card_history_list in the right order' do
-      expect(result.card_history_list.collect(&:player)).to eq [:me, :opponent]
-    end
-  end
+  include ResultHelper
 
   describe 'deck assignment' do
     # this is some kind of elaborate integration test
@@ -42,15 +10,14 @@ describe Result do
     let(:user) { FactoryGirl.create(:user) }
     let(:mode) { :ranked }
 
-    let(:shaman) { Hero.find_by_name('Shaman') }
+    let(:shaman) { 'shaman' }
 
     let(:midrange_shaman) { Deck.find_by!(key: 'midrange', hero: shaman) }
     let(:aggro_shaman) { Deck.find_by!(key: 'aggro', hero: shaman) }
 
-    let(:shaman_cards) { Card.all.select { |card| card.hero == 'shaman' } }
+    let(:shaman_cards) { CARDS.values.select { |card| card.hero == 'shaman' } }
 
-    def build_card_list(prob_matrix, cards)
-      deck = prob_matrix.keys.sample
+    def build_card_list(prob_matrix, deck, cards)
       probs = prob_matrix[deck]
 
       # avg 12, stddev 5
@@ -64,44 +31,50 @@ describe Result do
         chosen
       end.compact
 
-      [deck, card_list]
+      card_list
     end
 
     it 'does the ring at the right time for the right reasons' do
-      NUM_LEARN_RUNS = 20
+      NUM_LEARN_RUNS = 10
       NUM_VALIDATION_RUNS = 10
 
       shaman_prob_matrix = {
         midrange_shaman => {
-          'Totem Golem' => 0.9,
+          'Totem Golem' => 0.7,
+          'Doomhammer' => 0.2,
           'Lava Burst' => 0.1,
         },
         aggro_shaman => {
           'Totem Golem' => 0.1,
-          'Lava Burst' => 0.9,
+          'Doomhammer' => 0.4,
+          'Lava Burst' => 0.5,
         }
       }
 
-      learn_results = NUM_LEARN_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        result.save!
-
-        [true_deck, result]
+      NUM_LEARN_RUNS.times do
+        shaman_prob_matrix.each_key do |true_deck|
+          card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
+          result = build_result_with_history 'shaman', 'warrior', mode, user, me: card_list,  opponent: []
+          LearnPlayerDeckOfResult.call(result: result, player: 'me', deck: true_deck)
+        end
       end
 
-      learn_results.each do |true_deck, result|
-        ClassifyDeckForResult.new(result).learn_deck_for_player! true_deck
+      num_correct = 0
+      num_total = 0
+
+      NUM_VALIDATION_RUNS.times do
+        shaman_prob_matrix.each_key do |true_deck|
+          card_list = build_card_list(shaman_prob_matrix, true_deck, shaman_cards)
+          result = build_result_with_history 'shaman', 'warrior', mode, user, me: card_list,  opponent: []
+          AssignDecksToResult.call(result: result)
+          num_correct += (result.deck == true_deck ? 1 : 0)
+          if result.deck != true_deck
+            Rails.logger.info "[Classify] #{result.deck ? result.deck.full_name : 'NOT_PREDICTED'} #{true_deck.full_name} #{card_list}"
+          end
+          num_total += 1
+        end
       end
-
-      accuracy = NUM_VALIDATION_RUNS.times.collect do
-        true_deck, card_list = build_card_list(shaman_prob_matrix, shaman_cards)
-        result = build_result_with_history 'Shaman', 'Warrior', mode, user, me: card_list,  opponent: []
-        result.save!
-        result.deck == true_deck ? 1 : 0
-      end.sum / NUM_VALIDATION_RUNS.to_f
-
+      accuracy = num_correct.to_f / num_total
       expect(accuracy).to be >= 0.9
     end
 

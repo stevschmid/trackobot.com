@@ -2,7 +2,7 @@ class ArenaSerializer < ActiveModel::Serializer
   attributes :id, :hero, :wins, :losses
 
   def hero
-    object.hero.name
+    object.hero.titleize
   end
 
   def wins

@@ -2,17 +2,26 @@ class ResultsController < ApplicationController
   respond_to :json, :html
 
   include ApiDenier
-  before_filter :deny_api_calls!, except: %i[create update]
+  before_action :deny_api_calls!, except: %i[create update]
 
-  after_filter :verify_authorized
-  after_filter :verify_policy_scoped
+  after_action :verify_authorized
+  after_action :verify_policy_scoped
 
   def create
     @result = policy_scope(Result).new(safe_params)
     authorize @result
+
     if card_history = params[:result][:card_history]
       add_card_history_to_result(@result, card_history)
     end
+
+    case
+    when @result.arena?
+      AssignArenaToResult.call(result: @result)
+    else
+      AssignDecksToResult.call(result: @result)
+    end
+
     @result.save
     respond_with(:profile, @result.reload)
   end
@@ -27,11 +36,11 @@ class ResultsController < ApplicationController
     if @result.valid? && !@result.arena?
       unless exclude_result_from_learning?(@result)
         if @result.deck_id_changed?
-          ClassifyDeckForResult.new(@result).learn_deck_for_player! @result.deck
+          LearnPlayerDeckOfResult.call(result: @result, player: 'me', deck: @result.deck)
         end
 
         if @result.opponent_deck_id_changed?
-          ClassifyDeckForResult.new(@result).learn_deck_for_opponent! @result.opponent_deck
+          LearnPlayerDeckOfResult.call(result: @result, player: 'opponent', deck: @result.opponent_deck)
         end
       end
     end
@@ -45,6 +54,9 @@ class ResultsController < ApplicationController
     @result = policy_scope(Result).find(params[:id])
     authorize @result
     @result.destroy
+    if @result.arena && @result.arena.results.count == 0
+      @result.arena.destroy
+    end
     respond_with(:profile, @result)
   end
 
@@ -59,21 +71,14 @@ class ResultsController < ApplicationController
   end
 
   def add_card_history_to_result(result, card_history)
-    result.card_history_list = card_history.collect do |card_history_item|
-      card = Card.find_by_ref(card_history_item[:card_id])
-      if card
-        CardHistoryEntry.new(turn: card_history_item[:turn],
-                             player: card_history_item[:player].to_sym,
-                             card: card)
-      else
-        logger.info "Card #{card_history_item[:card_id]} not found in Card Database"
-        nil
-      end
-    end.compact
+    result.build_card_history(data: card_history)
   end
 
   def safe_params
-    params.require(:result).permit(:mode, :win, :hero, :opponent, :coin, :duration, :rank, :legend, :added, :deck_id, :opponent_deck_id, :note)
+    params.require(:result).permit(:mode, :win, :hero, :opponent,
+                                   :coin, :duration, :rank, :legend,
+                                   :deck_id, :opponent_deck_id,
+                                   :note, :added)
   end
 
 end

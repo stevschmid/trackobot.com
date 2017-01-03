@@ -19,7 +19,7 @@ describe Settings::AccountsController do
   describe 'POST reset' do
     let(:reset_modes) { %w[ranked casual] }
 
-    subject { post :reset, reset_modes: reset_modes }
+    subject { post :reset, params: { reset_modes: reset_modes } }
 
     it 'deletes the results specified by reset_modes' do
       expect {
@@ -40,6 +40,8 @@ describe Settings::AccountsController do
     end
 
     describe 'arena' do
+      before { FactoryGirl.create(:result_with_arena, user: user) }
+
       context 'arena specified' do
         let(:reset_modes) { %w[arena] }
         it 'deletes arena runs' do

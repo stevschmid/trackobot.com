@@ -1,8 +1,7 @@
 class ApplicationController < ActionController::Base
-  include Devise::Controllers::Rememberable
   include Pundit
 
-  rescue_from Pundit::NotAuthorizedError, with: :follow_the_rules
+  rescue_from Pundit::NotAuthorizedError, with: :follow_the_rules!
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -10,35 +9,56 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_via_one_time_token, if: -> { params[:u].present? && params[:t].present? }
   before_action :authenticate_via_api_token, if: -> { params[:username].present? && params[:token].present? }
+  before_action :authenticate_via_http_basic
   before_action :authenticate_user!
 
   private
 
-  def authenticate_via_one_time_token
-    token = params[:t]
-    user = User.find_by_username(params[:u])
-    if user && user.check_and_redeem_one_time_authentication_token(token)
-      sign_in(user)
-      remember_me(current_user)
-      redirect_to url_for(params.except(:u, :t))
-    end
-  end
-
-  def authenticate_via_api_token
-    token = params[:token] && params[:token].strip
-    unless token.blank?
-      user = User.find_by_username_and_api_authentication_token(params[:username], params[:token])
-      if user
-        sign_in(user, store: false)
+  def authenticate_via_http_basic
+    authenticate_with_http_basic do |username, password|
+      result = AuthenticateUser.call(username: username, password: password)
+      if result.success?
+        @current_user = result.user
       end
     end
   end
 
-  def after_sign_in_path_for(resource)
-    profile_history_index_path
+  def authenticate_user!
+    if current_user.nil?
+      redirect_to new_sessions_path, flash: { error: 'You need to log in first!' }
+      return
+    end
   end
 
-  def follow_the_rules
-    render text: 'Unauthorized', status: :unauthorized
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user
+  end
+
+  def authenticate_via_one_time_token
+    result = RedeemOneTimeAuthToken.call(username: params[:u], token: params[:t])
+    if result.success?
+      sign_in(result.user)
+      redirect_to request.path
+    else
+      follow_the_rules!
+    end
+  end
+
+  def authenticate_via_api_token
+    result = AuthenticateAPIUser.call(username: params[:username], token: params[:token])
+    if result.success?
+      @current_user = result.user
+    else
+      follow_the_rules!
+    end
+  end
+
+  def follow_the_rules!
+    render body: 'Unauthorized', status: :unauthorized
+  end
+
+  def sign_in(user)
+    session[:user_id] = user.id
   end
 end

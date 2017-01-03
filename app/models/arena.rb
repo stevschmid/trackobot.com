@@ -1,12 +1,11 @@
-class Arena < ActiveRecord::Base
-  paginates_per 15
+class Arena < ApplicationRecord
+  enum hero: Hero::MAPPING, _suffix: true
 
-  belongs_to :hero
   belongs_to :user
 
   has_many :results
 
-  validates_presence_of :hero_id, :user_id
+  validates_presence_of :hero, :user
 
   def wins
     results.wins

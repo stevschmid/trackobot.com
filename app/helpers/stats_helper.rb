@@ -39,6 +39,10 @@ module StatsHelper
       order = Stats::DEFAULT_ORDER
     end
 
-    link_to label, params.merge(sort_by: sort_by, order: order)
+    link_to label, stats_params.merge(sort_by: sort_by, order: order)
+  end
+
+  def stats_params
+    params.permit(*Stats::PARAMS)
   end
 end

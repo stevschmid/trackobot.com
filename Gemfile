@@ -1,31 +1,16 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-gem 'compass-rails', '~> 2.0.4'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-# respond_with/respond_to
-gem 'responders', '~> 2.0'
+gem 'rails', '~> 5.0.1'
+gem 'sass-rails'
+gem 'compass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
+gem 'responders'
 
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
-
-# Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
-gem 'devise'
-
 gem 'builder'
+gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -33,41 +18,47 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'database_cleaner'
   gem 'guard-rspec', require: false
+  gem 'awesome_print'
+  gem 'rails-controller-testing'
 end
 
-gem 'web-console', '~> 2.0', group: :development
+group :development do
+  gem 'spring'
+  gem 'capistrano-rails'
+  gem 'web-console'
+end
+
+group :staging, :production do
+  gem 'newrelic_rpm'
+  gem 'rollbar'
+  gem 'oj'
+end
 
 gem 'therubyracer'
-gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails'
-
+gem 'bootstrap-sass'
 gem 'bootstrap_form'
 gem 'chosen-rails'
-
 gem 'kaminari'
-gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari-bootstrap'
 
-gem 'active_model_serializers', github: 'rails-api/active_model_serializers', branch: '0-8-stable'
-
-gem 'font-awesome-less'
+gem 'active_model_serializers'
+gem 'font-awesome-sass'
 
 gem 'redcarpet'
 
-gem 'local_time'
-
-group :staging, :production do
-  gem 'pg'
-  gem 'newrelic_rpm'
-end
+gem 'local_time', git: 'git@github.com:basecamp/local_time.git', branch: '2-0'
 
 gem 'dotenv-rails'
-group :development do
-  # Use Capistrano for deployment
-  gem 'capistrano-rails'
-end
 
 gem 'possessive'
 
 gem 'pundit'
 
+gem 'interactor'
+gem 'bcrypt'
+
+gem 'whenever'
+
 gem 'puma'
+gem 'foreman'

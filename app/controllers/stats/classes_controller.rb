@@ -5,20 +5,20 @@ class Stats::ClassesController < ApplicationController
 
   def index
     as_class = {}
-    as = user_results.group(:win, :hero_id).count
-    Hero.all.each do |hero|
-      stat = (as_class[hero] ||= {})
-      stat[:wins]   = as.select { |(win, hero_id), _| win && hero_id == hero.id }.values.sum
-      stat[:losses] = as.select { |(win, hero_id), _| !win && hero_id == hero.id }.values.sum
+    as = user_results.group(:win, :hero).count
+    Hero::LIST.each do |h|
+      stat = (as_class[h] ||= {})
+      stat[:wins]   = as.select { |(win, hero), _| win && hero == h }.values.sum
+      stat[:losses] = as.select { |(win, hero), _| !win && hero == h }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
     vs_class = {}
-    vs = user_results.group(:win, :opponent_id).count
-    Hero.all.each do |hero|
-      stat = (vs_class[hero] ||= {})
-      stat[:wins]   = vs.select { |(win, opponent_id), _| win && opponent_id == hero.id }.values.sum
-      stat[:losses] = vs.select { |(win, opponent_id), _| !win && opponent_id == hero.id }.values.sum
+    vs = user_results.group(:win, :opponent).count
+    Hero::LIST.each do |h|
+      stat = (vs_class[h] ||= {})
+      stat[:wins]   = vs.select { |(win, opponent), _| win && opponent == h }.values.sum
+      stat[:losses] = vs.select { |(win, opponent), _| !win && opponent == h }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 

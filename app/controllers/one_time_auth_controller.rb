@@ -2,8 +2,11 @@ class OneTimeAuthController < ApplicationController
   respond_to :json
 
   def create
-    token = current_user.regenerate_one_time_authentication_token!
-    @url = profile_url(u: current_user.username, t: token)
-    respond_with(@url)
+    result = RegenerateToken.call(user: current_user, token_name: :one_time_authentication_token)
+    url = profile_url(u: current_user.username, t: result.token)
+
+    render json: {
+      url: url
+    }
   end
 end

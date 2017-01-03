@@ -1,38 +1,31 @@
 class ResultSerializer < ActiveModel::Serializer
   attributes :id, :mode, :hero, :hero_deck, :opponent, :opponent_deck,
-    :coin, :result, :arena_id, :duration, :rank, :legend, :note, :added
+    :coin, :result, :duration, :note, :added, :card_history
 
-  has_many :card_history_list, key: :card_history, serializer: CardHistoryEntrySerializer
+  attribute :arena_id, if: -> (r) { r.object.arena? }
+  attribute :rank, if: -> (r) { r.object.ranked? }
+  attribute :legend, if: -> (r) { r.object.ranked? }
 
-  def card_histories
-    object.card_histories.order(:id)
+  def card_history
+    object.card_history_list.collect do |it|
+      card = CARDS[it[:card_id]]
+      it.except(:card_id).merge(card: { id: card.id, name: card.name, mana: card.mana })
+    end
   end
 
   def hero
-    object.hero.name
+    object.hero.titleize
   end
 
   def hero_deck
-    object.deck ? object.deck.name : nil
+    object.deck.try(:name)
   end
 
   def opponent
-    object.opponent.name
+    object.opponent.titleize
   end
 
   def opponent_deck
-    object.opponent_deck ? object.opponent_deck.name : nil
-  end
-
-  def include_arena_id?
-    object.arena?
-  end
-
-  def include_rank?
-    object.ranked?
-  end
-
-  def include_legend?
-    object.ranked?
+    object.opponent_deck.try(:name)
   end
 end

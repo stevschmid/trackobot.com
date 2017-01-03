@@ -1,0 +1,7 @@
+<h2>Sign in</h2>
+
+<%= bootstrap_form_tag url: sessions_path do |f| %>
+  <%= f.text_field :username, autofocus: true, class: 'form-control' %>
+  <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+  <%= f.submit "Sign in", class: 'btn btn-primary' %>
+<% end %>

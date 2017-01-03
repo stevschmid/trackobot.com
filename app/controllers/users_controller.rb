@@ -11,19 +11,20 @@ class UsersController < ApplicationController
     skip_authorization
 
     username = generate_unique_username
-    @generated_password = generate_password
-    @user = User.create(username: username,
-                        password: @generated_password,
-                        password_confirmation: @generated_password,
-                        sign_up_ip: ip_address)
-    respond_with(@user)
+    generated_password = generate_password
+    User.create!(username: username, password: generated_password, sign_up_ip: ip_address)
+
+    render json: {
+      username: username,
+      password: generated_password
+    }
   end
 
   def rename
     @user = User.find(params[:user_id])
     authorize @user, :update?
     @user.update_attributes(rename_params)
-    redirect_to :back
+    redirect_back(fallback_location: profile_path)
   end
 
   private
@@ -40,7 +41,7 @@ class UsersController < ApplicationController
     if User.where(sign_up_ip: ip_address)
            .where('created_at > ?', 10.minutes.ago).count >= 3
     then
-      render nothing: true, status: 429
+      head 429
     end
   end
 

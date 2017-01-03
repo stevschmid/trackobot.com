@@ -5,13 +5,12 @@ class Stats::DecksController < ApplicationController
 
   def index
     @decks = policy_scope(Deck)
-    @heroes = Hero.all
+    @heroes = Hero::LIST
 
     @decks_by_id = Hash[@decks.collect { |deck| [deck.id, deck] }]
-    @heroes_by_id = Hash[@heroes.collect { |hero| [hero.id, hero] }]
 
-    as_deck = collect_stats(:hero_id, :deck_id)
-    vs_deck = collect_stats(:opponent_id, :opponent_deck_id)
+    as_deck = collect_stats(:hero, :deck_id)
+    vs_deck = collect_stats(:opponent, :opponent_deck_id)
 
     @stats = {
       overall: {
@@ -41,19 +40,19 @@ class Stats::DecksController < ApplicationController
       key = deck.full_name
       stat = (stats[key] ||= {})
       stat[:deck_id] = deck.id
-      stat[:hero_id] = deck.hero_id
+      stat[:hero] = deck.hero
       stat[:wins]   = grouped.select { |(win, _, deck_id), _| win && deck_id == deck.id }.values.sum
       stat[:losses] = grouped.select { |(win, _, deck_id), _| !win && deck_id == deck.id }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 
-    Hero.all.each do |hero|
-      key = "Other #{hero.name.pluralize}"
+    Hero::LIST.each do |h|
+      key = "Other #{h.pluralize}"
       stat = (stats[key] ||= {})
       stat[:deck_id] = nil
-      stat[:hero_id] = hero.id
-      stat[:wins]   = grouped.select { |(win, id, deck_id), _| win && id == hero.id && deck_id == nil }.values.sum
-      stat[:losses] = grouped.select { |(win, id, deck_id), _| !win && id == hero.id && deck_id == nil }.values.sum
+      stat[:hero] = h
+      stat[:wins]   = grouped.select { |(win, hero, deck_id), _| win && h == hero && deck_id == nil }.values.sum
+      stat[:losses] = grouped.select { |(win, hero, deck_id), _| !win && h == hero && deck_id == nil }.values.sum
       stat[:total]  = stat[:wins] + stat[:losses]
     end
 

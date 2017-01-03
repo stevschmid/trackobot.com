@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-
   root 'static#index'
+
+  resource :sessions, only: [:new, :create, :destroy]
 
   namespace :profile, module: false do
     get '/' => 'history#index'
@@ -17,7 +17,6 @@ Rails.application.routes.draw do
     namespace :stats do
       resources :classes, only: :index
       resources :decks, only: :index
-      resources :custom_decks, only: :index
       resources :arena, only: :index
     end
 

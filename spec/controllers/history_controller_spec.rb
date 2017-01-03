@@ -31,8 +31,8 @@ describe HistoryController do
 
       its([:id]) { should eq(result.id) }
       its([:mode]) { should eq(result.mode) }
-      its([:hero]) { should eq(result.hero.name) }
-      its([:opponent]) { should eq(result.opponent.name) }
+      its([:hero]) { should eq(result.hero.titleize) }
+      its([:opponent]) { should eq(result.opponent.titleize) }
       its([:coin]) { should eq(result.coin) }
       its([:result]) { should eq(result.win ? 'win' : 'loss') }
       its([:added]) { should eq(result.created_at.iso8601(3)) }
@@ -50,7 +50,7 @@ describe HistoryController do
       end
 
       context 'arena' do
-        let!(:result) { FactoryGirl.create(:result, mode: :arena, user: user) }
+        let!(:result) { FactoryGirl.create(:result_with_arena, mode: :arena, user: user) }
         its([:arena_id]) { should eq(result.arena.id) }
       end
 
@@ -65,8 +65,8 @@ describe HistoryController do
       end
 
       describe 'decks' do
-        let(:hero) { Hero.find_by_name('Rogue') }
-        let(:opponent) { Hero.find_by_name('Warrior') }
+        let(:hero) { 'rogue' }
+        let(:opponent) { 'warrior' }
 
         let(:deck) { Deck.where(hero: hero).first }
         let(:opponent_deck) { Deck.where(hero: opponent).first }
@@ -79,20 +79,15 @@ describe HistoryController do
 
       describe 'card history' do
         before do
-          list = [
-            # unleash
-            CardHistoryEntry.new(turn: 3, player: :me, card: Card.find_by_ref('EX1_538')),
-            # flamestrike
-            CardHistoryEntry.new(turn: 4, player: :opponent, card: Card.find_by_ref('CS2_032')),
-            # water elemental
-            CardHistoryEntry.new(turn: 4, player: :me, card: Card.find_by_ref('CS2_033'))
-          ]
-          result.update_attributes(card_history_list: list)
-
+          result.create_card_history(data: [
+            {turn: 3, player: :me, card_id: 'EX1_538'}, # unleash
+            {turn: 4, player: :opponent, card_id: 'CS2_032'}, # flamestrike
+            {turn: 4, player: :me, card_id: 'CS2_033'} # water elemental
+          ])
           get :index, format: :json
         end
 
-        specify { expect(subject[:card_history].count).to eq 3 }
+        specify { expect(json_result[:card_history].count).to eq 3 }
 
         describe 'card_history structure' do
           let(:json_card_history) { json_result[:card_history] }
@@ -103,7 +98,6 @@ describe HistoryController do
 
           describe 'card structure' do
             subject { json_card_history.first[:card] }
-
             its([:name]) { should eq 'Unleash the Hounds' }
             its([:id]) { should eq 'EX1_538' }
             its([:mana]) { should eq 3 }

@@ -1,19 +1,23 @@
-class Deck < ActiveRecord::Base
-  belongs_to :hero
+class Deck < ApplicationRecord
+  enum hero: Hero::MAPPING, _suffix: true
 
-  serialize :classifier, AdaGradClassifier
+  class AdaGradClassifier::Serializer
+    def self.load(str)
+      args = {}
+      args = JSON.parse(str, symbolize_names: true) unless str.blank?
+      AdaGradClassifier.new args
+    end
+
+    def self.dump(obj)
+      obj.to_json
+    end
+  end
+
+  serialize :classifier, AdaGradClassifier::Serializer
 
   validates_presence_of :hero, :name
 
-  def to_s
-    name
-  end
-
-  def self.reset_all_classifiers!
-    Deck.update_all(classifier: nil)
-  end
-
   def full_name
-    "#{name} #{hero.name}"
+    "#{name} #{hero.titleize}"
   end
 end

@@ -15,7 +15,7 @@
 
 <%= render partial: '/layouts/notifications' %>
 
-<%= render(partial: '/layouts/filter', locals: {name: 'As', label: hero_label(@as_hero.name), param: :as_hero}) if @as_hero %>
+<%= render(partial: '/layouts/filter', locals: {name: 'As', label: hero_label(@as_hero.titleize), param: :as_hero}) if @as_hero %>
 
 <div class="panel panel-default">
   <table class="table table-hover table-condensed stats arena-stats">
@@ -53,7 +53,7 @@
     <tbody>
     <% @stats[:as_hero].each do |hero, stats| %>
     <tr>
-      <td class="hero"><%= link_to hero_label(hero.name), params.merge(as_hero: hero.name.downcase) %></td>
+      <td class="hero"><%= link_to hero_label(hero.titleize), stats_params.merge(as_hero: hero.titleize.downcase) %></td>
       <td class="runs"><%= stats[:runs] %></td>
       <td class="wins-average"><%= ratio(stats[:wins], stats[:runs]) %></td>
       <td class="win-loss"><%= win_loss(stats[:wins], stats[:losses]) %></td>
@@ -63,7 +63,7 @@
     </tbody>
     <%
       values = @stats[:as_hero].sort_by { |_, stats| stats[:total] }.reverse.collect do |hero, stats|
-        { label: hero.name, value: stats[:total], class: hero.name.downcase }
+        { label: hero.titleize, value: stats[:total], class: hero.titleize.downcase }
       end
     %>
     <%= render(partial: '/stats/shared/class_distribution_bar', locals: {values: values, colspan: 5}) %>

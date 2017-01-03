@@ -1,45 +1,24 @@
 class AdaGradClassifier
-  class HashVector < Hash
-    def initialize(*args)
-      super
-      symbolize_keys!
-    end
-
-    def self.[](*args)
-      super.symbolize_keys
-    end
-
-    def dot(other)
-      dup_keys = self.keys & other.keys
-      dup_keys.inject(0.0) do |sum, key|
-        sum + self[key]*other[key]
-      end
-    end
-
-    def *(scalar)
-      Hash[self.collect do |key, value|
-        [key, value * scalar]
-      end]
-    end
-  end
-
   attr_reader :sum_of_squared_gradients, :master_learn_rate, :weights
 
-  def initialize(master_learn_rate: 1.0)
-    @master_learn_rate = master_learn_rate
-    @sum_of_squared_gradients = HashVector.new(0.0)
-    @weights = HashVector.new(0.0)
+  def initialize(master_learn_rate: 1.0, sum_of_squared_gradients: {}, weights: {})
+    @master_learn_rate                = master_learn_rate
+    @sum_of_squared_gradients         = HashWithIndifferentAccess.new(sum_of_squared_gradients)
+    @sum_of_squared_gradients.default = 0.0
+    @weights                          = HashWithIndifferentAccess.new(weights)
+    @weights.default                  = 0.0
+  end
+
+  def scale_sum_gradient_by(scalar)
+    @sum_of_squared_gradients = AdaGradClassifier.hash_scalar_mult(@sum_of_squared_gradients, scalar)
   end
 
   def train(x, y)
     raise "y must be -1 or 1" unless [-1, 1].include?(y)
 
-    # make sure input is a hash vector
-    x = HashVector[x]
-
     # compute gradient at time t and add it to our history
-    gradient = self.class.compute_gradient(x, y, weights)
-    gradient.each_key do |key, g|
+    gradient = AdaGradClassifier.compute_gradient(x, y, weights)
+    gradient.each_key do |key|
       @sum_of_squared_gradients[key] += gradient[key] ** 2
     end
 
@@ -50,52 +29,39 @@ class AdaGradClassifier
   end
 
   def predict(x)
-    weights.dot(HashVector[x]) > 0.0 ? 1 : -1
+    predict_score(x) > 0.0 ? 1 : -1
   end
 
   def predict_score(x)
-    weights.dot(HashVector[x])
+    AdaGradClassifier.hash_dot_hash(weights, x)
   end
 
   def self.compute_gradient(x, y, w)
     # hinge loss max(0, 1 - y*w*t)
     case
-    when y * w.dot(x) >= 1
-      HashVector[w.keys.collect do |key|
-        [key, 0.0]
-      end]
+    when y * hash_dot_hash(w, x) >= 1
+      HashWithIndifferentAccess[w.keys.collect { |key| [key, 0.0] }]
     else
-      x * -y
+      hash_scalar_mult(x, -y)
     end
   end
 
-  # for saving/restoring
-  def self.dump(clf)
-    JSON.dump clf.export
-  end
-
-  def self.load(obj)
-    AdaGradClassifier.new.tap do |clf|
-      clf.import JSON.load(obj, nil, symbolize_names: true) if obj
+  def self.hash_scalar_mult(h, scalar)
+    h.dup.tap do |res|
+      res.each_key do |key|
+        res[key] *= scalar
+      end
     end
   end
 
-  def import(settings = {})
-    @master_learn_rate = settings[:master_learn_rate] if settings[:master_learn_rate]
-
-    @sum_of_squared_gradients = HashVector[settings[:sum_of_squared_gradients]] if settings[:sum_of_squared_gradients]
-    @sum_of_squared_gradients.default = 0.0
-
-    @weights = HashVector[settings[:weights]] if settings[:weights]
-    @weights.default = 0.0
-  end
-
-  def export
-    {
-      master_learn_rate: @master_learn_rate,
-      sum_of_squared_gradients: @sum_of_squared_gradients,
-      weights: @weights
-    }
+  def self.hash_dot_hash(h1, h2)
+    h1.inject(0.0) do |sum, (key, _)|
+      if h2.has_key?(key)
+        sum + h1[key] * h2[key]
+      else
+        sum
+      end
+    end
   end
 
 end

@@ -1,4 +1,4 @@
-$(document).on 'ready page:load', ->
+$(document).on 'turbolinks:load', ->
   $(".chosen-select").chosen()
 
   $("a[rel~=popover], .has-popover").popover()

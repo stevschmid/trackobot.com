@@ -8,7 +8,6 @@
       <ul class="dropdown-menu" role="menu">
         <%= nav_link 'Classes', profile_stats_classes_path %>
         <%= nav_link 'Decks', profile_stats_decks_path if current_user.deck_tracking? %>
-        <%= nav_link "Decks (Old)", profile_stats_custom_decks_path if current_user.custom_decks.any? %>
         <%= nav_link 'Arena', profile_stats_arena_index_path %>
       </ul>
     </li>
@@ -19,7 +18,7 @@
         <%= nav_link 'Decks', profile_settings_decks_path %>
         <%= nav_link 'API', profile_settings_api_path %>
         <%= nav_link 'Account', profile_settings_account_path %>
-        <%= nav_link 'Logout', destroy_user_session_path, false, method: :delete %>
+        <%= nav_link 'Logout', sessions_path, false, method: :delete %>
       </ul>
     </li>
   </ul>
