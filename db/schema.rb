@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170103134930) do
+ActiveRecord::Schema.define(version: 20170103140314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20170103134930) do
     t.integer  "mode"
     t.boolean  "coin"
     t.boolean  "win"
-    t.integer  "hero"
-    t.integer  "opponent"
+    t.integer  "hero",             limit: 2
+    t.integer  "opponent",         limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -97,7 +97,6 @@ ActiveRecord::Schema.define(version: 20170103134930) do
     t.integer  "duration"
     t.integer  "rank"
     t.integer  "legend"
-    t.binary   "card_history_data"
     t.integer  "deck_id"
     t.integer  "opponent_deck_id"
     t.string   "note"
