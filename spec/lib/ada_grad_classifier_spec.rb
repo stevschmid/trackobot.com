@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ada_grad_classifier'
 
 describe AdaGradClassifier do
   describe '::compute_gradient' do

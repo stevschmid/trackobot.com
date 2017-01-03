@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 20170103140314) do
     t.integer  "mode"
     t.boolean  "coin"
     t.boolean  "win"
-    t.integer  "hero",
-    t.integer  "opponent",
+    t.integer  "hero"
+    t.integer  "opponent"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"

@@ -1,3 +1,5 @@
+require 'security'
+
 class AuthenticateAPIUser
   include Interactor
 

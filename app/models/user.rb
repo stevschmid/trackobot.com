@@ -1,3 +1,5 @@
+require 'security'
+
 class User < ApplicationRecord
   has_many :results
   has_many :arenas

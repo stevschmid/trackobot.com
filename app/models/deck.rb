@@ -1,3 +1,5 @@
+require 'ada_grad_classifier'
+
 class Deck < ApplicationRecord
   enum hero: Hero::MAPPING, _suffix: true
 

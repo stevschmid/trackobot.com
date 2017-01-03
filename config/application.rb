@@ -30,10 +30,6 @@ module Trackobot
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Enable auto loads from lib
-    config.autoload_paths << Rails.root.join('lib')
-    config.autoload_paths << Rails.root.join('app', 'interactors')
-
     # rails 5
     config.active_record.belongs_to_required_by_default = true
 

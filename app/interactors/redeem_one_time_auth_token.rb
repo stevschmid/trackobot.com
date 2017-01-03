@@ -1,3 +1,5 @@
+require 'security'
+
 class RedeemOneTimeAuthToken
   include Interactor
 
