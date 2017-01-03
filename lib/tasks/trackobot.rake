@@ -1,9 +1,10 @@
+DECAY_HALF_TIME = 15.days
+
 namespace :trackobot do
   # Meta shifts, new decks get added
   # -> We need to reduce the sum of gradients
   # -> Learning gets easier
   task :decay_classifiers => :environment do
-    DECAY_HALF_TIME = 30.days
     λ = Math.log(2) / DECAY_HALF_TIME
 
     Deck.find_each do |deck|
