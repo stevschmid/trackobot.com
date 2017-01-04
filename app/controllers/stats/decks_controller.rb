@@ -47,7 +47,7 @@ class Stats::DecksController < ApplicationController
     end
 
     Hero::LIST.each do |h|
-      key = "Other #{h.pluralize}"
+      key = "Other #{h.pluralize.titleize}"
       stat = (stats[key] ||= {})
       stat[:deck_id] = nil
       stat[:hero] = h
