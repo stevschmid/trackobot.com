@@ -183,6 +183,24 @@ describe ResultsController do
           }
         end
       end
+
+      context 'with some card history' do
+        let(:card_history) do
+          [
+            {card_id: 'EX1_105', player: 'opponent'}, # opponent played handlock
+            {card_id: 'EX1_095', player: 'me'} # I played miracle
+          ]
+        end
+
+        before do
+          result.build_card_history(data: card_history)
+          result.save!
+        end
+
+        it 'is able to delete' do
+          expect { subject }.to change { Result.count }.by(-1)
+        end
+      end
     end
 
     context 'foreign result' do

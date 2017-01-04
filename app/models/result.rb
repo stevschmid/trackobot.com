@@ -10,7 +10,7 @@ class Result < ApplicationRecord
   belongs_to :user
   belongs_to :arena, optional: true
 
-  has_one :card_history
+  has_one :card_history, dependent: :destroy
 
   scope :wins, ->{ where(win: true) }
   scope :losses, ->{ where(win: false) }
