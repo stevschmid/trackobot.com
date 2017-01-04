@@ -98,4 +98,18 @@ module HistoryHelper
 
     groups
   end
+
+  def deck_edit(result, type, field)
+    eligible_decks = @decks.select { |d| d.hero == result.send(type) }
+    return if result.arena? || eligible_decks.empty? || !current_user.deck_tracking?
+    blank_name = "Other #{result.send(type).titleize}"
+
+    [
+      form_for([:profile, result], html: { class: %w[deck-edit-form hidden] }) do |f|
+        f.collection_select field, eligible_decks, :id, :full_name, { include_blank: blank_name, selected: result.send(field) }
+      end,
+      icon('pencil', class: 'deck-edit-button')
+    ].join.html_safe
+  end
+
 end

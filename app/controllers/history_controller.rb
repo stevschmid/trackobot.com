@@ -29,6 +29,8 @@ class HistoryController < ApplicationController
       @unpaged_results = @unpaged_results.where('results.created_at > ?', Time.parse(params[:added_after]))
     end
 
+    @unpaged_results = @unpaged_results.includes(:card_history)
+
     @results = @unpaged_results.page(params[:page])
     @decks = Deck.all
 
