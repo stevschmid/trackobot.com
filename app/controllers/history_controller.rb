@@ -32,7 +32,7 @@ class HistoryController < ApplicationController
     @unpaged_results = @unpaged_results.includes(:card_history)
 
     @results = @unpaged_results.page(params[:page])
-    @decks = Deck.all
+    @decks = Deck.active
 
     respond_to do |format|
       format.html
