@@ -7,7 +7,7 @@ class LearnPlayerDeckOfResult
   def call
     true_deck   = context.deck
     return if num_cards < MIN_CARDS_FOR_LEARNING
-    fail!(error: "Ineligible deck #{true_deck} ≠ #{hero}") if true_deck && eligible_decks.exclude?(true_deck)
+    context.fail!(error: "Ineligible deck #{true_deck} ≠ #{hero}") if true_deck && eligible_decks.exclude?(true_deck)
 
     eligible_decks.each do |deck|
       label = true_deck == deck ? 1 : -1
