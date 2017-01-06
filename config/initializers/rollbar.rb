@@ -8,5 +8,9 @@ if defined?(Rollbar)
     end
 
     config.environment = ENV['ROLLBAR_ENV'] || Rails.env
+
+    config.exception_level_filters.merge!({
+      'ActionController::RoutingError' => 'ignore',
+    })
   end
 end
