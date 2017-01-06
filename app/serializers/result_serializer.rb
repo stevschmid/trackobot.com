@@ -9,8 +9,9 @@ class ResultSerializer < ActiveModel::Serializer
   def card_history
     object.card_history_list.collect do |it|
       card = CARDS[it[:card_id]]
+      next if card.nil?
       it.except(:card_id).merge(card: { id: card.id, name: card.name, mana: card.mana })
-    end
+    end.compact
   end
 
   def hero
