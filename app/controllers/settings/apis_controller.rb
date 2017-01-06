@@ -7,8 +7,7 @@ class Settings::ApisController < ApplicationController
 
   def update
     if params[:regenerate_api_token].present?
-      current_user.regenerate_api_authentication_token
-      current_user.save!
+      RegenerateToken.call(user: current_user, token_name: :api_authentication_token)
       redirect_to profile_settings_api_path, flash: {success: 'Your API token was regenerated successfully.'}
     end
   end
