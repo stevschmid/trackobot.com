@@ -15,11 +15,11 @@ class Settings::AccountsController < ApplicationController
       next unless Result.modes.include?(reset_mode)
 
       selected_results = results.where(mode: Result.modes[reset_mode])
-      selected_results.delete_all
+      selected_results.destroy_all
 
       if reset_mode == 'arena'
         arenas = policy_scope(Arena)
-        arenas.delete_all
+        arenas.destroy_all
       end
     end
 
