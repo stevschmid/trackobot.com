@@ -9,9 +9,9 @@ module Stats
     as_deck
     vs_deck
     time_range
-    custom_start
-    custom_end
     order
+    start
+    end
   ]
 
   TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month custom]
@@ -78,6 +78,7 @@ module Stats
         cookies.permanent[:custom_end] = custom_end
         @custom_range = Date.parse(custom_start)..Date.parse(custom_end)
       end
+
 
       @time_range_start = min_date_for_time_range.beginning_of_day
       @time_range_end = max_date_for_time_range.end_of_day
