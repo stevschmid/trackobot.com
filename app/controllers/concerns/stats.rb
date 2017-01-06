@@ -51,8 +51,8 @@ module Stats
                        if @time_range
                          user_arenas = user_arenas.where('arenas.created_at >= ? AND arenas.created_at <= ?', @time_range_start, @time_range_end)
                        end
-                       user_arenas = user_arenas.where('arenas.hero = ?', @as_hero) if @as_hero
-                       user_arenas = user_arenas.where('arenas.opponent = ?', @vs_hero) if @vs_hero
+                       user_arenas = user_arenas.where('arenas.hero = ?', Hero::MAPPING.key(@as_hero)) if @as_hero
+                       user_arenas = user_arenas.where('arenas.opponent = ?', Hero::MAPPING.key(@vs_hero)) if @vs_hero
                        user_arenas
                      end
   end
