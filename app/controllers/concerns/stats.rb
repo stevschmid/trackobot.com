@@ -12,6 +12,7 @@ module Stats
     order
     start
     end
+    sort_by
   ]
 
   TIME_RANGE_FILTERS = %w[last_24_hours last_3_days current_month custom]
