@@ -74,6 +74,10 @@
     {
       "key": "jade",
       "name": "Jade"
+    },
+    {
+      "key": "aggro",
+      "name": "Aggro"
     }
   ],
   "hunter": [
