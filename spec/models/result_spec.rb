@@ -15,7 +15,7 @@ describe Result do
     let(:midrange_shaman) { Deck.find_by!(key: 'midrange', hero: shaman) }
     let(:aggro_shaman) { Deck.find_by!(key: 'aggro', hero: shaman) }
 
-    let(:shaman_cards) { CARDS.values.select { |card| card.hero == 'shaman' } }
+    let(:shaman_cards) { CARDS.values.select { |card| card.hero == 'SHAMAN' } }
 
     def build_card_list(prob_matrix, deck, cards)
       probs = prob_matrix[deck]

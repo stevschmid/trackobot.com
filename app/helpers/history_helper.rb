@@ -72,7 +72,7 @@ module HistoryHelper
   private
 
   def group_card_histories_by_card_and_sort_by_mana(card_histories)
-    card_histories.group_by { |e| CARDS[e[:card_id]] }.sort_by { |card, _| card.mana || -1 }
+    card_histories.group_by { |e| CARDS[e[:card_id]] }.sort_by { |card, _| card.cost || -1 }
   end
 
   def group_card_histories_chronologically(card_histories)

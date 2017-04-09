@@ -2,10 +2,10 @@
   <%
     grouped_card_histories = group_card_histories_by_card_and_sort_by_mana(@card_histories)
     grouped_card_histories.each do |card, card_histories| 
-      next if card.type == 'hero' # skip hero power
+      next if card.type == 'HERO' || card.type == 'HERO_POWER' # skip hero power
   %>
   <tr>
-    <td><div class="mana"><%= card.mana || 0 %></div>&nbsp;<%= card.name %> <%= "(#{card_histories.length})" if card_histories.count > 1 %></td>
+    <td><div class="mana"><%= card.cost || 0 %></div>&nbsp;<%= card.name %> <%= "(#{card_histories.length})" if card_histories.count > 1 %></td>
   </tr>
   <% end %>
 </table>

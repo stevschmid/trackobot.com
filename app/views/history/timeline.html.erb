@@ -17,7 +17,7 @@
         card = CARDS[card_history[:card_id]]
     %>
       <div class="card">
-        <div class="mana"><%= card.mana || 0 %></div>&nbsp;<%= card.name %>
+        <div class="mana"><%= card.cost || 0 %></div>&nbsp;<%= card.name %>
       </div>
     <% end %>
   </li>

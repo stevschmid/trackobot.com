@@ -37,10 +37,10 @@ module DeckClassification
 
     card = CARDS[card_history[:card_id]]
     return false if card.nil?
-    return false if card.type == 'hero'
+    return false if card.type == 'HERO_POWER' || card.type == 'HERO'
     return false if card.name == 'The Coin'
-    return false if card[:hero] != 'neutral' && context.player == 'me' && card[:hero] != context.result.hero
-    return false if card[:hero] != 'neutral' && context.player == 'opponent' && card[:hero] != context.result.opponent
+    return false if card[:cardClass] != 'NEUTRAL' && context.player == 'me' && card[:cardClass] != context.result.hero.upcase
+    return false if card[:cardClass] != 'NEUTRAL' && context.player == 'opponent' && card[:cardClass] != context.result.opponent.upcase
 
     true
   end
