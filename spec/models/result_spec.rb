@@ -34,9 +34,12 @@ describe Result do
       card_list
     end
 
-    it 'does the ring at the right time for the right reasons' do
+    it 'does the right thing at the right time for the right reasons' do
       NUM_LEARN_RUNS = 10
       NUM_VALIDATION_RUNS = 10
+
+      midrange_shaman.update(active: true)
+      aggro_shaman.update(active: true)
 
       shaman_prob_matrix = {
         midrange_shaman => {
