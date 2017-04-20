@@ -18,6 +18,14 @@ namespace :trackobot do
     end
   end
 
+  task :reset_classifiers => :environment do
+    Deck.find_each do |deck|
+      deck.classifier = nil
+      deck.last_decay_at = Time.now
+      deck.save!
+    end
+  end
+
   task :vacuum_card_history => :environment do
     CardHistory.where('created_at < ?', 10.days.ago).delete_all
   end
