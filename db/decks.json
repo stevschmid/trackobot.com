@@ -6,7 +6,8 @@
     },
     {
       "key": "aggro",
-      "name": "Aggro"
+      "name": "Aggro",
+      "active": false
     },
     {
       "key": "control",
@@ -14,7 +15,8 @@
     },
     {
       "key": "jade",
-      "name": "Jade"
+      "name": "Jade",
+      "active": false
     }
   ],
   "warlock": [
@@ -24,7 +26,12 @@
     },
     {
       "key": "reno",
-      "name": "Reno"
+      "name": "Reno",
+      "active": false
+    },
+    {
+      "key": "hand",
+      "name": "Hand"
     }
   ],
   "warrior": [
@@ -34,7 +41,8 @@
     },
     {
       "key": "dragon",
-      "name": "Dragon"
+      "name": "Dragon",
+      "active": false
     },
     {
       "key": "tempo",
@@ -43,7 +51,8 @@
     },
     {
       "key": "control",
-      "name": "Control"
+      "name": "Control",
+      "active": false
     },
     {
       "key": "cthun",
@@ -54,6 +63,10 @@
       "key": "worgen",
       "name": "Worgen",
       "active": false
+    },
+    {
+      "key": "taunt",
+      "name": "Taunt"
     }
   ],
   "rogue": [
@@ -73,7 +86,12 @@
     },
     {
       "key": "jade",
-      "name": "Jade"
+      "name": "Jade",
+      "active": false
+    },
+    {
+      "key": "quest",
+      "name": "Quest"
     }
   ],
   "hunter": [
@@ -83,18 +101,19 @@
     },
     {
       "key": "face",
-      "name": "Face",
-      "active": false
+      "name": "Face"
     },
     {
       "key": "secret",
-      "name": "Secret"
+      "name": "Secret",
+      "active": false
     }
   ],
   "mage": [
     {
       "key": "tempo",
-      "name": "Tempo"
+      "name": "Tempo",
+      "active": false
     },
     {
       "key": "freeze",
@@ -102,7 +121,12 @@
     },
     {
       "key": "reno",
-      "name": "Reno"
+      "name": "Reno",
+      "active": false
+    },
+    {
+      "key": "burn",
+      "name": "Burn"
     }
   ],
   "paladin": [
@@ -133,8 +157,7 @@
     },
     {
       "key": "token",
-      "name": "Token",
-      "active": false
+      "name": "Token"
     },
     {
       "key": "ramp",
@@ -143,7 +166,8 @@
     },
     {
       "key": "malygos",
-      "name": "Malygos"
+      "name": "Malygos",
+      "active": false
     },
     {
       "key": "jade",
@@ -172,7 +196,16 @@
     },
     {
       "key": "reno",
-      "name": "Reno"
+      "name": "Reno",
+      "active": false
+    },
+    {
+      "key": "combo",
+      "name": "Combo"
+    },
+    {
+      "key": "miracle",
+      "name": "Miracle"
     }
   ]
 }

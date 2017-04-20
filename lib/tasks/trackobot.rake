@@ -1,4 +1,4 @@
-DECAY_HALF_TIME = 15.days
+DECAY_HALF_TIME = 3.days
 
 namespace :trackobot do
   # Meta shifts, new decks get added
