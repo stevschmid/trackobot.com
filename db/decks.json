@@ -17,6 +17,10 @@
       "key": "jade",
       "name": "Jade",
       "active": false
+    },
+    {
+      "key": "token",
+      "name": "Token"
     }
   ],
   "warlock": [
@@ -127,12 +131,17 @@
     {
       "key": "burn",
       "name": "Burn"
+    },
+    {
+      "key": "secret",
+      "name": "Secret"
     }
   ],
   "paladin": [
     {
       "key": "aggro",
-      "name": "Aggro"
+      "name": "Aggro",
+      "active": false
     },
     {
       "key": "nzoth",
@@ -147,6 +156,14 @@
     {
       "key": "murloc",
       "name": "Murloc"
+    },
+    {
+      "key": "midrange",
+      "name": "Midrange"
+    },
+    {
+      "key": "control",
+      "name": "Control"
     }
   ],
   "druid": [
