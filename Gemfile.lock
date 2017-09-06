@@ -241,8 +241,6 @@ GEM
     ref (2.0.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    rollbar (2.14.0)
-      multi_json
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -353,7 +351,6 @@ DEPENDENCIES
   rails-controller-testing
   redcarpet
   responders
-  rollbar
   rspec-its
   rspec-rails
   sass-rails
