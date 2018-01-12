@@ -61,3 +61,5 @@ gem 'whenever'
 
 gem 'puma'
 gem 'foreman'
+
+gem 'rack-throttle'

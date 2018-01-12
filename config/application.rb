@@ -8,6 +8,7 @@ require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require 'rack/throttle'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -34,5 +35,7 @@ module Trackobot
     config.active_record.belongs_to_required_by_default = true
 
     ActiveSupport.halt_callback_chains_on_return_false = false
+
+    config.middleware.use Rack::Throttle::Interval
   end
 end
