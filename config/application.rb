@@ -36,6 +36,6 @@ module Trackobot
 
     ActiveSupport.halt_callback_chains_on_return_false = false
 
-    config.middleware.use Rack::Throttle::Interval
+    config.middleware.use Rack::Throttle::Hourly, max: 120
   end
 end
