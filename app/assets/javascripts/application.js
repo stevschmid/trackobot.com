@@ -15,7 +15,7 @@
 //= require twitter/bootstrap
 //= require chosen-jquery
 //= require turbolinks
-//= require local_time
+//= require local-time
 //= require jquery.peity.min
 //= require moment.min
 //= require daterangepicker
