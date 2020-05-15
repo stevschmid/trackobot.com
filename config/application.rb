@@ -37,8 +37,6 @@ module Trackobot
     # rails 5
     config.active_record.belongs_to_required_by_default = true
 
-    ActiveSupport.halt_callback_chains_on_return_false = false
-
     config.middleware.use Rack::Throttle::Hourly, max: 120
   end
 end
