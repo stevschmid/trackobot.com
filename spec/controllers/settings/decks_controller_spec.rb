@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Settings::DecksController do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   before do
     sign_in user

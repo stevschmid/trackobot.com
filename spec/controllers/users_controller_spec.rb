@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UsersController do
 
   describe 'PATCH rename' do
-    let(:logged_in_user) { FactoryGirl.create(:user) }
+    let(:logged_in_user) { FactoryBot.create(:user) }
 
     before do
       request.env['HTTP_REFERER'] = '' # back
@@ -22,7 +22,7 @@ describe UsersController do
     end
 
     context 'as another user' do
-      let(:user) { FactoryGirl.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
 
       it 'Follow the rules!' do
         patch :rename, params: { user_id: user.id, user: { displayname: 'Salty Reynad' } }

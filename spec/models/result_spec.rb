@@ -7,7 +7,7 @@ describe Result do
   describe 'deck assignment' do
     # this is some kind of elaborate integration test
     # for the whole deck system
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryBot.create(:user) }
     let(:mode) { :ranked }
 
     let(:shaman) { 'shaman' }

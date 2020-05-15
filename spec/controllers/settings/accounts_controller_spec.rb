@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Settings::AccountsController do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:other_user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:other_user) { FactoryBot.create(:user) }
 
   before do
     sign_in user
@@ -11,8 +11,8 @@ describe Settings::AccountsController do
 
   before do
     Result.modes.each do |mode, id|
-      FactoryGirl.create(:result, mode: mode, user: user)
-      FactoryGirl.create(:result, mode: mode, user: other_user)
+      FactoryBot.create(:result, mode: mode, user: user)
+      FactoryBot.create(:result, mode: mode, user: other_user)
     end
   end
 
@@ -40,7 +40,7 @@ describe Settings::AccountsController do
     end
 
     describe 'arena' do
-      before { FactoryGirl.create(:result_with_arena, user: user) }
+      before { FactoryBot.create(:result_with_arena, user: user) }
 
       context 'arena specified' do
         let(:reset_modes) { %w[arena] }

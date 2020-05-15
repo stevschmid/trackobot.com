@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe HistoryController do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   before do
     sign_in(user)
   end
 
   context 'json' do
-    let!(:result) { FactoryGirl.create(:result, user: user) }
+    let!(:result) { FactoryBot.create(:result, user: user) }
 
     before do
       get :index, format: :json
@@ -40,27 +40,27 @@ describe HistoryController do
 
       context 'ranked' do
         describe 'rank' do
-          let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, rank: 25) }
+          let!(:result) { FactoryBot.create(:result, mode: :ranked, user: user, rank: 25) }
           its([:rank]) { should eq(result.rank) }
         end
         describe 'legend' do
-          let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, legend: 101) }
+          let!(:result) { FactoryBot.create(:result, mode: :ranked, user: user, legend: 101) }
           its([:legend]) { should eq(result.legend) }
         end
       end
 
       context 'arena' do
-        let!(:result) { FactoryGirl.create(:result_with_arena, mode: :arena, user: user) }
+        let!(:result) { FactoryBot.create(:result_with_arena, mode: :arena, user: user) }
         its([:arena_id]) { should eq(result.arena.id) }
       end
 
       context 'no arena' do
-        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user) }
+        let!(:result) { FactoryBot.create(:result, mode: :ranked, user: user) }
         it { should_not include(:arena_id) }
       end
 
       describe 'note' do
-        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, note: 'test') }
+        let!(:result) { FactoryBot.create(:result, mode: :ranked, user: user, note: 'test') }
         its([:note]) { should eq('test') }
       end
 
@@ -71,7 +71,7 @@ describe HistoryController do
         let(:deck) { Deck.where(hero: hero).first }
         let(:opponent_deck) { Deck.where(hero: opponent).first }
 
-        let!(:result) { FactoryGirl.create(:result, mode: :ranked, user: user, hero: hero, opponent: opponent, deck: deck, opponent_deck: opponent_deck) }
+        let!(:result) { FactoryBot.create(:result, mode: :ranked, user: user, hero: hero, opponent: opponent, deck: deck, opponent_deck: opponent_deck) }
 
         its([:opponent_deck]) { should eq(result.opponent_deck.name) }
         its([:hero_deck]) { should eq(result.deck.name) }

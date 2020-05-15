@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe ArenaController do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   before do
     sign_in(user)
   end
 
   context 'json' do
-    let!(:result) { FactoryGirl.create(:result_with_arena, mode: :arena, user: user) }
+    let!(:result) { FactoryBot.create(:result_with_arena, mode: :arena, user: user) }
     let(:arena) { result.arena }
 
     before do
