@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ResultsController do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:rogue) { 'rogue' }
   let(:warlock) { 'warlock' }
@@ -111,7 +111,7 @@ describe ResultsController do
         stub_const('LearnPlayerDeckOfResult::MIN_CARDS_FOR_LEARNING', 1)
 
         # learn the classifier
-        result = FactoryGirl.create(:result, result_params.except(:card_history))
+        result = FactoryBot.create(:result, result_params.except(:card_history))
         result.build_card_history(data: card_history)
         LearnPlayerDeckOfResult.call(result: result, player: 'me', deck: zoo)
         LearnPlayerDeckOfResult.call(result: result, player: 'opponent', deck: miracle)
@@ -153,7 +153,7 @@ describe ResultsController do
 
   describe 'DELETE destroy' do
     let(:mode) { :ranked }
-    let!(:result) { FactoryGirl.create(:result, user: result_user, mode: mode) }
+    let!(:result) { FactoryBot.create(:result, user: result_user, mode: mode) }
 
     subject { delete :destroy, params: { id: result.id } }
 
@@ -177,7 +177,7 @@ describe ResultsController do
         end
 
         context 'not last result' do
-          before { result.arena.results << FactoryGirl.create(:result, mode: :arena) }
+          before { result.arena.results << FactoryBot.create(:result, mode: :arena) }
           specify {
             expect {subject }.not_to change(Arena, :count)
           }
@@ -204,7 +204,7 @@ describe ResultsController do
     end
 
     context 'foreign result' do
-      let(:result_user) { FactoryGirl.create(:user) }
+      let(:result_user) { FactoryBot.create(:user) }
       specify {
         expect { subject }.to raise_error(ActiveRecord::RecordNotFound)
       }
@@ -213,7 +213,7 @@ describe ResultsController do
 
   describe 'PUT update' do
     let(:result_owner) { user }
-    let!(:result) { FactoryGirl.create(:result, user: result_owner, hero: warlock, opponent: rogue, deck_id: existing_deck_id, mode: mode) }
+    let!(:result) { FactoryBot.create(:result, user: result_owner, hero: warlock, opponent: rogue, deck_id: existing_deck_id, mode: mode) }
 
     let(:existing_deck_id) { zoo.id }
     let(:new_deck_id) { reno.id }
@@ -339,7 +339,7 @@ describe ResultsController do
     end
 
     describe 'result owned by somebody else' do
-      let(:result_owner) { FactoryGirl.create(:user) }
+      let(:result_owner) { FactoryBot.create(:user) }
 
       it 'denies' do
         expect {

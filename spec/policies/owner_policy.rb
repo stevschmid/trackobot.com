@@ -3,10 +3,10 @@ require 'spec_helper'
 shared_examples :owner_policy do
   subject { described_class }
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:another_user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:another_user) { FactoryBot.create(:user) }
 
-  let!(:item) { FactoryGirl.create(model, user: owner) }
+  let!(:item) { FactoryBot.create(model, user: owner) }
 
   permissions :show?, :create?, :update?, :destroy? do
     context 'owner' do

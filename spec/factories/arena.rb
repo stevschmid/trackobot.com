@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :arena do
-    hero 'shaman'
+    hero { 'shaman' }
     user
   end
 end

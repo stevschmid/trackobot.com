@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :hero do
-    name 'Shaman'
+    name { 'Shaman' }
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Authentication' do
   let(:password) { 'nose1234' }
-  let(:user) { FactoryGirl.create(:user, password: password) }
+  let(:user) { FactoryBot.create(:user, password: password) }
 
   context 'without auth' do
     it 'redirects to login' do

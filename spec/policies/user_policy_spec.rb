@@ -5,8 +5,8 @@ require_relative 'owner_policy'
 describe UserPolicy do
   subject { described_class }
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:another_user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:another_user) { FactoryBot.create(:user) }
 
   permissions :show?, :create?, :update?, :destroy? do
     specify do
